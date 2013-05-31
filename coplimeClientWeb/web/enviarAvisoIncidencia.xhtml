@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile"
+      contentType="text/html"
+      renderKitId="PRIMEFACES_MOBILE"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+    
+    
+    <pm:page title="Enviar aviso de incidencia">
+        
+        <style>
+                .th-groups th {
+                        text-align: center;
+                        background-color: rgba(0,0,0,.1);
+                        border-right: 1px solid #fff;
+                }
+                .ui-li-custom .ui-li-count {
+                        right: 10px !important;
+                }                
+        </style>
+        
+        <!-- Main View -->
+        <pm:view id="main">
+            <p:overlayPanel for="btnPanelContext" id ="panelContext" widgetVar="panelContext"> 
+                    <p:dataList styleClass="ui-li-custom">
+                        <f:attribute name="swatch" value="a" />
+                        <f:attribute name="dividerSwatch" value="d" />
+                        <f:attribute name="icon" value="false" />
+                        <h:outputLink>Ver puntos limpios</h:outputLink>
+                        <h:outputLink>Ver notificaciones<h:outputText styleClass="ui-li-count" value="4"/></h:outputLink>
+                        <h:outputLink>Ver solicitudes de mantención</h:outputLink>
+                        <h:outputLink>Ver operarios de mantención</h:outputLink>
+                        <h:outputLink>Ver inspectores</h:outputLink>
+                        <h:outputLink>Generar reportes</h:outputLink>
+                        <h:outputLink>Ayuda</h:outputLink>
+                        <h:outputLink>Cerrar sesión</h:outputLink>
+                        <!-- <h:outputLink onclick="PrimeFaces.back()">Log Out</h:outputLink> -->
+                    </p:dataList>
+            </p:overlayPanel>
+            
+            <pm:header title="Enviar aviso de incidencia">
+                <f:facet name="left">
+                    <p:button id="btnPanelContext" value="" iconPos="notext" icon="bars"/>
+                </f:facet>
+            </pm:header>
+
+            <pm:content>
+                <p:outputPanel>
+                    <p:dataList type="inset" styleClass="ui-li-custom">
+                        <f:facet name="header">Selecciones punto limpio</f:facet>
+                        <f:attribute name="icon" value="false" />
+                        <p:inputText label="Código punto limpio" />
+                        <p:commandButton value="Generar aviso" type="button"/>
+                    </p:dataList>
+                    
+                    <p:dataList type="inset" styleClass="ui-li-custom">
+                        <f:facet name="header">Ingresar datos del aviso</f:facet>
+                        <f:attribute name="icon" value="false" />
+                        
+                        <pm:field>
+                            <h:outputLabel for="selectOneMenu" value="Seleccione tipo de incidencia:"/>
+                            <h:selectOneMenu id="selectOneMenu">
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                <f:selectItem itemLabel="Option 1" itemValue="Option 1" />
+                                <f:selectItem itemLabel="Option 2" itemValue="Option 2" />
+                                <f:selectItem itemLabel="Option 3" itemValue="Option 3" />
+                            </h:selectOneMenu>
+                        </pm:field>
+                        
+                        <p:inputTextarea id="inputTextarea" label="Escribir detalles:"/>
+                        <p:inputText label="E-mail de contacto" />
+                        
+                        Subir imagen: <p:fileUpload value="" mode="simple"/>
+                        
+                        <p:panelGrid columns="2">
+                            <p:commandButton value="Enviar" type="button"/>
+                            <p:commandButton value="cancelar" type="button"/>
+                        </p:panelGrid>
+                        
+                    </p:dataList>
+                </p:outputPanel>
+                <p:contextMenu event="swiperight" beforeShow="panelContext.hide()" />
+            </pm:content>
+        </pm:view>
+    </pm:page>
+
+</f:view>

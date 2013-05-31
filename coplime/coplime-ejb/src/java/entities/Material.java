@@ -15,11 +15,21 @@ import javax.persistence.Id;
  * @author victor
  */
 @Entity
-public class TipoIncidencia implements Serializable {
+public class Material implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    private String nombre_material;
+
+    public String getNombre_material() {
+        return nombre_material;
+    }
+
+    public void setNombre_material(String nombre_material) {
+        this.nombre_material = nombre_material;
+    }
 
     public Long getId() {
         return id;
@@ -28,26 +38,6 @@ public class TipoIncidencia implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    private String nombreIncidencia;
-
-    public String getNombreIncidencia() {
-        return nombreIncidencia;
-    }
-
-    public void setNombreIncidencia(String nombreIncidencia) {
-        this.nombreIncidencia = nombreIncidencia;
-    }
-
-    public boolean isVisibleAlUsuario() {
-        return visibleAlUsuario;
-    }
-
-    public void setVisibleAlUsuario(boolean visibleAlUsuario) {
-        this.visibleAlUsuario = visibleAlUsuario;
-    }
-    
-    private boolean visibleAlUsuario;
 
     @Override
     public int hashCode() {
@@ -59,10 +49,10 @@ public class TipoIncidencia implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TipoIncidencia)) {
+        if (!(object instanceof Material)) {
             return false;
         }
-        TipoIncidencia other = (TipoIncidencia) object;
+        Material other = (Material) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -71,7 +61,7 @@ public class TipoIncidencia implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.TipoIncidencia[ id=" + id + " ]";
+        return "entities.Materiales[ id=" + id + " ]";
     }
     
 }

@@ -5,83 +5,33 @@
 package entities;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 /**
  *
  * @author victor
  */
 @Entity
-@Table(name = "administrador")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Administrador.findAll", query = "SELECT a FROM Administrador a"),
-    @NamedQuery(name = "Administrador.findByRut", query = "SELECT a FROM Administrador a WHERE a.rut = :rut"),
-    @NamedQuery(name = "Administrador.findByCodAdministrador", query = "SELECT a FROM Administrador a WHERE a.codAdministrador = :codAdministrador")})
-public class Administrador implements Serializable {
+public class Administrador extends Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "rut")
-    private Integer rut;
-    @Basic(optional = false)
-    @Column(name = "cod_administrador")
-    private int codAdministrador;
-    @JoinColumn(name = "rut", referencedColumnName = "rut", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private Usuario usuario;
+    
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long cod;
 
-    public Administrador() {
+    public Long getCod() {
+        return cod;
     }
 
-    public Administrador(Integer rut) {
-        this.rut = rut;
-    }
-
-    public Administrador(Integer rut, int codAdministrador) {
-        this.rut = rut;
-        this.codAdministrador = codAdministrador;
-    }
-
-    public Integer getRut() {
-        return rut;
-    }
-
-    public void setRut(Integer rut) {
-        this.rut = rut;
-    }
-
-    public int getCodAdministrador() {
-        return codAdministrador;
-    }
-
-    public void setCodAdministrador(int codAdministrador) {
-        this.codAdministrador = codAdministrador;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setCod(Long cod) {
+        this.cod = cod;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (rut != null ? rut.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -92,7 +42,7 @@ public class Administrador implements Serializable {
             return false;
         }
         Administrador other = (Administrador) object;
-        if ((this.rut == null && other.rut != null) || (this.rut != null && !this.rut.equals(other.rut))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -100,7 +50,7 @@ public class Administrador implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Administrador[ rut=" + rut + " ]";
+        return "entities.Administrador[ id=" + id + " ]";
     }
     
 }

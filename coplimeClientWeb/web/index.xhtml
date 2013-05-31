@@ -1,14 +1,38 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
-    </h:body>
-</html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile"
+      contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
+    
+    
+    <pm:page title="Bienvenido a COPLIME">
+        <!-- Main View -->
+        <pm:view id="main">
+            <pm:header title="Bienvenido a COPLIME" swatch="b"/>
+            <pm:content>
+                <p:outputPanel>
+                    <p:dataList type="inset" styleClass="ui-li-custom">
+                        <f:facet name="header">Avisar incidencia</f:facet>
+                        <f:attribute name="icon" value="false" />
+                        <p:commandButton action="enviarAvisoIncidencia" value="Generar aviso" type="button"/>
+                    </p:dataList>
+                    <p:dataList type="inset" styleClass="ui-li-custom">
+                        <f:facet name="header">Inicio de sesión</f:facet>
+                        <f:attribute name="icon" value="false" />
+                        <p:inputText label="Nombre de usuario" />
+                        <p:inputText label="contraseña:" />
+                        <p:commandButton value="Iniciar sesión" type="button"/>
+                    </p:dataList>
+                </p:outputPanel>
+            </pm:content>
+        </pm:view>
+    </pm:page>
+
+</f:view>
+
 

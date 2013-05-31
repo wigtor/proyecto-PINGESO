@@ -6,9 +6,9 @@
         <property name="portNumber" value="3306"/>
         <property name="databaseName" value="coplime_db"/>
         <property name="User" value="coplime_user"/>
-        <property name="Password" value="coplime_asdasd"/>
+        <property name="Password" value="coplime_12345"/>
         <property name="URL" value="jdbc:mysql://localhost:3306/coplime_db?zeroDateTimeBehavior=convertToNull"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="coplime_db" object-type="user" pool-name="mysql_coplime_db_coplime_userPool"/>
+    <jdbc-resource enabled="true" jndi-name="coplime_mysql_local" object-type="user" pool-name="mysql_coplime_db_coplime_userPool"/>
 </resources>
