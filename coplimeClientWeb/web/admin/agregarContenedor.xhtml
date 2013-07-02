@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile"
+      contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
+    
+    
+    <pm:page title="Agregar contenedores">
+        <!-- Main View -->
+        <pm:view id="main">
+            <pm:header title="Agregar contenedores" swatch="b"/>
+            <pm:content>
+                <h:form>
+                <p:outputPanel>
+                    <p:dataList type="inset" styleClass="ui-li-custom">
+                        <f:facet name="header">Inicio de sesión</f:facet>
+                        <f:attribute name="icon" value="false" />
+                        <p:inputText label="N° de punto limpio" value="#{mantenedorPuntoLimpio.numPuntoLimpio}"/>
+                        <p:selectOneMenu label="Material que almacena" value="#{mantenedorPuntoLimpio.materialContenedor_seleccionado}">
+                            <f:selectItems value="#{mantenedorPuntoLimpio.ListaMateriales}"  
+                                var="mat" itemLabel="#{mat.nombre}" itemValue="#{mat.num}" />
+                        </p:selectOneMenu>
+                        <p:inputText id="llenadoInicialContenedor" label="Llenado inicial" value="#{mantenedorPuntoLimpio.llenadoContenedor}"/>
+                        <p:slider step="10" for="llenadoInicialContenedor"/>
+                        <p:selectOneMenu label="Estado inicial" value="#{mantenedorPuntoLimpio.estadoContenedor_seleccionado}">
+                            <f:selectItems value="#{mantenedorPuntoLimpio.ListaEstadosContenedores}"  
+                                var="estadoCont" itemLabel="#{estadoCont.nombre}" itemValue="#{estadoCont.num}" />
+                        </p:selectOneMenu>
+                        <p:commandButton value="Guardar y agregar otro" action="#{mantenedorPuntoLimpio.nuevoAdministrador()}"/>
+                        <p:commandButton value="Guardar" action="#{mantenedorPuntoLimpio.nuevoAdministrador()}"/>
+                        <p:commandButton value="Volver" action="#{mantenedorPuntoLimpio.volver()}"/>
+                    </p:dataList>
+                </p:outputPanel>
+                </h:form>
+            </pm:content>
+        </pm:view>
+    </pm:page>
+
+</f:view>
+
+

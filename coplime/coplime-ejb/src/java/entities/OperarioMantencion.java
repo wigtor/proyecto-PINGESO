@@ -9,14 +9,16 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author victor
  */
 @Entity
-public class OperarioMantencion extends Usuario implements Serializable {
+public class OperarioMantencion implements Serializable {
     @OneToMany(mappedBy = "operarioAsignado")
     private List<SolicitudMantencion> solicitudesMantencionRealizadas;
 
@@ -41,15 +43,35 @@ public class OperarioMantencion extends Usuario implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long cod;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     public Long getCod() {
-        return cod;
+        return id;
     }
 
     public void setCod(Long cod) {
-        this.cod = cod;
+        this.id = cod;
+    }
+    
+    @OneToOne
+    private Usuario usuario;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override

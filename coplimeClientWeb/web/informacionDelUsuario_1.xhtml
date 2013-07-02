@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile"
+      contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
+    
+    
+    <pm:page title="Información del usuario">
+        <!-- Main View -->
+        <pm:view id="main">
+            <pm:header title="Información del usuario" swatch="b"/>
+            <pm:content>
+                <h:form>
+                <p:outputPanel>
+                    <p:dataList type="inset" styleClass="ui-li-custom">
+                        <f:facet name="header">Datos del usuario</f:facet>
+                        <f:attribute name="icon" value="false" />
+                        <p:inputText label="Nombre:" value="#{infoUsuario.nombre}"/>
+                        <p:inputText label="Apellido paterno:" value="#{infoUsuario.apellido1}"/>
+                        <p:inputText label="Apellido materno:" value="#{infoUsuario.apellido2}"/>
+                        <p:inputText label="Rol" value="#{infoUsuario.rol}"/>
+                        <p:inputText label="N°" value="#{infoUsuario.cod}"/>
+                    </p:dataList>
+                    
+                    <p:dataList type="inset" styleClass="ui-li-custom">
+                        <f:facet name="header">Datos de contacto</f:facet>
+                        <f:attribute name="icon" value="false" />
+                        <p:inputText label="Teléfono" value="#{infoUsuario.nombre}"/>
+                        <p:inputText label="email:" value="#{infoUsuario.apellido1}"/>
+                    </p:dataList>
+                        <p:commandButton value="Guardar cambios" action="#{infoUsuario.guardarCambios()}"/>
+                        <p:commandButton value="Volver" action="#{infoUsuario.volver()}"/>
+                </p:outputPanel>
+                </h:form>
+            </pm:content>
+        </pm:view>
+    </pm:page>
+
+</f:view>
+
+

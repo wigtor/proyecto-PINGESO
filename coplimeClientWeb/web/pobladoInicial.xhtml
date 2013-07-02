@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile"
+      contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
+    
+    
+    <pm:page title="Agregar punto limpio">
+        <!-- Main View -->
+        <pm:view id="main">
+            <pm:header title="Poblado inicial" swatch="b"/>
+            <pm:content>
+                <h:form>
+                <p:outputPanel>
+                    <p:dataList type="inset" styleClass="ui-li-custom">
+                        <f:facet name="header">Realizar el poblado inicial del sistema</f:facet>
+                        <f:attribute name="icon" value="false" />
+                        
+                        <p:commandButton value="Poblar" action="#{pobladoInicial.poblar()}"/>
+                    </p:dataList>
+                </p:outputPanel>
+                </h:form>
+            </pm:content>
+        </pm:view>
+    </pm:page>
+
+</f:view>
+
+

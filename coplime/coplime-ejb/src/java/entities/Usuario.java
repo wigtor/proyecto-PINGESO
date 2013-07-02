@@ -5,24 +5,58 @@
 package entities;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author victor
  */
 @Entity
+@NamedQuery(name="Usuario.findByUsernameAndPassword", query="SELECT u FROM Usuario u WHERE u.username = :username AND u.password = :password") 
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;
-
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //private Long id;
     
-    protected String username;
+    @JoinColumn(nullable = false)
+    @OneToOne(mappedBy = "usuario")
+    private Rol rol;
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+    
+    @Column(nullable = false)
+    private String password;
+    
+    @Column(nullable = false)
+    private String nombre;
+    
+    @Column(nullable = false)
+    private String apellido1;
+    
+    @Column(nullable = false)
+    private String apellido2;
+    
+    @Column(nullable = false)
+    private String email;
+    
+    @Id
+    @Column(nullable = false)
+    private String username;
 
     public String getUsername() {
         return username;
@@ -71,24 +105,12 @@ public class Usuario implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    protected String password;
-    protected String nombre;
-    protected String apellido1;
-    protected String apellido2;
-    protected String email;
     
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (username != null ? username.hashCode() : 0);
         return hash;
     }
 
@@ -99,7 +121,7 @@ public class Usuario implements Serializable {
             return false;
         }
         Usuario other = (Usuario) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.username == null && other.username != null) || (this.username != null && !this.username.equals(other.username))) {
             return false;
         }
         return true;
@@ -107,7 +129,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Usuario[ id=" + id + " ]";
+        return "entities.Usuario[ username=" + username + " ]";
     }
     
 }

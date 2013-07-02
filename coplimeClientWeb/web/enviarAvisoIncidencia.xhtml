@@ -12,37 +12,8 @@
     
     
     <pm:page title="Enviar aviso de incidencia">
-        
-        <style>
-                .th-groups th {
-                        text-align: center;
-                        background-color: rgba(0,0,0,.1);
-                        border-right: 1px solid #fff;
-                }
-                .ui-li-custom .ui-li-count {
-                        right: 10px !important;
-                }                
-        </style>
-        
         <!-- Main View -->
         <pm:view id="main">
-            <p:overlayPanel for="btnPanelContext" id ="panelContext" widgetVar="panelContext"> 
-                    <p:dataList styleClass="ui-li-custom">
-                        <f:attribute name="swatch" value="a" />
-                        <f:attribute name="dividerSwatch" value="d" />
-                        <f:attribute name="icon" value="false" />
-                        <h:outputLink>Ver puntos limpios</h:outputLink>
-                        <h:outputLink>Ver notificaciones<h:outputText styleClass="ui-li-count" value="4"/></h:outputLink>
-                        <h:outputLink>Ver solicitudes de mantención</h:outputLink>
-                        <h:outputLink>Ver operarios de mantención</h:outputLink>
-                        <h:outputLink>Ver inspectores</h:outputLink>
-                        <h:outputLink>Generar reportes</h:outputLink>
-                        <h:outputLink>Ayuda</h:outputLink>
-                        <h:outputLink>Cerrar sesión</h:outputLink>
-                        <!-- <h:outputLink onclick="PrimeFaces.back()">Log Out</h:outputLink> -->
-                    </p:dataList>
-            </p:overlayPanel>
-            
             <pm:header title="Enviar aviso de incidencia">
                 <f:facet name="left">
                     <p:button id="btnPanelContext" value="" iconPos="notext" icon="bars"/>
@@ -64,12 +35,12 @@
                         
                         <pm:field>
                             <h:outputLabel for="selectOneMenu" value="Seleccione tipo de incidencia:"/>
-                            <h:selectOneMenu id="selectOneMenu">
+                            <p:selectOneMenu id="selectOneMenu">
                                 <f:selectItem itemLabel="Select One" itemValue="" />
                                 <f:selectItem itemLabel="Option 1" itemValue="Option 1" />
                                 <f:selectItem itemLabel="Option 2" itemValue="Option 2" />
                                 <f:selectItem itemLabel="Option 3" itemValue="Option 3" />
-                            </h:selectOneMenu>
+                            </p:selectOneMenu>
                         </pm:field>
                         
                         <p:inputTextarea id="inputTextarea" label="Escribir detalles:"/>
@@ -79,7 +50,7 @@
                         
                         <p:panelGrid columns="2">
                             <p:commandButton value="Enviar" type="button"/>
-                            <p:commandButton value="cancelar" type="button"/>
+                            <p:commandButton value="Cancelar" type="button"/>
                         </p:panelGrid>
                         
                     </p:dataList>

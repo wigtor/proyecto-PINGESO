@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile"
+      contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
+    
+    
+    <pm:page title="Agregar operario de mantención">
+        <!-- Main View -->
+        <pm:view id="main">
+            <pm:header title="Agregar operario de mantención" swatch="b"/>
+            <pm:content>
+                <h:form>
+                <p:outputPanel>
+                    <p:dataList type="inset" styleClass="ui-li-custom">
+                        <f:facet name="header">Inicio de sesión</f:facet>
+                        <f:attribute name="icon" value="false" />
+                        <p:inputText label="Nombre:" value="#{mantenedorOperario.nombre}"/>
+                        <p:inputText label="Apellido paterno:" value="#{mantenedorOperario.apellido1}"/>
+                        <p:inputText label="Apellido materno:" value="#{mantenedorOperario.apellido2}"/>
+                        <p:inputText label="Nombre de usuario" value="#{mantenedorOperario.username}"/>
+                        <p:inputText label="contraseña:" type="password" value="#{mantenedorOperario.password}"/>
+                        <p:inputText label="E-mail:" value="#{mantenedorOperario.mail}"/>
+                        <p:commandButton value="Guardar" action="#{mantenedorOperario.agregarOperario()}"/>
+                        <p:commandButton value="Volver" action="#{mantenedorOperario.volver()}"/>
+                    </p:dataList>
+                </p:outputPanel>
+                </h:form>
+            </pm:content>
+        </pm:view>
+    </pm:page>
+
+</f:view>
+
+

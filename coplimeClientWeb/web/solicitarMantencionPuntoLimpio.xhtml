@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile"
+      contentType="text/html"
+      renderKitId="PRIMEFACES_MOBILE"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+    
+    
+    <pm:page title="Solicitar mantención de punto limpio">
+        <!-- Main View -->
+        <pm:view id="main">
+            <pm:header title="Solicitar mantención de punto limpio">
+                <f:facet name="left">
+                    <p:button id="btnPanelContext" value="" iconPos="notext" icon="bars"/>
+                </f:facet>
+            </pm:header>
+
+            <pm:content>
+                <p:outputPanel>
+                    <p:dataList type="inset" styleClass="ui-li-custom">
+                        <f:facet name="header">Ingrese datos de solicitud</f:facet>
+                        <f:attribute name="icon" value="false" />
+                        
+                        <p:selectOneMenu label="Seleccione punto limpio" value="#{solicitarMantencion.ptoLimpio_seleccionado}">
+                            <f:selectItems value="#{solicitarMantencion.ListaPuntosLimpios}"  
+                                var="ptoLimpio" itemLabel="#{ptoLimpio.nombre}" itemValue="#{ptoLimpio.num}" />
+                        </p:selectOneMenu>
+                        
+                        <p:selectOneMenu label="Seleccione operario encargado" value="#{operario_seleccionado}">
+                            <f:selectItems value="#{solicitarMantencion.ListaOperarios}"  
+                                var="operarioEncargado" itemLabel="#{operarioEncargado.nombre}" itemValue="#{operarioEncargado.num}" />
+                        </p:selectOneMenu>
+                        
+                        <p:inputTextarea label="Detalle" value="#{solicitarMantencion.detalle_seleccionado}"/>
+                        
+                        <p:commandButton value="Realizar solicitud" action="#{verMantenciones.realizarSolicitud()}"/>
+                        <p:commandButton value="Volver" action="#{verMantenciones.volverToListado()}"/>
+                        
+                    </p:dataList>
+                    
+                </p:outputPanel>
+                <p:contextMenu event="swiperight" beforeShow="panelContext.hide()" />
+            </pm:content>
+        </pm:view>
+    </pm:page>
+
+</f:view>

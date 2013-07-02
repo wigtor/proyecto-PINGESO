@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile"
+      contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
+    
+    
+    <pm:page title="Ver solicitudes de mantención">
+        <!-- Main View -->
+        <pm:view id="main">
+            <pm:header title="Ver solicitudes de mantención" swatch="b"/>
+            <pm:content>
+                <h:form>
+                <p:outputPanel>
+                    <p:dataList type="inset" styleClass="ui-li-custom">
+                        <f:facet name="header">Listado de solicitudes</f:facet>
+                        <f:attribute name="icon" value="false" />
+                        
+                        <p:dataTable value="#{verSolicitudesMantencion.lista}" var="solMant" 
+                                     scrollable="true" scrollHeight="200" 
+                                     paginator="true" rows="10">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="N°"/>
+                                </f:facet>
+                                <h:outputText value="#{solMant.num}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Detalle"/>
+                                </f:facet>
+                                <h:outputText value="#{solMant.detallesCortado}"/>
+                            </p:column>
+                            <p:column sortBy="#{solMant.fecha}">
+                                <f:facet name="header">
+                                    <h:outputText value="Fecha"/>
+                                </f:facet>
+                                <h:outputText value="#{solMant.fecha}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Revisada"/>
+                                </f:facet>
+                                <p:selectBooleanCheckbox value="#{solMant.revisada}"/>
+                            </p:column>
+                        </p:dataTable>
+                        
+                        <p:commandButton value="Ver detalles" action="#{verSolicitudesMantencion.verDetalles()}"/>
+                        <p:commandButton value="Volver" action="#{verSolicitudesMantencion.volver()}"/>
+                        
+                    </p:dataList>
+                </p:outputPanel>
+                </h:form>
+            </pm:content>
+        </pm:view>
+    </pm:page>
+
+</f:view>
+
+
