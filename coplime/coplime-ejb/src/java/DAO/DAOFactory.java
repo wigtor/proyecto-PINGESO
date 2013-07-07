@@ -6,6 +6,7 @@ package DAO;
 
 import DAO.interfaces.AdministradorDAO;
 import DAO.interfaces.ContenedorDAO;
+import DAO.interfaces.InspectorDAO;
 import DAO.interfaces.PuntoLimpioDAO;
 import DAO.interfaces.RolDAO;
 import DAO.interfaces.UsuarioDAO;
@@ -31,6 +32,8 @@ public abstract class DAOFactory {
     public abstract ContenedorDAO getContenedorDAO();
     public abstract UsuarioDAO getUsuarioDAO();
     public abstract RolDAO getRolDAO();
+    public abstract InspectorDAO getInspectorDAO();
+    
     public abstract void close();
 
   public static DAOFactory getDAOFactory(int whichFactory, EntityManager em) {

@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
@@ -20,24 +21,19 @@ import javax.persistence.OneToOne;
  * @author victor
  */
 @Entity
-@NamedQuery(name="Usuario.findByUsernameAndPassword", query="SELECT u FROM Usuario u WHERE u.username = :username AND u.password = :password") 
+@NamedQueries( {
+    @NamedQuery(name="Usuario.findByUsernameAndPassword", query="SELECT u FROM Usuario u WHERE u.username = :username AND u.password = :password"), 
+    @NamedQuery(name="Usuario.findByUsername", query="SELECT u FROM Usuario u WHERE u.username = :username")
+})
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     //@Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     //private Long id;
     
-    @JoinColumn(nullable = false)
-    @OneToOne(mappedBy = "usuario")
-    private Rol rol;
-
-    public Rol getRol() {
-        return rol;
-    }
-
-    public void setRol(Rol rol) {
-        this.rol = rol;
-    }
+    @Id
+    @Column(nullable = false)
+    private String username;
     
     @Column(nullable = false)
     private String password;
@@ -54,9 +50,27 @@ public class Usuario implements Serializable {
     @Column(nullable = false)
     private String email;
     
-    @Id
-    @Column(nullable = false)
-    private String username;
+    private int telefono;
+    
+    @JoinColumn(nullable = false)
+    @OneToOne(mappedBy = "usuario")
+    private Rol rol;
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+    
+    public int getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
+    }
 
     public String getUsername() {
         return username;

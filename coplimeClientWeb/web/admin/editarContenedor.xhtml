@@ -10,10 +10,10 @@
         renderKitId="PRIMEFACES_MOBILE">
     
     
-    <pm:page title="Agregar contenedores">
+    <pm:page title="Editar contenedores">
         <!-- Main View -->
         <pm:view id="main">
-            <pm:header title="Agregar contenedores" swatch="b"/>
+            <pm:header title="Editar contenedores" swatch="b"/>
             <pm:content>
                 <h:form>
                 <p:outputPanel>
@@ -25,14 +25,14 @@
                             <f:selectItems value="#{mantenedorPuntoLimpio.ListaMateriales}"  
                                 var="mat" itemLabel="#{mat.nombre}" itemValue="#{mat.num}" />
                         </p:selectOneMenu>
-                        <p:inputText id="llenadoInicialContenedor" label="Llenado inicial" value="#{mantenedorPuntoLimpio.llenadoContenedor}"/>
+                        <p:inputText id="llenadoInicialContenedor" label="Llenado actual" value="#{mantenedorPuntoLimpio.llenadoContenedor}"/>
                         <p:slider step="10" for="llenadoInicialContenedor"/>
-                        <p:selectOneMenu label="Estado inicial" value="#{mantenedorPuntoLimpio.estadoContenedor_seleccionado}">
+                        <p:selectOneMenu label="Estado actual" value="#{mantenedorPuntoLimpio.estadoContenedor_seleccionado}">
                             <f:selectItems value="#{mantenedorPuntoLimpio.ListaEstadosContenedores}"  
                                 var="estadoCont" itemLabel="#{estadoCont.nombre}" itemValue="#{estadoCont.num}" />
                         </p:selectOneMenu>
-                        <p:commandButton value="Guardar y agregar otro" action="#{mantenedorPuntoLimpio.guardaarNvoContenedor_y_otro()}"/>
-                        <p:commandButton value="Guardar" action="#{mantenedorPuntoLimpio.guardaarNvoContenedor()}"/>
+                        
+                        <p:commandButton value="Guardar" action="#{mantenedorPuntoLimpio.guardarCambiosContenedor()}"/>
                         <p:commandButton value="Volver" action="#{mantenedorPuntoLimpio.volverToPuntoLimpio()}"/>
                     </p:dataList>
                 </p:outputPanel>

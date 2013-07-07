@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile"
+      contentType="text/html"
+      renderKitId="PRIMEFACES_MOBILE">
+    
+    
+    <pm:page title="Información del usuario">
+        <style>
+                .th-groups th {
+                        text-align: center;
+                        background-color: rgba(0,0,0,.1);
+                        border-right: 1px solid #fff;
+                }
+                .ui-li-custom .ui-li-count {
+                        right: 10px !important;
+                }                
+        </style>
+        <!-- Main View -->
+        <pm:view id="main">
+            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext">
+                <p:dataList>
+                <h:outputLink value="/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
+                <h:outputLink value="/faces/users/verNotificaciones.xhtml">Ver notificaciones<h:outputText styleClass="ui-li-count" value="6"/></h:outputLink>
+                <h:outputLink value="/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención</h:outputLink>
+                <h:outputLink value="/faces/users/verOperariosMantencion.xhtml">Ver operarios de mantención</h:outputLink>
+                <h:outputLink value="/faces/users/verInspectores.xhtml">Ver inspectores</h:outputLink>
+                <h:outputLink >Generar reportes</h:outputLink>
+                <h:outputLink >Ayuda</h:outputLink>
+                <h:form>
+                <h:commandLink action="#{Autenticador.logout()}">Cerrar sesión</h:commandLink>
+                </h:form>
+                <!-- <h:outputLink onclick="PrimeFaces.back()">Log Out</h:outputLink> -->
+                </p:dataList>
+            </p:overlayPanel>
+            
+            <pm:header title="Información del usuario">
+                <f:facet name="left">
+                    <p:button id="btnPanelContext" value="" iconPos="notext" icon="bars"/>
+                </f:facet>
+            </pm:header>
+            
+            <pm:content>
+                <h:form>
+                    <p:outputPanel>
+                        <p:dataList type="inset" styleClass="ui-li-custom">
+                            <f:facet name="header">Datos del usuario</f:facet>
+                            <f:attribute name="icon" value="false" />
+
+                            <p:inputText label="Nombre" value="#{informacionDelUsuarioManagedBeans.nombres}" disabled="true"/>
+                            <p:inputText label="Apellidos" value="#{informacionDelUsuarioManagedBeans.apellidos}" disabled="true"/>
+                            <p:inputText label="Nombre de usuario" value="#{informacionDelUsuarioManagedBeans.idUsuario}" disabled="true"/>
+                            <p:inputText label="Rol de usuario" value="#{informacionDelUsuarioManagedBeans.rol}" disabled="true"/>
+                        </p:dataList>
+                        <p:dataList type="inset" styleClass="ui-li-custom">
+                            <f:facet name="header">Datos de contacto</f:facet>
+                            <f:attribute name="icon" value="false" />
+
+                            <p:inputText label="Teléfono" value="#{informacionDelUsuarioManagedBeans.telefono}"/>
+                            <p:inputText label="E-mail" value="#{informacionDelUsuarioManagedBeans.email}" required="true"/>
+
+                            <pm:buttonGroup>
+                                <p:commandButton value="Guardar cambios" actionListener="#{informacionDelUsuarioManagedBeans.guardarCambios()}"/>
+                                <p:commandButton value="Cancelar" actionListener="#{informacionDelUsuarioManagedBeans.volver()}"/>
+                            </pm:buttonGroup>
+
+                        </p:dataList>
+
+                    </p:outputPanel>
+                </h:form>
+                <p:contextMenu event="swiperight" beforeShow="pcontext.show()" />
+            </pm:content>
+        </pm:view>
+    </pm:page>
+
+</f:view>

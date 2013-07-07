@@ -15,5 +15,20 @@ import javax.ejb.Local;
 public interface UserServiceLocal {
 
     Usuario buscarUsuario(String username, String password);
+
+    boolean cambiarDatosContacto(int telefono, String email);
+    public String getNombres();
     
+    public String getApellidos();
+    
+    public String getRol();
+    
+    public String getIdUsuario();
+    
+    public String getEmail();
+
+    public int getTelefono();
+    
+    public void setUsuarioLogueado(String username);
+
 }

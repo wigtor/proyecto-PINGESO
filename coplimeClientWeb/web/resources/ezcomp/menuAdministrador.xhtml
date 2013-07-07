@@ -13,12 +13,13 @@
     <!-- INTERFACE -->
     <cc:interface>
         <cc:attribute name="btnViewMenu" required="true"/>
+        <cc:attribute name="wgvar" required="true"/>
     </cc:interface>
 
     <!-- IMPLEMENTATION -->
     <cc:implementation>
         
-            <p:overlayPanel for="#{cc.attrs.btnViewMenu}" widgetVar="panelContext"> 
+            <p:overlayPanel for="#{cc.attrs.btnViewMenu}" widgetVar="#{cc.attrs.wgvar}"> 
                     <p:dataList styleClass="ui-li-custom">
                         <f:attribute name="swatch" value="a" />
                         <f:attribute name="dividerSwatch" value="d" />

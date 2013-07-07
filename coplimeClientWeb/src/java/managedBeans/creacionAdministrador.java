@@ -21,7 +21,34 @@ public class creacionAdministrador {
     private CrudAdministradorLocal crudAdministrador;
     String username;
     String password;
-
+    String nombre;
+    String apellido1;
+    String apellido2;
+    String mail;
+    int telefono;
+    
+    /**
+     * Creates a new instance of creacionAdministrador
+     */
+    public creacionAdministrador() {
+    }
+    
+    
+    public void agregarAdministrador() {
+        try {
+            crudAdministrador.agregarAdministrador( username, password, nombre, apellido1, apellido2, mail, telefono);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        }
+        catch (Exception e) {
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("enviarAvisoIncidencia.xhtml");
+            }
+            catch (Exception e2) {
+                
+            }
+        }
+    }
+    
     public String getUsername() {
         return username;
     }
@@ -69,33 +96,12 @@ public class creacionAdministrador {
     public void setMail(String mail) {
         this.mail = mail;
     }
-    String nombre;
-    String apellido1;
-    String apellido2;
-    String mail;
     
-    /**
-     * Creates a new instance of creacionAdministrador
-     */
-    public creacionAdministrador() {
+    public int getTelefono() {
+        return telefono;
     }
-    
-    
-    public void nuevoAdministrador() {
-        
-        
-        
-        try {
-            crudAdministrador.agregarAdministrador( username, password, nombre, apellido1, apellido2, mail);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-        }
-        catch (Exception e) {
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("enviarAvisoIncidencia.xhtml");
-            }
-            catch (Exception e2) {
-                
-            }
-        }
+
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
     }
 }

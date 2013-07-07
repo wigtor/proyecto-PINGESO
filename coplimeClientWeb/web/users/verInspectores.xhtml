@@ -10,44 +10,39 @@
         renderKitId="PRIMEFACES_MOBILE">
     
     
-    <pm:page title="Ver puntos limpios">
+    <pm:page title="Ver inspectores">
         <!-- Main View -->
         <pm:view id="main">
-            <pm:header title="Ver puntos limpios" swatch="b"/>
+            <pm:header title="Ver inspectores" swatch="b"/>
             <pm:content>
                 <h:form>
                 <p:outputPanel>
                     <p:dataList type="inset" styleClass="ui-li-custom">
-                        <f:facet name="header">Listado de puntos limpios</f:facet>
+                        <f:facet name="header">Listado de inspectores</f:facet>
                         <f:attribute name="icon" value="false" />
                         
-                        <p:dataTable value="#{mantenedorPuntosLimpios.lista}" var="puntoLimpio" 
+                        <p:dataTable value="#{mantenedorInspectores.lista}" var="operario" 
                                      scrollable="true" scrollHeight="200" 
                                      paginator="true" rows="10">
                             <p:column>
                                 <f:facet name="header">
-                                    <h:outputText value="N°- Nombre"/>
+                                    <h:outputText value="Rut"/>
                                 </f:facet>
-                                <h:outputText value="#{puntoLimpio.num}"/>
+                                <h:outputText value="#{operario.num}"/>
                             </p:column>
                             <p:column>
                                 <f:facet name="header">
-                                    <h:outputText value="estado"/>
+                                    <h:outputText value="Detalle"/>
                                 </f:facet>
-                                <h:outputText value="#{puntoLimpio.estado}"/>
-                            </p:column>
-                            <p:column sortBy="#{puntoLimpio.fechaProximaRev}">
-                                <f:facet name="header">
-                                    <h:outputText value="Fecha proxima rev"/>
-                                </f:facet>
-                                <h:outputText value="#{puntoLimpio.fechaProximaRev}"/>
+                                <h:outputText value="#{operario.nombre}"/>
                             </p:column>
                         </p:dataTable>
                         
-                        <p:commandButton value="Agregar" action="#{mantenedorPuntosLimpios.agregar()}"/>
-                        <p:commandButton value="Editar" action="#{mantenedorPuntosLimpios.editar()}"/>
-                        <p:commandButton value="Elimnar" action="#{mantenedorPuntosLimpios.eliminar()}"/>
-                        <p:commandButton value="Ver detalles" action="#{mantenedorPuntosLimpios.verDetalles()}"/>
+                        <p:commandButton value="Agregar" action="#{mantenedorInspectores.agregar()}"/>
+                        <p:commandButton value="Editar" action="#{mantenedorInspectores.editar()}"/>
+                        <p:commandButton value="Elimnar" action="#{mantenedorInspectores.eliminar()}"/>
+                        <p:commandButton value="Ver detalles" action="#{mantenedorInspectores.verDetalles()}"/>
+                        <p:commandButton value="Volver" action="#{mantenedorInspectores.volver()}"/>
                     </p:dataList>
                 </p:outputPanel>
                 </h:form>

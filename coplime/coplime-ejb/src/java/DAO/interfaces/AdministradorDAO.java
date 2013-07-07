@@ -5,7 +5,6 @@
 package DAO.interfaces;
 
 import entities.Administrador;
-import java.util.Collection;
 
 /**
  *

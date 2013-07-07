@@ -4,9 +4,12 @@
  */
 package DAO.interfaces;
 
+import entities.Inspector;
+
 /**
  *
  * @author victor
  */
-public interface ContenedorDAO {
+public interface InspectorDAO extends genericDAO<Inspector>{
+    
 }

@@ -10,15 +10,15 @@
         renderKitId="PRIMEFACES_MOBILE">
     
     
-    <pm:page title="Agregar punto limpio">
+    <pm:page title="Editar punto limpio">
         <!-- Main View -->
         <pm:view id="main">
-            <pm:header title="Agregar punto limpio" swatch="b"/>
+            <pm:header title="Editar punto limpio" swatch="b"/>
             <pm:content>
                 <h:form>
                 <p:outputPanel>
                     <p:dataList type="inset" styleClass="ui-li-custom">
-                        <f:facet name="header">Ingrese los datos del punto limpio</f:facet>
+                        <f:facet name="header">Edite los datos del punto limpio</f:facet>
                         <f:attribute name="icon" value="false" />
                         <p:inputText label="Nombre del punto limpio" value="#{mantenedorPuntoLimpio.nombre}"/>
                         <p:selectOneMenu label="Seleccione comuna" value="#{mantenedorPuntoLimpio.comuna_seleccionada}">
@@ -27,7 +27,7 @@
                         </p:selectOneMenu>
                         <p:inputText label="Dirección" value="#{mantenedorPuntoLimpio.direccion}"/>
                         <p:calendar label="Fecha primera revisión" value="#{mantenedorPuntoLimpio.fechaRevision}"/>
-                        <p:selectOneMenu label="Estado global inicial" value="#{mantenedorPuntoLimpio.estado_seleccionado}">
+                        <p:selectOneMenu label="Estado global actual" value="#{mantenedorPuntoLimpio.estado_seleccionado}">
                             <f:selectItems value="#{mantenedorPuntoLimpio.ListaEstadosPtoLimpio}"  
                                 var="estado" itemLabel="#{estado.nombre}" itemValue="#{estado.num}" />
                         </p:selectOneMenu>
@@ -37,8 +37,9 @@
                         </p:selectOneMenu>
                         
                         <p:commandButton value="Agregar contenedores" action="#{mantenedorPuntoLimpio.agregarContenedores()}"/>
+                        <p:commandButton value="Editar contenedores" action="#{mantenedorPuntoLimpio.editarContenedores()}"/>
                         
-                        <p:commandButton value="Aceptar" action="#{mantenedorPuntoLimpio.agregarPuntoLimpio()}"/>
+                        <p:commandButton value="Aceptar" action="#{mantenedorPuntoLimpio.guardarCambiosPuntoLimpio()}"/>
                         <p:commandButton value="Volver" action="#{mantenedorPuntoLimpio.volverToLista()}"/>
                     </p:dataList>
                 </p:outputPanel>

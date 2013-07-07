@@ -5,10 +5,12 @@
 package DAO;
 
 import DAO.impl.JPA_mysql.AdministradorDAO_impl;
+import DAO.impl.JPA_mysql.InspectorDAO_impl;
 import DAO.impl.JPA_mysql.RolDAO_impl;
 import DAO.impl.JPA_mysql.UsuarioDAO_impl;
 import DAO.interfaces.AdministradorDAO;
 import DAO.interfaces.ContenedorDAO;
+import DAO.interfaces.InspectorDAO;
 import DAO.interfaces.PuntoLimpioDAO;
 import DAO.interfaces.RolDAO;
 import DAO.interfaces.UsuarioDAO;
@@ -61,6 +63,11 @@ public class JPADAOFactory extends DAOFactory{
     @Override
     public RolDAO getRolDAO() {
         return new RolDAO_impl(em);
+    }
+
+    @Override
+    public InspectorDAO getInspectorDAO() {
+        return new InspectorDAO_impl(em);
     }
     
 }

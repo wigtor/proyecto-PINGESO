@@ -6,7 +6,6 @@ package DAO.impl.JPA_mysql;
 
 
 import DAO.interfaces.genericDAO;
-import entities.Usuario;
 import java.util.Collection;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -57,9 +56,10 @@ public abstract class genericDAO_impl<T> implements genericDAO<T>{
     }
 
     @Override
-    public boolean update(T entity) {
-        getEntityManager().merge(entity);
-        return true;
+    public T update(T entity) {
+        entity = getEntityManager().merge(entity);
+        getEntityManager().flush();
+        return entity;
     }
 
     @Override

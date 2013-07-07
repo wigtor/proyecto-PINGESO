@@ -4,22 +4,16 @@
  */
 package managedBeans;
 
-import entities.Usuario;
 import java.io.IOException;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import sessionBeans.UserServiceLocal;
 //import com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm;
 
 /**
@@ -58,6 +52,14 @@ public class Autenticador implements Serializable{
 
     @PostConstruct
     public void init() {
+        originalURL = (String)FacesContext.getCurrentInstance().getExternalContext()
+            .getRequestMap().get(RequestDispatcher.FORWARD_REQUEST_URI);
+        System.out.println("URL Original: "+originalURL);
+        if (originalURL == null) {
+            originalURL = FacesContext.getCurrentInstance().getExternalContext()
+                    .getRequestContextPath()+"/faces/users/verPuntosLimpios.xhtml";
+        }
+        /*
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         originalURL = (String) externalContext.getRequestMap().get(RequestDispatcher.FORWARD_REQUEST_URI);
 
@@ -70,11 +72,14 @@ public class Autenticador implements Serializable{
                 originalURL += "?" + originalQuery;
             }
         }
+        */
     }
 
+    /*
     @EJB
     private UserServiceLocal userService;
-
+    */
+    
     public void login() throws IOException {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
@@ -86,6 +91,7 @@ public class Autenticador implements Serializable{
         
         try {
             request.login(username, password);
+            /*
             Usuario user = userService.buscarUsuario(username, password);
             System.out.println("Al hacer login se ha obtenido: "+user);
             if (user == null) {
@@ -93,6 +99,7 @@ public class Autenticador implements Serializable{
                 
             }
             externalContext.getSessionMap().put("user", user);
+            */
             externalContext.redirect(originalURL);
         }
         catch (Exception e) {
@@ -106,7 +113,7 @@ public class Autenticador implements Serializable{
     public void logout() throws IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.invalidateSession();
-        externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
+        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/index.xhtml");
     }
 
     // Getters/setters for username and password.

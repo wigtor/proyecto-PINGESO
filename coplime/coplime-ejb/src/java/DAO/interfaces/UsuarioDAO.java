@@ -15,4 +15,5 @@ public interface UsuarioDAO extends genericDAO<Usuario>{
     // Interface that all AdministradorDAOs must support
 
     public Usuario find(String username, String password);
+    public Usuario find(String username);
 }

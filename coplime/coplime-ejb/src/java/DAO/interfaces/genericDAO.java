@@ -18,7 +18,7 @@ public interface genericDAO<T> {
     public boolean delete(T nvaEntity);
     public boolean delete(int id);
     public T find(int id);
-    public boolean update(T nvaEntity);
+    public T update(T nvaEntity);
     public Collection<T> findAll();
     public Collection<T> findRange(int inicio, int fin);
     public int count();

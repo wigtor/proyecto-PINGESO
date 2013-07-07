@@ -38,4 +38,17 @@ public class UsuarioDAO_impl extends genericDAO_impl<Usuario> implements Usuario
             return res.get(0);
         }
     }
+    
+    @Override
+    public Usuario find(String username) {
+        Query q = this.em.createNamedQuery("Usuario.findByUsername");
+        q.setParameter("username", username);
+        List<Usuario> res = q.getResultList();
+        if (res.isEmpty()) {
+            return null;
+        }
+        else {
+            return res.get(0);
+        }
+    }
 }

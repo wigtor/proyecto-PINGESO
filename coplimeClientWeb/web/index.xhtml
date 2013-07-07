@@ -28,7 +28,7 @@
                             <p:outputLabel>#{Autenticador.outputMsj}</p:outputLabel>
                             <p:inputText label="Nombre de usuario" value="#{Autenticador.username}" required="true"/>
                             <p:inputText type="password" label="contraseña:" value="#{Autenticador.password}" required="true"/>
-                            <p:commandButton value="Iniciar sesión" action="#{Autenticador.login}"/>
+                            <p:commandButton value="Iniciar sesión" action="#{Autenticador.login()}"/>
                         </h:form>
                     </p:dataList>
                 </p:outputPanel>

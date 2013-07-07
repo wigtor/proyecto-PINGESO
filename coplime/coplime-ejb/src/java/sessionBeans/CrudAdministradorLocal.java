@@ -13,6 +13,6 @@ import javax.ejb.Local;
 @Local
 public interface CrudAdministradorLocal {
 
-    void agregarAdministrador(String username, String password, String nombre, String apellido1, String apellido2, String mail);
+    void agregarAdministrador(String username, String password, String nombre, String apellido1, String apellido2, String mail, int telefono);
 
 }

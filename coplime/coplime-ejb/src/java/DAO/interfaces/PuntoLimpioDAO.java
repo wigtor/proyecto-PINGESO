@@ -12,9 +12,4 @@ import java.util.Collection;
  * @author victor
  */
 public interface PuntoLimpioDAO {
-    public int insertPuntoLimpio();
-    public boolean deletePuntoLimpio();
-    public PuntoLimpio findPuntoLimpio();
-    public boolean updatePuntoLimpio();
-    public Collection selectPuntoLimpioesTO();
 }
