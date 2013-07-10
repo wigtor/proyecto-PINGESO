@@ -16,3 +16,4 @@
 *.properties
 *.xml
 
+/coplime/dist/
