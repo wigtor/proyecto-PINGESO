@@ -34,9 +34,9 @@ public class mantenedorOperario {
     private String apellido2;
     private String username;
     private String password;
-    private int rut;
+    private Integer rut;
     private String mail;
-    private int telefono;
+    private Integer telefono;
     
     private Collection<UsuarioPojo> lista;
 
@@ -155,19 +155,19 @@ public class mantenedorOperario {
         this.mail = mail;
     }
     
-    public int getRut() {
+    public Integer getRut() {
         return rut;
     }
 
-    public void setRut(int rut) {
+    public void setRut(Integer rut) {
         this.rut = rut;
     }
     
-    public int getTelefono() {
+    public Integer getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(Integer telefono) {
         this.telefono = telefono;
     }
 }
