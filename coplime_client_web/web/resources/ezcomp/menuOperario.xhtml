@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile"
+      contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:dataList>
+            <f:facet name="header">Menu para Operario
+                <h:outputLabel value="#{Autenticador.username}"/>
+            </f:facet>
+            <h:outputLink value="/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
+            <h:outputLink value="/faces/users/verNotificaciones.xhtml">Ver notificaciones<h:outputText styleClass="ui-li-count" value="6"/></h:outputLink>
+            <h:outputLink value="/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención</h:outputLink>
+            <h:outputLink value="/faces/users/verOperariosMantencion.xhtml">Ver operarios de mantención</h:outputLink>
+            <h:outputLink value="/faces/users/verInspectores.xhtml">Ver inspectores</h:outputLink>
+            <h:outputLink value="/faces/users/agregarMantencionPuntoLimpio.xhtml">Agregar mantención de punto limpio</h:outputLink>
+            <h:outputLink >Generar reportes</h:outputLink>
+            <h:outputLink >Ayuda</h:outputLink>
+            <h:outputLink value="/faces/users/logout.xhtml">Cerrar sesión</h:outputLink>
+        </p:dataList>
+    </cc:implementation>
+</html>

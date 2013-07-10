@@ -7,6 +7,7 @@ package DAO;
 import DAO.interfaces.AdministradorDAO;
 import DAO.interfaces.ContenedorDAO;
 import DAO.interfaces.InspectorDAO;
+import DAO.interfaces.OperarioDAO;
 import DAO.interfaces.PuntoLimpioDAO;
 import DAO.interfaces.RolDAO;
 import DAO.interfaces.UsuarioDAO;
@@ -33,6 +34,7 @@ public abstract class DAOFactory {
     public abstract UsuarioDAO getUsuarioDAO();
     public abstract RolDAO getRolDAO();
     public abstract InspectorDAO getInspectorDAO();
+    public abstract OperarioDAO getOperarioDAO();
     
     public abstract void close();
 

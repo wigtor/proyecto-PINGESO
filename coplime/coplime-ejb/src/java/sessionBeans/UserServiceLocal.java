@@ -29,6 +29,8 @@ public interface UserServiceLocal {
 
     public int getTelefono();
     
-    public void setUsuarioLogueado(String username);
+    public boolean setUsuarioLogueado(String username);
+
+    public int getRut();
 
 }

@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile"
+      contentType="text/html"
+      renderKitId="PRIMEFACES_MOBILE"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+    
+    
+    <pm:page title="Ver operarios de mantención">
+        <!-- Main View -->
+        <pm:view id="main">
+            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Administrador')}">
+                <ezcomp:menuAdministrador/>
+            </p:overlayPanel>
+            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Inspector')}">
+                <ezcomp:menuInspector/>
+            </p:overlayPanel>
+            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Operario')}">
+                <ezcomp:menuOperario/>
+            </p:overlayPanel>
+            
+            <pm:header title="Ver operarios de mantención">
+                <f:facet name="left">
+                    <p:commandButton id="btnPanelContext" value="" iconPos="notext" icon="bars" type="button"/>
+                </f:facet>
+            </pm:header>
+            
+            <pm:content>
+                <h:form>
+                    
+                    <p:dataList type="inset">
+                        <f:facet name="header">Listado de operarios de mantención</f:facet>
+                        <f:attribute name="icon" value="false" />
+                        
+                        <p:dataTable value="#{mantenedorOperarios.lista}" var="operario" 
+                                     scrollable="true" scrollHeight="200" 
+                                     paginator="true" rows="10">
+                            <p:column headerText="Rut">
+                                <h:outputText value="#{operario.num}"/>
+                            </p:column>
+                            <p:column headerText="Nombre">
+                                <h:outputText value="#{operario.nombre}"/>
+                            </p:column>
+                        </p:dataTable>
+                        
+                        <pm:buttonGroup>
+                            <p:commandButton value="Agregar" action="#{mantenedorOperarios.agregar()}"/>
+                            <p:commandButton value="Editar" action="#{mantenedorOperarios.editar()}"/>
+                            <p:commandButton value="Elimnar" action="#{mantenedorOperarios.eliminar()}"/>
+                            <p:commandButton value="Ver detalles" action="#{mantenedorOperarios.verDetalles()}"/>
+                            <p:commandButton value="Volver" action="#{mantenedorOperarios.volver()}"/>
+                        </pm:buttonGroup>
+                    </p:dataList>
+                </h:form>
+            </pm:content>
+        </pm:view>
+    </pm:page>
+
+</f:view>
+
+

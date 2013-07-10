@@ -5,16 +5,15 @@
 package sessionBeans;
 
 import DAO.DAOFactory;
-import DAO.interfaces.AdministradorDAO;
 import DAO.interfaces.InspectorDAO;
 import DAO.interfaces.RolDAO;
 import DAO.interfaces.UsuarioDAO;
-import entities.Administrador;
 import entities.Inspector;
 import entities.Rol;
 import entities.Usuario;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.Collection;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -34,7 +33,7 @@ public class CrudInspector implements CrudInspectorLocal {
 
     @TransactionAttribute (TransactionAttributeType.REQUIRED)
     @Override
-    public void agregarInspector(String username, String password, String nombre, String apellido1, String apellido2, String mail, int telefono){
+    public void agregarInspector(String username, String password, int rut, String nombre, String apellido1, String apellido2, String mail, int telefono){
         
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -55,6 +54,7 @@ public class CrudInspector implements CrudInspectorLocal {
         nvoInspect = new Inspector();
         nvoUsuario.setNombre(nombre);
         nvoUsuario.setApellido1(apellido1);
+        nvoUsuario.setRut(rut);
         nvoUsuario.setEmail(mail);
         nvoUsuario.setApellido2(apellido2);
         nvoUsuario.setUsername(username);
@@ -71,7 +71,7 @@ public class CrudInspector implements CrudInspectorLocal {
         Rol nvoRol = rolDAO.find("Inspector");
         if (nvoRol == null) { //Para crear el rol en caso que no exista en la DB
             nvoRol = new Rol();
-            nvoRol.setId("Inspector");
+            nvoRol.setNombreRol("Inspector");
             rolDAO.insert(nvoRol);
         }
         nvoUsuario.setRol(nvoRol);
@@ -80,5 +80,13 @@ public class CrudInspector implements CrudInspectorLocal {
         inspectDAO.insert(nvoInspect);
         System.out.println("Insertado");
         //factoryDeDAOs.close();
+    }
+    
+    @Override
+    public Collection<Inspector> getAllInspectores() {
+        //Hago los DAO
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        InspectorDAO inspectDAO = factoryDeDAOs.getInspectorDAO();
+        return inspectDAO.findAll();
     }
 }

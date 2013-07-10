@@ -25,12 +25,16 @@ public class UserService implements UserServiceLocal {
     private Usuario usuarioLogueado;
 
     @Override
-    public void setUsuarioLogueado(String username) {
+    public boolean setUsuarioLogueado(String username) {
         //Hago los DAO
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
         
         this.usuarioLogueado = userDAO.find(username);
+        if (this.usuarioLogueado == null) {
+            return false;
+        }
+        return true;
     }
     
     // Add business logic below. (Right-click in editor and choose
@@ -92,7 +96,7 @@ public class UserService implements UserServiceLocal {
     
     @Override
     public String getRol() {
-        return usuarioLogueado.getRol().getId();
+        return usuarioLogueado.getRol().getNombreRol();
     }
     
     @Override
@@ -105,7 +109,13 @@ public class UserService implements UserServiceLocal {
         return usuarioLogueado.getEmail();
     }
     
+    @Override
     public int getTelefono() {
         return usuarioLogueado.getTelefono();
+    }
+    
+    @Override
+    public int getRut() {
+        return usuarioLogueado.getRut();
     }
 }

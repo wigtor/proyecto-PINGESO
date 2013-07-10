@@ -31,7 +31,7 @@ public class CrudAdministrador implements CrudAdministradorLocal {
     
     @TransactionAttribute (TransactionAttributeType.REQUIRED)
     @Override
-    public void agregarAdministrador(String username, String password, String nombre, String apellido1, String apellido2, String mail, int telefono){
+    public void agregarAdministrador(String username, String password, int rut, String nombre, String apellido1, String apellido2, String mail, int telefono){
         
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -54,6 +54,7 @@ public class CrudAdministrador implements CrudAdministradorLocal {
         nvoUsuario.setApellido1(apellido1);
         nvoUsuario.setEmail(mail);
         nvoUsuario.setApellido2(apellido2);
+         nvoUsuario.setRut(rut);
         nvoUsuario.setUsername(username);
         nvoUsuario.setPassword(password);
         nvoUsuario.setTelefono(telefono);
@@ -68,7 +69,7 @@ public class CrudAdministrador implements CrudAdministradorLocal {
         Rol nvoRol = rolDAO.find("Administrador");
         if (nvoRol == null) { //Para crear el rol en caso que no exista en la DB
             nvoRol = new Rol();
-            nvoRol.setId("Administrador");
+            nvoRol.setNombreRol("Administrador");
             rolDAO.insert(nvoRol);
         }
         nvoUsuario.setRol(nvoRol);

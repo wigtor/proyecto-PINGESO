@@ -4,6 +4,8 @@
  */
 package sessionBeans;
 
+import entities.Inspector;
+import java.util.Collection;
 import javax.ejb.Local;
 
 /**
@@ -13,6 +15,8 @@ import javax.ejb.Local;
 @Local
 public interface CrudInspectorLocal {
 
-    public void agregarInspector(String username, String password, String nombre, String apellido1, String apellido2, String mail, int telefono);
+    public void agregarInspector(String username, String password, int rut, String nombre, String apellido1, String apellido2, String mail, int telefono);
+
+    public Collection<Inspector> getAllInspectores();
     
 }

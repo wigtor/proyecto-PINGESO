@@ -7,13 +7,12 @@ package entities;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -36,6 +35,9 @@ public class Usuario implements Serializable {
     private String username;
     
     @Column(nullable = false)
+    private int rut;
+    
+    @Column(nullable = false)
     private String password;
     
     @Column(nullable = false)
@@ -53,7 +55,7 @@ public class Usuario implements Serializable {
     private int telefono;
     
     @JoinColumn(nullable = false)
-    @OneToOne(mappedBy = "usuario")
+    @ManyToOne
     private Rol rol;
 
     public Rol getRol() {
@@ -62,6 +64,14 @@ public class Usuario implements Serializable {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+    
+    public int getRut() {
+        return rut;
+    }
+
+    public void setRut(int rut) {
+        this.rut = rut;
     }
     
     public int getTelefono() {

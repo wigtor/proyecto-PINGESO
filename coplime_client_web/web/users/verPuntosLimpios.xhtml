@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile"
+      contentType="text/html"
+      renderKitId="PRIMEFACES_MOBILE"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+    
+    
+    <pm:page title="Ver puntos limpios">
+        <!-- Main View -->
+        <pm:view id="main">
+            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Administrador')}">
+                <ezcomp:menuAdministrador/>
+            </p:overlayPanel>
+            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Inspector')}">
+                <ezcomp:menuInspector/>
+            </p:overlayPanel>
+            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Operario')}">
+                <ezcomp:menuOperario/>
+            </p:overlayPanel>
+            
+            <pm:header title="Ver puntos limpios">
+                <f:facet name="left">
+                    <p:button id="btnPanelContext" value="" iconPos="notext" icon="bars"/>
+                </f:facet>
+            </pm:header>
+            
+            <pm:content>
+                <h:form>
+                    
+                    <p:dataList type="inset">
+                        <f:facet name="header">Listado de puntos limpios</f:facet>
+                        <f:attribute name="icon" value="false" />
+                        
+                        <p:dataTable value="#{mantenedorPuntosLimpios.lista}" var="puntoLimpio" 
+                                     scrollable="true">
+                            <p:column headerText="N°">
+                                <h:outputText value="#{puntoLimpio.num}"/>
+                            </p:column>
+                            <p:column headerText="Nombre">
+                                <h:outputText value="#{puntoLimpio.nombre}"/>
+                            </p:column>
+                            <p:column headerText="estado">
+                                <h:outputText value="#{puntoLimpio.estado}"/>
+                            </p:column>
+                            <p:column headerText="Fecha proxima rev" sortBy="#{puntoLimpio.fechaProximaRev}">
+                                <h:outputText value="#{puntoLimpio.fechaProximaRev}"/>
+                            </p:column>
+                        </p:dataTable>
+                        
+                        <pm:buttonGroup>
+                        <p:commandButton value="Agregar" action="#{mantenedorPuntosLimpios.agregar()}"/>
+                        <p:commandButton value="Editar" action="#{mantenedorPuntosLimpios.editar()}"/>
+                        <p:commandButton value="Elimnar" action="#{mantenedorPuntosLimpios.eliminar()}"/>
+                        <p:commandButton value="Ver detalles" action="#{mantenedorPuntosLimpios.verDetalles()}"/>
+                        </pm:buttonGroup>
+                    </p:dataList>
+                </h:form>
+            </pm:content>
+        </pm:view>
+    </pm:page>
+
+</f:view>
+
+

@@ -6,11 +6,9 @@ package entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 /**
@@ -18,34 +16,27 @@ import javax.persistence.OneToOne;
  * @author victor
  */
 @Entity
+@NamedQueries( {
+    @NamedQuery(name="Rol.findByName", query="SELECT u FROM Rol u WHERE u.nombreRol = :nombre") 
+})
 public class Rol implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    private String id;
+    private String nombreRol;
     
-    @OneToOne
-    private Usuario usuario;
-
-    public Usuario getUsuario() {
-        return usuario;
+    
+    public String getNombreRol() {
+        return nombreRol;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setNombreRol(String nombreRol) {
+        this.nombreRol = nombreRol;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (nombreRol != null ? nombreRol.hashCode() : 0);
         return hash;
     }
 
@@ -56,7 +47,7 @@ public class Rol implements Serializable {
             return false;
         }
         Rol other = (Rol) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.nombreRol == null && other.nombreRol != null) || (this.nombreRol != null && !this.nombreRol.equals(other.nombreRol))) {
             return false;
         }
         return true;
@@ -64,7 +55,7 @@ public class Rol implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Rol[ id=" + id + " ]";
+        return "entities.Rol[ id=" + nombreRol + " ]";
     }
     
 }
