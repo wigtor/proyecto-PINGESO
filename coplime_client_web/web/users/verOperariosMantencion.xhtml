@@ -37,7 +37,7 @@
                         <f:facet name="header">Listado de operarios de mantención</f:facet>
                         <f:attribute name="icon" value="false" />
                         
-                        <p:dataTable value="#{mantenedorOperarios.lista}" var="operario" 
+                        <p:dataTable value="#{mantenedorOperario.lista}" var="operario" 
                                      scrollable="true" scrollHeight="200" 
                                      paginator="true" rows="10">
                             <p:column headerText="Rut">
@@ -49,11 +49,11 @@
                         </p:dataTable>
                         
                         <pm:buttonGroup>
-                            <p:commandButton value="Agregar" action="#{mantenedorOperarios.agregar()}"/>
-                            <p:commandButton value="Editar" action="#{mantenedorOperarios.editar()}"/>
-                            <p:commandButton value="Elimnar" action="#{mantenedorOperarios.eliminar()}"/>
-                            <p:commandButton value="Ver detalles" action="#{mantenedorOperarios.verDetalles()}"/>
-                            <p:commandButton value="Volver" action="#{mantenedorOperarios.volver()}"/>
+                            <p:commandButton value="Agregar" action="#{mantenedorOperario.agregar()}"/>
+                            <p:commandButton value="Editar" action="#{mantenedorOperario.editar()}"/>
+                            <p:commandButton value="Elimnar" action="#{mantenedorOperario.eliminar()}"/>
+                            <p:commandButton value="Ver detalles" action="#{mantenedorOperario.verDetalles()}"/>
+                            <p:commandButton value="Volver" action="#{mantenedorOperario.volver()}"/>
                         </pm:buttonGroup>
                     </p:dataList>
                 </h:form>

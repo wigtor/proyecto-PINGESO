@@ -54,9 +54,9 @@
                         </p:dataTable>
                         
                         <pm:buttonGroup>
-                        <p:commandButton value="Agregar" action="#{mantenedorPuntosLimpios.agregar()}"/>
-                        <p:commandButton value="Editar" action="#{mantenedorPuntosLimpios.editar()}"/>
-                        <p:commandButton value="Elimnar" action="#{mantenedorPuntosLimpios.eliminar()}"/>
+                        <p:commandButton value="Agregar" action="#{mantenedorPuntosLimpios.agregar()}" rendered="#{request.isUserInRole('Administrador')}" />
+                        <p:commandButton value="Editar" action="#{mantenedorPuntosLimpios.editar()}" rendered="#{request.isUserInRole('Administrador')}" />
+                        <p:commandButton value="Elimnar" action="#{mantenedorPuntosLimpios.eliminar()}" rendered="#{request.isUserInRole('Administrador')}"/>
                         <p:commandButton value="Ver detalles" action="#{mantenedorPuntosLimpios.verDetalles()}"/>
                         </pm:buttonGroup>
                     </p:dataList>

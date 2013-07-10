@@ -8,7 +8,7 @@ package ObjectsForManagedBeans;
  *
  * @author victor
  */
-public class InspectorPojo {
+public class UsuarioPojo {
     private int num;
     private String nombre;
 

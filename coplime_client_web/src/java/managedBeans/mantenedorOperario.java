@@ -6,6 +6,7 @@ package managedBeans;
 
 import ObjectsForManagedBeans.UsuarioPojo;
 import entities.Inspector;
+import entities.OperarioMantencion;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -16,17 +17,17 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import sessionBeans.CrudInspectorLocal;
+import sessionBeans.CrudOperarioLocal;
 
 /**
  *
  * @author victor
  */
-@Named(value = "mantenedorInspector")
+@Named(value = "mantenedorOperario")
 @RequestScoped
-public class mantenedorInspector {
+public class mantenedorOperario {
     @EJB
-    private CrudInspectorLocal crudInspector;
+    private CrudOperarioLocal crudOperario;
 
     private String nombre;
     private String apellido1;
@@ -46,15 +47,15 @@ public class mantenedorInspector {
     /**
      * Creates a new instance of mantenedorInspector
      */
-    public mantenedorInspector() {
+    public mantenedorOperario() {
     }
     
     @PostConstruct
     public void init() {
-        Collection<Inspector> listaTemp = crudInspector.getAllInspectores();
+        Collection<OperarioMantencion> listaTemp = crudOperario.getAllOperarios();
         UsuarioPojo inspectorTemporal;
         this.lista = new LinkedList();
-        for(Inspector insp_iter : listaTemp) {
+        for(OperarioMantencion insp_iter : listaTemp) {
             inspectorTemporal = new UsuarioPojo();
             
             inspectorTemporal.setNombre(insp_iter.getUsuario().getNombre()+" "+
@@ -67,12 +68,12 @@ public class mantenedorInspector {
         
     }
     
-    public void agregarInspector() {
+    public void agregarOperario() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         try {
-            crudInspector.agregarInspector( username, password, rut, nombre, apellido1, apellido2, mail, telefono);
+            crudOperario.agregarOperario( username, password, rut, nombre, apellido1, apellido2, mail, telefono);
             this.init();
-            FacesContext.getCurrentInstance().getExternalContext().redirect(externalContext.getRequestContextPath() + "/faces/users/verInspectores.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect(externalContext.getRequestContextPath() + "/faces/users/verOperariosMantencion.xhtml");
         }
         catch (Exception e) {
             try {
@@ -98,14 +99,14 @@ public class mantenedorInspector {
     public void agregar() {
        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
        try {
-           externalContext.redirect(externalContext.getRequestContextPath() + "/faces/admin/agregarInspector.xhtml");
+           externalContext.redirect(externalContext.getRequestContextPath() + "/faces/admin/agregarOperarioMantencion.xhtml");
        }
        catch (IOException e) {
            System.out.println(e.getMessage());
        }
     }
     
-    
+   
     public String getNombre() {
         return nombre;
     }
