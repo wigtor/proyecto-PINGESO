@@ -8,3 +8,11 @@
 /coplime_client_web/nbproject/
 /coplime_client_web/nbproject/private/
 /coplime/nbproject/
+*.class
+# Package Files #
+*.jar
+*.war
+*.ear
+*.properties
+*.xml
+
