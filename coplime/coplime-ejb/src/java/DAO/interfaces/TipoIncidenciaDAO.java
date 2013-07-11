@@ -5,6 +5,7 @@
 package DAO.interfaces;
 
 import entities.TipoIncidencia;
+import java.util.Collection;
 
 /**
  *
@@ -14,4 +15,5 @@ public interface TipoIncidenciaDAO extends genericDAO<TipoIncidencia>{
     // Interface that all AdministradorDAOs must support
 
     public TipoIncidencia find(String tipoName);
+    public Collection<TipoIncidencia> findAllVisibles();
 }

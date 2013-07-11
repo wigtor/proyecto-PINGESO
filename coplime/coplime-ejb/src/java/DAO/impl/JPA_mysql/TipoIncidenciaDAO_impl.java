@@ -6,6 +6,7 @@ package DAO.impl.JPA_mysql;
 
 import DAO.interfaces.TipoIncidenciaDAO;
 import entities.TipoIncidencia;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -33,5 +34,12 @@ public class TipoIncidenciaDAO_impl extends genericDAO_impl<TipoIncidencia> impl
         else {
             return res.get(0);
         }
+    }
+    
+    @Override
+    public Collection<TipoIncidencia> findAllVisibles() {
+        Query q = this.em.createNamedQuery("TipoIncidencia.findAllVisibles");
+        Collection<TipoIncidencia> res = q.getResultList();
+        return res;
     }
 }

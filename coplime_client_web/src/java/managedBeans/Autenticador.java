@@ -136,6 +136,20 @@ public class Autenticador implements Serializable{
         externalContext.invalidateSession();
         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/index.xhtml");
     }
+    
+    public void goToEnviarAvisoIncidencia() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
+        System.out.println("cacacaca");
+        try {
+            String url = FacesContext.getCurrentInstance().getExternalContext()
+                .getRequestContextPath()+"/faces/enviarAvisoIncidencia.xhtml";
+            externalContext.redirect(url);
+        }
+        catch(IOException ioe) {
+            System.out.println(ioe.getMessage());
+        }
+    }
 
     // Getters/setters for username and password.
 }
