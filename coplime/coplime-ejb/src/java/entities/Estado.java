@@ -23,6 +23,12 @@ public class Estado implements Serializable {
     
     private String nombreEstado;
 
+    public Estado(String nombreEstado) {
+        this.nombreEstado = nombreEstado;
+    }
+    public Estado() {
+    }
+    
     public String getNombreEstado() {
         return nombreEstado;
     }

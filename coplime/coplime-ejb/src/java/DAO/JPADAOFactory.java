@@ -5,10 +5,15 @@
 package DAO;
 
 import DAO.impl.JPA_mysql.AdministradorDAO_impl;
+import DAO.impl.JPA_mysql.ContenedorDAO_impl;
 import DAO.impl.JPA_mysql.InspectorDAO_impl;
 import DAO.impl.JPA_mysql.OperarioDAO_impl;
 import DAO.impl.JPA_mysql.RolDAO_impl;
 import DAO.impl.JPA_mysql.UsuarioDAO_impl;
+import DAO.impl.JPA_mysql.TipoIncidenciaDAO_impl;
+import DAO.impl.JPA_mysql.EstadoDAO_impl;
+import DAO.impl.JPA_mysql.MaterialDAO_impl;
+import DAO.impl.JPA_mysql.PuntoLimpioDAO_impl;
 import DAO.interfaces.AdministradorDAO;
 import DAO.interfaces.ContenedorDAO;
 import DAO.interfaces.InspectorDAO;
@@ -16,6 +21,9 @@ import DAO.interfaces.OperarioDAO;
 import DAO.interfaces.PuntoLimpioDAO;
 import DAO.interfaces.RolDAO;
 import DAO.interfaces.UsuarioDAO;
+import DAO.interfaces.EstadoDAO;
+import DAO.interfaces.MaterialDAO;
+import DAO.interfaces.TipoIncidenciaDAO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -49,12 +57,12 @@ public class JPADAOFactory extends DAOFactory{
 
     @Override
     public PuntoLimpioDAO getPuntoLimpioDAO() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new PuntoLimpioDAO_impl(em);
     }
 
     @Override
     public ContenedorDAO getContenedorDAO() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new ContenedorDAO_impl(em);
     }
 
     @Override
@@ -75,5 +83,20 @@ public class JPADAOFactory extends DAOFactory{
     @Override
     public OperarioDAO getOperarioDAO() {
         return new OperarioDAO_impl(em);
+    }
+
+    @Override
+    public EstadoDAO getEstadoDAO() {
+        return new EstadoDAO_impl(em);
+    }
+
+    @Override
+    public TipoIncidenciaDAO getTipoIncidenciaDAO() {
+        return new TipoIncidenciaDAO_impl(em);
+    }
+
+    @Override
+    public MaterialDAO getMaterialDAO() {
+        return new MaterialDAO_impl(em);
     }
 }

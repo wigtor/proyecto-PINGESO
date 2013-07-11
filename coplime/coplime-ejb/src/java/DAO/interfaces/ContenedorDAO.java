@@ -4,9 +4,11 @@
  */
 package DAO.interfaces;
 
+import entities.Contenedor;
+
 /**
  *
  * @author victor
  */
-public interface ContenedorDAO {
+public interface ContenedorDAO  extends genericDAO<Contenedor>{
 }

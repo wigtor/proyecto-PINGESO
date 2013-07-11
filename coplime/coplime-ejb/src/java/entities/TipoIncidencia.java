@@ -20,6 +20,19 @@ public class TipoIncidencia implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    private String nombreIncidencia;
+    
+    private boolean visibleAlUsuario;
+    
+    
+    public TipoIncidencia(String nombre, boolean visibleUser) {
+        this.nombreIncidencia = nombre;
+        this.visibleAlUsuario = visibleUser;
+    }
+    
+    public TipoIncidencia() {
+    }
 
     public Long getId() {
         return id;
@@ -28,8 +41,6 @@ public class TipoIncidencia implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    private String nombreIncidencia;
 
     public String getNombreIncidencia() {
         return nombreIncidencia;
@@ -46,8 +57,6 @@ public class TipoIncidencia implements Serializable {
     public void setVisibleAlUsuario(boolean visibleAlUsuario) {
         this.visibleAlUsuario = visibleAlUsuario;
     }
-    
-    private boolean visibleAlUsuario;
 
     @Override
     public int hashCode() {

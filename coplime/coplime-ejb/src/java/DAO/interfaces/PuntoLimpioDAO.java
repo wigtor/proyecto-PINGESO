@@ -11,5 +11,6 @@ import java.util.Collection;
  *
  * @author victor
  */
-public interface PuntoLimpioDAO {
+public interface PuntoLimpioDAO extends genericDAO<PuntoLimpio>{
+    public PuntoLimpio find(String puntoLimpioName);
 }

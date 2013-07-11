@@ -22,6 +22,13 @@ public class Material implements Serializable {
     private Long id;
     
     private String nombre_material;
+    
+    public Material() {
+    }
+    
+    public Material(String nombreMat) {
+        this.nombre_material = nombreMat;
+    }
 
     public String getNombre_material() {
         return nombre_material;

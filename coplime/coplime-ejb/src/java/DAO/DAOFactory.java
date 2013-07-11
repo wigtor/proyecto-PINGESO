@@ -10,6 +10,9 @@ import DAO.interfaces.InspectorDAO;
 import DAO.interfaces.OperarioDAO;
 import DAO.interfaces.PuntoLimpioDAO;
 import DAO.interfaces.RolDAO;
+import DAO.interfaces.EstadoDAO;
+import DAO.interfaces.MaterialDAO;
+import DAO.interfaces.TipoIncidenciaDAO;
 import DAO.interfaces.UsuarioDAO;
 import javax.persistence.EntityManager;
 
@@ -35,6 +38,9 @@ public abstract class DAOFactory {
     public abstract RolDAO getRolDAO();
     public abstract InspectorDAO getInspectorDAO();
     public abstract OperarioDAO getOperarioDAO();
+    public abstract EstadoDAO getEstadoDAO();
+    public abstract TipoIncidenciaDAO getTipoIncidenciaDAO();
+    public abstract MaterialDAO getMaterialDAO();
     
     public abstract void close();
 

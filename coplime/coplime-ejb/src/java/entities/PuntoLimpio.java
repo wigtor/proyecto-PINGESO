@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
@@ -20,11 +22,26 @@ import javax.persistence.Temporal;
  * @author victor
  */
 @Entity
+@NamedQueries( {
+    @NamedQuery(name="PuntoLimpio.findByName", query="SELECT u FROM PuntoLimpio u WHERE u.nombre = :nombre") 
+})
 public class PuntoLimpio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    private String nombre;
+    
+    private String comuna;
+    
+    private String ubicacion;
+    
+    private int num;
+    
+    private int latitud;
+    
+    private int longitud;
     
     @ManyToOne
     private Estado estadoGlobal;
@@ -35,6 +52,29 @@ public class PuntoLimpio implements Serializable {
     @OneToMany(mappedBy = "puntoLimpio")
     private List<MantencionPuntoLimpio> mantenciones;
 
+    @OneToMany(mappedBy = "puntoLimpio")
+    private List<RevisionPuntoLimpio> revisiones;
+    
+    @OneToMany(mappedBy = "puntoLimpio")
+    private List<SolicitudMantencion> solicitudesMantencion;
+    
+    
+    @ManyToOne
+    private Inspector inspectorEncargado;
+    
+    @OneToMany(mappedBy = "puntoLimpio")
+    private List<Notificacion> notificaciones;
+    
+    public PuntoLimpio() {
+    }
+    
+    public PuntoLimpio(String nombre, String comuna, String ubicacion, int numero) {
+        this.nombre = nombre;
+        this.comuna = comuna;
+        this.ubicacion = ubicacion;
+        this.num = numero;
+    }
+    
     public Estado getEstadoGlobal() {
         return estadoGlobal;
     }
@@ -74,21 +114,6 @@ public class PuntoLimpio implements Serializable {
     public void setSolicitudesMantencion(List<SolicitudMantencion> solicitudesMantencion) {
         this.solicitudesMantencion = solicitudesMantencion;
     }
-    
-    @OneToMany(mappedBy = "puntoLimpio")
-    private List<RevisionPuntoLimpio> revisiones;
-    
-    @OneToMany(mappedBy = "puntoLimpio")
-    private List<SolicitudMantencion> solicitudesMantencion;
-    
-    private Long num;
-    
-    @ManyToOne
-    private Inspector inspectorEncargado;
-    
-    
-    @OneToMany(mappedBy = "puntoLimpio")
-    private List<Notificacion> notificaciones;
 
     public List<Notificacion> getNotificaciones() {
         return notificaciones;
@@ -106,11 +131,11 @@ public class PuntoLimpio implements Serializable {
         this.inspectorEncargado = inspectorEncargado;
     }
 
-    public Long getNum() {
+    public int getNum() {
         return num;
     }
 
-    public void setNum(Long num) {
+    public void setNum(int num) {
         this.num = num;
     }
 
@@ -161,16 +186,6 @@ public class PuntoLimpio implements Serializable {
     public void setFechaProxRevision(Date fechaProxRevision) {
         this.fechaProxRevision = fechaProxRevision;
     }
-    
-    private String nombre;
-    
-    private String comuna;
-    
-    private String ubicacion;
-    
-    private int latitud;
-    
-    private int longitud;
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaProxRevision;
