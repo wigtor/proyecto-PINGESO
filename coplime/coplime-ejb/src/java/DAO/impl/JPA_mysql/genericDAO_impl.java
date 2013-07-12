@@ -55,6 +55,14 @@ public abstract class genericDAO_impl<T> implements genericDAO<T>{
         return getEntityManager().find(entityClass, id);
     }
 
+    public Class<T> getEntityClass() {
+        return entityClass;
+    }
+
+    public void setEntityClass(Class<T> entityClass) {
+        this.entityClass = entityClass;
+    }
+
     @Override
     public T update(T entity) {
         entity = getEntityManager().merge(entity);

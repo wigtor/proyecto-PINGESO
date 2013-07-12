@@ -18,13 +18,14 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries( {
-    @NamedQuery(name="TipoIncidencia.findAllVisibles", query="SELECT u FROM TipoIncidencia u WHERE u.visibleAlUsuario = true")
+    @NamedQuery(name="TipoIncidencia.findAllVisibles", query="SELECT u FROM TipoIncidencia u WHERE u.visibleAlUsuario = true"),
+    @NamedQuery(name="TipoIncidencia.findById", query="SELECT u FROM TipoIncidencia u WHERE u.id = :id")
 })
 public class TipoIncidencia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     
     private String nombreIncidencia;
     
@@ -39,11 +40,11 @@ public class TipoIncidencia implements Serializable {
     public TipoIncidencia() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

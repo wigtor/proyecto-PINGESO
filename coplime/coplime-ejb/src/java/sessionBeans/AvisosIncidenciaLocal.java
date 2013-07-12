@@ -17,6 +17,6 @@ public interface AvisosIncidenciaLocal {
 
     Collection<TipoIncidencia> getTiposAvisos();
 
-    public void guardarAvisoIncidencia(Integer numPuntoLimpio, String emailContacto, String detalles, String tipoIncidenciaSeleccionada, byte[] datosImagen, String tipoImagen);
+    public void guardarAvisoIncidencia(int numPuntoLimpio, String emailContacto, String detalles, int idTipoIncidenciaSeleccionada, byte[] datosImagen, String tipoImagen);
     
 }

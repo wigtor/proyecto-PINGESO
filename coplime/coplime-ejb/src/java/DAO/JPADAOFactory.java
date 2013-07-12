@@ -13,6 +13,7 @@ import DAO.impl.JPA_mysql.UsuarioDAO_impl;
 import DAO.impl.JPA_mysql.TipoIncidenciaDAO_impl;
 import DAO.impl.JPA_mysql.EstadoDAO_impl;
 import DAO.impl.JPA_mysql.MaterialDAO_impl;
+import DAO.impl.JPA_mysql.NotificacionDAO_impl;
 import DAO.impl.JPA_mysql.PuntoLimpioDAO_impl;
 import DAO.interfaces.AdministradorDAO;
 import DAO.interfaces.ContenedorDAO;
@@ -23,6 +24,7 @@ import DAO.interfaces.RolDAO;
 import DAO.interfaces.UsuarioDAO;
 import DAO.interfaces.EstadoDAO;
 import DAO.interfaces.MaterialDAO;
+import DAO.interfaces.NotificacionDAO;
 import DAO.interfaces.TipoIncidenciaDAO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -98,5 +100,10 @@ public class JPADAOFactory extends DAOFactory{
     @Override
     public MaterialDAO getMaterialDAO() {
         return new MaterialDAO_impl(em);
+    }
+    
+    @Override
+    public NotificacionDAO getNotificacionDAO() {
+        return new NotificacionDAO_impl(em);
     }
 }

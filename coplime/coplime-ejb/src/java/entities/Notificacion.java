@@ -19,9 +19,24 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class Notificacion implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Integer id;
+    
+    protected String comentario;
+    
+    protected boolean revisado;
+    
+    protected boolean resuelto;
+    
     @ManyToOne
-    private PuntoLimpio puntoLimpio;
+    protected PuntoLimpio puntoLimpio;
+    
+    @ManyToOne
+    protected TipoIncidencia tipoIncidencia;
 
+    
     public PuntoLimpio getPuntoLimpio() {
         return puntoLimpio;
     }
@@ -29,19 +44,7 @@ public class Notificacion implements Serializable {
     public void setPuntoLimpio(PuntoLimpio puntoLimpio) {
         this.puntoLimpio = puntoLimpio;
     }
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
     
-    protected String comentario;
-    
-    protected boolean revisado;
-    
-    @ManyToOne
-    protected TipoIncidencia tipoIncidencia;
-
     public TipoIncidencia getTipoIncidencia() {
         return tipoIncidencia;
     }
@@ -84,14 +87,12 @@ public class Notificacion implements Serializable {
     public void setResuelto(boolean resuelto) {
         this.resuelto = resuelto;
     }
-    
-    protected boolean resuelto;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

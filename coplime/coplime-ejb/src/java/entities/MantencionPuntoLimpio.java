@@ -38,11 +38,11 @@ public class MantencionPuntoLimpio implements Serializable {
         this.puntoLimpio = puntoLimpio;
     }
 
-    public Long getNum() {
+    public Integer getNum() {
         return num;
     }
 
-    public void setNum(Long num) {
+    public void setNum(Integer num) {
         this.num = num;
     }
     @ManyToOne
@@ -50,7 +50,7 @@ public class MantencionPuntoLimpio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long num;
+    private Integer num;
     
     
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -74,11 +74,11 @@ public class MantencionPuntoLimpio implements Serializable {
     
     private String comentarios;
 
-    public Long getId() {
+    public Integer getId() {
         return num;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.num = id;
     }
 

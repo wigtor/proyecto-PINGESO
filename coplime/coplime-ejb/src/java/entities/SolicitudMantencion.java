@@ -57,11 +57,11 @@ public class SolicitudMantencion implements Serializable {
         this.operarioAsignado = operarioAsignado;
     }
 
-    public Long getNum() {
+    public Integer getNum() {
         return num;
     }
 
-    public void setNum(Long num) {
+    public void setNum(Integer num) {
         this.num = num;
     }
     
@@ -71,13 +71,13 @@ public class SolicitudMantencion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long num;
+    private Integer num;
 
-    public Long getId() {
+    public Integer getId() {
         return num;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.num = id;
     }
 

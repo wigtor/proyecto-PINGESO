@@ -29,7 +29,7 @@ public class enviarAvisoIncidenciaManagedBeans {
     private Integer numPuntoLimpio;
     private String emailContacto;
     private String detalles;
-    private String tipoIncidenciaSeleccionada;
+    private Integer tipoIncidenciaSeleccionada;
     private Collection<SelectElemPojo> listaTiposIncidencias;
     private UploadedFile file;
 
@@ -68,10 +68,14 @@ public class enviarAvisoIncidenciaManagedBeans {
         System.out.println("N° " + numPuntoLimpio + " email: "+ emailContacto + " detalles: " + detalles + " tipo: " + tipoIncidenciaSeleccionada);
         if(file != null) {
             byte[] datosImagen = file.getContents();
-            String nombreArchivo = file.getFileName();
+            //String nombreArchivo = file.getFileName();
             String tipoArchivo = file.getContentType();
-            System.out.println("Nombre archivo: " + nombreArchivo + " tipo: " + tipoArchivo);
-            //avisosIncidencia.guardarAvisoIncidencia(numPuntoLimpio, emailContacto, detalles, tipoIncidenciaSeleccionada, datosImagen, tipoArchivo);
+            //System.out.println("Nombre archivo: " + nombreArchivo + " tipo: " + tipoArchivo);
+            if (numPuntoLimpio != null) {
+                if (tipoIncidenciaSeleccionada != null)
+                avisosIncidencia.guardarAvisoIncidencia(numPuntoLimpio.intValue(), emailContacto, detalles, tipoIncidenciaSeleccionada.intValue(), datosImagen, tipoArchivo);
+            }
+        //Mostrar algún mensaje: Su aviso ha sido realizado satisfactoriamente, gracias por ayudarnos a prestar un mejor servicio
         }
     }
 
@@ -83,11 +87,11 @@ public class enviarAvisoIncidenciaManagedBeans {
         this.numPuntoLimpio = numPuntoLimpio;
     }
     
-    public String getTipoIncidenciaSeleccionada() {
+    public Integer getTipoIncidenciaSeleccionada() {
         return tipoIncidenciaSeleccionada;
     }
     
-    public void setTipoIncidenciaSeleccionada(String tipoIncidenciaSeleccionada) {
+    public void setTipoIncidenciaSeleccionada(Integer tipoIncidenciaSeleccionada) {
         this.tipoIncidenciaSeleccionada = tipoIncidenciaSeleccionada;
     }
 

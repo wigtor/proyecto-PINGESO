@@ -5,6 +5,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import javax.persistence.Entity;
 
 /**
@@ -16,6 +17,31 @@ public class NotificacionDeUsuario extends Notificacion implements Serializable 
     private static final long serialVersionUID = 1L;
 
     private String emailContacto;
+    
+    private String imagenAdjunta;
+    
+    private String tipoImagen;
+
+    
+    public NotificacionDeUsuario() {
+    }
+    
+    public NotificacionDeUsuario(String comentarios, PuntoLimpio ptoRelacionado, TipoIncidencia tipoIncidencia) {
+        this.puntoLimpio = ptoRelacionado;
+        this.comentario = comentarios;
+        this.fechaHora = Calendar.getInstance().getTime();
+        this.revisado = false;
+        this.resuelto = false;
+        this.tipoIncidencia = tipoIncidencia;
+    }
+    
+    public String getTipoImagen() {
+        return tipoImagen;
+    }
+
+    public void setTipoImagen(String tipoImagen) {
+        this.tipoImagen = tipoImagen;
+    }
 
     public String getEmailContacto() {
         return emailContacto;
@@ -33,7 +59,6 @@ public class NotificacionDeUsuario extends Notificacion implements Serializable 
         this.imagenAdjunta = imagenAdjunta;
     }
     
-    private String imagenAdjunta;
 
     @Override
     public int hashCode() {

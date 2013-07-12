@@ -55,24 +55,24 @@ public class Inspector implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; //Es un N° único para el usuario inspector
+    private Integer id; //Es un N° único para el usuario inspector
 
-    public Long getCod() {
+    public Integer getCod() {
         return id;
     }
 
-    public void setCod(Long cod) {
+    public void setCod(Integer cod) {
         this.id = cod;
     }
     
     @OneToOne
     private Usuario usuario;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

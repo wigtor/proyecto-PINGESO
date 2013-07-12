@@ -17,9 +17,29 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class Contenedor implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @ManyToOne
+    private Material materialDeAcopio;
+    
+    @ManyToOne
+    private Estado estadoContenedor;
+    
+    private int capacidad;
+    
+    private String unidadMedida;
+    
+    private int procentajeUso; //Indica lo que últimamente fue revisado y confirmado
+    
+    private int porcentajeUsoEstimado; //Indica lo que el sistema estima
+    
     @ManyToOne
     private PuntoLimpio puntoLimpio;
 
+    
     public PuntoLimpio getPuntoLimpio() {
         return puntoLimpio;
     }
@@ -75,32 +95,12 @@ public class Contenedor implements Serializable {
     public void setPorcentajeUsoEstimado(int porcentajeUsoEstimado) {
         this.porcentajeUsoEstimado = porcentajeUsoEstimado;
     }
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    private Material materialDeAcopio;
     
-    @ManyToOne
-    private Estado estadoContenedor;
-    
-    private int capacidad;
-    
-    private String unidadMedida;
-    
-    private int procentajeUso; //Indica lo que últimamente fue revisado y confirmado
-    
-    private int porcentajeUsoEstimado; //Indica lo que el sistema estima
-    
-    
-    
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

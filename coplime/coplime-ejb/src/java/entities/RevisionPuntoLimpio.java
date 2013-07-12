@@ -19,6 +19,14 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class RevisionPuntoLimpio implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer num;
+    
+    @OneToMany(mappedBy = "revisionOriginadora")
+    private List<SolicitudMantencion> solicitudesPorMantencion; //Casi siempre es sólo una, no varias
+
     @ManyToOne
     private Inspector inspectorRevisor;
     @ManyToOne
@@ -40,11 +48,11 @@ public class RevisionPuntoLimpio implements Serializable {
         this.puntoLimpio = puntoLimpio;
     }
 
-    public Long getNum() {
+    public Integer getNum() {
         return num;
     }
 
-    public void setNum(Long num) {
+    public void setNum(Integer num) {
         this.num = num;
     }
 
@@ -55,19 +63,12 @@ public class RevisionPuntoLimpio implements Serializable {
     public void setSolicitudesPorMantencion(List<SolicitudMantencion> solicitudesPorMantencion) {
         this.solicitudesPorMantencion = solicitudesPorMantencion;
     }
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long num;
     
-    @OneToMany(mappedBy = "revisionOriginadora")
-    private List<SolicitudMantencion> solicitudesPorMantencion; //Casi siempre es sólo una, no varias
-
-    public Long getId() {
+    public Integer getId() {
         return num;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.num = id;
     }
 
