@@ -5,10 +5,12 @@
 package entities;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
@@ -23,20 +25,27 @@ public class Contenedor implements Serializable {
     private Integer id;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Material materialDeAcopio;
     
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Estado estadoContenedor;
     
+    @Column(nullable = false)
     private int capacidad;
     
+    @Column(nullable = false)
     private String unidadMedida;
     
+    @Column(nullable = false)
     private int procentajeUso; //Indica lo que últimamente fue revisado y confirmado
     
+    @Column(nullable = false)
     private int porcentajeUsoEstimado; //Indica lo que el sistema estima
     
     @ManyToOne
+    @JoinColumn(nullable = false)
     private PuntoLimpio puntoLimpio;
 
     

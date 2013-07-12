@@ -6,12 +6,15 @@ package managedBeans;
 
 import ObjectsForManagedBeans.SelectElemPojo;
 import entities.TipoIncidencia;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import sessionBeans.AvisosIncidenciaLocal;
 import org.primefaces.model.UploadedFile;
 
@@ -75,7 +78,18 @@ public class enviarAvisoIncidenciaManagedBeans {
                 if (tipoIncidenciaSeleccionada != null)
                 avisosIncidencia.guardarAvisoIncidencia(numPuntoLimpio.intValue(), emailContacto, detalles, tipoIncidenciaSeleccionada.intValue(), datosImagen, tipoArchivo);
             }
-        //Mostrar algún mensaje: Su aviso ha sido realizado satisfactoriamente, gracias por ayudarnos a prestar un mejor servicio
+            FacesContext context = FacesContext.getCurrentInstance();
+            ExternalContext externalContext = context.getExternalContext();
+            String url = FacesContext.getCurrentInstance().getExternalContext()
+                    .getRequestContextPath();
+            url += "/faces/enviarAvisoIncidencia.xhtml#success";
+            try {
+                externalContext.redirect(url);
+            }
+            catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+            //Mostrar algún mensaje: Su aviso ha sido realizado satisfactoriamente, gracias por ayudarnos a prestar un mejor servicio
         }
     }
 

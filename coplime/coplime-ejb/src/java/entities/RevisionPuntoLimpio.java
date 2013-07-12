@@ -5,13 +5,17 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -24,14 +28,22 @@ public class RevisionPuntoLimpio implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer num;
     
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private Calendar fecha;
+    
     @OneToMany(mappedBy = "revisionOriginadora")
     private List<SolicitudMantencion> solicitudesPorMantencion; //Casi siempre es sólo una, no varias
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Inspector inspectorRevisor;
+    
     @ManyToOne
+    @JoinColumn(nullable = false)
     private PuntoLimpio puntoLimpio;
 
+    
     public Inspector getInspectorRevisor() {
         return inspectorRevisor;
     }
@@ -54,6 +66,14 @@ public class RevisionPuntoLimpio implements Serializable {
 
     public void setNum(Integer num) {
         this.num = num;
+    }
+    
+    public Calendar getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Calendar fecha) {
+        this.fecha = fecha;
     }
 
     public List<SolicitudMantencion> getSolicitudesPorMantencion() {

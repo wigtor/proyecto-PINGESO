@@ -5,11 +5,14 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
@@ -24,16 +27,25 @@ public class Notificacion implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
     
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    protected Calendar fechaHora;
+    
+    @Column(nullable = false)
     protected String comentario;
     
+    @Column(nullable = false)
     protected boolean revisado;
     
+    @Column(nullable = false)
     protected boolean resuelto;
     
     @ManyToOne
+    @JoinColumn(nullable = false)
     protected PuntoLimpio puntoLimpio;
     
     @ManyToOne
+    @JoinColumn(nullable = false)
     protected TipoIncidencia tipoIncidencia;
 
     
@@ -52,9 +64,6 @@ public class Notificacion implements Serializable {
     public void setTipoIncidencia(TipoIncidencia tipoIncidencia) {
         this.tipoIncidencia = tipoIncidencia;
     }
-    
-    @Temporal(javax.persistence.TemporalType.DATE)
-    protected Date fechaHora;
 
     public String getComentario() {
         return comentario;
@@ -72,11 +81,11 @@ public class Notificacion implements Serializable {
         this.revisado = revisado;
     }
 
-    public Date getFechaHora() {
+    public Calendar getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(Date fechaHora) {
+    public void setFechaHora(Calendar fechaHora) {
         this.fechaHora = fechaHora;
     }
 

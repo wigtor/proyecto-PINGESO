@@ -29,7 +29,7 @@ public class NotificacionDeUsuario extends Notificacion implements Serializable 
     public NotificacionDeUsuario(String comentarios, PuntoLimpio ptoRelacionado, TipoIncidencia tipoIncidencia) {
         this.puntoLimpio = ptoRelacionado;
         this.comentario = comentarios;
-        this.fechaHora = Calendar.getInstance().getTime();
+        this.fechaHora = Calendar.getInstance();
         this.revisado = false;
         this.resuelto = false;
         this.tipoIncidencia = tipoIncidencia;

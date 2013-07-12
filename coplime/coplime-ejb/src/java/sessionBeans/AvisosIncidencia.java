@@ -11,6 +11,11 @@ import DAO.interfaces.TipoIncidenciaDAO;
 import entities.NotificacionDeUsuario;
 import entities.PuntoLimpio;
 import entities.TipoIncidencia;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -58,18 +63,56 @@ public class AvisosIncidencia implements AvisosIncidenciaLocal {
         notif.setEmailContacto(emailContacto);
         if (datosImagen != null) {
             notif.setTipoImagen(tipoImagen);
-            //Falta almacenar la imagen y la extensión según tipo de imagen
-            System.out.println("Han llegado datos de una imagen de tipo: "+tipoImagen + " cantidad de bytes: "+datosImagen.length);
-            String url_imagen_adjunta = "img_notif_"+ Calendar.getInstance().getTimeInMillis()+".png"; //FALTA CREAR UNA CARPETA TEMPORAL
-            notif.setImagenAdjunta(url_imagen_adjunta);
+            String url_completa = guardarArchivo(tipoImagen, datosImagen);
+            notif.setImagenAdjunta(url_completa);
         }
         //La persisto
         NotificacionDAO notifDAO = factoryDeDAOs.getNotificacionDAO();
         notifDAO.insert(notif);
-        
-        
-        
-        
+    }
+    
+    /**
+     * Escribe en el disco duro los datos de la imagen pasada como parámetro,
+     * utiliza un directorio común a todas las subidas de archivos.
+     * @param tipoImagen Contiene el tipo de imagen que será almacenada. Ej: image/jpeg
+     * @param datosImagen Contiene los datos de la imagen a guardar
+     * @return 
+     */
+    private String guardarArchivo(String tipoImagen, byte[] datosImagen) {
+        //Falta almacenar la imagen y la extensión según tipo de imagen
+            System.out.println("Han llegado datos de una imagen de tipo: "+tipoImagen + " cantidad de bytes: "+datosImagen.length);
+            String url_imagen_adjunta = "img_notif_"+ Calendar.getInstance().getTimeInMillis(); //FALTA CREAR UNA CARPETA TEMPORAL
+            String url_completa = "";
+            String extensionImagen = "";
+                String[] arrayTemp = tipoImagen.split("/");
+                if (arrayTemp.length == 2) {
+                    extensionImagen = "."+tipoImagen.split("/")[1];
+                }
+            int contador;
+            String path = System.getenv("JAVA_HOME");
+            path = path + File.separator+"uploads_coplime"+File.separator;
+            File carpetaUploads = new File(path);
+            if (carpetaUploads.mkdir()) {
+                System.out.println("Creado el directorio para almacenar los uploads: "+path);
+            }
+            System.out.println("Almacenando archivo en el siguiente path: " + path);
+            try {
+                url_completa = path + url_imagen_adjunta + extensionImagen;
+                File nf= new File(url_completa);
+                contador = 1;
+                while(!nf.createNewFile()) {
+                    url_completa = path + url_imagen_adjunta + "-" + contador + extensionImagen;
+                    nf= new File(url_completa);
+                    contador++;
+                }
+                FileOutputStream escritor = new FileOutputStream(nf);
+                escritor.write(datosImagen);
+                escritor.close();
+            }
+            catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            return url_completa;
     }
 
     // Add business logic below. (Right-click in editor and choose

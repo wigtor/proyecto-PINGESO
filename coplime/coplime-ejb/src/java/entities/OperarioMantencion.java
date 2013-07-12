@@ -19,6 +19,11 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class OperarioMantencion implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    
     @OneToMany(mappedBy = "operarioAsignado")
     private List<SolicitudMantencion> solicitudesMantencionRealizadas;
 
@@ -41,11 +46,6 @@ public class OperarioMantencion implements Serializable {
     @OneToMany(mappedBy = "operarioMantencion")
     private List<MantencionPuntoLimpio> mantencionesRealizadas;
     
-    private static final long serialVersionUID = 1L;
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
 
     public Integer getCod() {
         return id;

@@ -5,11 +5,13 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
@@ -19,9 +21,26 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class MantencionPuntoLimpio implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer num;
+    
+    private String comentarios;
+    
     @ManyToOne
+    @JoinColumn(nullable = false)
+    private PuntoLimpio puntoLimpio;
+    
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private Calendar fecha;
+    
+    @ManyToOne
+    @JoinColumn(nullable = false)
     private OperarioMantencion operarioMantencion;
 
+    
     public OperarioMantencion getOperarioMantencion() {
         return operarioMantencion;
     }
@@ -45,22 +64,12 @@ public class MantencionPuntoLimpio implements Serializable {
     public void setNum(Integer num) {
         this.num = num;
     }
-    @ManyToOne
-    private PuntoLimpio puntoLimpio;
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer num;
-    
-    
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fecha;
 
-    public Date getFecha() {
+    public Calendar getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(Calendar fecha) {
         this.fecha = fecha;
     }
 
@@ -71,8 +80,6 @@ public class MantencionPuntoLimpio implements Serializable {
     public void setComentarios(String comentarios) {
         this.comentarios = comentarios;
     }
-    
-    private String comentarios;
 
     public Integer getId() {
         return num;

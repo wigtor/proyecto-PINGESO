@@ -7,10 +7,12 @@ package entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -31,12 +33,15 @@ public class PuntoLimpio implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
+    @Column(nullable = false)
     private String nombre;
     
     private String comuna;
     
+    @Column(nullable = false)
     private String ubicacion;
     
+    @Column(nullable = false)
     private int num;
     
     private int latitud;
@@ -44,7 +49,11 @@ public class PuntoLimpio implements Serializable {
     private int longitud;
     
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Estado estadoGlobal;
+    
+    @ManyToOne
+    private Inspector inspectorEncargado;
     
     @OneToMany(mappedBy = "puntoLimpio")
     private List<Contenedor> contenedores;
@@ -57,10 +66,6 @@ public class PuntoLimpio implements Serializable {
     
     @OneToMany(mappedBy = "puntoLimpio")
     private List<SolicitudMantencion> solicitudesMantencion;
-    
-    
-    @ManyToOne
-    private Inspector inspectorEncargado;
     
     @OneToMany(mappedBy = "puntoLimpio")
     private List<Notificacion> notificaciones;
