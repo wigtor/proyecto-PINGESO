@@ -7,12 +7,24 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:pm="http://primefaces.org/mobile"
       contentType="text/html"
-        renderKitId="PRIMEFACES_MOBILE">
+      renderKitId="PRIMEFACES_MOBILE"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
     
     
     <pm:page title="Agregar inspector">
         <!-- Main View -->
         <pm:view id="main">
+            
+            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Administrador')}">
+                <ezcomp:menuAdministrador/>
+            </p:overlayPanel>
+            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Inspector')}">
+                <ezcomp:menuInspector/>
+            </p:overlayPanel>
+            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Operario')}">
+                <ezcomp:menuOperario/>
+            </p:overlayPanel>
+            
             <pm:header title="Agregar inspector">
                 <f:facet name="left">
                     <p:commandButton id="btnPanelContext" value="" iconPos="notext" icon="bars" type="button"/>

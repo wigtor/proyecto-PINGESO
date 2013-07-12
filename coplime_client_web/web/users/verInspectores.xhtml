@@ -10,7 +10,7 @@
       renderKitId="PRIMEFACES_MOBILE"
       xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
 
-    <pm:page title="Ver inspectores">
+   <pm:page title="Ver inspectores"> 
          
         <!-- Main View -->
         <pm:view id="main">
@@ -36,8 +36,8 @@
                         <f:facet name="header">Listado de inspectores</f:facet>
                         <f:attribute name="icon" value="false" />
                         
-                        <p:dataTable value="#{mantenedorInspector.lista}" var="inspector"
-                                     paginator="true" rows="10">
+                        <p:dataTable id="inspectores" value="#{mantenedorInspector.lista}" var="inspector" rowKey="#{inspector.num}"
+                                     paginator="true" rows="10"  selectionMode="single" selection="#{mantenedorInspector.elementoSelecionado}"  >
                             <p:column headerText="Rut">
                                 <h:outputText value="#{inspector.num}"/>
                             </p:column>
@@ -49,7 +49,7 @@
                         <pm:buttonGroup>
                             <p:commandButton value="Agregar" action="#{mantenedorInspector.agregar()}"/>
                             <p:commandButton value="Editar" action="#{mantenedorInspector.editar()}"/>
-                            <p:commandButton value="Elimnar" action="#{mantenedorInspector.eliminar()}"/>
+                            <p:commandButton value="Eliminar" action="#{mantenedorInspector.eliminar()}"/>
                             <p:commandButton value="Ver detalles" action="#{mantenedorInspector.verDetalles()}"/>
                             <p:commandButton value="Volver" action="#{mantenedorInspector.volver()}"/>
                         </pm:buttonGroup>

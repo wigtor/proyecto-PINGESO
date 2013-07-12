@@ -7,6 +7,7 @@ package managedBeans;
 import ObjectsForManagedBeans.UsuarioPojo;
 import entities.Inspector;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,23 +38,25 @@ public class mantenedorInspector {
     private String mail;
     private Integer telefono;
     
-    private Collection<UsuarioPojo> lista;
-
-    public Collection<UsuarioPojo> getLista() {
-        return lista;
-    }
+    private List<UsuarioPojo> lista; //collection
+    
+    private UsuarioPojo elementoSelecionado;
+    
 
     /**
      * Creates a new instance of mantenedorInspector
      */
+    
     public mantenedorInspector() {
+        
     }
     
     @PostConstruct
-    public void init() {
+    public void init() { ///void init
         Collection<Inspector> listaTemp = crudInspector.getAllInspectores();
         UsuarioPojo inspectorTemporal;
-        this.lista = new LinkedList();
+        //this.lista = new LinkedList();
+        this.lista = new ArrayList<UsuarioPojo>();
         for(Inspector insp_iter : listaTemp) {
             inspectorTemporal = new UsuarioPojo();
             
@@ -65,6 +68,23 @@ public class mantenedorInspector {
         
         }
         
+        
+    }
+
+    
+    
+    public List<UsuarioPojo> getLista() {
+        return lista;
+    }
+
+    
+    
+    public UsuarioPojo getElementoSelecionado() {
+        return elementoSelecionado;
+    }
+
+    public void setElementoSelecionado(UsuarioPojo elementoSelecionado) {
+        this.elementoSelecionado = elementoSelecionado;
     }
     
     public void agregarInspector() {
@@ -105,6 +125,15 @@ public class mantenedorInspector {
        }
     }
     
+    public void editar() {
+       ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+       try {
+           externalContext.redirect(externalContext.getRequestContextPath() + "/faces/admin/editarInspector.xhtml");
+       }
+       catch (IOException e) {
+           System.out.println(e.getMessage());
+       }
+    }
     
     public String getNombre() {
         return nombre;

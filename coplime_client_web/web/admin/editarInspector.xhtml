@@ -7,16 +7,33 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:pm="http://primefaces.org/mobile"
       contentType="text/html"
-        renderKitId="PRIMEFACES_MOBILE">
+      renderKitId="PRIMEFACES_MOBILE"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
     
     
     <pm:page title="Editar inspector">
         <!-- Main View -->
         <pm:view id="main">
-            <pm:header title="Editar inspector" swatch="b"/>
+            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Administrador')}">
+                <ezcomp:menuAdministrador/>
+            </p:overlayPanel>
+            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Inspector')}">
+                <ezcomp:menuInspector/>
+            </p:overlayPanel>
+            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Operario')}">
+                <ezcomp:menuOperario/>
+            </p:overlayPanel>
+            
+            
+            <pm:header title="Editar inspector">
+                <f:facet name="left">
+                    <p:commandButton id="btnPanelContext" value="" iconPos="notext" icon="bars" type="button"/>
+                </f:facet>
+            </pm:header>
+            
             <pm:content>
                 <h:form>
-                <p:outputPanel>
+                
                     <p:dataList type="inset" styleClass="ui-li-custom">
                         <f:facet name="header">Edición de datos del inspector</f:facet>
                         <f:attribute name="icon" value="false" />
@@ -29,7 +46,7 @@
                         <p:commandButton value="Guardar" action="#{mantenedorInspector.guardarCambiosInspector()}"/>
                         <p:commandButton value="Volver" action="#{mantenedorInspector.volver()}"/>
                     </p:dataList>
-                </p:outputPanel>
+                
                 </h:form>
             </pm:content>
         </pm:view>
