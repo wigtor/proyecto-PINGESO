@@ -13,6 +13,8 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import sessionBeans.AvisosIncidenciaLocal;
+import org.primefaces.model.UploadedFile;
+
 
 /**
  *
@@ -29,6 +31,23 @@ public class enviarAvisoIncidenciaManagedBeans {
     private String detalles;
     private String tipoIncidenciaSeleccionada;
     private Collection<SelectElemPojo> listaTiposIncidencias;
+    private UploadedFile file;
+
+    public AvisosIncidenciaLocal getAvisosIncidencia() {
+        return avisosIncidencia;
+    }
+
+    public void setAvisosIncidencia(AvisosIncidenciaLocal avisosIncidencia) {
+        this.avisosIncidencia = avisosIncidencia;
+    }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
 
     @PostConstruct
     public void init() {
@@ -44,6 +63,17 @@ public class enviarAvisoIncidenciaManagedBeans {
         
         }
     }
+    
+    public void enviarAviso() {
+        System.out.println("N° " + numPuntoLimpio + " email: "+ emailContacto + " detalles: " + detalles + " tipo: " + tipoIncidenciaSeleccionada);
+        if(file != null) {
+            byte[] datosImagen = file.getContents();
+            String nombreArchivo = file.getFileName();
+            String tipoArchivo = file.getContentType();
+            System.out.println("Nombre archivo: " + nombreArchivo + " tipo: " + tipoArchivo);
+            //avisosIncidencia.guardarAvisoIncidencia(numPuntoLimpio, emailContacto, detalles, tipoIncidenciaSeleccionada, datosImagen, tipoArchivo);
+        }
+    }
 
     public Integer getNumPuntoLimpio() {
         return numPuntoLimpio;
@@ -55,6 +85,10 @@ public class enviarAvisoIncidenciaManagedBeans {
     
     public String getTipoIncidenciaSeleccionada() {
         return tipoIncidenciaSeleccionada;
+    }
+    
+    public void setTipoIncidenciaSeleccionada(String tipoIncidenciaSeleccionada) {
+        this.tipoIncidenciaSeleccionada = tipoIncidenciaSeleccionada;
     }
 
     public Collection<SelectElemPojo> getListaTiposIncidencias() {

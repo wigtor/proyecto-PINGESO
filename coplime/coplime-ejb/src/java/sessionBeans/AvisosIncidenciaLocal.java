@@ -16,5 +16,7 @@ import javax.ejb.Local;
 public interface AvisosIncidenciaLocal {
 
     Collection<TipoIncidencia> getTiposAvisos();
+
+    public void guardarAvisoIncidencia(Integer numPuntoLimpio, String emailContacto, String detalles, String tipoIncidenciaSeleccionada, byte[] datosImagen, String tipoImagen);
     
 }

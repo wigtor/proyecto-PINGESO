@@ -35,12 +35,13 @@ public class AvisosIncidencia implements AvisosIncidenciaLocal {
         }
         return resultado;
     }
+    
+    @Override
+    public void guardarAvisoIncidencia(Integer numPuntoLimpio, String emailContacto, String detalles, String tipoIncidenciaSeleccionada, byte[] datosImagen, String tipoImagen) {
+        
+    }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-
-    public void persist(Object object) {
-        em.persist(object);
-    }
     
 }

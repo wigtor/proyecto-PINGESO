@@ -10,7 +10,7 @@
 /coplime/nbproject/
 *.class
 # Package Files #
-*.jar
+#*.jar #Descartado para poder subir las bibliotecas
 *.war
 *.ear
 *.properties
