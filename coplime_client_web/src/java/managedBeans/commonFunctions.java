@@ -5,9 +5,6 @@
 package managedBeans;
 
 import java.io.IOException;
-import javax.annotation.ManagedBean;
-import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
@@ -15,20 +12,16 @@ import javax.faces.context.FacesContext;
  *
  * @author victor
  */
-@ManagedBean
-@Named(value = "puntosLimpiosManagedBeans")
-@RequestScoped
-public class PuntosLimpiosManagedBeans {
-
+public class commonFunctions {
+    
     /**
-     * Creates a new instance of PuntosLimpiosManagedBeans
+     * Pasale una url incluyendo /faces/ y te redirecciona
+     * @param pagina 
      */
-    public PuntosLimpiosManagedBeans() {
-    }
-    public void agregar() {
+    public void goToPage(String pagina) {
        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
        try {
-           externalContext.redirect(externalContext.getRequestContextPath() + "/faces/admin/agregarPuntoLimpio.xhtml");
+           externalContext.redirect(externalContext.getRequestContextPath() + pagina);
        }
        catch (IOException e) {
            System.out.println(e.getMessage());

@@ -35,23 +35,25 @@
                             <f:facet name="header">Datos del usuario</f:facet>
                             <f:attribute name="icon" value="false" />
 
-                            <p:inputText label="Nombre" value="#{informacionDelUsuarioManagedBeans.nombres}" disabled="true"/>
-                            <p:inputText label="Apellidos" value="#{informacionDelUsuarioManagedBeans.apellidos}" disabled="true"/>
-                            <p:inputText label="Rut" value="#{informacionDelUsuarioManagedBeans.rut}" disabled="true"/>
-                            <p:inputText label="Nombre de usuario" value="#{informacionDelUsuarioManagedBeans.idUsuario}" disabled="true"/>
-                            <p:inputText label="Rol de usuario" value="#{informacionDelUsuarioManagedBeans.rol}" disabled="true"/>
+                            <p:inputText label="Nombre" value="#{infoUsuarioManagedBeans.nombres}" disabled="true"/>
+                            <p:inputText label="Apellidos" value="#{infoUsuarioManagedBeans.apellidos}" disabled="true"/>
+                            <p:inputText label="Rut" value="#{infoUsuarioManagedBeans.rut}" disabled="true"/>
+                            <p:inputText label="Nombre de usuario" value="#{infoUsuarioManagedBeans.idUsuario}" disabled="true"/>
+                            <p:inputText label="Rol de usuario" value="#{infoUsuarioManagedBeans.rol}" disabled="true"/>
                             
                         </p:dataList>
                         <p:dataList type="inset">
                             <f:facet name="header">Datos de contacto</f:facet>
                             <f:attribute name="icon" value="false" />
 
-                            <p:inputText label="Teléfono" value="#{informacionDelUsuarioManagedBeans.telefono}"/>
-                            <p:inputText label="E-mail" value="#{informacionDelUsuarioManagedBeans.email}" required="true"/>
-
+                            <p:inputText label="Teléfono" value="#{infoUsuarioManagedBeans.telefono}"/>
+                            <p:inputText label="E-mail" value="#{infoUsuarioManagedBeans.email}" required="true"/>
+                            
+                            <p:commandButton value="Cambiar contraseña" action="#{infoUsuarioManagedBeans.goToCambiarContrasegna()}"/>
+                                
                             <pm:buttonGroup>
-                                <p:commandButton value="Guardar cambios" actionListener="#{informacionDelUsuarioManagedBeans.guardarCambios()}"/>
-                                <p:commandButton value="Cancelar" actionListener="#{informacionDelUsuarioManagedBeans.volver()}"/>
+                                <p:commandButton value="Guardar cambios" action="#{infoUsuarioManagedBeans.guardarCambios()}"/>
+                                <p:commandButton value="Cancelar" action="#{infoUsuarioManagedBeans.goToPuntosLimpios()}"/>
                             </pm:buttonGroup>
 
                         </p:dataList>

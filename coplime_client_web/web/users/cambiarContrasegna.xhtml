@@ -32,18 +32,18 @@
 
             <pm:content>
                 <h:form>
-                    <p:dataList type="inset" styleClass="ui-li-custom">
+                    <p:dataList type="inset">
                         <f:facet name="header">Datos del usuario</f:facet>
                         <f:attribute name="icon" value="false" />
                         
-                        <p:inputText label="Nombre de usuario" />
-                        <p:inputText label="Contraseña actual" />
-                        <p:inputText label="Contraseña nueva" />
-                        <p:inputText label="Repetir contraseña nueva" />
-                        <p:panelGrid columns="2">
-                            <p:commandButton value="Guardar cambios" type="button"/>
-                            <p:commandButton value="Cancelar" type="button"/>
-                        </p:panelGrid>
+                        <p:inputText label="Nombre de usuario" value="#{cambioPassManagedBeans.username}"/>
+                        <p:inputText label="Contraseña actual" value="#{cambioPassManagedBeans.passActual}"/>
+                        <p:inputText label="Contraseña nueva" value="#{cambioPassManagedBeans.nvaPass}"/>
+                        <p:inputText label="Repetir contraseña nueva" value="#{cambioPassManagedBeans.nvaPassRep}"/>
+                        <pm:buttonGroup>
+                            <p:commandButton value="Guardar cambios" action="#{cambioPassManagedBeans.guardarPass()}"/>
+                            <p:commandButton value="Cancelar" action="#{cambioPassManagedBeans.goToInfoUsuario()}"/>
+                        </pm:buttonGroup>
                     </p:dataList>
                 </h:form>
             </pm:content>

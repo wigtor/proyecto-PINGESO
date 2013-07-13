@@ -37,7 +37,7 @@
                         <f:facet name="header">Listado de puntos limpios</f:facet>
                         <f:attribute name="icon" value="false" />
                         
-                        <p:dataTable value="#{mantenedorPuntosLimpios.lista}" var="puntoLimpio" 
+                        <p:dataTable value="#{mantenedorPuntoLimpio.lista}" var="puntoLimpio" 
                                      scrollable="true">
                             <p:column headerText="N°">
                                 <h:outputText value="#{puntoLimpio.num}"/>
@@ -54,10 +54,10 @@
                         </p:dataTable>
                         
                         <pm:buttonGroup>
-                        <p:commandButton value="Agregar" action="#{mantenedorPuntosLimpios.agregar()}" rendered="#{request.isUserInRole('Administrador')}" />
-                        <p:commandButton value="Editar" action="#{mantenedorPuntosLimpios.editar()}" rendered="#{request.isUserInRole('Administrador')}" />
-                        <p:commandButton value="Elimnar" action="#{mantenedorPuntosLimpios.eliminar()}" rendered="#{request.isUserInRole('Administrador')}"/>
-                        <p:commandButton value="Ver detalles" action="#{mantenedorPuntosLimpios.verDetalles()}"/>
+                        <p:commandButton value="Agregar" action="#{mantenedorPuntoLimpio.agregar()}" rendered="#{request.isUserInRole('Administrador')}" />
+                        <p:commandButton value="Editar" action="#{mantenedorPuntoLimpio.editar()}" rendered="#{request.isUserInRole('Administrador')}" />
+                        <p:commandButton value="Elimnar" action="#{mantenedorPuntoLimpio.eliminar()}" rendered="#{request.isUserInRole('Administrador')}"/>
+                        <p:commandButton value="Ver detalles" action="#{mantenedorPuntoLimpio.verDetalles()}"/>
                         </pm:buttonGroup>
                     </p:dataList>
                 </h:form>

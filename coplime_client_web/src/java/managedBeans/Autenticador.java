@@ -23,15 +23,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Named(value = "Autenticador")
 @SessionScoped
-public class Autenticador implements Serializable{
+public class Autenticador extends commonFunctions implements Serializable {
 
     private String username;
-    
-    private String outputMsj = "Listo";
-
-    public String getOutputMsj() {
-        return outputMsj;
-    }
+    private String password;
+    private String originalURL;
 
     public String getUsername() {
         return username;
@@ -48,8 +44,7 @@ public class Autenticador implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
-    private String password;
-    private String originalURL;
+    
 
     @PostConstruct
     public void init() {
@@ -60,81 +55,38 @@ public class Autenticador implements Serializable{
             originalURL = FacesContext.getCurrentInstance().getExternalContext()
                     .getRequestContextPath()+"/faces/users/verPuntosLimpios.xhtml";
         }
-        /*
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        originalURL = (String) externalContext.getRequestMap().get(RequestDispatcher.FORWARD_REQUEST_URI);
-
-        if (originalURL == null) {
-            originalURL = externalContext.getRequestContextPath() + "/faces/users/verPuntosLimpios.xhtml";
-        } else {
-            String originalQuery = (String) externalContext.getRequestMap().get(RequestDispatcher.FORWARD_QUERY_STRING);
-
-            if (originalQuery != null) {
-                originalURL += "?" + originalQuery;
-            }
-        }
-        */
     }
-    
     
     public boolean verificaSiEstaLogueado() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         if (request.getRemoteUser() != null) {
-            try {
-                originalURL = FacesContext.getCurrentInstance().getExternalContext()
-                    .getRequestContextPath()+"/faces/users/verPuntosLimpios.xhtml";
-                externalContext.redirect(originalURL);
-            }
-            catch(IOException ioe) {
-                System.out.println(ioe.getMessage());
-            }
+            goToPage("/faces/users/verPuntosLimpios.xhtml");
             return true;
         }
         return false;
     }
-
-    /*
-    @EJB
-    private UserServiceLocal userService;
-    */
     
     public void login() throws IOException {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        System.out.println("getUserPrincipal(): "+request.getUserPrincipal());
-        System.out.println("getAuthType(): "+request.getAuthType());
-        System.out.println("getRemoteUser(): "+request.getRemoteUser());
-        //JDBCRealm wea = new JDBCRealm();
-        
         try {
             verificaSiEstaLogueado();
             request.login(username, password);
-            /*
-            Usuario user = userService.buscarUsuario(username, password);
-            System.out.println("Al hacer login se ha obtenido: "+user);
-            if (user == null) {
-                outputMsj = "Login incorrecto";
-                
-            }
-            externalContext.getSessionMap().put("user", user);
-            */
             externalContext.redirect(originalURL);
         }
         catch (Exception e) {
             System.out.println("MENSAJE DE EXCEPCIÓN: "+e.getMessage());
-            //e.printStackTrace();
-            // Handle unknown username/password in request.login().
-            context.addMessage(null, new FacesMessage("Unknown login"));
+            context.addMessage("labelMensaje", new FacesMessage("Nombre de usuario o contraseña incorrectos"));
         }
     }
 
-    public void logout() throws IOException {
+    public void logout() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.invalidateSession();
-        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/index.xhtml");
+        goToPage("/faces/index.xhtml");
     }
     
     public void goToEnviarAvisoIncidencia() {

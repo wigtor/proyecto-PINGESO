@@ -19,9 +19,9 @@ import sessionBeans.UserServiceLocal;
  *
  * @author victor
  */
-@Named(value = "informacionDelUsuarioManagedBeans")
+@Named(value = "infoUsuarioManagedBeans")
 @RequestScoped
-public class informacionDelUsuarioManagedBeans {
+public class infoUsuarioManagedBeans extends commonFunctions{
     @EJB
     private UserServiceLocal userService;
     
@@ -42,12 +42,7 @@ public class informacionDelUsuarioManagedBeans {
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         System.out.println("nombre de usuario: "+request.getRemoteUser());
         if (!userService.setUsuarioLogueado(request.getRemoteUser())) {
-            try {
-                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/users/logout.xhtml");
-            }
-            catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+            goToPage("/faces/users/logout.xhtml");
         }
         nombres = userService.getNombres();
         apellidos = userService.getApellidos();
@@ -56,31 +51,25 @@ public class informacionDelUsuarioManagedBeans {
         idUsuario = userService.getIdUsuario();
         email = userService.getEmail();
         telefono = userService.getTelefono();
+        /*
         System.out.println("Es administrador: "+request.isUserInRole("Administrador"));
         System.out.println("Es inspector: "+request.isUserInRole("Inspector"));
         System.out.println("Es operario: "+request.isUserInRole("Operario"));
         System.out.println("Es cualquier wea: "+request.isUserInRole("blabla"));
+        */
     }
 
     public void guardarCambios() {
         userService.cambiarDatosContacto(telefono, email);
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        try {
-            externalContext.redirect(externalContext.getRequestContextPath() + "/faces/users/verPuntosLimpios.xhtml");
-        }
-        catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
     
-    public void volver() {
-       ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-       try {
-           externalContext.redirect(externalContext.getRequestContextPath() + "/faces/users/verPuntosLimpios.xhtml");
-       }
-       catch (IOException e) {
-           System.out.println(e.getMessage());
-       }
+    public void goToPuntosLimpios() {
+       goToPage("/faces/users/verPuntosLimpios.xhtml");
+    }
+    
+    public void goToCambiarContrasegna() {
+        goToPage("/faces/users/cambiarContrasegna.xhtml");
     }
     
     

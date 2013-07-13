@@ -16,7 +16,7 @@ import sessionBeans.CrudAdministradorLocal;
  */
 @Named(value = "creacionAdministrador")
 @RequestScoped
-public class creacionAdministrador {
+public class creacionAdministrador extends commonFunctions{
     @EJB
     private CrudAdministradorLocal crudAdministrador;
     
@@ -37,18 +37,8 @@ public class creacionAdministrador {
     
     
     public void agregarAdministrador() {
-        try {
-            crudAdministrador.agregarAdministrador( username, password, rut, nombre, apellido1, apellido2, mail, telefono);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-        }
-        catch (Exception e) {
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("enviarAvisoIncidencia.xhtml");
-            }
-            catch (Exception e2) {
-                
-            }
-        }
+        crudAdministrador.agregarAdministrador( username, password, rut, nombre, apellido1, apellido2, mail, telefono);
+        goToPage("/faces/index.xhtml");
     }
     
     public String getUsername() {
