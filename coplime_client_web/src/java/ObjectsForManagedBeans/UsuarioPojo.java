@@ -11,7 +11,17 @@ package ObjectsForManagedBeans;
 public class UsuarioPojo{
     public int num;
     private String nombre;
+    public String userName;
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    
     public int getNum() {
         return num;
     }

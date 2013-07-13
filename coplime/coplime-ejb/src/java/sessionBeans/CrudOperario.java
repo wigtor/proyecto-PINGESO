@@ -89,4 +89,13 @@ public class CrudOperario implements CrudOperarioLocal {
         OperarioDAO inspectDAO = factoryDeDAOs.getOperarioDAO();
         return inspectDAO.findAll();
     }
+    
+    @Override
+    public Usuario getOperario(String userName) {
+        //Hago los DAO
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        UsuarioDAO usuarioDAO = factoryDeDAOs.getUsuarioDAO();
+        return usuarioDAO.find(userName);
+        
+    }
 }

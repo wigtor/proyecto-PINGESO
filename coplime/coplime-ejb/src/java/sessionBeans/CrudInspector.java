@@ -28,6 +28,8 @@ import javax.persistence.PersistenceContext;
 public class CrudInspector implements CrudInspectorLocal {
     @PersistenceContext(unitName = "coplime-ejbPU")
     private EntityManager em;
+    private Usuario usertemp;
+    
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
@@ -88,5 +90,71 @@ public class CrudInspector implements CrudInspectorLocal {
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         InspectorDAO inspectDAO = factoryDeDAOs.getInspectorDAO();
         return inspectDAO.findAll();
+        
     }
+    
+    @Override
+    public Usuario getInspector(String userName) {
+        //Hago los DAO
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        UsuarioDAO usuarioDAO = factoryDeDAOs.getUsuarioDAO();
+        return usuarioDAO.find(userName);
+        
+    }
+    
+    @Override
+    public void editarInspector(String userName,String nombre, String apellido1, String apellido2, String mail, boolean resetContraseña,int telefono, Usuario user) {
+        Usuario editInspector = new Usuario();
+        editInspector.setNombre(nombre);
+        editInspector.setApellido1(apellido1);
+        editInspector.setApellido2(apellido2);
+        editInspector.setEmail(mail);
+        editInspector.setTelefono(telefono);
+        editInspector.setUsername(userName);
+        String password = Integer.toString(user.getRut());
+        
+        if(resetContraseña == true){
+            try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes("UTF-8"));
+
+            byte[] digest = md.digest();
+            BigInteger bigInt = new BigInteger(1, digest);
+            password = bigInt.toString(16);
+            }
+            catch (Exception e) {
+                System.out.println("No se pudo convertir a MD5 la password");
+            }
+            editInspector.setPassword(password);        
+        }
+        this.usertemp = user;
+        //user = editInspector;
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
+        this.usertemp = userDAO.update(editInspector);
+        
+        //userDAO.find(userName) = userDAO.update(editInspector);
+        //System.out.println("Telefono antes de merge: "+this.usuarioLogueado.getTelefono());
+        
+        
+    }
+    
+    @Override
+    public void eliminarInspector(Usuario user){
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
+        userDAO.delete(user);
+        
+    }
+
+    public Usuario getUsertemp() {
+        return usertemp;
+    }
+
+    public void setUsertemp(Usuario usertemp) {
+        this.usertemp = usertemp;
+    }
+    
+    
 }
+

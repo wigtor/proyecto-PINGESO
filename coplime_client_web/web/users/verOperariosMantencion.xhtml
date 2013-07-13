@@ -46,13 +46,22 @@
                             <p:column headerText="Nombre">
                                 <h:outputText value="#{operario.nombre}"/>
                             </p:column>
+                            <p:column headerText="" >
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{mantenedorOperario.editar(operario.num)}">
+                                </p:commandLink>
+                            </p:column>                            
+                            <p:column headerText="" >
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-edit ui-icon" action="#{mantenedorOperario.editar(operario.num)}">
+                                </p:commandLink>
+                            </p:column>
+                            <p:column headerText="" >
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-delete ui-icon" action="#{mantenedorOperario.eliminar(operario.num)}">
+                                </p:commandLink>
+                            </p:column>
                         </p:dataTable>
                         
                         <pm:buttonGroup>
                             <p:commandButton value="Agregar" action="#{mantenedorOperario.agregar()}"/>
-                            <p:commandButton value="Editar" action="#{mantenedorOperario.editar()}"/>
-                            <p:commandButton value="Elimnar" action="#{mantenedorOperario.eliminar()}"/>
-                            <p:commandButton value="Ver detalles" action="#{mantenedorOperario.verDetalles()}"/>
                             <p:commandButton value="Volver" action="#{mantenedorOperario.volver()}"/>
                         </pm:buttonGroup>
                     </p:dataList>

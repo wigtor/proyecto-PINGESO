@@ -7,10 +7,13 @@ package managedBeans;
 import ObjectsForManagedBeans.UsuarioPojo;
 import entities.Inspector;
 import entities.OperarioMantencion;
+import entities.Usuario;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -25,7 +28,7 @@ import sessionBeans.CrudOperarioLocal;
  */
 @Named(value = "mantenedorOperario")
 @RequestScoped
-public class mantenedorOperario {
+public class mantenedorOperario extends commonFunctions{
     @EJB
     private CrudOperarioLocal crudOperario;
 
@@ -38,7 +41,12 @@ public class mantenedorOperario {
     private String mail;
     private Integer telefono;
     
-    private Collection<UsuarioPojo> lista;
+    private List<UsuarioPojo> lista;
+    
+    private Usuario userSelect;
+    
+    FacesContext context = FacesContext.getCurrentInstance();
+    Map<String,Object> variableSession = context.getExternalContext().getSessionMap();
 
     public Collection<UsuarioPojo> getLista() {
         return lista;
@@ -52,9 +60,11 @@ public class mantenedorOperario {
     
     @PostConstruct
     public void init() {
+        ///////////////VER/////////////////////
         Collection<OperarioMantencion> listaTemp = crudOperario.getAllOperarios();
         UsuarioPojo inspectorTemporal;
-        this.lista = new LinkedList();
+        //this.lista = new LinkedList();
+        this.lista = new ArrayList<UsuarioPojo>();
         for(OperarioMantencion insp_iter : listaTemp) {
             inspectorTemporal = new UsuarioPojo();
             
@@ -62,50 +72,64 @@ public class mantenedorOperario {
                     insp_iter.getUsuario().getApellido1()+" "+
                     insp_iter.getUsuario().getApellido2());
             inspectorTemporal.setNum(insp_iter.getUsuario().getRut());
+            inspectorTemporal.setUserName(insp_iter.getUsuario().getUsername());
             this.lista.add(inspectorTemporal);
-        
+            
+        } 
+        //////////Edit/////////////////////
+        try{
+            String userName = (String)variableSession.get("userToEdit");
+            variableSession.clear();
+            Usuario usuarioEdit = crudOperario.getOperario(userName);
+            this.nombre = usuarioEdit.getNombre();
+            this.apellido1 = usuarioEdit.getApellido1();
+            this.apellido2 = usuarioEdit.getApellido2();
+            this.mail = usuarioEdit.getEmail();
+            this.username = usuarioEdit.getUsername();
+            this.telefono = usuarioEdit.getTelefono();
+            this.userSelect = usuarioEdit;
+            System.out.println("usuario: "+userSelect.getRut());
+            
+        }
+        catch(Exception e){
+            System.out.println("no hay cookie"); 
         }
         
     }
     
     public void agregarOperario() {
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        try {
-            crudOperario.agregarOperario( username, password, rut, nombre, apellido1, apellido2, mail, telefono);
-            this.init();
-            FacesContext.getCurrentInstance().getExternalContext().redirect(externalContext.getRequestContextPath() + "/faces/users/verOperariosMantencion.xhtml");
-        }
-        catch (Exception e) {
-            try {
-                
-                FacesContext.getCurrentInstance().getExternalContext().redirect(externalContext.getRequestContextPath() + "/faces/users/verPuntosLimpios.xhtml");
-            }
-            catch (Exception e2) {
-                System.out.println(e2.getMessage());
-            }
-        }
+        crudOperario.agregarOperario( username, password, rut, nombre, apellido1, apellido2, mail, telefono);
+        this.init();
+        goToPage("/faces/users/verOperariosMantencion.xhtml");
+        
+    }
+    public void editar(int numOperario) {
+       System.out.println("NÚMERO DE INSPECTOR: "+numOperario);
+       String user = ObtineUserName(numOperario);
+       //Usuario usuarioEdit = crudInspector.getInspector(user);
+       FacesContext context = FacesContext.getCurrentInstance();
+       Map<String,Object> variableSession = context.getExternalContext().getSessionMap();
+       variableSession.put("userToEdit", user);      
+       goToPage("/faces/admin/editarOperarioMantencion.xhtml");
+       
     }
     
     public void volver() {
-       ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-       try {
-           externalContext.redirect(externalContext.getRequestContextPath() + "/faces/users/verPuntosLimpios.xhtml");
-       }
-       catch (IOException e) {
-           System.out.println(e.getMessage());
-       }
+       goToPage("/faces/users/verPuntosLimpios.xhtml");
+       
     }
     
     public void agregar() {
-       ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-       try {
-           externalContext.redirect(externalContext.getRequestContextPath() + "/faces/admin/agregarOperarioMantencion.xhtml");
-       }
-       catch (IOException e) {
-           System.out.println(e.getMessage());
-       }
+        goToPage("/faces/admin/agregarOperarioMantencion.xhtml");
+       
     }
-    
+    public String ObtineUserName(int rut){
+        for(UsuarioPojo use_iter : lista){
+            if(use_iter.getNum()== rut)
+                return use_iter.userName;
+        }
+        return null;        
+    }
    
     public String getNombre() {
         return nombre;

@@ -5,6 +5,7 @@
 package sessionBeans;
 
 import entities.Inspector;
+import entities.Usuario;
 import java.util.Collection;
 import javax.ejb.Local;
 
@@ -19,4 +20,9 @@ public interface CrudInspectorLocal {
 
     public Collection<Inspector> getAllInspectores();
     
+    public Usuario getInspector(String userName);
+    
+    public void editarInspector(String userName,String nombre, String apellido1, String apellido2, String mail, boolean resetContraseña,int telefono, Usuario user);
+    
+    public void eliminarInspector(Usuario user);
 }

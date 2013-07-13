@@ -37,15 +37,20 @@
                         <f:attribute name="icon" value="false" />
                         
                         
-                        <p:dataTable id="inspectores" value="#{mantenedorInspector.lista}" var="insp" rowKey="#{insp.num}"
-                                     paginator="true" rows="2" selectionMode="single" emptyMessage="No hay inspectores registrados en el sistema" 
-                                      selection="#{mantenedorInspector.elementoSelecionado}"  >
+                        <p:dataTable id="inspectores" value="#{mantenedorInspector.lista}" var="insp" 
+                                     paginator="true" rows="2"  emptyMessage="No hay inspectores registrados en el sistema" 
+                                        >
                             <p:column headerText="Rut">
                                 #{insp.num}
                             </p:column>
                             <p:column headerText="Nombre">
                                 #{insp.nombre}
                             </p:column>
+                            
+                            <p:column headerText="" >
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{mantenedorInspector.editar(insp.num)}">
+                                </p:commandLink>
+                            </p:column>                            
                             <p:column headerText="" >
                                 <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-edit ui-icon" action="#{mantenedorInspector.editar(insp.num)}">
                                 </p:commandLink>
@@ -58,9 +63,6 @@
                         
                         <pm:buttonGroup>
                             <p:commandButton value="Agregar" action="#{mantenedorInspector.agregar()}"/>
-                            <p:commandButton value="Editar" action="#{mantenedorInspector.editar()}"/>
-                            <p:commandButton value="Eliminar" action="#{mantenedorInspector.eliminar()}"/>
-                            <p:commandButton value="Ver detalles" action="#{mantenedorInspector.verDetalles()}"/>
                             <p:commandButton value="Volver" action="#{mantenedorInspector.volver()}"/>
                         </pm:buttonGroup>
                     </p:dataList>
