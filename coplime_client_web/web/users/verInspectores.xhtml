@@ -9,7 +9,7 @@
       contentType="text/html"
       renderKitId="PRIMEFACES_MOBILE"
       xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
-
+    
    <pm:page title="Ver inspectores"> 
          
         <!-- Main View -->
@@ -37,14 +37,22 @@
                         <f:attribute name="icon" value="false" />
                         
                         
-                        <p:dataTable id="inspectores" value="#{mantenedorInspector.lista}" var="inspector" rowKey="#{inspector.num}"
-                                     paginator="true" rows="2"  selectionMode="single" emptyMessage="No hay inspectores registrados en el sistema" 
+                        <p:dataTable id="inspectores" value="#{mantenedorInspector.lista}" var="insp" rowKey="#{insp.num}"
+                                     paginator="true" rows="2" selectionMode="single" emptyMessage="No hay inspectores registrados en el sistema" 
                                       selection="#{mantenedorInspector.elementoSelecionado}"  >
                             <p:column headerText="Rut">
-                                #{inspector.num}
+                                #{insp.num}
                             </p:column>
                             <p:column headerText="Nombre">
-                                #{inspector.nombre}
+                                #{insp.nombre}
+                            </p:column>
+                            <p:column headerText="" >
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-edit ui-icon" action="#{mantenedorInspector.editar(insp.num)}">
+                                </p:commandLink>
+                            </p:column>
+                            <p:column headerText="" >
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-delete ui-icon" action="#{mantenedorInspector.eliminar(insp.num)}">
+                                </p:commandLink>
                             </p:column>
                         </p:dataTable>
                         

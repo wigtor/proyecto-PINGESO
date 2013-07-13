@@ -130,7 +130,8 @@ public class mantenedorInspector {
        }
     }
     
-    public void editar() {
+    public void editar(int numInspector) {
+       System.out.println("NÚMERO DE INSPECTOR: "+numInspector);
        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
        try {
            externalContext.redirect(externalContext.getRequestContextPath() + "/faces/admin/editarInspector.xhtml");
@@ -138,6 +139,11 @@ public class mantenedorInspector {
        catch (IOException e) {
            System.out.println(e.getMessage());
        }
+    }
+    
+    public void eliminar(int numInspector) {
+       System.out.println("NÚMERO DE INSPECTOR: "+numInspector);
+       //PONER LA LÓGICA DE ELIMINARCIÓN, MOSTRAR MENSAJE DE CONFIRMACIÓN
     }
     
     public String getNombre() {
