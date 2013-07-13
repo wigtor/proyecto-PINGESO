@@ -90,17 +90,7 @@ public class Autenticador extends commonFunctions implements Serializable {
     }
     
     public void goToEnviarAvisoIncidencia() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
-        System.out.println("cacacaca");
-        try {
-            String url = FacesContext.getCurrentInstance().getExternalContext()
-                .getRequestContextPath()+"/faces/enviarAvisoIncidencia.xhtml";
-            externalContext.redirect(url);
-        }
-        catch(IOException ioe) {
-            System.out.println(ioe.getMessage());
-        }
+        goToPage("/faces/enviarAvisoIncidencia.xhtml");
     }
 
     // Getters/setters for username and password.

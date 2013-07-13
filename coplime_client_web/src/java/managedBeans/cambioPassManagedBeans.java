@@ -17,7 +17,7 @@ import sessionBeans.UserServiceLocal;
  *
  * @author victor
  */
-@Named(value = "informacionDelUsuarioManagedBeans")
+@Named(value = "cambioPassManagedBeans")
 @RequestScoped
 public class cambioPassManagedBeans extends commonFunctions{
     @EJB
@@ -44,11 +44,11 @@ public class cambioPassManagedBeans extends commonFunctions{
 
     public void guardarPass() {
         //userService.cambiarDatosContacto(telefono, email);
-        goToPage("/faces/users/infoUsuarioManagedBeans.xhtml");
+        goToPage("/faces/users/infoUsuario.xhtml");
     }
     
     public void goToInfoUsuario() {
-       goToPage("/faces/users/infoUsuarioManagedBeans.xhtml");
+       goToPage("/faces/users/infoUsuario.xhtml");
     }
 
     public String getUsername() {
