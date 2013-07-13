@@ -40,6 +40,16 @@
 
                 <p:layoutUnit position="center">
                     Welcome to PrimeFaces
+                    <p:dataTable id="inspectores" value="#{mantenedorInspector.lista}" var="inspector" rowKey="#{inspector.num}"
+                                     paginator="true" rows="2"  selectionMode="single" emptyMessage="No hay inspectores registrados en el sistema" 
+                                      selection="#{mantenedorInspector.elementoSelecionado}"  >
+                            <p:column headerText="Rut">
+                                #{inspector.num}
+                            </p:column>
+                            <p:column headerText="Nombre">
+                                #{inspector.nombre}
+                            </p:column>
+                        </p:dataTable>
                 </p:layoutUnit>
 
             </p:layout>

@@ -36,13 +36,15 @@
                         <f:facet name="header">Listado de inspectores</f:facet>
                         <f:attribute name="icon" value="false" />
                         
+                        
                         <p:dataTable id="inspectores" value="#{mantenedorInspector.lista}" var="inspector" rowKey="#{inspector.num}"
-                                     paginator="true" rows="10"  selectionMode="single" selection="#{mantenedorInspector.elementoSelecionado}"  >
+                                     paginator="true" rows="2"  selectionMode="single" emptyMessage="No hay inspectores registrados en el sistema" 
+                                      selection="#{mantenedorInspector.elementoSelecionado}"  >
                             <p:column headerText="Rut">
-                                <h:outputText value="#{inspector.num}"/>
+                                #{inspector.num}
                             </p:column>
                             <p:column headerText="Nombre">
-                                <h:outputText value="#{inspector.nombre}"/>
+                                #{inspector.nombre}
                             </p:column>
                         </p:dataTable>
                         

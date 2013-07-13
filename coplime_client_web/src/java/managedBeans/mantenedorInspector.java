@@ -7,6 +7,7 @@ package managedBeans;
 import ObjectsForManagedBeans.UsuarioPojo;
 import entities.Inspector;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -15,6 +16,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import sessionBeans.CrudInspectorLocal;
@@ -67,8 +69,11 @@ public class mantenedorInspector {
             this.lista.add(inspectorTemporal);
         
         }
-        
-        
+    }
+    
+    public void onRowSelect() {
+        //this.elementoSelecionado = null;
+        System.out.println("clickeada una tabla");
     }
 
     

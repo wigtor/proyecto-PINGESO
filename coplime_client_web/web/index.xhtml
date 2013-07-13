@@ -15,23 +15,21 @@
         <pm:view id="main">
             <pm:header title="Bienvenido a COPLIME"/>
             <pm:content>
-                <p:outputPanel>
-                    <h:form>
-                        <p:dataList type="inset" styleClass="ui-li-custom">
-                            <f:facet name="header">Avisar incidencia</f:facet>
-                            <f:attribute name="icon" value="false" />
-                            <p:commandButton immediate="true" action="#{Autenticador.goToEnviarAvisoIncidencia()}" value="Generar aviso" />
-                        </p:dataList>
-                        <p:dataList type="inset" styleClass="ui-li-custom">
-                            <f:facet name="header">Inicio de sesión</f:facet>
-                            <f:attribute name="icon" value="false" />
-                            <p:outputLabel>#{Autenticador.outputMsj}</p:outputLabel>
-                            <p:inputText label="Nombre de usuario" value="#{Autenticador.username}" required="true"/>
-                            <p:inputText type="password" label="contraseña:" value="#{Autenticador.password}" required="true"/>
-                            <p:commandButton value="Iniciar sesión" action="#{Autenticador.login()}"/>
-                        </p:dataList>
-                    </h:form>
-                </p:outputPanel>
+                <h:form>
+                    <p:dataList type="inset" styleClass="ui-li-custom">
+                        <f:facet name="header">Avisar incidencia</f:facet>
+                        <f:attribute name="icon" value="false" />
+                        <p:commandButton immediate="true" action="#{Autenticador.goToEnviarAvisoIncidencia()}" value="Generar aviso" />
+                    </p:dataList>
+                    <p:dataList type="inset" styleClass="ui-li-custom">
+                        <f:facet name="header">Inicio de sesión</f:facet>
+                        <f:attribute name="icon" value="false" />
+                        <p:outputLabel>#{Autenticador.outputMsj}</p:outputLabel>
+                        <p:inputText label="Nombre de usuario" value="#{Autenticador.username}" required="true"/>
+                        <p:inputText type="password" label="contraseña:" value="#{Autenticador.password}" required="true"/>
+                        <p:commandButton value="Iniciar sesión" action="#{Autenticador.login()}"/>
+                    </p:dataList>
+                </h:form>
             </pm:content>
         </pm:view>
     </pm:page>

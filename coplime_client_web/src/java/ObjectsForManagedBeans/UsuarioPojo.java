@@ -8,8 +8,8 @@ package ObjectsForManagedBeans;
  *
  * @author victor
  */
-public class UsuarioPojo {
-    private int num;
+public class UsuarioPojo{
+    public int num;
     private String nombre;
 
     public int getNum() {
