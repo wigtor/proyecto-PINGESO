@@ -27,10 +27,14 @@ public interface UserServiceLocal {
     
     public String getEmail();
 
-    public int getTelefono();
+    public Integer getTelefono();
     
     public boolean setUsuarioLogueado(String username);
 
-    public int getRut();
+    public Integer getRut();
+
+    public String getUsername();
+
+    public void cambiarPass(String passActual, String nvaPass) throws Exception;
 
 }

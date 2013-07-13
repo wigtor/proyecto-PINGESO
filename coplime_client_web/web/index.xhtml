@@ -22,14 +22,14 @@
                         <p:commandButton immediate="true" value="Generar aviso" action="#{Autenticador.goToEnviarAvisoIncidencia()}"/>
                     </p:dataList>
                 </h:form>
-                <h:form>
+                <h:form id="form_login">
                     <p:dataList type="inset" styleClass="ui-li-custom">
                         <f:facet name="header">Inicio de sesión</f:facet>
                         <f:attribute name="icon" value="false" />
-                        <p:outputLabel id="labelMensaje"/>
-                        <p:inputText label="Nombre de usuario" value="#{Autenticador.username}" required="true"/>
+                        <p:growl id="msj_error_login"/>
+                        <p:inputText id="input_username" label="Nombre de usuario" value="#{Autenticador.username}" required="true"/>
                         <p:inputText type="password" label="contraseña:" value="#{Autenticador.password}" required="true"/>
-                        <p:commandButton value="Iniciar sesión" action="#{Autenticador.login()}"/>
+                        <p:commandButton value="Iniciar sesión" action="#{Autenticador.login()}" update="msj_error_login"/>
                     </p:dataList>
                 </h:form>
             </pm:content>

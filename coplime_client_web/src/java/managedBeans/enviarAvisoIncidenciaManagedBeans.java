@@ -25,7 +25,7 @@ import org.primefaces.model.UploadedFile;
  */
 @Named(value = "enviarAvisoIncidenciaManagedBeans")
 @RequestScoped
-public class enviarAvisoIncidenciaManagedBeans {
+public class enviarAvisoIncidenciaManagedBeans extends commonFunctions{
     @EJB
     private AvisosIncidenciaLocal avisosIncidencia;
     
@@ -140,6 +140,8 @@ public class enviarAvisoIncidenciaManagedBeans {
     public enviarAvisoIncidenciaManagedBeans() {
     }
     
-    
+    public void goToIndex() {
+        goToPage("/faces/index.xhtml");
+    }
     
 }

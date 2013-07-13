@@ -35,13 +35,13 @@
                     <p:dataList type="inset">
                         <f:facet name="header">Datos del usuario</f:facet>
                         <f:attribute name="icon" value="false" />
-                        
+                        <p:growl id="msj_error_cambioContrasegna"/>
                         <p:inputText label="Nombre de usuario" value="#{cambioPassManagedBeans.username}"/>
-                        <p:inputText label="Contraseña actual" value="#{cambioPassManagedBeans.passActual}"/>
-                        <p:inputText label="Contraseña nueva" value="#{cambioPassManagedBeans.nvaPass}"/>
-                        <p:inputText label="Repetir contraseña nueva" value="#{cambioPassManagedBeans.nvaPassRep}"/>
+                        <p:inputText label="Contraseña actual" value="#{cambioPassManagedBeans.passActual}" type="password"/>
+                        <p:inputText label="Contraseña nueva" value="#{cambioPassManagedBeans.nvaPass}" type="password"/>
+                        <p:inputText label="Repetir contraseña nueva" value="#{cambioPassManagedBeans.nvaPassRep}" type="password"/>
                         <pm:buttonGroup>
-                            <p:commandButton value="Guardar cambios" action="#{cambioPassManagedBeans.guardarPass()}"/>
+                            <p:commandButton value="Guardar cambios" action="#{cambioPassManagedBeans.guardarPass()}" update="msj_error_cambioContrasegna"/>
                             <p:commandButton value="Cancelar" action="#{cambioPassManagedBeans.goToInfoUsuario()}"/>
                         </pm:buttonGroup>
                     </p:dataList>

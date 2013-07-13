@@ -7,6 +7,7 @@ package managedBeans;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -30,21 +31,31 @@ public class cambioPassManagedBeans extends commonFunctions{
 
     @PostConstruct
     public void init() {
-        /*
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        System.out.println("nombre de usuario: "+request.getRemoteUser());
         if (!userService.setUsuarioLogueado(request.getRemoteUser())) {
             goToPage("/faces/users/logout.xhtml");
         }
-        username = userService.getUsername();
-        */
+        this.username = userService.getUsername();
     }
 
     public void guardarPass() {
-        //userService.cambiarDatosContacto(telefono, email);
-        goToPage("/faces/users/infoUsuario.xhtml");
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (!nvaPass.equals(nvaPassRep)) {
+            //Muestro el mensaje de error
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Las contraseñas no coinciden", ""));
+        }
+        else {
+            try {
+                userService.cambiarPass(passActual, nvaPass);
+                goToPage("/faces/users/infoUsuario.xhtml");
+            }
+            catch (Exception e) {
+                //Muestro el mensaje de error
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
+            }
+        }
     }
     
     public void goToInfoUsuario() {

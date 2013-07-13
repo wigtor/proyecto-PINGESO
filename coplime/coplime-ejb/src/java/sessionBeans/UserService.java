@@ -45,17 +45,7 @@ public class UserService implements UserServiceLocal {
         //Hago los DAO
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(password.getBytes("UTF-8"));
-
-            byte[] digest = md.digest();
-            BigInteger bigInt = new BigInteger(1, digest);
-            password = bigInt.toString(16);
-        }
-        catch (Exception e) {
-            System.out.println("No se pudo convertir a MD5 la password");
-        }
+        password = conviertePassToMd5(password);
         this.usuarioLogueado = userDAO.find(username, password);
         return this.usuarioLogueado;
         
@@ -79,43 +69,103 @@ public class UserService implements UserServiceLocal {
         else 
             return false;
     }
+    
+    @Override
+    public void cambiarPass(String passActual, String nvaPass) throws Exception{
+        if (this.usuarioLogueado != null) {
+            //System.out.println("modificando contraseña del usuario");
+            //Hago los DAO
+            DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+            UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
+            String passwordMd5_real = usuarioLogueado.getPassword();
+            String passwordMd5_puesta = conviertePassToMd5(passActual);
+            if (passwordMd5_puesta.equals(passwordMd5_real)) {
+                usuarioLogueado.setPassword(conviertePassToMd5(nvaPass));
+                userDAO.update(usuarioLogueado);
+            }
+            else {
+                throw new Exception("La contraseña actual no es correcta");
+            }
+        }
+        else {
+            throw new Exception("No existe un usuario con sesión iniciada o es inválida");
+        }
+    }
 
     public Usuario getUsuarioLogueado() {
+        if (usuarioLogueado == null)
+            return null;
         return usuarioLogueado;
     }
     
     @Override
     public String getNombres() {
+        if (usuarioLogueado == null)
+            return null;
         return usuarioLogueado.getNombre();
     }
     
     @Override
     public String getApellidos() {
+        if (usuarioLogueado == null)
+            return null;
         return usuarioLogueado.getApellido1()+ " "+ usuarioLogueado.getApellido2();
     }
     
     @Override
     public String getRol() {
+        if (usuarioLogueado == null)
+            return null;
         return usuarioLogueado.getRol().getNombreRol();
     }
     
     @Override
     public String getIdUsuario() {
+        if (usuarioLogueado == null)
+            return null;
         return usuarioLogueado.getUsername();
     }
     
     @Override
     public String getEmail() {
+        if (usuarioLogueado == null)
+            return null;
         return usuarioLogueado.getEmail();
     }
     
     @Override
-    public int getTelefono() {
+    public Integer getTelefono() {
+        if (usuarioLogueado == null)
+            return null;
         return usuarioLogueado.getTelefono();
     }
     
     @Override
-    public int getRut() {
+    public Integer getRut() {
+        if (usuarioLogueado == null)
+            return null;
         return usuarioLogueado.getRut();
+    }
+    
+    @Override
+    public String getUsername() {
+        if (usuarioLogueado == null)
+            return null;
+        return usuarioLogueado.getUsername();
+    }
+    
+    private String conviertePassToMd5(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes("UTF-8"));
+
+            byte[] digest = md.digest();
+            BigInteger bigInt = new BigInteger(1, digest);
+            password = bigInt.toString(16);
+        }
+        catch (Exception e) {
+            System.out.println("No se pudo convertir a MD5 la password");
+        }
+        return password;
     }
 }
