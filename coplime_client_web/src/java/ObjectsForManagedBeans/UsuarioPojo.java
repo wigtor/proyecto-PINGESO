@@ -9,7 +9,7 @@ package ObjectsForManagedBeans;
  * @author victor
  */
 public class UsuarioPojo{
-    public int num;
+    private int num;
     private String nombre;
     public String userName;
 

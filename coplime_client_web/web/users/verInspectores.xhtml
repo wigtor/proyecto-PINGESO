@@ -62,7 +62,7 @@
                         </p:dataTable>
                         
                         <pm:buttonGroup>
-                            <p:commandButton value="Agregar" action="#{mantenedorInspector.agregar()}"/>
+                            <p:commandButton value="Agregar" action="#{mantenedorInspector.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
                             <p:commandButton value="Volver" action="#{mantenedorInspector.volver()}"/>
                         </pm:buttonGroup>
                     </p:dataList>

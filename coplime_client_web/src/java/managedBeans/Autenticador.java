@@ -68,7 +68,7 @@ public class Autenticador extends commonFunctions implements Serializable {
         return false;
     }
     
-    public void login() throws IOException {
+    public void login() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();

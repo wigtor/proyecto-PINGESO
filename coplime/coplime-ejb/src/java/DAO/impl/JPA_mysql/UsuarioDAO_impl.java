@@ -51,4 +51,17 @@ public class UsuarioDAO_impl extends genericDAO_impl<Usuario> implements Usuario
             return res.get(0);
         }
     }
+    
+    @Override
+    public Usuario findByRut(int rut) {
+        Query q = this.em.createNamedQuery("Usuario.findByRut");
+        q.setParameter("rut", rut);
+        List<Usuario> res = q.getResultList();
+        if (res.isEmpty()) {
+            return null;
+        }
+        else {
+            return res.get(0);
+        }
+    }
 }

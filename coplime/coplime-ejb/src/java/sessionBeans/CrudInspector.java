@@ -99,52 +99,67 @@ public class CrudInspector implements CrudInspectorLocal {
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         UsuarioDAO usuarioDAO = factoryDeDAOs.getUsuarioDAO();
         return usuarioDAO.find(userName);
-        
     }
     
     @Override
-    public void editarInspector(String userName,String nombre, String apellido1, String apellido2, String mail, boolean resetContraseña,int telefono, Usuario user) {
-        Usuario editInspector = new Usuario();
+    public Usuario getInspectorByRut(Integer rutUser) {
+        //Hago los DAO
+        if (rutUser == null) {
+            return null;
+        }
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        UsuarioDAO usuarioDAO = factoryDeDAOs.getUsuarioDAO();
+        return usuarioDAO.findByRut(rutUser.intValue());
+    }
+    
+    @Override
+    public void editarInspector(Integer rutUser, String userName,String nombre, String apellido1, String apellido2, String mail, boolean resetContraseña,int telefono) {
+        if (rutUser == null) {
+            return;
+        }
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
+        
+        Usuario editInspector = userDAO.findByRut(rutUser.intValue());
+        if (editInspector == null) {
+            System.out.println("Usuario a editar no encontrado");
+            return;
+        }
         editInspector.setNombre(nombre);
+        editInspector.setUsername(userName);
         editInspector.setApellido1(apellido1);
         editInspector.setApellido2(apellido2);
         editInspector.setEmail(mail);
         editInspector.setTelefono(telefono);
-        editInspector.setUsername(userName);
-        String password = Integer.toString(user.getRut());
+        
         
         if(resetContraseña == true){
+            String password = Integer.toString(editInspector.getRut());
             try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(password.getBytes("UTF-8"));
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(password.getBytes("UTF-8"));
 
-            byte[] digest = md.digest();
-            BigInteger bigInt = new BigInteger(1, digest);
-            password = bigInt.toString(16);
+                byte[] digest = md.digest();
+                BigInteger bigInt = new BigInteger(1, digest);
+                password = bigInt.toString(16);
             }
             catch (Exception e) {
                 System.out.println("No se pudo convertir a MD5 la password");
             }
             editInspector.setPassword(password);        
         }
-        this.usertemp = user;
-        //user = editInspector;
-        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-        UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
+        
+        this.usertemp = editInspector;
         this.usertemp = userDAO.update(editInspector);
-        
-        //userDAO.find(userName) = userDAO.update(editInspector);
-        //System.out.println("Telefono antes de merge: "+this.usuarioLogueado.getTelefono());
-        
-        
     }
     
     @Override
-    public void eliminarInspector(Usuario user){
-        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-        UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
-        userDAO.delete(user);
-        
+    public void eliminarInspector(Integer idUser){
+        if (idUser != null) {
+            DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+            UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
+            userDAO.delete(idUser.intValue());
+        }
     }
 
     public Usuario getUsertemp() {

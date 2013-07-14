@@ -6,23 +6,17 @@ package managedBeans;
 
 import ObjectsForManagedBeans.UsuarioPojo;
 import entities.Inspector;
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import sessionBeans.CrudInspectorLocal;
 import entities.Usuario;
 import java.util.Map;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -43,22 +37,12 @@ public class mantenedorInspector extends commonFunctions {
     private String mail;
     private Integer telefono;
     private boolean checkContraseña;
-    
     private List<UsuarioPojo> lista; //collection
-    
     private UsuarioPojo elementoSelecionado;
     
-    private Usuario userSelect;
-    
-    
-    FacesContext context = FacesContext.getCurrentInstance();
-    Map<String,Object> variableSession = context.getExternalContext().getSessionMap();
-    
-
     /**
      * Creates a new instance of mantenedorInspector
      */
-    
     public mantenedorInspector() {
         
     }
@@ -70,7 +54,7 @@ public class mantenedorInspector extends commonFunctions {
         Collection<Inspector> listaTemp = crudInspector.getAllInspectores();
         UsuarioPojo inspectorTemporal;
         //this.lista = new LinkedList();
-        this.lista = new ArrayList<UsuarioPojo>();
+        this.lista = new ArrayList();
         for(Inspector insp_iter : listaTemp) {
             inspectorTemporal = new UsuarioPojo();
             
@@ -84,18 +68,25 @@ public class mantenedorInspector extends commonFunctions {
         }    
         ///////////////Editar/////////////////////  
         try{
-            String userName = (String)variableSession.get("userToEdit");
-            variableSession.clear();
-            Usuario usuarioEdit = crudInspector.getInspector(userName);
-            this.nombre = usuarioEdit.getNombre();
-            this.apellido1 = usuarioEdit.getApellido1();
-            this.apellido2 = usuarioEdit.getApellido2();
-            this.mail = usuarioEdit.getEmail();
-            this.username = usuarioEdit.getUsername();
-            this.telefono = usuarioEdit.getTelefono();
-            this.userSelect = usuarioEdit;
-            System.out.println("usuario: "+userSelect.getRut());
-            
+            Map<String,Object> variableSession = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+            Integer idUsuario = (Integer)variableSession.get("idUserToEdit");
+            if (idUsuario != null) {
+                variableSession.remove("idUserToEdit");
+                Usuario usuarioEdit = crudInspector.getInspectorByRut(idUsuario);
+                if (usuarioEdit != null) {
+                    this.rut = new Integer(usuarioEdit.getRut());
+                    this.nombre = usuarioEdit.getNombre();
+                    this.apellido1 = usuarioEdit.getApellido1();
+                    this.apellido2 = usuarioEdit.getApellido2();
+                    this.mail = usuarioEdit.getEmail();
+                    this.username = usuarioEdit.getUsername();
+                    this.telefono = usuarioEdit.getTelefono();
+                    System.out.println(" idUser="+this.rut);
+                }
+                else {
+                    //MOSTRAR ERROR
+                }
+            }
         }
         catch(Exception e){
             System.out.println("no hay cookie"); 
@@ -127,13 +118,16 @@ public class mantenedorInspector extends commonFunctions {
     }
     
     public void agregarInspector() {
-        crudInspector.agregarInspector( username, password, rut, nombre, apellido1, apellido2, mail, telefono);
+        crudInspector.agregarInspector(username, password, rut, nombre, apellido1, apellido2, mail, telefono);
         this.init();
         goToPage("/faces/users/verInspectores.xhtml");       
         
     }
     public void guardarCambiosInspector(){
-        crudInspector.editarInspector(username, nombre, apellido1, apellido2, mail, checkContraseña, telefono, userSelect);
+        System.out.println("this.rut: "+this.rut);
+        System.out.println("Se va a guardar los cambios de un inspector");
+        System.out.println("idUser="+rut+" username:"+username+" nombre:"+nombre+" ap1:"+apellido1+" ap2:"+apellido2);
+        crudInspector.editarInspector( rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
         this.init();
         goToPage("/faces/users/verInspectores.xhtml");
     }
@@ -157,17 +151,15 @@ public class mantenedorInspector extends commonFunctions {
     
     public void editar(int numInspector) {
        System.out.println("NÚMERO DE INSPECTOR: "+numInspector);
-       String user = ObtineUserName(numInspector);
-       //Usuario usuarioEdit = crudInspector.getInspector(user);
        FacesContext context = FacesContext.getCurrentInstance();
        Map<String,Object> variableSession = context.getExternalContext().getSessionMap();
-       variableSession.put("userToEdit", user);      
+       variableSession.put("idUserToEdit", new Integer(numInspector));      
        goToPage("/faces/admin/editarInspector.xhtml");
        
     }
     public void eliminar(int numInspector) {
        System.out.println("NÚMERO DE INSPECTOR: "+numInspector);
-       crudInspector.eliminarInspector(userSelect);
+       crudInspector.eliminarInspector(new Integer(numInspector));
        init();
        goToPage("/faces/users/verInspectores.xhtml");
        

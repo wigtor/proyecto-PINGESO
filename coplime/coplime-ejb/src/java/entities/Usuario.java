@@ -7,6 +7,8 @@ package entities;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,15 +24,15 @@ import javax.persistence.OneToOne;
 @Entity
 @NamedQueries( {
     @NamedQuery(name="Usuario.findByUsernameAndPassword", query="SELECT u FROM Usuario u WHERE u.username = :username AND u.password = :password"), 
-    @NamedQuery(name="Usuario.findByUsername", query="SELECT u FROM Usuario u WHERE u.username = :username")
+    @NamedQuery(name="Usuario.findByUsername", query="SELECT u FROM Usuario u WHERE u.username = :username"),
+    @NamedQuery(name="Usuario.findByRut", query="SELECT u FROM Usuario u WHERE u.rut = :rut")
 })
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //private Long id;
-    
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    
     @Column(nullable = false)
     private String username;
     
@@ -58,6 +60,15 @@ public class Usuario implements Serializable {
     @ManyToOne
     private Rol rol;
 
+    
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
     public Rol getRol() {
         return rol;
     }
@@ -153,7 +164,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Usuario[ username=" + username + " ]";
+        return "entities.Usuario[ id=" + username + " ]";
     }
     
 }
