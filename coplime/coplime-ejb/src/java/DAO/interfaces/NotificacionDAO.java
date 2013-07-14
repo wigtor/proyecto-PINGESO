@@ -14,5 +14,5 @@ import java.util.Collection;
 public interface NotificacionDAO extends genericDAO<Notificacion>{
     // Interface that all AdministradorDAOs must support
 
-    
+    public Integer countPorRevisar(String username);
 }

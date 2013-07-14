@@ -23,7 +23,6 @@ import sessionBeans.UserServiceLocal;
 public class cambioPassManagedBeans extends commonFunctions{
     @EJB
     private UserServiceLocal userService;
-    
     String username;
     String passActual;
     String nvaPass;
@@ -61,7 +60,8 @@ public class cambioPassManagedBeans extends commonFunctions{
     public void goToInfoUsuario() {
        goToPage("/faces/users/infoUsuario.xhtml");
     }
-
+    
+    
     public String getUsername() {
         return username;
     }

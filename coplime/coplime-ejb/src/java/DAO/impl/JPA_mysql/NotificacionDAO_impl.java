@@ -24,4 +24,13 @@ public class NotificacionDAO_impl extends genericDAO_impl<Notificacion> implemen
     
     //Poner otras funciones extra que sólo haga este DAO
     
+    @Override
+    public Integer countPorRevisar(String username) {
+        Query q = this.em.createNamedQuery("Notificacion.countNoRevisadasUsuarioDestinatario");
+        q.setParameter("username", username);
+        Long resultado = (Long)q.getSingleResult();
+        System.out.println("Notificaciones por revisar para el usuario con username: "+username+" son:"+resultado);
+        return new Integer(resultado.intValue());
+    }
+            
 }

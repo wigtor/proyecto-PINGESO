@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 
 /**
@@ -21,6 +23,10 @@ import javax.persistence.Temporal;
  * @author victor
  */
 @Entity
+@NamedQueries( {
+    @NamedQuery(name="Notificacion.findByUsuarioDestinatario", query="SELECT u FROM Notificacion u WHERE u.puntoLimpio.inspectorEncargado.usuario.rut = :rut"),
+    @NamedQuery(name="Notificacion.countNoRevisadasUsuarioDestinatario", query="SELECT count(u) FROM Notificacion u WHERE (u.puntoLimpio.inspectorEncargado.usuario.username = :username OR u.puntoLimpio.inspectorEncargado IS NULL) AND u.revisado = false")
+})
 public class Notificacion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

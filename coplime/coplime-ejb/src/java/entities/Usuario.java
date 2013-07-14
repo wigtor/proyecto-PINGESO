@@ -37,7 +37,7 @@ public class Usuario implements Serializable {
     private String username;
     
     @Column(nullable = false)
-    private int rut;
+    private Integer rut;
     
     @Column(nullable = false)
     private String password;
@@ -77,11 +77,11 @@ public class Usuario implements Serializable {
         this.rol = rol;
     }
     
-    public int getRut() {
+    public Integer getRut() {
         return rut;
     }
 
-    public void setRut(int rut) {
+    public void setRut(Integer rut) {
         this.rut = rut;
     }
     

@@ -36,7 +36,7 @@
                         <f:facet name="header">Datos del usuario</f:facet>
                         <f:attribute name="icon" value="false" />
                         <p:growl id="msj_error_cambioContrasegna"/>
-                        <p:inputText label="Nombre de usuario" value="#{cambioPassManagedBeans.username}"/>
+                        <p:inputText label="Nombre de usuario" value="#{cambioPassManagedBeans.username}" disabled="true"/>
                         <p:inputText label="Contraseña actual" value="#{cambioPassManagedBeans.passActual}" type="password"/>
                         <p:inputText label="Contraseña nueva" value="#{cambioPassManagedBeans.nvaPass}" type="password"/>
                         <p:inputText label="Repetir contraseña nueva" value="#{cambioPassManagedBeans.nvaPassRep}" type="password"/>
