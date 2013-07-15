@@ -28,6 +28,7 @@ import javax.persistence.PersistenceContext;
 public class CrudOperario implements CrudOperarioLocal {
     @PersistenceContext(unitName = "coplime-ejbPU")
     private EntityManager em;
+    private Usuario usertemp;
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
@@ -98,4 +99,65 @@ public class CrudOperario implements CrudOperarioLocal {
         return usuarioDAO.find(userName);
         
     }
+    
+    @Override
+    public Usuario getOperarioByRut(Integer rutUser) {
+        //Hago los DAO
+        if (rutUser == null) {
+            return null;
+        }
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        UsuarioDAO usuarioDAO = factoryDeDAOs.getUsuarioDAO();
+        return usuarioDAO.findByRut(rutUser.intValue());
+    }
+    
+    @Override
+    public void editarOperario(Integer rutUser, String userName,String nombre, String apellido1, String apellido2, String mail, boolean resetContraseña,int telefono) {
+        if (rutUser == null) {
+            return;
+        }
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
+        
+        Usuario editInspector = userDAO.findByRut(rutUser.intValue());
+        if (editInspector == null) {
+            System.out.println("Usuario a editar no encontrado");
+            return;
+        }
+        editInspector.setNombre(nombre);
+        editInspector.setUsername(userName);
+        editInspector.setApellido1(apellido1);
+        editInspector.setApellido2(apellido2);
+        editInspector.setEmail(mail);
+        editInspector.setTelefono(telefono);
+        
+        
+        if(resetContraseña == true){
+            String password = Integer.toString(editInspector.getRut());
+            try {
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(password.getBytes("UTF-8"));
+
+                byte[] digest = md.digest();
+                BigInteger bigInt = new BigInteger(1, digest);
+                password = bigInt.toString(16);
+            }
+            catch (Exception e) {
+                System.out.println("No se pudo convertir a MD5 la password");
+            }
+            editInspector.setPassword(password);        
+        }
+        
+        this.usertemp = editInspector;
+        this.usertemp = userDAO.update(editInspector);
+    }
+
+    public Usuario getUsertemp() {
+        return usertemp;
+    }
+
+    public void setUsertemp(Usuario usertemp) {
+        this.usertemp = usertemp;
+    }
+    
 }

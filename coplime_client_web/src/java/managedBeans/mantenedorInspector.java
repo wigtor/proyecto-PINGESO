@@ -38,7 +38,7 @@ public class mantenedorInspector extends commonFunctions {
     private Integer telefono;
     private boolean checkContraseña;
     private List<UsuarioPojo> lista; //collection
-    private UsuarioPojo elementoSelecionado;
+   
     
     /**
      * Creates a new instance of mantenedorInspector
@@ -108,15 +108,7 @@ public class mantenedorInspector extends commonFunctions {
     public void setCheckContraseña(boolean checkContraseña) {
         this.checkContraseña = checkContraseña;
     }    
-    
-    public UsuarioPojo getElementoSelecionado() {
-        return elementoSelecionado;
-    }
-
-    public void setElementoSelecionado(UsuarioPojo elementoSelecionado) {
-        this.elementoSelecionado = elementoSelecionado;
-    }
-    
+           
     public void agregarInspector() {
         crudInspector.agregarInspector(username, password, rut, nombre, apellido1, apellido2, mail, telefono);
         this.init();
@@ -159,7 +151,8 @@ public class mantenedorInspector extends commonFunctions {
     }
     public void eliminar(int numInspector) {
        System.out.println("NÚMERO DE INSPECTOR: "+numInspector);
-       crudInspector.eliminarInspector(new Integer(numInspector));
+       //crudInspector.eliminarInspector(new Integer(numInspector));
+       crudInspector.eliminarInspector(numInspector);
        init();
        goToPage("/faces/users/verInspectores.xhtml");
        

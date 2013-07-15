@@ -39,14 +39,12 @@ public class mantenedorOperario extends commonFunctions{
     private String password;
     private Integer rut;
     private String mail;
-    private Integer telefono;
+    private boolean checkContraseña;
+    private Integer telefono;    
+    private List<UsuarioPojo> lista;    
     
-    private List<UsuarioPojo> lista;
     
-    private Usuario userSelect;
     
-    FacesContext context = FacesContext.getCurrentInstance();
-    Map<String,Object> variableSession = context.getExternalContext().getSessionMap();
 
     public Collection<UsuarioPojo> getLista() {
         return lista;
@@ -64,7 +62,7 @@ public class mantenedorOperario extends commonFunctions{
         Collection<OperarioMantencion> listaTemp = crudOperario.getAllOperarios();
         UsuarioPojo inspectorTemporal;
         //this.lista = new LinkedList();
-        this.lista = new ArrayList<UsuarioPojo>();
+        this.lista = new ArrayList();
         for(OperarioMantencion insp_iter : listaTemp) {
             inspectorTemporal = new UsuarioPojo();
             
@@ -78,17 +76,26 @@ public class mantenedorOperario extends commonFunctions{
         } 
         //////////Edit/////////////////////
         try{
-            String userName = (String)variableSession.get("userToEdit");
-            variableSession.clear();
-            Usuario usuarioEdit = crudOperario.getOperario(userName);
-            this.nombre = usuarioEdit.getNombre();
-            this.apellido1 = usuarioEdit.getApellido1();
-            this.apellido2 = usuarioEdit.getApellido2();
-            this.mail = usuarioEdit.getEmail();
-            this.username = usuarioEdit.getUsername();
-            this.telefono = usuarioEdit.getTelefono();
-            this.userSelect = usuarioEdit;
-            System.out.println("usuario: "+userSelect.getRut());
+            Map<String,Object> variableSession = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+            Integer idUsuario = (Integer)variableSession.get("idUserToEdit");
+            if (idUsuario != null) {
+                variableSession.remove("idUserToEdit");
+                Usuario usuarioEdit = crudOperario.getOperarioByRut(idUsuario);
+                if (usuarioEdit != null) {
+                    this.rut = new Integer(usuarioEdit.getRut());
+                    this.nombre = usuarioEdit.getNombre();
+                    this.apellido1 = usuarioEdit.getApellido1();
+                    this.apellido2 = usuarioEdit.getApellido2();
+                    this.mail = usuarioEdit.getEmail();
+                    this.username = usuarioEdit.getUsername();
+                    this.telefono = usuarioEdit.getTelefono();
+                    System.out.println(" idUser="+this.rut);
+                }
+                else {
+                    //MOSTRAR ERROR
+                }
+            }
+            
             
         }
         catch(Exception e){
@@ -103,13 +110,21 @@ public class mantenedorOperario extends commonFunctions{
         goToPage("/faces/users/verOperariosMantencion.xhtml");
         
     }
+    
+    public void guardarCambiosOperario(){
+        System.out.println("this.rut: "+this.rut);
+        System.out.println("Se va a guardar los cambios de un Operario");
+        System.out.println("idUser="+rut+" username:"+username+" nombre:"+nombre+" ap1:"+apellido1+" ap2:"+apellido2);
+        crudOperario.editarOperario(rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
+        this.init();
+        goToPage("/faces/users/verOperariosMantencion.xhtml");
+    }
+    
     public void editar(int numOperario) {
-       System.out.println("NÚMERO DE INSPECTOR: "+numOperario);
-       String user = ObtineUserName(numOperario);
-       //Usuario usuarioEdit = crudInspector.getInspector(user);
+       System.out.println("NÚMERO DE Operario: "+numOperario);
        FacesContext context = FacesContext.getCurrentInstance();
        Map<String,Object> variableSession = context.getExternalContext().getSessionMap();
-       variableSession.put("userToEdit", user);      
+       variableSession.put("idUserToEdit", new Integer(numOperario));      
        goToPage("/faces/admin/editarOperarioMantencion.xhtml");
        
     }
@@ -194,4 +209,13 @@ public class mantenedorOperario extends commonFunctions{
     public void setTelefono(Integer telefono) {
         this.telefono = telefono;
     }
+
+    public boolean isCheckContraseña() {
+        return checkContraseña;
+    }
+
+    public void setCheckContraseña(boolean checkContraseña) {
+        this.checkContraseña = checkContraseña;
+    }
+    
 }

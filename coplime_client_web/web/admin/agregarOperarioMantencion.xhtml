@@ -40,12 +40,11 @@
                         <p:inputText label="Nombre:" value="#{mantenedorOperario.nombre}"/>
                         <p:inputText label="Apellido paterno" value="#{mantenedorOperario.apellido1}"/>
                         <p:inputText label="Apellido materno" value="#{mantenedorOperario.apellido2}"/>
+                        <p:inputText label="Rut" value="#{mantenedorOperario.rut}" required="true"/>
+                        <p:inputText label="Teléfono" value="#{mantenedorOperario.telefono}"/>
+                        <p:inputText label="E-mail" value="#{mantenedorOperario.mail}" required="true"/>
                         <p:inputText label="Nombre de usuario" value="#{mantenedorOperario.username}"/>
                         <p:inputText label="contraseña" type="password" value="#{mantenedorOperario.password}"/>
-                        <p:inputText label="Rut" value="#{mantenedorOperario.rut}" required="true"/>
-                        <p:inputText label="E-mail" value="#{mantenedorOperario.mail}" required="true"/>
-                        <p:inputText label="Teléfono" value="#{mantenedorOperario.telefono}"/>
-
                         <p:commandButton value="Guardar" action="#{mantenedorOperario.agregarOperario()}"/>
                         <p:commandButton value="Volver" action="#{mantenedorOperario.volver()}"/>
                     </p:dataList>
