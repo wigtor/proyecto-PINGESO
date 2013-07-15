@@ -29,6 +29,16 @@
             </pm:content>
             </h:form>
         </pm:view>
+        <pm:view id="success" title="Aviso de incidencia enviado">
+            <pm:header title="Aviso de incidencia enviado">
+                <f:facet name="left">
+                    <p:commandButton value="Ir al inicio" icon="back" action="#{Autenticador.goToIndex()}" />
+                </f:facet>
+            </pm:header>
+            <pm:content>
+                El aviso ha sido enviado satisfactoriamente
+            </pm:content>
+        </pm:view>
     </pm:page>
 
 </f:view>

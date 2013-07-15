@@ -4,13 +4,11 @@
  */
 package managedBeans;
 
-import java.io.IOException;
 import javax.inject.Named;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.RequestDispatcher;
@@ -91,6 +89,10 @@ public class Autenticador extends commonFunctions implements Serializable {
     
     public void goToEnviarAvisoIncidencia() {
         goToPage("/faces/selectPtoLimpioAviso.xhtml");
+    }
+    
+    public void goToIndex() {
+        goToPage("/faces/index.xhtml");
     }
 
     // Getters/setters for username and password.

@@ -7,7 +7,7 @@ package managedBeans;
 import ObjectsForManagedBeans.SelectElemPojo;
 import entities.PuntoLimpio;
 import entities.TipoIncidencia;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -15,6 +15,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -28,14 +30,10 @@ import sessionBeans.AvisosIncidenciaLocal;
  * @author victor
  */
 @Named(value = "enviarAvisoIncidenciaManagedBeans")
-@ConversationScoped
-public class enviarAvisoIncidenciaManagedBeans extends commonFunctions implements Serializable{
+@RequestScoped
+public class enviarAvisoIncidenciaManagedBeans extends commonFunctions {
     @EJB
     private AvisosIncidenciaLocal avisosIncidencia;
-    
-    @Inject
-    private Conversation conversation; //Hace persistente el bean
-    //private @Inject enviarAvisoIncidenciaManagedBeans controlador;
     
     private Integer numPuntoLimpio;
     private String nombre_presentacion_ptoLimpio;
@@ -46,20 +44,9 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions implement
     private Collection<SelectElemPojo> listaPuntosLimpios;
     private UploadedFile file;
     
-    public void beginConversation() {
-        System.out.println("Conversavción iniciada");
-        if(conversation.isTransient())
-            conversation.begin();
-    }
-
-    public void endConversation() {
-        System.out.println("Conversavción terminada");
-        if(!conversation.isTransient())
-            conversation.end();
-    }
-    
     @PostConstruct
     public void init() {
+        
         System.out.println("Ejecutando init");
         if (!seIntentaSeleccionarPuntoLimpio()) {
             if (!puntoLimpioIsSelected()) {
@@ -68,7 +55,6 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions implement
             cargarTiposIncidencia();
         }
         cargarPuntosLimpios();
-        beginConversation();
     }
     
     private boolean seIntentaSeleccionarPuntoLimpio() {
@@ -82,6 +68,13 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions implement
     }
     
     private boolean puntoLimpioIsSelected() {
+        
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        HttpServletRequest obj = (HttpServletRequest)externalContext.getRequest();
+        if (!obj.getMethod().equals("GET")) {
+            return true;
+        }
+        
         String paramNumPtoLimpio = FacesContext.getCurrentInstance().
                 getExternalContext().getRequestParameterMap().
                 get("id");
@@ -136,28 +129,25 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions implement
     public void enviarAviso() {
         
         System.out.println("N° " + numPuntoLimpio + " email: "+ emailContacto + " detalles: " + detalles + " tipo: " + tipoIncidenciaSeleccionada);
+        byte[] datosImagen = null;
+        String tipoArchivo = null;
         if(file != null) {
-            byte[] datosImagen = file.getContents();
+            datosImagen = file.getContents();
             //String nombreArchivo = file.getFileName();
-            String tipoArchivo = file.getContentType();
-            //System.out.println("Nombre archivo: " + nombreArchivo + " tipo: " + tipoArchivo);
-            if (numPuntoLimpio != null) {
-                if (tipoIncidenciaSeleccionada != null)
-                avisosIncidencia.guardarAvisoIncidencia(numPuntoLimpio.intValue(), emailContacto, detalles, tipoIncidenciaSeleccionada.intValue(), datosImagen, tipoArchivo);
-            }
-            FacesContext context = FacesContext.getCurrentInstance();
-            ExternalContext externalContext = context.getExternalContext();
-            String url = FacesContext.getCurrentInstance().getExternalContext()
-                    .getRequestContextPath();
-            url += "/faces/enviarAvisoIncidencia.xhtml#success";
-            try {
-                externalContext.redirect(url);
-            }
-            catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-            //Mostrar algún mensaje: Su aviso ha sido realizado satisfactoriamente, gracias por ayudarnos a prestar un mejor servicio
+            tipoArchivo = file.getContentType();
         }
+        //System.out.println("Nombre archivo: " + nombreArchivo + " tipo: " + tipoArchivo);
+        if (numPuntoLimpio != null) {
+            if (tipoIncidenciaSeleccionada != null)
+            avisosIncidencia.guardarAvisoIncidencia(numPuntoLimpio.intValue(), emailContacto, detalles, tipoIncidenciaSeleccionada.intValue(), datosImagen, tipoArchivo);
+        }
+        goToPage("/faces/selectPtoLimpioAviso.xhtml#success");
+    }
+    
+    public void submitCaptcha(ActionEvent event) {  
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Correcto");  
+          
+        FacesContext.getCurrentInstance().addMessage(null, msg);  
     }
 
     public Integer getNumPuntoLimpio() {
@@ -225,12 +215,6 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions implement
     
     public String getNombre_presentacion_ptoLimpio() {
         return nombre_presentacion_ptoLimpio;
-    }
-    
-    public void goToIndex() {
-        goToPage("/faces/index.xhtml");
-        endConversation();
-        System.out.println("Terminando conversación");
     }
     
     public void goToEnviarAviso(int idSeleccionado) {
