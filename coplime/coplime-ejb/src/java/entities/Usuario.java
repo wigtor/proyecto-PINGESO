@@ -84,6 +84,9 @@ public class Usuario implements Serializable {
     public void setRut(Integer rut) {
         this.rut = rut;
     }
+    public void setRut(int rut) {
+        this.rut = rut;
+    }
     
     public int getTelefono() {
         return telefono;
