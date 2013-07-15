@@ -15,6 +15,9 @@
         <!-- Main View -->
         <pm:view id="main">
             <pm:header title="Enviar aviso de incidencia">
+                <f:facet name="left">
+                    <p:commandButton value="Ir al inicio" icon="back" action="#{Autenticador.goToIndex()}" />
+                </f:facet>
             </pm:header>
 
             <pm:content>
@@ -50,7 +53,6 @@
                             <p:commandButton value="Enviar" ajax="false" action="#{enviarAvisoIncidenciaManagedBeans.enviarAviso()}"/>
                             <p:commandButton immediate="true" value="Cancelar" action="#{enviarAvisoIncidenciaManagedBeans.goToIndex()}"/>
                         </pm:buttonGroup>
-                        
                     </p:dataList>
                 </h:form>
             </pm:content>
