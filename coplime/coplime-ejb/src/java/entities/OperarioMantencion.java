@@ -6,10 +6,12 @@ package entities;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -55,7 +57,8 @@ public class OperarioMantencion implements Serializable {
         this.id = cod;
     }
     
-    @OneToOne
+    @OneToOne(optional = false, cascade = {CascadeType.REFRESH, CascadeType.REMOVE})
+    @JoinColumn(nullable = false)
     private Usuario usuario;
 
     public Integer getId() {

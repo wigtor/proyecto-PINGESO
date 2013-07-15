@@ -7,6 +7,7 @@ package entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,7 +53,8 @@ public class PuntoLimpio implements Serializable {
     @JoinColumn(nullable = false)
     private Estado estadoGlobal;
     
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn
     private Inspector inspectorEncargado;
     
     @OneToMany(mappedBy = "puntoLimpio")

@@ -18,19 +18,13 @@
             </pm:header>
 
             <pm:content>
-                <p:outputPanel>
-                    <h:form  enctype="multipart/form-data">
+                <h:form  enctype="multipart/form-data">
+                    <h:inputHidden value="#{enviarAvisoIncidenciaManagedBeans.numPuntoLimpio}"/>
                     <p:dataList type="inset" styleClass="ui-li-custom">
-                        <f:facet name="header">Seleccione punto limpio</f:facet>
-                        <f:attribute name="icon" value="false" />
-                        <p:inputText label="Código punto limpio" value="#{enviarAvisoIncidenciaManagedBeans.numPuntoLimpio}" required="true"/>
-                        <p:commandButton value="Ver la ayuda" type="button"/>
-                    </p:dataList>
-                    
-                    <p:dataList type="inset" styleClass="ui-li-custom">
-                        <f:facet name="header">Ingresar datos del aviso</f:facet>
+                        <f:facet name="header">Ingresar datos del aviso de incidencia</f:facet>
                         <f:attribute name="icon" value="false" />
                         
+                        <p:inputText label="Punto limpio" value="#{enviarAvisoIncidenciaManagedBeans.nombre_presentacion_ptoLimpio}" disabled="true"/>
                         <pm:field>
                             <h:outputLabel for="selectOneMenu" value="Seleccione tipo de incidencia:"/>
                             <h:selectOneMenu id="selectOneMenu" value="#{enviarAvisoIncidenciaManagedBeans.tipoIncidenciaSeleccionada}">
@@ -45,7 +39,9 @@
                             <h:outputLabel for="subidaArchivos" value="Subir imagen:"/>
                             <!-- Máximo de 16Mb y sólo imágenes --> 
                             <p:fileUpload id="subidaArchivos" value="#{enviarAvisoIncidenciaManagedBeans.file}" 
-                                          mode="simple" sizeLimit="16777216" allowTypes="/(\.|\/)(gif|jpg|jpeg|gif|png|PNG|GIF|JPG|JPEG)$/"/> 
+                                          mode="simple" sizeLimit="16777216" 
+                                          allowTypes="/(\.|\/)(gif|jpg|jpeg|gif|png|PNG|GIF|JPG|JPEG)$/"
+                                          required="false"/> 
                         </pm:field>
                         
                         <pm:buttonGroup>
@@ -55,7 +51,6 @@
                         
                     </p:dataList>
                 </h:form>
-                </p:outputPanel>
             </pm:content>
         </pm:view>
         

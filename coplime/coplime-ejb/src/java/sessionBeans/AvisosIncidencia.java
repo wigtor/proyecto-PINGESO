@@ -47,6 +47,20 @@ public class AvisosIncidencia implements AvisosIncidenciaLocal {
     }
     
     @Override
+    public Collection<PuntoLimpio> getPuntosLimpios() {
+        //Hago los DAO
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        PuntoLimpioDAO tiDAO = factoryDeDAOs.getPuntoLimpioDAO();
+        
+        Collection<PuntoLimpio> resultado;
+        resultado = tiDAO.findAll();
+        if (resultado == null) {
+            resultado = new LinkedList();
+        }
+        return resultado;
+    }
+    
+    @Override
     public void guardarAvisoIncidencia(int numPuntoLimpio, String emailContacto, String detalles, int idTipoIncidenciaSeleccionada, byte[] datosImagen, String tipoImagen) {
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         PuntoLimpioDAO ptoLimpioDAO = factoryDeDAOs.getPuntoLimpioDAO();
@@ -115,6 +129,17 @@ public class AvisosIncidencia implements AvisosIncidenciaLocal {
             return url_completa;
     }
 
+    @Override
+    public String getNombrePtoLimpio(int numPtoLimpio) {
+        //Hago los DAO
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        PuntoLimpioDAO pDAO = factoryDeDAOs.getPuntoLimpioDAO();
+        PuntoLimpio pLimpio = pDAO.find(numPtoLimpio);
+        if (pLimpio == null) {
+            return null;
+        }
+        return pLimpio.getNombre();
+    }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     

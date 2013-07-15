@@ -5,6 +5,7 @@
 package entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class Administrador implements Serializable {
     
     
     @JoinColumn(nullable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, cascade = {CascadeType.REFRESH, CascadeType.REMOVE})
     private Usuario usuario;
 
     public Usuario getUsuario() {

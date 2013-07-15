@@ -8,34 +8,28 @@ import ObjectsForManagedBeans.SelectElemPojo;
 import entities.PuntoLimpio;
 import entities.TipoIncidencia;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import org.primefaces.model.UploadedFile;
 import sessionBeans.AvisosIncidenciaLocal;
+import org.primefaces.model.UploadedFile;
+
 
 /**
  *
  * @author victor
  */
-@Named(value = "enviarAvisoIncidenciaManagedBeans")
-@ConversationScoped
-public class enviarAvisoIncidenciaManagedBeans extends commonFunctions implements Serializable{
+@Named(value = "enviarAvisoIncidenciaManagedBeans2")
+@RequestScoped
+public class enviarAvisoIncidenciaManagedBeans2 extends commonFunctions{
     @EJB
     private AvisosIncidenciaLocal avisosIncidencia;
-    
-    @Inject
-    private Conversation conversation; //Hace persistente el bean
-    //private @Inject enviarAvisoIncidenciaManagedBeans controlador;
     
     private Integer numPuntoLimpio;
     private String nombre_presentacion_ptoLimpio;
@@ -45,22 +39,10 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions implement
     private Collection<SelectElemPojo> listaTiposIncidencias;
     private Collection<SelectElemPojo> listaPuntosLimpios;
     private UploadedFile file;
-    
-    public void beginConversation() {
-        System.out.println("Conversavción iniciada");
-        if(conversation.isTransient())
-            conversation.begin();
-    }
 
-    public void endConversation() {
-        System.out.println("Conversavción terminada");
-        if(!conversation.isTransient())
-            conversation.end();
-    }
-    
+
     @PostConstruct
     public void init() {
-        System.out.println("Ejecutando init");
         if (!seIntentaSeleccionarPuntoLimpio()) {
             if (!puntoLimpioIsSelected()) {
                 goToPage("/faces/selectPtoLimpioAviso.xhtml");
@@ -68,7 +50,6 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions implement
             cargarTiposIncidencia();
         }
         cargarPuntosLimpios();
-        beginConversation();
     }
     
     private boolean seIntentaSeleccionarPuntoLimpio() {
@@ -134,7 +115,6 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions implement
     }
     
     public void enviarAviso() {
-        
         System.out.println("N° " + numPuntoLimpio + " email: "+ emailContacto + " detalles: " + detalles + " tipo: " + tipoIncidenciaSeleccionada);
         if(file != null) {
             byte[] datosImagen = file.getContents();
@@ -227,19 +207,19 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions implement
         return nombre_presentacion_ptoLimpio;
     }
     
+    /**
+     * Creates a new instance of enviarAvisoIncidenciaManagedBeans2
+     */
+    public enviarAvisoIncidenciaManagedBeans2() {
+    }
+    
     public void goToIndex() {
         goToPage("/faces/index.xhtml");
-        endConversation();
-        System.out.println("Terminando conversación");
     }
     
     public void goToEnviarAviso(int idSeleccionado) {
         System.out.println("idPtoLimpio="+idSeleccionado);
         goToPage("/faces/enviarAvisoIncidencia.xhtml"+"?id="+idSeleccionado);
     }
-    /**
-     * Creates a new instance of enviarAvisoIncidenciaManagedBeans
-     */
-    public enviarAvisoIncidenciaManagedBeans() {
-    }
+    
 }

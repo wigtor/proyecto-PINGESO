@@ -90,7 +90,7 @@ public class Autenticador extends commonFunctions implements Serializable {
     }
     
     public void goToEnviarAvisoIncidencia() {
-        goToPage("/faces/enviarAvisoIncidencia.xhtml");
+        goToPage("/faces/selectPtoLimpioAviso.xhtml");
     }
 
     // Getters/setters for username and password.

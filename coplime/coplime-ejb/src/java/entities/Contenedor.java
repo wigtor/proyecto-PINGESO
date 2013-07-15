@@ -5,6 +5,7 @@
 package entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,7 +45,8 @@ public class Contenedor implements Serializable {
     @Column(nullable = false)
     private int porcentajeUsoEstimado; //Indica lo que el sistema estima
     
-    @ManyToOne
+    
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private PuntoLimpio puntoLimpio;
 
