@@ -1,52 +1,50 @@
-<!DOCTYPE html>
-<f:view xmlns="http://www.w3.org/1999/xhtml"
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pm="http://primefaces.org/mobile"
-      contentType="text/html"
-      renderKitId="PRIMEFACES_MOBILE"
-      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
-    
-    
-    <pm:page title="Cambiar contraseña">
-        <!-- Main View -->
-        <pm:view id="main">
-            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Administrador')}">
-                <ezcomp:menuAdministrador/>
-            </p:overlayPanel>
-            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Inspector')}">
-                <ezcomp:menuInspector/>
-            </p:overlayPanel>
-            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Operario')}">
-                <ezcomp:menuOperario/>
-            </p:overlayPanel>
-            
-            <pm:header title="Cambiar contraseña">
-                <f:facet name="left">
-                    <p:button id="btnPanelContext" value="" iconPos="notext" icon="bars"/>
-                </f:facet>
-            </pm:header>
+      contentType="text/html">
 
-            <pm:content>
+    <body>
+
+        <ui:composition template="../mainTemplate.xhtml">
+
+            <ui:define name="titulo">
+                Cambiar contraseña
+            </ui:define>
+            
+            <ui:define name="botonesBarra">
+                <p:commandButton value="Ir al inicio" action="#{Autenticador.indexLoggued()}" />
+            </ui:define>
+            
+            <ui:define name="centro">
                 <h:form>
-                    <p:dataList type="inset">
+                    <p:panelGrid columns="2" styleClass="centrar">
                         <f:facet name="header">Datos del usuario</f:facet>
-                        <f:attribute name="icon" value="false" />
-                        <p:growl id="msj_error_cambioContrasegna"/>
-                        <p:inputText label="Nombre de usuario" value="#{cambioPassManagedBeans.username}" disabled="true"/>
-                        <p:inputText label="Contraseña actual" value="#{cambioPassManagedBeans.passActual}" type="password"/>
-                        <p:inputText label="Contraseña nueva" value="#{cambioPassManagedBeans.nvaPass}" type="password"/>
-                        <p:inputText label="Repetir contraseña nueva" value="#{cambioPassManagedBeans.nvaPassRep}" type="password"/>
-                        <pm:buttonGroup>
+                        
+                        <p:outputLabel value="Nombre de usuario"/>
+                        <p:inputText value="#{cambioPassManagedBeans.username}" disabled="true"/>
+                        
+                        <p:outputLabel value="Contraseña actual"/>
+                        <p:inputText value="#{cambioPassManagedBeans.passActual}" type="password"/>
+                        
+                        <p:outputLabel value="Contraseña nueva"/>
+                        <p:inputText value="#{cambioPassManagedBeans.nvaPass}" type="password"/>
+                        
+                        <p:outputLabel value="Repetir contraseña nueva"/>
+                        <p:inputText value="#{cambioPassManagedBeans.nvaPassRep}" type="password"/>
+                        
+                        <f:facet name="footer">
                             <p:commandButton value="Guardar cambios" action="#{cambioPassManagedBeans.guardarPass()}" update="msj_error_cambioContrasegna"/>
                             <p:commandButton value="Cancelar" action="#{cambioPassManagedBeans.goToInfoUsuario()}"/>
-                        </pm:buttonGroup>
-                    </p:dataList>
+                        </f:facet>
+                    </p:panelGrid>>
+                    <p:growl id="msj_error_cambioContrasegna"/>
                 </h:form>
-            </pm:content>
-        </pm:view>
-    </pm:page>
-
-</f:view>
+                <p:contextMenu beforeShow="pcontext.show()" />
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

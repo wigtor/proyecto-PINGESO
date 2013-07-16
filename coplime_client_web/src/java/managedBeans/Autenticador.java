@@ -94,6 +94,10 @@ public class Autenticador extends commonFunctions implements Serializable {
     public void goToIndex() {
         goToPage("/faces/index.xhtml");
     }
+    
+    public void indexLoggued() {
+        goToPage("/faces/users/verPuntosLimpios.xhtml");
+    }
 
     // Getters/setters for username and password.
 }

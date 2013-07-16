@@ -1,64 +1,67 @@
-<!DOCTYPE html>
-<f:view xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pm="http://primefaces.org/mobile"
-      renderKitId="PRIMEFACES_MOBILE"
-      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
-    
-    
-    <pm:page title="Información del usuario">
-        <!-- Main View -->
-        <pm:view id="main">
-            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Administrador')}">
-                <ezcomp:menuAdministrador/>
-            </p:overlayPanel>
-            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Inspector')}">
-                <ezcomp:menuInspector/>
-            </p:overlayPanel>
-            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Operario')}">
-                <ezcomp:menuOperario/>
-            </p:overlayPanel>
+      contentType="text/html">
+
+    <body>
+
+        <ui:composition template="../mainTemplate.xhtml">
+
+            <ui:define name="titulo">
+                Información del usuario
+            </ui:define>
             
-            <pm:header title="Información del usuario">
-                <f:facet name="left">
-                    <p:button id="btnPanelContext" value="" iconPos="notext" onclick="pcontext.show()" icon="bars"/>
-                </f:facet>
-            </pm:header>
+            <ui:define name="botonesBarra">
+                <p:commandButton value="Ir al inicio" action="#{Autenticador.indexLoggued()}" />
+            </ui:define>
             
-            <pm:content>
+            <ui:define name="centro">
                 <h:form>
-                        <p:dataList type="inset" styleClass="ui-li-custom">
+                        <p:panelGrid columns="2" styleClass="centrar">
                             <f:facet name="header">Datos del usuario</f:facet>
-                            <f:attribute name="icon" value="false" />
 
-                            <p:inputText label="Nombre" value="#{infoUsuarioManagedBeans.nombres}" disabled="true"/>
-                            <p:inputText label="Apellidos" value="#{infoUsuarioManagedBeans.apellidos}" disabled="true"/>
-                            <p:inputText label="Rut" value="#{infoUsuarioManagedBeans.rut}" disabled="true"/>
-                            <p:inputText label="Nombre de usuario" value="#{infoUsuarioManagedBeans.idUsuario}" disabled="true"/>
-                            <p:inputText label="Rol de usuario" value="#{infoUsuarioManagedBeans.rol}" disabled="true"/>
+                            <p:outputLabel value="Nombre"/>
+                            <p:inputText value="#{infoUsuarioManagedBeans.nombres}" disabled="true"/>
                             
-                        </p:dataList>
-                        <p:dataList type="inset">
+                            <p:outputLabel value="Apellidos"/>
+                            <p:inputText value="#{infoUsuarioManagedBeans.apellidos}" disabled="true"/>
+                            
+                            <p:outputLabel value="Rut"/>
+                            <p:inputText value="#{infoUsuarioManagedBeans.rut}" disabled="true"/>
+                            
+                            <p:outputLabel value="Nombre de usuario"/>
+                            <p:inputText value="#{infoUsuarioManagedBeans.idUsuario}" disabled="true"/>
+                            
+                            <p:outputLabel value="Rol de usuario"/>
+                            <p:inputText value="#{infoUsuarioManagedBeans.rol}" disabled="true"/>
+                            
+                        </p:panelGrid>
+                    
+                        <p:panelGrid columns="2" styleClass="centrar">
                             <f:facet name="header">Datos de contacto</f:facet>
-                            <f:attribute name="icon" value="false" />
 
-                            <p:inputText label="Teléfono" value="#{infoUsuarioManagedBeans.telefono}"/>
-                            <p:inputText label="E-mail" value="#{infoUsuarioManagedBeans.email}" required="true"/>
+                            <p:outputLabel value="Teléfono"/>
+                            <p:inputText value="#{infoUsuarioManagedBeans.telefono}"/>
                             
-                            <p:commandButton value="Cambiar contraseña" action="#{infoUsuarioManagedBeans.goToCambiarContrasegna()}"/>
-                                
-                            <pm:buttonGroup>
+                            <p:outputLabel value="E-mail"/>
+                            <p:inputText value="#{infoUsuarioManagedBeans.email}" required="true"/>
+                            
+                               
+                            <f:facet name="footer">
+                                <p:commandButton value="Cambiar contraseña" action="#{infoUsuarioManagedBeans.goToCambiarContrasegna()}"/>
+                             
                                 <p:commandButton value="Guardar cambios" action="#{infoUsuarioManagedBeans.guardarCambios()}"/>
                                 <p:commandButton value="Cancelar" action="#{infoUsuarioManagedBeans.goToPuntosLimpios()}"/>
-                            </pm:buttonGroup>
+                            </f:facet>
 
-                        </p:dataList>
+                        </p:panelGrid>
                 </h:form>
                 <p:contextMenu beforeShow="pcontext.show()" />
-            </pm:content>
-        </pm:view>
-    </pm:page>
-</f:view>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
