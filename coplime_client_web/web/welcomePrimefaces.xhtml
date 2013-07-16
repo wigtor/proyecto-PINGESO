@@ -3,13 +3,13 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui" xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
 
     <f:view contentType="text/html">
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>PrimeFaces</title>
+                <title>Bienvenido a COPLIME</title>
             </f:facet>
         </h:head>
 
@@ -18,45 +18,83 @@
             <p:layout fullPage="true">
 
                 <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                    Header
+                    Header COPLIME
                 </p:layoutUnit>
 
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
-                    Footer
+                    Footer COPLIME
                 </p:layoutUnit>
 
-                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                <p:layoutUnit position="west" size="175" header="Left" collapsed="true" collapsible="true" rendered="#{request.isUserInRole('Administrador') || request.isUserInRole('Inspector') || request.isUserInRole('Operario')}">
                     <p:menu>
                         <p:submenu label="Resources">
-                            <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
-                            <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                            <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
-                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
-
+                            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Administrador')}">
+                                <ezcomp:menuAdministrador/>
+                            </p:overlayPanel>
+                            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Inspector')}">
+                                <ezcomp:menuInspector/>
+                            </p:overlayPanel>
+                            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Operario')}">
+                                <ezcomp:menuOperario/>
+                            </p:overlayPanel>
                         </p:submenu>
 
                     </p:menu>
                 </p:layoutUnit>
 
                 <p:layoutUnit position="center">
-                    Welcome to PrimeFaces
+                    <h:form>
+                        <p:panelGrid columns="1"> 
+                            <f:facet name="header">Avisar incidencia</f:facet>
+                            Si usted es un usuario de un punto limpio y se encuentra con que existe algún problema,
+                            es de gran utilidad que lo informe para tener un mejor servicio y así lograr mantener
+                            en buen estado los puntos limpios siempre.
+                            <p:commandButton immediate="true" value="Generar aviso" action="#{Autenticador.goToEnviarAvisoIncidencia()}"/>
+                        </p:panelGrid>
+                    </h:form>
+                    <h:form id="form_login">
+                        <p:panelGrid columns="2"> 
+                            <f:facet name="header">Inicio de sesión</f:facet>
+                            
+                            <p:outputLabel value="Nombre de usuario" for="input_username"/>
+                            <p:inputText id="input_username" label="Nombre de usuario" value="#{Autenticador.username}" required="true"/>
+                            
+                            <p:outputLabel value="contraseña" for="input_password"/>
+                            <p:inputText id="input_password" type="password" value="#{Autenticador.password}" required="true"/>
+                            
+                            <p:growl id="msj_error_login"/>
+                            <p:commandButton value="Iniciar sesión" action="#{Autenticador.login()}" update="msj_error_login"/>
+                        </p:panelGrid>
+                    </h:form>
+                    
+                    <hr/>
+                    A continuación sólo hay pruebas de elementos de primefaces
+                    <h:form>
+                    <h:outputLink value="/faces/users/verNotificaciones.xhtml">Ver notificaciones
+                        <h:outputText id="txt_num_notif" styleClass="ui-li-count" value="#{notificacionesManagedBeans.cantidadNotificaciones}"/>
+                        <p:poll interval="5" autoStart="true" listener="#{notificacionesManagedBeans.refresNotificaciones(null)}" update="txt_num_notif"/>
+                    </h:outputLink>
+                    </h:form>
+                    
                     <p:dataTable id="inspectores" value="#{mantenedorInspector.lista}" var="inspector" rowKey="#{inspector.num}"
-                                     paginator="true" rows="2"  selectionMode="single" emptyMessage="No hay inspectores registrados en el sistema" 
-                                      selection="#{mantenedorInspector.elementoSelecionado}"  >
-                            <p:column headerText="Rut">
-                                #{inspector.num}
-                            </p:column>
-                            <p:column headerText="Nombre">
-                                #{inspector.nombre}
-                            </p:column>
-                        </p:dataTable>
-                </p:layoutUnit>
-
-            </p:layout>
-                <p:dialog header="Inspector agregado" widgetVar="dlg_inspector_agregado">
+                                paginator="true" rows="2"  selectionMode="single" emptyMessage="No hay inspectores registrados en el sistema" 
+                                   >
+                       <p:column headerText="Rut">
+                           #{inspector.num}
+                       </p:column>
+                       <p:column headerText="Nombre">
+                           #{inspector.nombre}
+                       </p:column>
+                   </p:dataTable>
+                    
+                    <p:dialog header="Inspector agregado" widgetVar="dlg_inspector_agregado">
                         <h:outputText value="Se ha agregado satisfactoriamente el inspector" />
                     </p:dialog>
                     <p:commandButton value="mostrar" onclick="dlg_inspector_agregado.show();" type="button"/>
+                
+                </p:layoutUnit>
+
+            </p:layout>
                 
         </h:body>
 

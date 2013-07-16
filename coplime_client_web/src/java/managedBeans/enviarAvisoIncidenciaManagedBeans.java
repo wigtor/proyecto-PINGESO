@@ -120,7 +120,7 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions {
             elemTemp = new SelectElemPojo();
             
             elemTemp.setId(temp.getId().toString());
-            elemTemp.setLabel(temp.getNombre() + "-" + temp.getComuna() + "-"+temp.getUbicacion());
+            elemTemp.setLabel("N°"+temp.getNum()+ " - " + temp.getUbicacion());
             this.listaPuntosLimpios.add(elemTemp);
         
         }
@@ -141,7 +141,7 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions {
             if (tipoIncidenciaSeleccionada != null)
             avisosIncidencia.guardarAvisoIncidencia(numPuntoLimpio.intValue(), emailContacto, detalles, tipoIncidenciaSeleccionada.intValue(), datosImagen, tipoArchivo);
         }
-        goToPage("/faces/selectPtoLimpioAviso.xhtml#success");
+        goToPage("/faces/index.xhtml.xhtml?success=1");
     }
     
     public void submitCaptcha(ActionEvent event) {  
@@ -220,6 +220,10 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions {
     public void goToEnviarAviso(int idSeleccionado) {
         System.out.println("idPtoLimpio="+idSeleccionado);
         goToPage("/faces/enviarAvisoIncidencia.xhtml"+"?id="+idSeleccionado);
+    }
+    
+    public void goToSeleccionarPuntoLimpio() {
+        goToPage("/faces/selectPtoLimpioAviso.xhtml");
     }
     /**
      * Creates a new instance of enviarAvisoIncidenciaManagedBeans

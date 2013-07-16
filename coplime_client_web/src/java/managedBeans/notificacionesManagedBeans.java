@@ -4,6 +4,7 @@
  */
 package managedBeans;
 
+import java.awt.event.ActionEvent;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -34,7 +35,12 @@ public class notificacionesManagedBeans implements Serializable {
     }
 
     @PostConstruct
-    public void init() {
+    public void cargarCantidadNotificaciones() {
+        refresNotificaciones(null);
+    }
+    
+    public void refresNotificaciones(ActionEvent actionEvent) {
+        System.out.println("Cargando método cargarCantidadNotificaciones");
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
@@ -44,6 +50,7 @@ public class notificacionesManagedBeans implements Serializable {
     }
     
     public int getCantidadNotificaciones() {
+        System.out.println("Accediendo a la cantidad de notificaciones");
         return cantidadNotificaciones;
     }
 

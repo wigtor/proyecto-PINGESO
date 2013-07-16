@@ -1,0 +1,27 @@
+/* 
+    Document   : personalizados
+    Created on : 16-07-2013, 12:37:12 AM
+    Author     : victor
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.centrar {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ui-panelgrid .ui-panelgrid-footer {
+    text-align:center !important;
+}
+
+.footer {
+    color: rgb(153, 153, 153);
+    font-size: 11px;
+    text-align: center;
+    margin-top: -5px;
+}

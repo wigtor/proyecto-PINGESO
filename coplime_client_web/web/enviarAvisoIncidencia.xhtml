@@ -1,64 +1,69 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<f:view xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pm="http://primefaces.org/mobile"
-      contentType="text/html"
-      renderKitId="PRIMEFACES_MOBILE"
-      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
-    
-    
-    <pm:page title="Enviar aviso de incidencia">
-        <!-- Main View -->
-        <pm:view id="main">
-            <h:form>
-            <pm:header title="Enviar aviso de incidencia">
-                <f:facet name="left">
-                    <p:commandButton value="Ir al inicio" icon="back" action="#{Autenticador.goToIndex()}" />
-                </f:facet>
-            </pm:header>
-            </h:form>
+      contentType="text/html">
 
-            <pm:content>
+    <body>
+
+        <ui:composition template="./mainTemplate.xhtml">
+
+            <ui:define name="titulo">
+                Enviar aviso de incidencia
+            </ui:define>
+            
+            <ui:define name="botonesBarra">
+                <p:commandButton value="Ir al inicio" icon="back" action="#{Autenticador.goToIndex()}" />
+                <p:commandButton value="Seleccionar punto limpio" icon="back" action="#{enviarAvisoIncidenciaManagedBeans.goToSeleccionarPuntoLimpio()}" />
+            </ui:define>
+            
+            <ui:define name="centro">
                 <h:form  enctype="multipart/form-data">
                     <h:inputHidden value="#{enviarAvisoIncidenciaManagedBeans.numPuntoLimpio}"/>
-                    <p:dataList type="inset" styleClass="ui-li-custom">
+                    
+                    <p:panelGrid columns="2" styleClass="centrar">
                         <f:facet name="header">Ingresar datos del aviso de incidencia</f:facet>
-                        <f:attribute name="icon" value="false" />
                         
-                        <p:inputText label="Punto limpio" value="#{enviarAvisoIncidenciaManagedBeans.nombre_presentacion_ptoLimpio}" disabled="true"/>
-                        <pm:field>
-                            <h:outputLabel for="selectOneMenu" value="Seleccione tipo de incidencia:"/>
-                            <h:selectOneMenu id="selectOneMenu" value="#{enviarAvisoIncidenciaManagedBeans.tipoIncidenciaSeleccionada}">
-                                <f:selectItems value="#{enviarAvisoIncidenciaManagedBeans.listaTiposIncidencias}" var="t_incid" itemValue="#{t_incid.id}" itemLabel="#{t_incid.label}"/>
-                            </h:selectOneMenu>
-                        </pm:field>
+                        <p:outputLabel value="Punto limpio" for="nombre_ptoLimpio"/>
+                        <p:inputText id="nombre_ptoLimpio" value="#{enviarAvisoIncidenciaManagedBeans.nombre_presentacion_ptoLimpio}" disabled="true"/>
                         
-                        <p:inputTextarea label="Escribir detalles:" value="#{enviarAvisoIncidenciaManagedBeans.detalles}" required="true"/>
-                        <p:inputText label="E-mail de contacto" value="#{enviarAvisoIncidenciaManagedBeans.emailContacto}" />
+                        <p:outputLabel for="selectOneMenu" value="Seleccione tipo de incidencia"/>
+                        <p:selectOneMenu id="selectOneMenu" value="#{enviarAvisoIncidenciaManagedBeans.tipoIncidenciaSeleccionada}">
+                            <f:selectItems value="#{enviarAvisoIncidenciaManagedBeans.listaTiposIncidencias}" var="t_incid" itemValue="#{t_incid.id}" itemLabel="#{t_incid.label}"/>
+                        </p:selectOneMenu>
                         
-                        <pm:field>
-                            <h:outputLabel for="subidaArchivos" value="Subir imagen:"/>
-                            <!-- Máximo de 16Mb y sólo imágenes --> 
+                        <p:outputLabel value="Escribir detalles" for="detalles"/>
+                        <p:inputTextarea id="detalles" value="#{enviarAvisoIncidenciaManagedBeans.detalles}" required="true"/>
+                        
+                        <p:outputLabel value="E-mail de contacto" for="email"/>
+                        <p:inputText id="email" value="#{enviarAvisoIncidenciaManagedBeans.emailContacto}" />
+                        
+                        
+                        <p:outputLabel for="subidaArchivos" value="Subir imagen"/>
+                        
+                        <p:outputPanel><!-- Máximo de 16Mb y sólo imágenes -->
                             <p:fileUpload id="subidaArchivos" value="#{enviarAvisoIncidenciaManagedBeans.file}" 
-                                          mode="simple" sizeLimit="16777216" 
-                                          allowTypes="/(\.|\/)(gif|jpg|jpeg|gif|png|PNG|GIF|JPG|JPEG)$/"
-                                          required="false"/> 
-                        </pm:field>
+                                    mode="simple" sizeLimit="16777216" 
+                                    allowTypes="/(\.|\/)(gif|jpg|jpeg|gif|png|PNG|GIF|JPG|JPEG)$/"
+                                    required="false" label="Subir imagen"/> 
+                        </p:outputPanel>
                         
-                        <p:captcha label="Captcha" theme="white" language="es"/>
+                        <p:outputLabel for="captcha" value="Escriba las dos palabras"/>
+                        <p:captcha id="captcha" theme="white" language="es"/>
                         
-                        <pm:buttonGroup>
+                        <f:facet name="footer">
                             <p:commandButton value="Enviar" ajax="false" action="#{enviarAvisoIncidenciaManagedBeans.enviarAviso()}"/>
                             <p:commandButton immediate="true" value="Cancelar" action="#{Autenticador.goToIndex()}"/>
-                        </pm:buttonGroup>
-                    </p:dataList>
+                        </f:facet>
+                    </p:panelGrid>
                 </h:form>
-            </pm:content>
-        </pm:view>
-    </pm:page>
+                
+            </ui:define>
 
-</f:view>
+        </ui:composition>
+
+    </body>
+</html>

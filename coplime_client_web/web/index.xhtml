@@ -1,44 +1,60 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<f:view xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pm="http://primefaces.org/mobile"
       contentType="text/html"
-        renderKitId="PRIMEFACES_MOBILE">
-    
-    
-    <pm:page title="Bienvenido a COPLIME">
-        <!-- Main View -->
-        <pm:view id="main">
-            <pm:header title="Bienvenido a COPLIME"/>
-            <pm:content>
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+
+    <body>
+
+        <ui:composition template="./mainTemplate.xhtml">
+
+            <ui:define name="titulo">
+                Bienvenido a COPLIME
+            </ui:define>
+            
+            <!--<ui:define name="botonesBarra">
+                
+            </ui:define> -->
+            
+            <ui:define name="centro">
                 <h:form>
-                    <p:dataList type="inset" styleClass="ui-li-custom">
+                    <p:panel>
                         <f:facet name="header">Avisar incidencia</f:facet>
-                        <f:attribute name="icon" value="false" />
                         Si usted es un usuario de un punto limpio y se encuentra con que existe algún problema,
                         es de gran utilidad que lo informe para tener un mejor servicio y así lograr mantener
                         en buen estado los puntos limpios siempre.
-                        <p:commandButton immediate="true" value="Generar aviso" action="#{Autenticador.goToEnviarAvisoIncidencia()}"/>
-                    </p:dataList>
+                            <div style="text-align: center">
+                                <p:commandButton immediate="true" style="text-align: center" value="Generar aviso" action="#{Autenticador.goToEnviarAvisoIncidencia()}"/>
+                            </div>
+                    </p:panel>
                 </h:form>
-                <h:form id="form_login">
-                    <p:dataList type="inset" styleClass="ui-li-custom">
+                
+                
+                <h:form id="form_login" >
+                    <p:panel>
+                        <p:panelGrid columns="2" styleClass="centrar">
                         <f:facet name="header">Inicio de sesión</f:facet>
-                        <f:attribute name="icon" value="false" />
-                        <p:growl id="msj_error_login"/>
-                        <p:inputText id="input_username" label="Nombre de usuario" value="#{Autenticador.username}" required="true"/>
-                        <p:inputText type="password" label="contraseña:" value="#{Autenticador.password}" required="true"/>
-                        <p:commandButton value="Iniciar sesión" action="#{Autenticador.login()}" update="msj_error_login"/>
-                    </p:dataList>
+                        
+                            <p:outputLabel value="Nombre de usuario" for="input_username"/>
+                            <p:inputText id="input_username" label="Nombre de usuario" value="#{Autenticador.username}" required="true"/>
+
+                            <p:outputLabel value="contraseña" for="input_password"/>
+                            <p:inputText id="input_password" type="password" value="#{Autenticador.password}" required="true"/>
+                            
+                            <f:facet name="footer">
+                                <p:growl id="msj_error_login"/>
+                                <p:commandButton styleClass="centrar" value="Iniciar sesión" action="#{Autenticador.login()}" update="msj_error_login"/>
+                            </f:facet>
+                        </p:panelGrid>
+                    </p:panel>
                 </h:form>
-            </pm:content>
-        </pm:view>
-    </pm:page>
+            </ui:define>
 
-</f:view>
+        </ui:composition>
 
-
+    </body>
+</html>

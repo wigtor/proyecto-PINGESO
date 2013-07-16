@@ -6,7 +6,6 @@ package sessionBeans;
 
 import DAO.DAOFactory;
 import DAO.interfaces.NotificacionDAO;
-import DAO.interfaces.UsuarioDAO;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

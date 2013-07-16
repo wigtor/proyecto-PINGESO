@@ -1,5 +1,3 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:cc="http://java.sun.com/jsf/composite"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -18,13 +16,17 @@
 
     <!-- IMPLEMENTATION -->
     <cc:implementation>
+        <h:form>
         <p:dataList>
+            
             <f:facet name="header">Menu para Administrador
                 <h:outputLabel value="#{Autenticador.username}"/>
             </f:facet>
             <h:outputLink value="/faces/users/infoUsuario.xhtml">Información del usuario</h:outputLink>
             <h:outputLink value="/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
-            <h:outputLink value="/faces/users/verNotificaciones.xhtml">Ver notificaciones<h:outputText styleClass="ui-li-count" value="#{notificacionesManagedBeans.cantidadNotificaciones}"/></h:outputLink>
+            <h:outputLink value="/faces/users/verNotificaciones.xhtml">Ver notificaciones
+                <h:outputText id="txt_num_notif" styleClass="ui-li-count" value="#{notificacionesManagedBeans.cantidadNotificaciones}"/>
+            </h:outputLink>
             <h:outputLink value="/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención</h:outputLink>
             <h:outputLink value="/faces/users/verOperariosMantencion.xhtml">Ver operarios de mantención</h:outputLink>
             <h:outputLink value="/faces/users/verInspectores.xhtml">Ver inspectores</h:outputLink>
@@ -32,5 +34,6 @@
             <h:outputLink >Ayuda</h:outputLink>
             <h:outputLink value="/faces/users/logout.xhtml">Cerrar sesión</h:outputLink>
         </p:dataList>
+        </h:form>
     </cc:implementation>
 </html>

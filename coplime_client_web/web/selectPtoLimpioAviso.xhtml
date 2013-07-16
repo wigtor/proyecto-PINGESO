@@ -1,44 +1,40 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<f:view xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pm="http://primefaces.org/mobile"
-      contentType="text/html"
-      renderKitId="PRIMEFACES_MOBILE"
-      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
-    
-    
-    <pm:page title="Enviar aviso de incidencia">
-        <!-- Main View -->
-        <pm:view id="main">
-            <h:form>
-            <pm:header title="Seleccione un punto limpio">
-                <f:facet name="left">
-                    <p:commandButton value="Ir al inicio" icon="back" action="#{Autenticador.goToIndex()}" />
-                </f:facet>
-            </pm:header>
-            <pm:content>
-                <p:outputLabel value="Seleccione el punto limpio donde se encuentra y que desea dar aviso de un problema"/>
-                <h:selectOneListbox value="#{enviarAvisoIncidenciaManagedBeans.numPuntoLimpio}">
-                    <f:selectItems value="#{enviarAvisoIncidenciaManagedBeans.listaPuntosLimpios}" var="t_ptoLimpio" itemValue="#{t_ptoLimpio.id}" itemLabel="#{t_ptoLimpio.label}"/>
-                </h:selectOneListbox>
-                <p:commandButton value="Siguiente" action="#{enviarAvisoIncidenciaManagedBeans.goToEnviarAviso(enviarAvisoIncidenciaManagedBeans.numPuntoLimpio)}"></p:commandButton>
-            </pm:content>
-            </h:form>
-        </pm:view>
-        <pm:view id="success" title="Aviso de incidencia enviado">
-            <pm:header title="Aviso de incidencia enviado">
-                <f:facet name="left">
-                    <p:commandButton value="Ir al inicio" icon="back" action="#{Autenticador.goToIndex()}" />
-                </f:facet>
-            </pm:header>
-            <pm:content>
-                El aviso ha sido enviado satisfactoriamente
-            </pm:content>
-        </pm:view>
-    </pm:page>
+      contentType="text/html">
 
-</f:view>
+    <body>
+
+        <ui:composition template="./mainTemplate.xhtml">
+
+            <ui:define name="titulo">
+                Seleccione un punto limpio
+            </ui:define>
+            
+            <ui:define name="botonesBarra">
+                <p:commandButton value="Ir al inicio" icon="back" action="#{Autenticador.goToIndex()}" />
+            </ui:define>
+            
+            <ui:define name="centro">
+                <h:form>
+                    <p:panelGrid columns="2" styleClass="centrar">
+                        <f:facet name="header">Seleccionar un punto limpio para generar el aviso</f:facet>
+                        
+                        <p:outputLabel value="Seleccione el punto limpio"/>
+                        <p:selectOneListbox value="#{enviarAvisoIncidenciaManagedBeans.numPuntoLimpio}" style="width: 100%;">
+                            <f:selectItems value="#{enviarAvisoIncidenciaManagedBeans.listaPuntosLimpios}" var="t_ptoLimpio" itemValue="#{t_ptoLimpio.id}" itemLabel="#{t_ptoLimpio.label}"/>
+                        </p:selectOneListbox>
+                        
+                        <f:facet name="footer">
+                            <p:commandButton value="Siguiente" action="#{enviarAvisoIncidenciaManagedBeans.goToEnviarAviso(enviarAvisoIncidenciaManagedBeans.numPuntoLimpio)}"></p:commandButton>
+                        </f:facet>
+                    </p:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

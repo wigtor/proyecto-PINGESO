@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+
+    
+    <h:head>
+        <f:facet name="first">
+            <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+            <h:outputStylesheet library="css" name="personalizados.css" />
+            <title><ui:insert name="titulo">titulo</ui:insert></title>
+        </f:facet>
+    </h:head>
+
+    <h:body>
+        <p:layout fullPage="true">
+            
+            <p:layoutUnit position="north" size="60" closable="true" collapsible="true" gutter="10">
+                
+                <p:commandButton id="btnPanelContext" value="M" 
+                                 rendered="#{request.isUserInRole('Administrador') 
+                                             || request.isUserInRole('Inspector') 
+                                             || request.isUserInRole('Operario')}"/>
+                <h:form>
+                <ui:insert name="botonesBarra"></ui:insert>
+                <ui:insert name="titulo">titulo</ui:insert>
+                </h:form>
+            </p:layoutUnit>
+
+            <p:layoutUnit minSize="90" position="center" gutter="20">
+                <ui:insert name="centro">centro</ui:insert>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="25" closable="true" collapsible="true">
+                <div class="footer"> Grupo N°3 - PINGESO 2013-1 - U de Santiago</div>
+            </p:layoutUnit>
+        </p:layout>
+        
+        
+        <p:overlayPanel id="menu_administrador" for="btnPanelContext">
+            <h:form>
+                <p:panelGrid columns="1"> 
+                    <f:facet name="header">Menu para Administrador
+                        <h:outputLabel value="#{Autenticador.username}"/>
+                    </f:facet>
+                    <h:outputLink value="/faces/users/infoUsuario.xhtml">Información del usuario</h:outputLink>
+                    <h:outputLink value="/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
+                    <h:outputLink value="/faces/users/verNotificaciones.xhtml">Ver notificaciones
+                        <h:outputText id="txt_num_notif" styleClass="ui-li-count" value="#{notificacionesManagedBeans.cantidadNotificaciones}"/>
+                        <p:poll interval="30" autoStart="true" listener="#{notificacionesManagedBeans.refresNotificaciones(null)}" update="txt_num_notif"/>
+                    </h:outputLink>
+                    <h:outputLink value="/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención</h:outputLink>
+                    <h:outputLink value="/faces/users/verOperariosMantencion.xhtml">Ver operarios de mantención</h:outputLink>
+                    <h:outputLink value="/faces/users/verInspectores.xhtml">Ver inspectores</h:outputLink>
+                    <h:outputLink >Generar reportes</h:outputLink>
+                    <h:outputLink >Ayuda</h:outputLink>
+                    <h:outputLink value="/faces/users/logout.xhtml">Cerrar sesión</h:outputLink>
+                </p:panelGrid>
+            </h:form>
+        </p:overlayPanel>
+        
+        <p:overlayPanel id="menu_inspector" for="btnPanelContext" rendered="#{request.isUserInRole('Inspector')}">
+            <h:form>
+                <p:panelGrid columns="1"> 
+                    <f:facet name="header">Menu para Inspector
+                        <h:outputLabel value="#{Autenticador.username}"/>
+                    </f:facet>
+                    <h:outputLink value="/faces/users/infoUsuario.xhtml">Información del usuario</h:outputLink>
+                    <h:outputLink value="/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
+                    <h:outputLink value="/faces/users/verNotificaciones.xhtml">Ver notificaciones
+                        <h:outputText id="txt_num_notif" styleClass="ui-li-count" value="#{notificacionesManagedBeans.cantidadNotificaciones}"/>
+                        <p:poll interval="30" autoStart="true" listener="#{notificacionesManagedBeans.refresNotificaciones(null)}" update="txt_num_notif"/>
+                    </h:outputLink>
+                    <h:outputLink value="/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención</h:outputLink>
+                    <h:outputLink value="/faces/users/verOperariosMantencion.xhtml">Ver operarios de mantención</h:outputLink>
+                    <h:outputLink value="/faces/users/verInspectores.xhtml">Ver inspectores</h:outputLink>
+                    <h:outputLink value="/faces/users/agregarRevisionPuntoLimpio.xhtml">Agregar revisión de punto limpio</h:outputLink>
+                    <h:outputLink value="/faces/users/solicitarMantencionPuntoLimpio.xhtml">Agregar revisión de punto limpio</h:outputLink>
+                    <h:outputLink >Generar reportes</h:outputLink>
+                    <h:outputLink >Ayuda</h:outputLink>
+                    <h:outputLink value="/faces/users/logout.xhtml">Cerrar sesión</h:outputLink>
+                </p:panelGrid>
+            </h:form>
+        </p:overlayPanel>
+            
+        <p:overlayPanel id="menu_operario" for="btnPanelContext" rendered="#{request.isUserInRole('Operario')}">
+            <h:form>
+                <p:panelGrid columns="1"> 
+                    <f:facet name="header">Menu para Operario
+                        <h:outputLabel value="#{Autenticador.username}"/>
+                    </f:facet>
+                    <h:outputLink value="/faces/users/infoUsuario.xhtml">Información del usuario</h:outputLink>
+                    <h:outputLink value="/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
+                    <h:outputLink value="/faces/users/verNotificaciones.xhtml">Ver notificaciones
+                        <h:outputText id="txt_num_notif" styleClass="ui-li-count" value="#{notificacionesManagedBeans.cantidadNotificaciones}"/>
+                        <p:poll interval="30" autoStart="true" listener="#{notificacionesManagedBeans.refresNotificaciones(null)}" update="txt_num_notif"/>
+                    </h:outputLink>
+                    <h:outputLink value="/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención</h:outputLink>
+                    <h:outputLink value="/faces/users/verOperariosMantencion.xhtml">Ver operarios de mantención</h:outputLink>
+                    <h:outputLink value="/faces/users/verInspectores.xhtml">Ver inspectores</h:outputLink>
+                    <h:outputLink value="/faces/users/agregarMantencionPuntoLimpio.xhtml">Agregar mantención de punto limpio</h:outputLink>
+                    <h:outputLink >Generar reportes</h:outputLink>
+                    <h:outputLink >Ayuda</h:outputLink>
+                    <h:outputLink value="/faces/users/logout.xhtml">Cerrar sesión</h:outputLink>
+                </p:panelGrid>
+            </h:form>
+        </p:overlayPanel>
+                
+    </h:body>
+</html>
