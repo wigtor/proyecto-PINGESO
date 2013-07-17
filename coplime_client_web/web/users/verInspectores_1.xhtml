@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    <body>
+       <ui:composition template="../mainTemplate.xhtml">
+           <ui:define name="titulo">
+                "Ver inspectores"
+           </ui:define>
+           
+           <ui:define name="botonesBarra">
+                <p:commandButton value="Ir al inicio" action="#{Autenticador.indexLoggued()}" />
+            </ui:define>
+           
+           <ui:define name="centro">
+               <h:form>
+                   <p:panelGrid columns="5" styleClass="centrar">
+                       <f:facet name="header">Listado de inspectores</f:facet>
+                       
+                       <p:dataTable id="inspectores" value="#{mantenedorInspector.lista}" var="insp" 
+                                     paginator="true" rows="2"  emptyMessage="No hay inspectores registrados en el sistema" 
+                                        >
+                            <p:column headerText="Rut">
+                                #{insp.num}
+                            </p:column>
+                            <p:column headerText="Nombre">
+                                #{insp.nombre}
+                            </p:column>
+                            
+                            <p:column headerText="" >
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{mantenedorInspector.editar(insp.num)}">
+                                </p:commandLink>
+                            </p:column>                            
+                            <p:column headerText="" >
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{mantenedorInspector.editar(insp.num)}">
+                                </p:commandLink>
+                            </p:column>
+                            <p:column headerText="" >
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" action="#{mantenedorInspector.eliminar(insp.num)}">
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                       
+                       <f:facet name="footer">
+                           <p:commandButton value="Agregar" action="#{mantenedorInspector.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
+                           <p:commandButton value="Volver" action="#{mantenedorInspector.volver()}"/>
+                           
+                       </f:facet>
+                            
+                       
+                   </p:panelGrid>
+                   <p:contextMenu beforeShow="pcontext.show()" />
+               </h:form>
+           </ui:define>
+       </ui:composition>
+    </body>    
+</html>      
