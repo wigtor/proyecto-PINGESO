@@ -9,7 +9,7 @@
 
     <body>
 
-        <ui:composition template="./mainTemplate.xhtml">
+        <ui:composition template="/mainTemplate.xhtml">
 
             <ui:define name="titulo">
                 Enviar aviso de incidencia
@@ -31,9 +31,9 @@
                         <p:inputText id="nombre_ptoLimpio" value="#{enviarAvisoIncidenciaManagedBeans.nombre_presentacion_ptoLimpio}" disabled="true"/>
                         
                         <p:outputLabel for="selectOneMenu" value="Seleccione tipo de incidencia"/>
-                        <p:selectOneMenu id="selectOneMenu" value="#{enviarAvisoIncidenciaManagedBeans.tipoIncidenciaSeleccionada}">
+                        <h:selectOneMenu id="selectOneMenu" value="#{enviarAvisoIncidenciaManagedBeans.tipoIncidenciaSeleccionada}" >
                             <f:selectItems value="#{enviarAvisoIncidenciaManagedBeans.listaTiposIncidencias}" var="t_incid" itemValue="#{t_incid.id}" itemLabel="#{t_incid.label}"/>
-                        </p:selectOneMenu>
+                        </h:selectOneMenu>
                         
                         <p:outputLabel value="Escribir detalles" for="detalles"/>
                         <p:inputTextarea id="detalles" value="#{enviarAvisoIncidenciaManagedBeans.detalles}" required="true"/>

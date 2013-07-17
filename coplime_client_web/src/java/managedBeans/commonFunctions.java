@@ -27,4 +27,8 @@ public class commonFunctions {
            System.out.println(e.getMessage());
        }
     }
+    
+    public void goToIndex() {
+        goToPage("/faces/index.xhtml");
+    }
 }

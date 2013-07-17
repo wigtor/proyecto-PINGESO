@@ -4,6 +4,7 @@
  */
 package managedBeans;
 
+import ObjectsForManagedBeans.NotificacionPojo;
 import java.awt.event.ActionEvent;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -24,6 +25,7 @@ import sessionBeans.NotificadorLocal;
 public class notificacionesManagedBeans implements Serializable {
     @EJB
     private NotificadorLocal notificador;
+    
     private int cantidadNotificaciones;
     private String usernameLogueado;
     

@@ -6,7 +6,6 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +23,7 @@ import javax.persistence.Temporal;
  */
 @Entity
 @NamedQueries( {
-    @NamedQuery(name="Notificacion.findByUsuarioDestinatario", query="SELECT u FROM Notificacion u WHERE u.puntoLimpio.inspectorEncargado.usuario.rut = :rut"),
+    @NamedQuery(name="Notificacion.findByUsuarioDestinatario", query="SELECT u FROM Notificacion u WHERE u.puntoLimpio.inspectorEncargado.usuario.username = :username"),
     @NamedQuery(name="Notificacion.countNoRevisadasUsuarioDestinatario", query="SELECT count(u) FROM Notificacion u WHERE (u.puntoLimpio.inspectorEncargado.usuario.username = :username OR u.puntoLimpio.inspectorEncargado IS NULL) AND u.revisado = false")
 })
 public class Notificacion implements Serializable {

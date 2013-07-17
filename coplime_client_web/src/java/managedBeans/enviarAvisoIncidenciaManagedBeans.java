@@ -47,7 +47,7 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions {
     @PostConstruct
     public void init() {
         
-        System.out.println("Ejecutando init");
+        System.out.println("Ejecutando init enviarAvisoIncidencia");
         if (!seIntentaSeleccionarPuntoLimpio()) {
             if (!puntoLimpioIsSelected()) {
                 goToPage("/faces/selectPtoLimpioAviso.xhtml");
@@ -141,7 +141,7 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions {
             if (tipoIncidenciaSeleccionada != null)
             avisosIncidencia.guardarAvisoIncidencia(numPuntoLimpio.intValue(), emailContacto, detalles, tipoIncidenciaSeleccionada.intValue(), datosImagen, tipoArchivo);
         }
-        goToPage("/faces/index.xhtml.xhtml?success=1");
+        goToPage("/faces/index.xhtml?success=1");
     }
     
     public void submitCaptcha(ActionEvent event) {  

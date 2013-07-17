@@ -65,7 +65,7 @@ public class mantenedorInspector extends commonFunctions {
             inspectorTemporal.setUserName(insp_iter.getUsuario().getUsername());
             this.lista.add(inspectorTemporal);
             
-        }    
+        }
         ///////////////Editar/////////////////////  
         try{
             Map<String,Object> variableSession = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();

@@ -32,5 +32,12 @@ public class NotificacionDAO_impl extends genericDAO_impl<Notificacion> implemen
         System.out.println("Notificaciones por revisar para el usuario con username: "+username+" son:"+resultado);
         return new Integer(resultado.intValue());
     }
+    
+    @Override
+    public Collection<Notificacion> findAllOfUser(String username) {
+        Query q = this.em.createNamedQuery("Notificacion.findByUsuarioDestinatario");
+        q.setParameter("username", username);
+        return q.getResultList();
+    }
             
 }

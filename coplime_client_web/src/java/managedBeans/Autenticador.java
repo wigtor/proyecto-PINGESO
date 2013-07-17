@@ -91,10 +91,6 @@ public class Autenticador extends commonFunctions implements Serializable {
         goToPage("/faces/selectPtoLimpioAviso.xhtml");
     }
     
-    public void goToIndex() {
-        goToPage("/faces/index.xhtml");
-    }
-    
     public void indexLoggued() {
         goToPage("/faces/users/verPuntosLimpios.xhtml");
     }

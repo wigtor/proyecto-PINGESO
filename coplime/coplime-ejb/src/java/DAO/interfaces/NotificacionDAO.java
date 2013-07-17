@@ -15,4 +15,5 @@ public interface NotificacionDAO extends genericDAO<Notificacion>{
     // Interface that all AdministradorDAOs must support
 
     public Integer countPorRevisar(String username);
+    public Collection<Notificacion> findAllOfUser(String username);
 }
