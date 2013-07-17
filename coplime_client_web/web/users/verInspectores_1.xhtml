@@ -8,13 +8,11 @@
       contentType="text/html">
     <body>
        <ui:composition template="../mainTemplate.xhtml">
-           <ui:define name="titulo">
-                "Ver inspectores"
+           <ui:define name="titulo" >
+               Ver inspectores           
            </ui:define>
            
-           <ui:define name="botonesBarra">
-                <p:commandButton value="Ir al inicio" action="#{Autenticador.indexLoggued()}" />
-            </ui:define>
+          
            
            <ui:define name="centro">
                <h:form>
@@ -22,7 +20,7 @@
                        <f:facet name="header">Listado de inspectores</f:facet>
                        
                        <p:dataTable id="inspectores" value="#{mantenedorInspector.lista}" var="insp" 
-                                     paginator="true" rows="2"  emptyMessage="No hay inspectores registrados en el sistema" 
+                                     paginator="true" rows="4"  emptyMessage="No hay inspectores registrados en el sistema" 
                                         >
                             <p:column headerText="Rut">
                                 #{insp.num}
