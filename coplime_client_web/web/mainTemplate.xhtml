@@ -5,34 +5,44 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      contentType="text/html">
+      contentType="text/html"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
 
     
     <h:head>
         <f:facet name="first">
             <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-            <h:outputStylesheet library="css" name="bootstrap.css" />
-            <h:outputStylesheet library="css" name="personalizados.css" />
+            <h:outputStylesheet library="css" name="css/bootstrap.css" />
+            <h:outputStylesheet library="css" name="css/personalizados.css" />
             <link rel="icon" href="#{request.contextPath}/resources/img/icon.png"/>
             <title><ui:insert name="titulo">COPLIME</ui:insert></title>
         </f:facet>
     </h:head>
 
-    <body data-tarjet=".bs-docs-sidebar" data-spy="scroll" data-twttr-rendered="true" style="position:relative;padding-top: 0px;">
+    <body data-tarjet=".bs-docs-sidebar" data-spy="scroll" data-twttr-rendered="true" style="position:relative;padding: 0px;">
         <div class="navbar navbar-inverse navbar-top">
         	<div class="navbar-inner">
-            	<div class="container-fluid">
                     <div class="row-fluid">
                     	<div class="span2">
                             <h:form id="form_botones_barra" style="margin:0px;">
                                 <p>
-                                    <p:commandButton id="btnPanelContext" value="  " 
-                                         rendered="#{request.isUserInRole('Administrador') 
-                                                     || request.isUserInRole('Inspector') 
-                                                     || request.isUserInRole('Operario')}"
-                                                     styleClass="btn-menu-superior"
-                                                     />
-
+                                    <ezcomp:boton_barra_superior rendered="false"
+                                                             classIcon="ui-icon-bars" type="button"
+                                                             title="Menú principal"
+                                                             id="btnPanelContext2"/>
+                                    
+                                    <p:outputPanel rendered="#{request.isUserInRole('Administrador') 
+                                                             || request.isUserInRole('Inspector') 
+                                                             || request.isUserInRole('Operario')}">
+                                        <a class="btn-menu-superior">
+                                            <span class="ui-btn-inner">
+                                                <span class="ui-icon ui-icon-shadow ui-icon-bars">
+                                                </span>
+                                            </span>
+                                            <h:commandButton type="button" id="btnPanelContext" value="  " 
+                                                            styleClass="transparente command_btn_barra_superior"/>
+                                        </a>
+                                    </p:outputPanel>
                                     <ui:insert name="botonesBarra"></ui:insert>
                                 </p>
                             </h:form>
@@ -46,7 +56,6 @@
                                             url="/resources/img/icon.png"/>
                         </div>
                     </div>
-            	</div>
             </div>
         </div>
         <div class="container">
