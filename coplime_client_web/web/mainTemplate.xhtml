@@ -11,37 +11,53 @@
     <h:head>
         <f:facet name="first">
             <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+            <h:outputStylesheet library="css" name="bootstrap.css" />
             <h:outputStylesheet library="css" name="personalizados.css" />
             <title><ui:insert name="titulo">COPLIME</ui:insert></title>
         </f:facet>
     </h:head>
 
-    <h:body>
-        <p:layout fullPage="true">
-            
-            <p:layoutUnit position="north" size="60" closable="true" collapsible="true" gutter="10">
-                
-                <p:commandButton id="btnPanelContext" value="M" 
-                                 rendered="#{request.isUserInRole('Administrador') 
-                                             || request.isUserInRole('Inspector') 
-                                             || request.isUserInRole('Operario')}"/>
-                <h:form>
-                <ui:insert name="botonesBarra"></ui:insert>
-                <ui:insert name="titulo">titulo</ui:insert>
-                </h:form>
-            </p:layoutUnit>
+    <body data-taret=".bs-docs-sidebar" data-spy="scroll" data-twttr-rendered="true" style="position:relative;padding-top: 60px;">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+        	<div class="navbar-inner">
+            	<div class="container-fluid">
+                    <div class="row-fluid">
+                    	<div class="span4">
+                            <h:form id="form_botones_barra" style="margin:0px;">
+                                <p>
+                                    <p:commandButton id="btnPanelContext" value="  " 
+                                         rendered="#{request.isUserInRole('Administrador') 
+                                                     || request.isUserInRole('Inspector') 
+                                                     || request.isUserInRole('Operario')}"
+                                                     styleClass="btn-menu-superior"
+                                                     />
 
-            <p:layoutUnit minSize="90" position="center" gutter="20">
-                <ui:insert name="centro">centro</ui:insert>
-            </p:layoutUnit>
-
-            <p:layoutUnit position="south" size="25" closable="true" collapsible="true">
-                <div class="footer"> Grupo N°3 - PINGESO 2013-1 - U de Santiago</div>
-            </p:layoutUnit>
-        </p:layout>
+                                    <ui:insert name="botonesBarra"></ui:insert>
+                                </p>
+                            </h:form>
+                        </div>
+                        <div class="span4 text-center">
+                            <h3 style="line-height:20px; color: white;"><ui:insert name="titulo">COPLIME</ui:insert></h3>
+                        </div>
+                        <div class="span4 text-right">
+                            LOGO
+                        </div>
+                    </div>
+            	</div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="span12">
+                    <ui:insert name="centro">centro</ui:insert>
+                </div>
+            </div>
+            <div class="row">
+                <footer class="footer"> Grupo N°3 - PINGESO 2013-1 - U de Santiago</footer>
+            </div>
+        </div>
         
-        
-        <p:overlayPanel id="menu_administrador" for="btnPanelContext" rendered="#{request.isUserInRole('Administrador')}">
+        <p:overlayPanel id="menu_administrador" for=":form_botones_barra:btnPanelContext" rendered="#{request.isUserInRole('Administrador')}">
             <h:form>
                 <p:panelGrid columns="1"> 
                     <f:facet name="header">Menu para Administrador
@@ -63,7 +79,7 @@
             </h:form>
         </p:overlayPanel>
         
-        <p:overlayPanel id="menu_inspector" for="btnPanelContext" rendered="#{request.isUserInRole('Inspector')}">
+        <p:overlayPanel id="menu_inspector" for=":form_botones_barra:btnPanelContext" rendered="#{request.isUserInRole('Inspector')}">
             <h:form>
                 <p:panelGrid columns="1"> 
                     <f:facet name="header">Menu para Inspector
@@ -87,7 +103,7 @@
             </h:form>
         </p:overlayPanel>
             
-        <p:overlayPanel id="menu_operario" for="btnPanelContext" rendered="#{request.isUserInRole('Operario')}">
+        <p:overlayPanel id="menu_operario" for=":form_botones_barra:btnPanelContext" rendered="#{request.isUserInRole('Operario')}">
             <h:form>
                 <p:panelGrid columns="1"> 
                     <f:facet name="header">Menu para Operario
@@ -109,6 +125,8 @@
                 </p:panelGrid>
             </h:form>
         </p:overlayPanel>
-                
-    </h:body>
+        
+        
+        
+    </body>
 </html>

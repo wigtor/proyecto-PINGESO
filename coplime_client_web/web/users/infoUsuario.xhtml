@@ -16,7 +16,7 @@
             </ui:define>
             
             <ui:define name="botonesBarra">
-                <p:commandButton value="Ir al inicio" action="#{Autenticador.indexLoggued()}" />
+                <p:commandButton styleClass="btn-menu-superior" value="  " title="Ir al inicio" action="#{Autenticador.indexLoggued()}" />
             </ui:define>
             
             <ui:define name="centro">
@@ -40,7 +40,9 @@
                             <p:inputText value="#{infoUsuarioManagedBeans.rol}" disabled="true"/>
                             
                         </p:panelGrid>
-                    
+                </h:form>
+                
+                <h:form>
                         <p:panelGrid columns="2" styleClass="centrar">
                             <f:facet name="header">Datos de contacto</f:facet>
 
