@@ -13,16 +13,17 @@
             <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
             <h:outputStylesheet library="css" name="bootstrap.css" />
             <h:outputStylesheet library="css" name="personalizados.css" />
+            <link rel="icon" href="#{request.contextPath}/resources/img/icon.png"/>
             <title><ui:insert name="titulo">COPLIME</ui:insert></title>
         </f:facet>
     </h:head>
 
-    <body data-taret=".bs-docs-sidebar" data-spy="scroll" data-twttr-rendered="true" style="position:relative;padding-top: 60px;">
-        <div class="navbar navbar-inverse navbar-fixed-top">
+    <body data-tarjet=".bs-docs-sidebar" data-spy="scroll" data-twttr-rendered="true" style="position:relative;padding-top: 0px;">
+        <div class="navbar navbar-inverse navbar-top">
         	<div class="navbar-inner">
             	<div class="container-fluid">
                     <div class="row-fluid">
-                    	<div class="span4">
+                    	<div class="span2">
                             <h:form id="form_botones_barra" style="margin:0px;">
                                 <p>
                                     <p:commandButton id="btnPanelContext" value="  " 
@@ -36,11 +37,13 @@
                                 </p>
                             </h:form>
                         </div>
-                        <div class="span4 text-center">
+                        <div class="span8 text-center">
                             <h3 style="line-height:20px; color: white;"><ui:insert name="titulo">COPLIME</ui:insert></h3>
                         </div>
-                        <div class="span4 text-right">
-                            LOGO
+                        <div class="span2 text-right">
+                            <h:graphicImage alt="Logo COPLIME" 
+                                            width="40px" height="40px"
+                                            url="/resources/img/icon.png"/>
                         </div>
                     </div>
             	</div>
@@ -56,6 +59,7 @@
                 <footer class="footer"> Grupo N°3 - PINGESO 2013-1 - U de Santiago</footer>
             </div>
         </div>
+        <p:growl id="growl_msj_accion"/>
         
         <p:overlayPanel id="menu_administrador" for=":form_botones_barra:btnPanelContext" rendered="#{request.isUserInRole('Administrador')}">
             <h:form>
