@@ -26,9 +26,11 @@
                         Si usted es un usuario de un punto limpio y se encuentra con que existe algún problema,
                         es de gran utilidad que lo informe para tener un mejor servicio y así lograr mantener
                         en buen estado los puntos limpios siempre.
-                            <div style="text-align: center">
-                                <p:commandButton immediate="true" style="text-align: center" value="Generar aviso" action="#{Autenticador.goToEnviarAvisoIncidencia()}"/>
+                        <f:facet name="footer" >
+                            <div style="text-align:center;">
+                                <p:commandButton styleClass="text-center" value="Generar aviso" action="#{Autenticador.goToEnviarAvisoIncidencia()}"/>
                             </div>
+                        </f:facet>
                     </p:panel>
                 </h:form>
                 

@@ -19,7 +19,7 @@
         </f:facet>
     </h:head>
 
-    <body data-tarjet=".bs-docs-sidebar" data-spy="scroll" data-twttr-rendered="true" style="position:relative;padding: 0px;">
+    <body data-tarjet=".bs-docs-sidebar" data-spy="scroll" data-twttr-rendered="true" style="position:relative; padding: 0px; padding-top:0px; min-width: 750px; height:100%;">
         <div class="navbar navbar-inverse navbar-top">
         	<div class="navbar-inner">
                     <div class="row-fluid">
@@ -39,7 +39,7 @@
                                                 <span class="ui-icon ui-icon-shadow ui-icon-bars">
                                                 </span>
                                             </span>
-                                            <h:commandButton type="button" id="btnPanelContext" value="  " 
+                                            <h:commandButton type="button" id="btnPanelContext" value="  " title="Menú principal"
                                                             styleClass="transparente command_btn_barra_superior"/>
                                         </a>
                                     </p:outputPanel>
@@ -56,16 +56,18 @@
                                             url="/resources/img/icon.png"/>
                         </div>
                     </div>
+                </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="span12">
+        
+        
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12 text-center">
                     <ui:insert name="centro">centro</ui:insert>
                 </div>
             </div>
-            <div class="row">
-                <footer class="footer"> Grupo N°3 - PINGESO 2013-1 - U de Santiago</footer>
+            <div class="row-fluid text-center">
+                <footer class="footer span12"> Grupo N°3 - PINGESO 2013-1 - U de Santiago</footer>
             </div>
         </div>
         <p:growl id="growl_msj_accion"/>

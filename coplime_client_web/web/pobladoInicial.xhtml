@@ -1,34 +1,31 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<f:view xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pm="http://primefaces.org/mobile"
       contentType="text/html"
-        renderKitId="PRIMEFACES_MOBILE">
-    
-    
-    <pm:page title="Agregar punto limpio">
-        <!-- Main View -->
-        <pm:view id="main">
-            <pm:header title="Poblado inicial"/>
-            <pm:content>
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+
+    <body>
+
+        <ui:composition template="/mainTemplate.xhtml">
+
+            <ui:define name="titulo">Poblado inicial</ui:define>
+            
+            <ui:define name="centro">
                 <h:form>
-                <p:outputPanel>
-                    <p:dataList type="inset" styleClass="ui-li-custom">
+                    <p:panelGrid columns="1" styleClass="centrar">
                         <f:facet name="header">Realizar el poblado inicial del sistema</f:facet>
                         <f:attribute name="icon" value="false" />
-                        
-                        <p:commandButton value="Poblar" action="#{pobladoInicial.poblar()}"/>
-                    </p:dataList>
-                </p:outputPanel>
+                        <p:outputLabel value="Actualmente se crean 3 usuarios (1 de cada tipo) y 1 punto limpio" />
+                        <f:facet name="footer">
+                            <p:commandButton value="Poblar" action="#{pobladoInicial.poblar()}"/>
+                        </f:facet>
+                    </p:panelGrid>
                 </h:form>
-            </pm:content>
-        </pm:view>
-    </pm:page>
-
-</f:view>
-
-
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

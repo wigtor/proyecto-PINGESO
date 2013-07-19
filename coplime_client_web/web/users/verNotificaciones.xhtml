@@ -5,14 +5,17 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      contentType="text/html">
+      contentType="text/html"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
 
     <body>
 
         <ui:composition template="/mainTemplate.xhtml">
 
-            <ui:define name="titulo">
-                Ver notificaciones
+            <ui:define name="titulo">Ver notificaciones</ui:define>
+            
+            <ui:define name="botonesBarra">
+                <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{Autenticador.indexLoggued()}" />
             </ui:define>
             
             <ui:define name="centro">
@@ -64,7 +67,7 @@
                         <f:facet name="footer">
                             <p:commandButton value="Volver" action="#{verNotificaciones.volver()}"/>
                         </f:facet>
-                    </p:panelGrid>>
+                    </p:panelGrid>
                 </h:form>
                 
             </ui:define>
