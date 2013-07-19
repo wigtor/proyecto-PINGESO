@@ -10,6 +10,7 @@ import DAO.interfaces.ContenedorDAO;
 import DAO.interfaces.EstadoDAO;
 import DAO.interfaces.InspectorDAO;
 import DAO.interfaces.MaterialDAO;
+import DAO.interfaces.NotificacionDAO;
 import DAO.interfaces.OperarioDAO;
 import DAO.interfaces.PuntoLimpioDAO;
 import DAO.interfaces.RolDAO;
@@ -20,6 +21,7 @@ import entities.Contenedor;
 import entities.Estado;
 import entities.Inspector;
 import entities.Material;
+import entities.NotificacionDeUsuario;
 import entities.OperarioMantencion;
 import entities.PuntoLimpio;
 import entities.Rol;
@@ -44,6 +46,8 @@ public class configuracionInicial implements configuracionInicialLocal {
     private EntityManager em;
     DAOFactory factoryDeDAOs;
     List<TipoIncidencia> tiposIncidencias;
+    List<Inspector> inspectores;
+    List<PuntoLimpio> puntosLimpios;
     List<Estado> estadosPuntosLimpios;
     List<Material> materialesPuntosLimpios;
     
@@ -125,6 +129,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         PuntoLimpio p1 = new PuntoLimpio("Plaza San Bernardo", "San bernardo", "Plaza de armas", 1);
         p1.setEstadoGlobal(this.estadosPuntosLimpios.get(0));
         p1.setFechaProxRevision(Calendar.getInstance().getTime());
+        p1.setInspectorEncargado(this.inspectores.get(0));
         
         PuntoLimpioDAO plDAO = factoryDeDAOs.getPuntoLimpioDAO();
         ContenedorDAO contDAO = factoryDeDAOs.getContenedorDAO();
@@ -160,6 +165,10 @@ public class configuracionInicial implements configuracionInicialLocal {
         contDAO.insert(c1);
         contDAO.insert(c2);
         contDAO.insert(c3);
+        
+        
+        this.puntosLimpios = new LinkedList();
+        this.puntosLimpios.add(p1);
     }
     
     private void cargarMantenciones() {
@@ -167,6 +176,19 @@ public class configuracionInicial implements configuracionInicialLocal {
     }
     
     private void cargarNotificaciones() {
+        NotificacionDeUsuario notif = new NotificacionDeUsuario();
+        notif.setComentario("El punto limpio está con todos los desechos botados por perros");
+        notif.setEmailContacto("victor.floress@usach.cl");
+        notif.setImagenAdjunta("C:\\glassfish3\\jdk7\\uploads_coplime\\img_notif_1373923087570.jpeg");
+        notif.setFechaHora(Calendar.getInstance());
+        notif.setResuelto(false);
+        notif.setRevisado(false);
+        notif.setTipoImagen("image/jpeg");
+        notif.setTipoIncidencia(tiposIncidencias.get(1));
+        notif.setPuntoLimpio(puntosLimpios.get(0));
+        
+        NotificacionDAO notifDAO = factoryDeDAOs.getNotificacionDAO();
+        notifDAO.insert(notif);
         
     }
     
@@ -242,6 +264,9 @@ public class configuracionInicial implements configuracionInicialLocal {
         rolDAO.insert(nvoRol2);
         userDAO.insert(nvoUsuario2);
         inspectDAO.insert(nvoInspect);
+        
+        this.inspectores = new LinkedList();
+        this.inspectores.add(nvoInspect);
         
         OperarioMantencion nvoOperario;
         Usuario nvoUsuario3 = new Usuario();

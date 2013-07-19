@@ -5282,6 +5282,9 @@ button.close {
   display: inherit !important;
 }
 @media (min-width: 768px) and (max-width: 979px) {
+    body {
+        padding-top: 60px;
+    }
   .hidden-desktop {
     display: inherit !important;
   }
@@ -5296,6 +5299,9 @@ button.close {
   }
 }
 @media (max-width: 767px) {
+    body {
+        padding-top: 60px;
+    }
   .hidden-desktop {
     display: inherit !important;
   }
@@ -5324,6 +5330,7 @@ button.close {
   body {
     padding-left: 20px;
     padding-right: 20px;
+    padding-top: 60px;
   }
   .navbar-fixed-top,
   .navbar-fixed-bottom,
@@ -5378,6 +5385,30 @@ button.close {
   .row-fluid [class*="offset"]:first-child {
     margin-left: 0;
   }
+  .row-fluid.special [class*="span"]{
+      float:left;
+      
+      overflow:hidden;
+  }
+  
+  .row-fluid.special .span2{
+      float:left;
+      width:20% !important;
+      max-width:20% !important;
+      overflow:hidden;
+  }
+  
+  .row-fluid.special .span8{
+      float:left;
+      width:60% !important;
+      max-width:60% !important;
+      overflow:hidden;
+  }
+  .row-fluid.special .span8 h3 {
+      font-size:12px;
+      font-weight:bolder;
+  }
+  
   .input-large,
   .input-xlarge,
   .input-xxlarge,
@@ -5809,7 +5840,10 @@ button.close {
   }
 }
 @media (min-width: 1200px) {
-  .row {
+    body {
+        padding-top: 60px;
+    }
+    .row {
     margin-left: -30px;
     *zoom: 1;
   }
@@ -6309,6 +6343,9 @@ button.close {
   }
 }
 @media (min-width: 980px) {
+    body {
+        padding-top: 60px;
+    }
   .nav-collapse.collapse {
     height: auto !important;
     overflow: visible !important;

@@ -23,17 +23,21 @@
                     <p:panelGrid columns="2" styleClass="centrar">
                         <f:facet name="header">Datos de notificación</f:facet>
                         
-                        <p:outputLabel value="Origen de notificación"/>
-                        <p:inputText value="#{verNotificaciones.origen_seleccionado}"/>
+                        <p:outputLabel value="N° de notificación" />
+                        <p:inputText value="#{verNotificaciones.numNotif}" disabled="true"/>
+                        
+                        
+                        <p:outputLabel value="Origen de notificación" />
+                        <p:inputText value="#{verNotificaciones.origen_seleccionado}" disabled="true"/>
                         
                         <p:outputLabel value="Tipo de notificación"/>
-                        <p:inputText value="#{verNotificaciones.tipo_seleccionado}"/>
+                        <p:inputText value="#{verNotificaciones.tipo_seleccionado}" disabled="true"/>
                         
                         <p:outputLabel value="Fecha"/>
-                        <p:inputText value="#{verNotificaciones.fecha_seleccionado}"/>
+                        <p:inputText value="#{verNotificaciones.fecha_seleccionado}" disabled="true"/>
                         
                         <p:outputLabel value="Detalle"/>
-                        <p:inputText value="#{verNotificaciones.detalleCompleto_seleccionado}"/>
+                        <p:inputTextarea value="#{verNotificaciones.detalleCompleto_seleccionado}" disabled="true"/>
                         
                         <p:outputLabel value="Revisada"/>
                         <p:selectBooleanCheckbox value="#{verNotificaciones.revisada_seleccionado}"/>
@@ -42,7 +46,7 @@
                         <p:selectBooleanCheckbox value="#{verNotificaciones.resuelta_seleccionado}"/>
                         
                         <p:outputLabel value="Imagen adjunta"/>
-                        <p:graphicImage url="#{verNotificaciones.urlImagen_seleccionado}"/>
+                        <p:graphicImage url="sdfdf" />
                         
                         <f:facet name="footer">
                             <p:commandButton value="Volver" action="#{verNotificaciones.volverToListado()}"/>

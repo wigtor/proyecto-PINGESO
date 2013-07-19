@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
@@ -19,7 +19,7 @@
         </f:facet>
     </h:head>
 
-    <body data-tarjet=".bs-docs-sidebar" data-spy="scroll" data-twttr-rendered="true" style="position:relative; padding: 0px; padding-top:0px; min-width: 750px; min-height:100%;">
+    <body data-tarjet=".bs-docs-sidebar" data-spy="scroll" data-twttr-rendered="true">
         
         
         <p:overlayPanel id="menu_administrador" for=":form_botones_barra:btnPanelContext" rendered="#{request.isUserInRole('Administrador')}">
@@ -93,9 +93,9 @@
         
         
         
-        <div class="navbar navbar-inverse navbar-top">
+        <div class="navbar navbar-inverse navbar-fixed-top">
         	<div class="navbar-inner">
-                    <div class="row-fluid">
+                    <div class="row-fluid special">
                     	<div class="span2">
                             <h:form id="form_botones_barra" style="margin:0px;">
                                 <p>

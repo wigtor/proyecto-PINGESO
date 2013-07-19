@@ -17,5 +17,6 @@ public interface NotificadorLocal {
 
     Integer obtenerCantidadNotificaciones(String username);
     Collection<Notificacion> getAllNotificaciones(String username);
+    public Notificacion getNotificacion(Integer id);
     
 }

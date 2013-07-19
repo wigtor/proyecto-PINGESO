@@ -29,6 +29,7 @@ public class verNotificaciones extends commonFunctions{
     @EJB
     private NotificadorLocal notificador;
     
+    private Integer numNotif;
     private String origen_seleccionado;
     private String tipo_seleccionado;
     private String fecha_seleccionado;
@@ -44,41 +45,82 @@ public class verNotificaciones extends commonFunctions{
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        String username = request.getRemoteUser();
-        System.out.println("caca "+ username);
-        if (username == null) {
-            goToIndex();
-        }
+        String url = request.getPathInfo();
+        if (url.contains("verNotificaciones.xhtml")){
         
-        Collection<Notificacion> listaTemp = notificador.getAllNotificaciones(username);
-        NotificacionPojo notifTemp;
-        String str_temp;
-        this.listaAllNotif = new ArrayList();
-        System.out.println("caca2");
-        for(Notificacion notif_iter : listaTemp) {
-            notifTemp = new NotificacionPojo();
-            
-            notifTemp.setNum(notif_iter.getId());
-            str_temp = notif_iter.getComentario();
-            if (str_temp.length() > 21) {
-                str_temp = str_temp.substring(0, 25)+"...";
+            String username = request.getRemoteUser();
+            System.out.println("caca "+ username);
+            if (username == null) {
+                goToIndex();
             }
-            notifTemp.setDetallesCortado(str_temp);
-            notifTemp.setFecha(notif_iter.getFechaHora().get(Calendar.DAY_OF_MONTH)
-                    +"-"
-                    +notif_iter.getFechaHora().getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)
-                    +"-"
-                    +notif_iter.getFechaHora().get(Calendar.YEAR));
-            notifTemp.setRevisado("No");
-            this.listaAllNotif.add(notifTemp);
+        
+            Collection<Notificacion> listaTemp = notificador.getAllNotificaciones(username);
+            NotificacionPojo notifTemp;
+            String str_temp;
+            this.listaAllNotif = new ArrayList();
+            System.out.println("caca2");
+            for(Notificacion notif_iter : listaTemp) {
+                notifTemp = new NotificacionPojo();
+
+                notifTemp.setNum(notif_iter.getId());
+                str_temp = notif_iter.getComentario();
+                if (str_temp.length() > 21) {
+                    str_temp = str_temp.substring(0, 25)+"...";
+                }
+                notifTemp.setDetallesCortado(str_temp);
+                notifTemp.setFecha(notif_iter.getFechaHora().get(Calendar.DAY_OF_MONTH)
+                        +"-"
+                        +notif_iter.getFechaHora().getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)
+                        +"-"
+                        +notif_iter.getFechaHora().get(Calendar.YEAR));
+                notifTemp.setRevisado("No");
+                this.listaAllNotif.add(notifTemp);
+
+            }
+            System.out.println("listo init()");
+        }
+        if (url.contains("detallesNotificacion.xhtml")) {
+            System.out.println("Se están viendo los detalles de la notificación");
+            if (request.getMethod().equals("GET")) {
+                String paramNumNotif = externalContext.getRequestParameterMap().get("id");
+                System.out.println("param: "+ paramNumNotif);
+                if (paramNumNotif == null){ //No se ha seleccionado aún, redirecciono
+                    goToPage("/faces/users/verNotificaciones.xhtml");
+                    //return false;
+                }
+                //Validar que punto limpio existe y es un número realmente
+                try {
+                    this.numNotif = Integer.parseInt(paramNumNotif);
+                }
+                catch (NumberFormatException nfe) {
+                    goToPage("/faces/users/verNotificaciones.xhtml");
+                    //return false;
+                }
+
+                Notificacion notifTemp = notificador.getNotificacion(this.numNotif);
+                if (notifTemp == null) {
+                    goToPage("/faces/users/verNotificaciones.xhtml");
+                    //return false;
+                }
+                this.detalleCompleto_seleccionado = notifTemp.getComentario();
+                this.fecha_seleccionado = notifTemp.getFechaHora().get(Calendar.DAY_OF_MONTH)
+                            +"-"
+                            +notifTemp.getFechaHora().getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)
+                            +"-"
+                            +notifTemp.getFechaHora().get(Calendar.YEAR);
+                this.tipo_seleccionado = notifTemp.getTipoIncidencia().getNombreIncidencia();
+            }
             
         }
-        System.out.println("listo init()");
     }
     
-    public void verDetalles(Integer num) {
-        System.out.println("Se quiere ver los detalles: "+num);
-        goToPage("/faces/users/detallesNotificacion.xhtml");
+    public void verDetalles(Integer idSeleccionado) {
+        System.out.println("Se quiere ver los detalles: "+idSeleccionado);
+        goToPage("/faces/users/detallesNotificacion.xhtml"+"?id="+idSeleccionado);
+    }
+    
+    public void volverToListado() {
+        goToPage("/faces/users/verNotificaciones.xhtml");
     }
     
     public void eliminar(Integer num) {
@@ -142,6 +184,14 @@ public class verNotificaciones extends commonFunctions{
 
     public void setResuelta_seleccionado(boolean resuelta_seleccionado) {
         this.resuelta_seleccionado = resuelta_seleccionado;
+    }
+
+    public Integer getNumNotif() {
+        return numNotif;
+    }
+
+    public void setNumNotif(Integer numNotif) {
+        this.numNotif = numNotif;
     }
     
 }

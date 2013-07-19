@@ -35,6 +35,13 @@ public class Notificador implements NotificadorLocal {
         return notifDAO.findAllOfUser(username);
         
     }
+    
+    @Override
+    public Notificacion getNotificacion(Integer id) {
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        NotificacionDAO notifDAO = factoryDeDAOs.getNotificacionDAO();
+        return notifDAO.find(id);
+    }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
