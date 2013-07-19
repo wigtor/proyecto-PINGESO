@@ -1,48 +1,57 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<f:view xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pm="http://primefaces.org/mobile"
       contentType="text/html"
-      renderKitId="PRIMEFACES_MOBILE"
       xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
-    
-    
-    <pm:page title="Detalles de notificación">
-        <!-- Main View -->
-        <pm:view id="main">
-            <pm:header title="Detalles de notificación">
-                <f:facet name="left">
-                    <p:button id="btnPanelContext" value="" iconPos="notext" icon="bars"/>
-                </f:facet>
-            </pm:header>
 
-            <pm:content>
-                <p:outputPanel>
-                    <p:dataList type="inset" styleClass="ui-li-custom">
+    <body>
+
+        <ui:composition template="/mainTemplate.xhtml">
+
+            <ui:define name="titulo">Ver notificaciones</ui:define>
+            
+            <ui:define name="botonesBarra">
+                <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{Autenticador.indexLoggued()}" />
+            </ui:define>
+            
+            <ui:define name="centro">
+                <h:form>
+                    <p:panelGrid columns="2" styleClass="centrar">
                         <f:facet name="header">Datos de notificación</f:facet>
-                        <f:attribute name="icon" value="false" />
                         
-                        <p:inputText label="Origen de notificación" value="#{verNotificaciones.origen_seleccionado}"/>
-                        <p:inputText label="Tipo de notificación" value="#{verNotificaciones.tipo_seleccionado}"/>
-                        <p:inputText label="Fecha" value="#{verNotificaciones.fecha_seleccionado}"/>
-                        <p:inputText label="Detalle" value="#{verNotificaciones.detalleCompleto_seleccionado}"/>
-                        <p:selectBooleanCheckbox label="Revisada" value="#{verNotificaciones.revisada_seleccionado}"/>
-                        <p:selectBooleanCheckbox label="Resuelta" value="#{verNotificaciones.resuelta_seleccionado}"/>
+                        <p:outputLabel value="Origen de notificación"/>
+                        <p:inputText value="#{verNotificaciones.origen_seleccionado}"/>
+                        
+                        <p:outputLabel value="Tipo de notificación"/>
+                        <p:inputText value="#{verNotificaciones.tipo_seleccionado}"/>
+                        
+                        <p:outputLabel value="Fecha"/>
+                        <p:inputText value="#{verNotificaciones.fecha_seleccionado}"/>
+                        
+                        <p:outputLabel value="Detalle"/>
+                        <p:inputText value="#{verNotificaciones.detalleCompleto_seleccionado}"/>
+                        
+                        <p:outputLabel value="Revisada"/>
+                        <p:selectBooleanCheckbox value="#{verNotificaciones.revisada_seleccionado}"/>
+                        
+                        <p:outputLabel value="Resuelta"/>
+                        <p:selectBooleanCheckbox value="#{verNotificaciones.resuelta_seleccionado}"/>
+                        
+                        <p:outputLabel value="Imagen adjunta"/>
                         <p:graphicImage url="#{verNotificaciones.urlImagen_seleccionado}"/>
                         
-                        
-                        <p:commandButton value="Volver" action="#{verNotificaciones.volverToListado()}"/>
-                        
-                    </p:dataList>
-                    
-                </p:outputPanel>
-                <p:contextMenu event="swiperight" beforeShow="panelContext.hide()" />
-            </pm:content>
-        </pm:view>
-    </pm:page>
+                        <f:facet name="footer">
+                            <p:commandButton value="Volver" action="#{verNotificaciones.volverToListado()}"/>
+                        </f:facet>
+                    </p:panelGrid>
+                </h:form>
+            </ui:define>
 
-</f:view>
+        </ui:composition>
+
+    </body>
+</html>

@@ -20,8 +20,7 @@
                        <f:facet name="header">Listado de inspectores</f:facet>
                        
                        <p:dataTable id="inspectores" value="#{mantenedorInspector.lista}" var="insp" 
-                                     paginator="true" rows="10"  emptyMessage="No hay inspectores registrados en el sistema" 
-                                        >
+                                     paginator="true" rows="10"  emptyMessage="No hay inspectores registrados en el sistema" >
                             <p:column headerText="Rut">
                                 #{insp.num}
                             </p:column>

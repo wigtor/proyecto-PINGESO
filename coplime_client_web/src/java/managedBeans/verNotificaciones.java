@@ -29,7 +29,12 @@ public class verNotificaciones extends commonFunctions{
     @EJB
     private NotificadorLocal notificador;
     
-    
+    private String origen_seleccionado;
+    private String tipo_seleccionado;
+    private String fecha_seleccionado;
+    private String detalleCompleto_seleccionado;
+    private boolean revisada_seleccionado;
+    private boolean resuelta_seleccionado;
     
     private Collection<NotificacionPojo> listaAllNotif;
     
@@ -72,7 +77,8 @@ public class verNotificaciones extends commonFunctions{
     }
     
     public void verDetalles(Integer num) {
-        
+        System.out.println("Se quiere ver los detalles: "+num);
+        goToPage("/faces/users/detallesNotificacion.xhtml");
     }
     
     public void eliminar(Integer num) {
@@ -89,4 +95,53 @@ public class verNotificaciones extends commonFunctions{
     public Collection<NotificacionPojo> getListaAllNotif() {
         return listaAllNotif;
     }
+
+    public String getOrigen_seleccionado() {
+        return origen_seleccionado;
+    }
+
+    public void setOrigen_seleccionado(String origen_seleccionado) {
+        this.origen_seleccionado = origen_seleccionado;
+    }
+
+    public String getTipo_seleccionado() {
+        return tipo_seleccionado;
+    }
+
+    public void setTipo_seleccionado(String tipo_seleccionado) {
+        this.tipo_seleccionado = tipo_seleccionado;
+    }
+
+    public String getFecha_seleccionado() {
+        return fecha_seleccionado;
+    }
+
+    public void setFecha_seleccionado(String fecha_seleccionado) {
+        this.fecha_seleccionado = fecha_seleccionado;
+    }
+
+    public String getDetalleCompleto_seleccionado() {
+        return detalleCompleto_seleccionado;
+    }
+
+    public void setDetalleCompleto_seleccionado(String detalleCompleto_seleccionado) {
+        this.detalleCompleto_seleccionado = detalleCompleto_seleccionado;
+    }
+
+    public boolean isRevisada_seleccionado() {
+        return revisada_seleccionado;
+    }
+
+    public void setRevisada_seleccionado(boolean revisada_seleccionado) {
+        this.revisada_seleccionado = revisada_seleccionado;
+    }
+
+    public boolean isResuelta_seleccionado() {
+        return resuelta_seleccionado;
+    }
+
+    public void setResuelta_seleccionado(boolean resuelta_seleccionado) {
+        this.resuelta_seleccionado = resuelta_seleccionado;
+    }
+    
 }

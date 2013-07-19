@@ -24,8 +24,7 @@
                         <f:facet name="header">Listado de notificaciones</f:facet>
                         
                         <p:dataTable value="#{verNotificaciones.listaAllNotif}" var="notif" 
-                                     scrollable="true" scrollHeight="200" 
-                                     paginator="true" rows="10">
+                                     paginator="true" rows="10" emptyMessage="No hay notificaciones para usted">
                             <p:column >
                                 <f:facet name="header">
                                     <h:outputText value="N°"/>
@@ -50,17 +49,13 @@
                                 </f:facet>
                                 <p:selectBooleanCheckbox value="#{notif.revisado}"/>
                             </p:column>
-                            <p:column >
-                                <f:facet name="header">
-                                    <h:outputText value="Ver"/>
-                                </f:facet>
-                                <p:commandLink value="  " action="#{verNotificaciones.verDetalles(notif.num)}"/>
-                            </p:column>
-                            <p:column >
-                                <f:facet name="header">
-                                    <h:outputText value="Eliminar"/>
-                                </f:facet>
-                                <p:commandLink value="  " action="#{verNotificaciones.eliminar(notif.num)}"/>
+                            <p:column headerText="" >
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{verNotificaciones.verDetalles(notif.num)}">
+                                </p:commandLink>
+                            </p:column>                            
+                            <p:column headerText="" >
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" action="#{verNotificaciones.eliminar(notif.num)}">
+                                </p:commandLink>
                             </p:column>
                         </p:dataTable>
                         
