@@ -5,7 +5,8 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      contentType="text/html">
+      contentType="text/html"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
 
     <body>
 
@@ -16,7 +17,7 @@
             </ui:define>
             
             <ui:define name="botonesBarra">
-                <p:commandButton styleClass="btn-menu-superior" value="  " title="Ir al inicio" icon="back" action="#{Autenticador.goToIndex()}" />
+                <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{Autenticador.goToIndex()}" />
             </ui:define>
             
             <ui:define name="centro">

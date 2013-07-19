@@ -118,3 +118,20 @@ root {
     background-image: url("../img/glyphicons-halflings-white.png");
     
 }
+
+.btn-menu-superior > .ui-btn-inner > .ui-icon-home {
+    background-color: rgba(0, 0, 0, 0.4);
+    background-repeat: no-repeat;
+    border-radius: 9px 9px 9px 9px;
+    background-position: 2.5px -22px;
+    background-image: url("../img/glyphicons-halflings-white.png");
+}
+
+.btn-menu-superior > .ui-btn-inner > .ui-icon-back {
+    background-color: rgba(0, 0, 0, 0.4);
+    background-repeat: no-repeat;
+    border-radius: 9px 9px 9px 9px;
+    background-position: -238px -94px;
+    background-image: url("../img/glyphicons-halflings-white.png");
+    
+}
