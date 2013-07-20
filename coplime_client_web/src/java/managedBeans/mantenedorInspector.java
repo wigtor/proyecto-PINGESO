@@ -16,7 +16,16 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import sessionBeans.CrudInspectorLocal;
 import entities.Usuario;
+import java.io.Serializable;
 import java.util.Map;
+import javax.faces.bean.ViewScoped;
+
+
+
+
+
+
+ 
 
 /**
  *
@@ -24,7 +33,9 @@ import java.util.Map;
  */
 @Named(value = "mantenedorInspector")
 @RequestScoped
-public class mantenedorInspector extends commonFunctions {
+
+//@ViewScoped
+public class mantenedorInspector extends commonFunctions{
     @EJB
     private CrudInspectorLocal crudInspector;
 
@@ -38,13 +49,14 @@ public class mantenedorInspector extends commonFunctions {
     private Integer telefono;
     private boolean checkContraseña;
     private List<UsuarioPojo> lista; //collection
+    private List<UsuarioPojo> listaBusqueda;
    
     
     /**
      * Creates a new instance of mantenedorInspector
      */
     public mantenedorInspector() {
-        
+               
     }
     
     @PostConstruct
@@ -94,9 +106,16 @@ public class mantenedorInspector extends commonFunctions {
         
  
     } 
+
+    public List<UsuarioPojo> getListaBusqueda() {
+        return listaBusqueda;
+    }
+
+    public void setListaBusqueda(List<UsuarioPojo> listaBusqueda) {
+        this.listaBusqueda = listaBusqueda;
+    }
    
-    
-    
+        
     public List<UsuarioPojo> getLista(){
         return lista;
     }
@@ -125,7 +144,7 @@ public class mantenedorInspector extends commonFunctions {
     }
     
     public void volver() {
-       goToPage("/faces/users/verPuntosLimpios.xhtml");
+       goToPage("/faces/users/verInspectores.xhtml");
        
     }
     
