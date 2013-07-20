@@ -1,57 +1,75 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<f:view xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pm="http://primefaces.org/mobile"
-      contentType="text/html"
-      renderKitId="PRIMEFACES_MOBILE"
-      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+      contentType="text/html">
     
     
-    <pm:page title="Agregar inspector">
-        <!-- Main View -->
-        <pm:view id="main">
+    <body>
+        <ui:composition template="../mainTemplate.xhtml">
+            <ui:define name="titulo">
+                Agregar inspector
+            </ui:define>
             
-            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Administrador')}">
-                <ezcomp:menuAdministrador/>
-            </p:overlayPanel>
-            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Inspector')}">
-                <ezcomp:menuInspector/>
-            </p:overlayPanel>
-            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Operario')}">
-                <ezcomp:menuOperario/>
-            </p:overlayPanel>
-            
-            <pm:header title="Agregar inspector">
-                <f:facet name="left">
-                    <p:commandButton id="btnPanelContext" value="" iconPos="notext" icon="bars" type="button"/>
-                </f:facet>
-            </pm:header>
-            
-            <pm:content>
-                <h:form>
-                    <p:dataList type="inset">
-                        <f:facet name="header">Ingrese datos del inspector</f:facet>
-                        <f:attribute name="icon" value="false" />
-                        <p:inputText label="Nombre" value="#{mantenedorInspector.nombre}" required="true"/>
-                        <p:inputText label="Apellido paterno" value="#{mantenedorInspector.apellido1}" required="true"/>
-                        <p:inputText label="Apellido materno" value="#{mantenedorInspector.apellido2}" required="true"/>
-                        <p:inputText label="Rut" value="#{mantenedorInspector.rut}" required="true"/>
-                        <p:inputText label="Teléfono" value="#{mantenedorInspector.telefono}"/>
-                        <p:inputText label="E-mail" value="#{mantenedorInspector.mail}" required="true"/>         
-                        <p:inputText label="Nombre de usuario" value="#{mantenedorInspector.username}" required="true"/>
-                        <p:inputText label="contraseña" type="password" value="#{mantenedorInspector.password}" required="true"/>
-                        <p:commandButton value="Guardar" action="#{mantenedorInspector.agregarInspector()}"/>
-                        <p:commandButton value="Volver" action="#{mantenedorInspector.volver()}"/>
-                    </p:dataList>
-                </h:form>
-            </pm:content>
-        </pm:view>
-    </pm:page>
+            <ui:define name="centro">
+                 <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Ingrese datos del inspector</f:facet>
+                         
+                        
+                         
+                         <p:outputLabel value="Nombre"/>
+                         <p:inputText value="#{mantenedorInspector.nombre}" required="true"/>
+                         
+                         <p:outputLabel value="Apellido paterno"/>
+                         <p:inputText value="#{mantenedorInspector.apellido1}" required="true"/>
+                         
+                         <p:outputLabel value="Apellido materno"/>
+                         <p:inputText value="#{mantenedorInspector.apellido2}" required="true"/>
+                         
+                         <p:outputLabel value="Rut"/>
+                         <p:inputText value="#{mantenedorInspector.rut}" required="true"/>
+                        
+                         <p:outputLabel value="Teléfono"/>
+                         <p:inputText value="#{mantenedorInspector.telefono}" required="true"/>
+                         
+                         <p:outputLabel value="E-mail"/>
+                         <p:inputText value="#{mantenedorInspector.mail}" required="true"/>
+                         
+                         <p:outputLabel value="Nombre de usuario"/>
+                         <p:inputText value="#{mantenedorInspector.username}" required="true"/>
+                         
+                         <p:outputLabel value="Contraseña"/>
+                         <p:inputText value="#{mantenedorInspector.password}" required="true" type="password"/>
+                         
+                         <f:facet name="footer">
+                            <p:commandButton value="Guardar" action="#{mantenedorInspector.agregarInspector()}"/>
+                            <p:commandButton value="Volver" action="#{mantenedorInspector.volver()}"/>                         
+                         </f:facet>
+                     </p:panelGrid>                
+                </h:form>               
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>
 
-</f:view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
