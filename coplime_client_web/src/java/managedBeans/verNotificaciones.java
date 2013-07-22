@@ -9,27 +9,30 @@ import entities.Notificacion;
 import entities.NotificacionDeUsuario;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
+import javax.faces.bean.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import sessionBeans.NotificadorLocal;
 
 /**
  *
  * @author victor
  */
-@Named(value = "verNotificaciones")
+@ManagedBean(name = "verNotificaciones")
 @RequestScoped
-public class verNotificaciones extends commonFunctions{
+public class verNotificaciones extends commonFunctions implements Serializable {
     @EJB
     private NotificadorLocal notificador;
     
@@ -40,12 +43,16 @@ public class verNotificaciones extends commonFunctions{
     private String detalleCompleto_seleccionado;
     private boolean revisada_seleccionado;
     private boolean resuelta_seleccionado;
-    private DefaultStreamedContent imagen;
+    private StreamedContent imagen;
     
     private Collection<NotificacionPojo> listaAllNotif;
     
     @PostConstruct
     public void init() {
+        Object objTemp = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("imagen");
+        if (objTemp != null) {
+            this.imagen = (DefaultStreamedContent)objTemp;
+        }
         System.out.println("Ejecutando init de verNotificaciones");
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
@@ -107,34 +114,29 @@ public class verNotificaciones extends commonFunctions{
                     goToPage("/faces/users/verNotificaciones.xhtml");
                     //return false;
                 }
-                this.detalleCompleto_seleccionado = notifTemp.getComentario();
-                this.fecha_seleccionado = notifTemp.getFechaHora().get(Calendar.DAY_OF_MONTH)
-                            +"-"
-                            +notifTemp.getFechaHora().getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)
-                            +"-"
-                            +notifTemp.getFechaHora().get(Calendar.YEAR)
-                            +" a las "+notifTemp.getFechaHora().get(Calendar.HOUR)
-                            +":"+notifTemp.getFechaHora().get(Calendar.MINUTE);
-                this.tipo_seleccionado = notifTemp.getTipoIncidencia().getNombreIncidencia();
-                this.origen_seleccionado = notificador.getOrigenIncidencia(notifTemp);
-                if (notificador.isNotificacionUsuario(notifTemp)) {
-                    NotificacionDeUsuario notifUsuarioTemp = (NotificacionDeUsuario)notifTemp;
-                    byte[] datosImagenBytes = notificador.getBytesImagen(notifUsuarioTemp);
-                    if (datosImagenBytes != null) {
-                        System.out.println("datos de imagen notNull");
-                        InputStream datosImagenStream = new ByteArrayInputStream(datosImagenBytes);
-                        imagen = new DefaultStreamedContent(datosImagenStream, notifUsuarioTemp.getTipoImagen());
-                    }
-                    else {
-                        imagen = null;
-                    }
-                }
                 else {
-                    imagen = null;
+                    this.detalleCompleto_seleccionado = notifTemp.getComentario();
+                    this.fecha_seleccionado = notifTemp.getFechaHora().get(Calendar.DAY_OF_MONTH)
+                                +"-"
+                                +notifTemp.getFechaHora().getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)
+                                +"-"
+                                +notifTemp.getFechaHora().get(Calendar.YEAR)
+                                +" a las "+notifTemp.getFechaHora().get(Calendar.HOUR)
+                                +":"+notifTemp.getFechaHora().get(Calendar.MINUTE);
+                    this.tipo_seleccionado = notifTemp.getTipoIncidencia().getNombreIncidencia();
+                    this.origen_seleccionado = notificador.getOrigenIncidencia(notifTemp);
+                    if (notificador.isNotificacionUsuario(notifTemp)) {
+                        NotificacionDeUsuario notifUsuarioTemp = (NotificacionDeUsuario)notifTemp;
+                        InputStream datosImagenStream = new ByteArrayInputStream(notificador.getBytesImagen(notifUsuarioTemp));
+                        imagen = new DefaultStreamedContent(datosImagenStream, notifUsuarioTemp.getTipoImagen());
+                        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("imagen", imagen);
+                        System.out.println("se abrió el defaultStreamedContent");
+                    }
                 }
             }
             
         }
+        System.out.println("La imagen es: "+this.imagen);
     }
     
     public void verDetalles(Integer idSeleccionado) {
@@ -217,12 +219,9 @@ public class verNotificaciones extends commonFunctions{
         this.numNotif = numNotif;
     }
 
-    public DefaultStreamedContent getImagen() {
+    public StreamedContent getImagen() {
+        this.imagen = (StreamedContent)FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("imagen");
         return imagen;
-    }
-
-    public void setImagen(DefaultStreamedContent imagen) {
-        this.imagen = imagen;
     }
     
 }

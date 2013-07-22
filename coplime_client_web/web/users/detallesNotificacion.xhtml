@@ -45,7 +45,7 @@
                         <p:selectBooleanCheckbox value="#{verNotificaciones.resuelta_seleccionado}"/>
                         
                         <p:outputLabel value="Imagen adjunta"/>
-                        <p:graphicImage value="#{verNotificaciones.imagen}" />
+                        <p:graphicImage rendered="#{verNotificaciones.imagen != null}" value="#{verNotificaciones.imagen}" cache="false" width="80px" alt="No hay imagen adjunta"/>
                         
                         <f:facet name="footer">
                             <p:commandButton value="Volver" action="#{verNotificaciones.volverToListado()}"/>
