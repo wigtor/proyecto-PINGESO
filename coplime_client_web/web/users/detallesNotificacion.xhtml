@@ -26,14 +26,13 @@
                         <p:outputLabel value="N° de notificación" />
                         <p:inputText value="#{verNotificaciones.numNotif}" disabled="true"/>
                         
-                        
                         <p:outputLabel value="Origen de notificación" />
                         <p:inputText value="#{verNotificaciones.origen_seleccionado}" disabled="true"/>
                         
                         <p:outputLabel value="Tipo de notificación"/>
                         <p:inputText value="#{verNotificaciones.tipo_seleccionado}" disabled="true"/>
                         
-                        <p:outputLabel value="Fecha"/>
+                        <p:outputLabel value="Fecha - hora"/>
                         <p:inputText value="#{verNotificaciones.fecha_seleccionado}" disabled="true"/>
                         
                         <p:outputLabel value="Detalle"/>
@@ -46,7 +45,7 @@
                         <p:selectBooleanCheckbox value="#{verNotificaciones.resuelta_seleccionado}"/>
                         
                         <p:outputLabel value="Imagen adjunta"/>
-                        <p:graphicImage url="sdfdf" />
+                        <p:graphicImage value="#{verNotificaciones.imagen}" />
                         
                         <f:facet name="footer">
                             <p:commandButton value="Volver" action="#{verNotificaciones.volverToListado()}"/>

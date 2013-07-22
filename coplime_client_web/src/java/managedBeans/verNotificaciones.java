@@ -6,6 +6,9 @@ package managedBeans;
 
 import ObjectsForManagedBeans.NotificacionPojo;
 import entities.Notificacion;
+import entities.NotificacionDeUsuario;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -17,6 +20,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import org.primefaces.model.DefaultStreamedContent;
 import sessionBeans.NotificadorLocal;
 
 /**
@@ -36,6 +40,7 @@ public class verNotificaciones extends commonFunctions{
     private String detalleCompleto_seleccionado;
     private boolean revisada_seleccionado;
     private boolean resuelta_seleccionado;
+    private DefaultStreamedContent imagen;
     
     private Collection<NotificacionPojo> listaAllNotif;
     
@@ -107,8 +112,26 @@ public class verNotificaciones extends commonFunctions{
                             +"-"
                             +notifTemp.getFechaHora().getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)
                             +"-"
-                            +notifTemp.getFechaHora().get(Calendar.YEAR);
+                            +notifTemp.getFechaHora().get(Calendar.YEAR)
+                            +" a las "+notifTemp.getFechaHora().get(Calendar.HOUR)
+                            +":"+notifTemp.getFechaHora().get(Calendar.MINUTE);
                 this.tipo_seleccionado = notifTemp.getTipoIncidencia().getNombreIncidencia();
+                this.origen_seleccionado = notificador.getOrigenIncidencia(notifTemp);
+                if (notificador.isNotificacionUsuario(notifTemp)) {
+                    NotificacionDeUsuario notifUsuarioTemp = (NotificacionDeUsuario)notifTemp;
+                    byte[] datosImagenBytes = notificador.getBytesImagen(notifUsuarioTemp);
+                    if (datosImagenBytes != null) {
+                        System.out.println("datos de imagen notNull");
+                        InputStream datosImagenStream = new ByteArrayInputStream(datosImagenBytes);
+                        imagen = new DefaultStreamedContent(datosImagenStream, notifUsuarioTemp.getTipoImagen());
+                    }
+                    else {
+                        imagen = null;
+                    }
+                }
+                else {
+                    imagen = null;
+                }
             }
             
         }
@@ -192,6 +215,14 @@ public class verNotificaciones extends commonFunctions{
 
     public void setNumNotif(Integer numNotif) {
         this.numNotif = numNotif;
+    }
+
+    public DefaultStreamedContent getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(DefaultStreamedContent imagen) {
+        this.imagen = imagen;
     }
     
 }

@@ -5,6 +5,7 @@
 package sessionBeans;
 
 import entities.Notificacion;
+import entities.NotificacionDeUsuario;
 import java.util.Collection;
 import javax.ejb.Local;
 
@@ -18,5 +19,11 @@ public interface NotificadorLocal {
     Integer obtenerCantidadNotificaciones(String username);
     Collection<Notificacion> getAllNotificaciones(String username);
     public Notificacion getNotificacion(Integer id);
+
+    public String getOrigenIncidencia(Notificacion notif);
+
+    public boolean isNotificacionUsuario(Notificacion notif);
+
+    public byte[] getBytesImagen(NotificacionDeUsuario notifUsuarioTemp);
     
 }
