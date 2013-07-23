@@ -24,6 +24,4 @@ public interface NotificadorLocal {
 
     public boolean isNotificacionUsuario(Notificacion notif);
 
-    public byte[] getBytesImagen(NotificacionDeUsuario notifUsuarioTemp);
-    
 }

@@ -7,6 +7,7 @@ package managedBeans;
 import java.io.IOException;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -30,5 +31,20 @@ public class commonFunctions {
     
     public void goToIndex() {
         goToPage("/faces/index.xhtml");
+    }
+    
+    public String getUsuarioLogueado() {
+        HttpServletRequest request = (HttpServletRequest) 
+                (FacesContext.getCurrentInstance().getExternalContext().getRequest());
+        return request.getRemoteUser();
+    }
+    
+    public boolean isGetMethod() {
+        HttpServletRequest request = (HttpServletRequest) 
+                (FacesContext.getCurrentInstance().getExternalContext().getRequest());
+        if (request.getMethod().equals("GET")) {
+            return true;
+        }
+        return false;
     }
 }

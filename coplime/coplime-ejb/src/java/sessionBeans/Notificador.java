@@ -62,25 +62,6 @@ public class Notificador implements NotificadorLocal {
         return false;
         
     }
-    
-    @Override
-    public byte[] getBytesImagen(NotificacionDeUsuario notifUsuarioTemp) {
-        String path = notifUsuarioTemp.getImagenAdjunta();
-        System.out.println("Path de imagen a abrir: " + path);
-        try {
-            File archivoImagen = new File(path);
-            FileInputStream lector = new FileInputStream(archivoImagen);
-            byte[] resultado = new byte[(int)archivoImagen.length()];
-            lector.read(resultado);
-
-            return resultado;
-        }
-        catch (Exception e) {
-            System.out.println("Excepción al abrir la imagen de notificación: "+e.getMessage());
-            return null;
-        } 
-    }
-    
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 

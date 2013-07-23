@@ -23,44 +23,34 @@
                     <p:panelGrid columns="4" styleClass="centrar">
                         <f:facet name="header">Listado de notificaciones</f:facet>
                         
-                        <p:dataTable value="#{verNotificaciones.listaAllNotif}" var="notif" 
-                                     paginator="true" rows="10" emptyMessage="No hay notificaciones para usted">
-                            <p:column >
-                                <f:facet name="header">
-                                    <h:outputText value="N°"/>
-                                </f:facet>
+                        <p:dataTable value="#{NotificacionVerListado.listaAllNotif}" var="notif" 
+                                     paginator="true" rows="10" filteredValue="#{NotificacionVerListado.filteredNotif}"
+                                     emptyMessage="No hay notificaciones para usted"
+                                     widgetVar="tablaListado" filterDelay="1000" filterEvent="enter">
+                            <p:column id="numColumn" sortBy="#{notif.num}" headerText="N°" filterBy="#{notif.num}" filterMatchMode="contains">
                                 <h:outputText value="#{notif.num}"/>
                             </p:column>
-                            <p:column >
-                                <f:facet name="header">
-                                    <h:outputText value="Detalle"/>
-                                </f:facet>
+                            <p:column id="detColumn" sortBy="#{notif.detallesCortado}" headerText="Detalle" filterBy="#{notif.detallesCortado}" filterMatchMode="contains">
                                 <h:outputText value="#{notif.detallesCortado}"/>
                             </p:column>
-                            <p:column sortBy="#{notif.fecha}">
-                                <f:facet name="header">
-                                    <h:outputText value="Fecha"/>
-                                </f:facet>
+                            <p:column id="fechaColumn" sortBy="#{notif.fecha}" headerText="Fecha" filterBy="#{notif.fecha}" filterMatchMode="contains">
                                 <h:outputText value="#{notif.fecha}"/>
                             </p:column>
-                            <p:column >
-                                <f:facet name="header">
-                                    <h:outputText value="Revisado"/>
-                                </f:facet>
+                            <p:column headerText="Revisado">
                                 <p:selectBooleanCheckbox value="#{notif.revisado}"/>
                             </p:column>
                             <p:column headerText="" >
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{verNotificaciones.verDetalles(notif.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{NotificacionVerListado.verDetalles(notif.num)}">
                                 </p:commandLink>
                             </p:column>                            
                             <p:column headerText="" >
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" action="#{verNotificaciones.eliminar(notif.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" action="#{NotificacionVerListado.eliminar(notif.num)}">
                                 </p:commandLink>
                             </p:column>
                         </p:dataTable>
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Volver" action="#{verNotificaciones.volver()}"/>
+                            <p:commandButton value="Volver" action="#{NotificacionVerListado.volver()}"/>
                         </f:facet>
                     </p:panelGrid>
                 </h:form>
