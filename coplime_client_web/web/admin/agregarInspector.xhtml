@@ -22,32 +22,32 @@
                         
                          
                          <p:outputLabel value="Nombre"/>
-                         <p:inputText value="#{mantenedorInspector.nombre}" required="true"/>
+                         <p:inputText value="#{MantenedorInspectorAgregar.nombre}" required="true"/>
                          
                          <p:outputLabel value="Apellido paterno"/>
-                         <p:inputText value="#{mantenedorInspector.apellido1}" required="true"/>
+                         <p:inputText value="#{MantenedorInspectorAgregar.apellido1}" required="true"/>
                          
                          <p:outputLabel value="Apellido materno"/>
-                         <p:inputText value="#{mantenedorInspector.apellido2}" required="true"/>
+                         <p:inputText value="#{MantenedorInspectorAgregar.apellido2}" required="true"/>
                          
                          <p:outputLabel value="Rut"/>
-                         <p:inputText value="#{mantenedorInspector.rut}" required="true"/>
+                         <p:inputText value="#{MantenedorInspectorAgregar.rut}" required="true"/>
                         
                          <p:outputLabel value="Teléfono"/>
-                         <p:inputText value="#{mantenedorInspector.telefono}" required="true"/>
+                         <p:inputText value="#{MantenedorInspectorAgregar.telefono}" required="true"/>
                          
                          <p:outputLabel value="E-mail"/>
-                         <p:inputText value="#{mantenedorInspector.mail}" required="true"/>
+                         <p:inputText value="#{MantenedorInspectorAgregar.mail}" required="true"/>
                          
                          <p:outputLabel value="Nombre de usuario"/>
-                         <p:inputText value="#{mantenedorInspector.username}" required="true"/>
+                         <p:inputText value="#{MantenedorInspectorAgregar.username}" required="true"/>
                          
                          <p:outputLabel value="Contraseña"/>
-                         <p:inputText value="#{mantenedorInspector.password}" required="true" type="password"/>
+                         <p:inputText value="#{MantenedorInspectorAgregar.password}" required="true" type="password"/>
                          
                          <f:facet name="footer">
-                            <p:commandButton value="Guardar" action="#{mantenedorInspector.agregarInspector()}"/>
-                            <p:commandButton value="Volver" action="#{mantenedorInspector.volver()}"/>                         
+                            <p:commandButton value="Guardar" action="#{MantenedorInspectorAgregar.agregarInspector()}"/>
+                            <p:commandButton value="Volver" action="#{MantenedorInspectorAgregar.volver()}"/>                         
                          </f:facet>
                      </p:panelGrid>                
                 </h:form>               

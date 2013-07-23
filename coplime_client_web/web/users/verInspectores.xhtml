@@ -19,10 +19,11 @@
                   <p:panelGrid columns="5" styleClass="centrar" >
                        <f:facet name="header">Listado de inspectores</f:facet>
                        
-                       <p:dataTable id="inspectores" value="#{mantenedorInspector.lista}" var="insp" widgetVar="inspectorTable"  
-                                     paginator="true" rows="10" emptyMessage="No hay inspectores registrados en el sistema" 
-                                     filteredValue="#{mantenedorInspector.listaBusqueda}">
-               <!--            <f:facet name="header">  
+                       <p:dataTable id="inspectores" value="#{MantenedorInspectorVerListado.lista}" var="insp" widgetVar="inspectorTable"  
+                                      emptyMessage="No hay inspectores registrados en el sistema" 
+                                     filteredValue="#{MantenedorInspectorVerListado.listaBusqueda}">
+                           <!--
+                          <f:facet name="header">  
                                 <p:outputPanel>  
                                     <h:outputText value="Buscar: " /> 
                                     
@@ -31,31 +32,31 @@
                                 </p:outputPanel>  
                             </f:facet> -->
                            
-                           <p:column id="rutColumn" headerText="Rut" filterMatchMode="contains" filterBy="#{insp.num}"  >
+                           <p:column id="rutColumn" sortBy="#{insp.num}" headerText="Rut" filterMatchMode="contains" filterBy="#{insp.num}"  >
                                 <h:outputText value="#{insp.num}" /> 
                                                               
                             </p:column>
-                            <p:column id="nomColumn" headerText="Nombre" filterMatchMode="contains" filterBy="#{insp.nombre}">
+                            <p:column id="nomColumn" sortBy="#{insp.nombre}" headerText="Nombre" filterMatchMode="contains" filterBy="#{insp.nombre}">
                                 <h:outputText value="#{insp.nombre}" />                                
                             </p:column>
                             
                             <p:column headerText="" >
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{mantenedorInspector.editar(insp.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorInspectorVerListado.editar(insp.num)}">
                                 </p:commandLink>
                             </p:column>                            
                             <p:column headerText="" >
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{mantenedorInspector.editar(insp.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{MantenedorInspectorVerListado.editar(insp.num)}">
                                 </p:commandLink>
                             </p:column>
                             <p:column headerText="" >
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" action="#{mantenedorInspector.eliminar(insp.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" action="#{MantenedorInspectorVerListado.eliminar(insp.num)}">
                                 </p:commandLink>
                             </p:column>
                         </p:dataTable>
                        
                        <f:facet name="footer">
-                           <p:commandButton value="Agregar" action="#{mantenedorInspector.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
-                           <p:commandButton value="Volver" action="#{mantenedorInspector.volver()}"/>
+                           <p:commandButton value="Agregar" action="#{MantenedorInspectorVerListado.agregar()}" />
+                           <p:commandButton value="Volver" action="#{MantenedorInspectorVerListado.volver()}"/>
                            
                        </f:facet>
                             
