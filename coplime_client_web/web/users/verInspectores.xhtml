@@ -16,21 +16,21 @@
            
            <ui:define name="centro">
                <h:form>
-                  <p:panelGrid columns="5" styleClass="centrar">
+                  <p:panelGrid columns="5" styleClass="centrar" >
                        <f:facet name="header">Listado de inspectores</f:facet>
                        
                        <p:dataTable id="inspectores" value="#{mantenedorInspector.lista}" var="insp" widgetVar="inspectorTable"  
                                      paginator="true" rows="10" emptyMessage="No hay inspectores registrados en el sistema" 
                                      filteredValue="#{mantenedorInspector.listaBusqueda}">
-                      <!--      <f:facet name="header">  
+               <!--            <f:facet name="header">  
                                 <p:outputPanel>  
                                     <h:outputText value="Buscar: " /> 
                                     
                                     <p:inputText id="globalFilter" onkeyup="inspectorTable.filter()" style="width:150px"  /> 
                                     
                                 </p:outputPanel>  
-                            </f:facet> 
-                           -->
+                            </f:facet> -->
+                           
                            <p:column id="rutColumn" headerText="Rut" filterMatchMode="contains" filterBy="#{insp.num}"  >
                                 <h:outputText value="#{insp.num}" /> 
                                                               

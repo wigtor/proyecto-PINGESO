@@ -19,6 +19,7 @@ import entities.Usuario;
 import java.io.Serializable;
 import java.util.Map;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.event.SelectEvent;
 
 
 
@@ -35,7 +36,7 @@ import javax.faces.bean.ViewScoped;
 @RequestScoped
 
 //@ViewScoped
-public class mantenedorInspector extends commonFunctions{
+public class mantenedorInspector extends commonFunctions implements Serializable{
     @EJB
     private CrudInspectorLocal crudInspector;
 
@@ -106,6 +107,10 @@ public class mantenedorInspector extends commonFunctions{
         
  
     } 
+    public void update(SelectEvent event) {
+        init();
+    // your code here...
+}
 
     public List<UsuarioPojo> getListaBusqueda() {
         return listaBusqueda;
