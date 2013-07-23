@@ -8,11 +8,8 @@ import DAO.DAOFactory;
 import DAO.interfaces.NotificacionDAO;
 import entities.Notificacion;
 import entities.NotificacionDeUsuario;
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -69,9 +66,11 @@ public class Notificador implements NotificadorLocal {
     @Override
     public byte[] getBytesImagen(NotificacionDeUsuario notifUsuarioTemp) {
         String path = notifUsuarioTemp.getImagenAdjunta();
+        System.out.println("Path de imagen a abrir: " + path);
         try {
-            FileInputStream lector = new FileInputStream(path);
-            byte[] resultado = null;
+            File archivoImagen = new File(path);
+            FileInputStream lector = new FileInputStream(archivoImagen);
+            byte[] resultado = new byte[(int)archivoImagen.length()];
             lector.read(resultado);
 
             return resultado;

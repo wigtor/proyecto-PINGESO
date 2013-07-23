@@ -179,7 +179,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         NotificacionDeUsuario notif = new NotificacionDeUsuario();
         notif.setComentario("El punto limpio está con todos los desechos botados por perros");
         notif.setEmailContacto("victor.floress@usach.cl");
-        notif.setImagenAdjunta("C:\\glassfish3\\jdk7\\uploads_coplime\\img_notif_1373923087570.jpeg");
+        notif.setImagenAdjunta("C:\\glassfish3\\jdk7\\uploads_coplime\\img_notif_1374215183342.jpeg");
         notif.setFechaHora(Calendar.getInstance());
         notif.setResuelto(false);
         notif.setRevisado(false);
