@@ -24,7 +24,7 @@
                         <f:facet name="header">Listado de notificaciones</f:facet>
                         
                         <p:dataTable value="#{NotificacionVerListado.listaAllNotif}" var="notif" 
-                                     paginator="true" rows="10" filteredValue="#{NotificacionVerListado.filteredNotif}"
+                                     paginator="true" rows="10"
                                      emptyMessage="No hay notificaciones para usted"
                                      widgetVar="tablaListado" filterDelay="1000" filterEvent="enter">
                             <p:column id="numColumn" sortBy="#{notif.num}" headerText="N°" filterBy="#{notif.num}" filterMatchMode="contains">

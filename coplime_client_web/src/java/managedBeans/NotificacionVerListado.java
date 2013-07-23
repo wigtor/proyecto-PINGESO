@@ -14,6 +14,7 @@ import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -94,6 +95,10 @@ public class NotificacionVerListado extends commonFunctions implements Serializa
     
     public Collection<NotificacionPojo> getListaAllNotif() {
         return listaAllNotif;
+    }
+    
+    public void setListaAllNotif(Collection<NotificacionPojo> listaAllNotif) {
+        this.listaAllNotif = listaAllNotif;
     }
 
     public Collection<NotificacionPojo> getFilteredNotif() {
