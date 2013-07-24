@@ -53,7 +53,7 @@ public class MantenedorInspectorVerListado extends commonFunctions{
         ///////////////VER/////////////////////
         Collection<Inspector> listaTemp = crudInspector.getAllInspectores();
         UsuarioPojo inspectorTemporal;
-       
+        
         this.lista = new ArrayList();
         for(Inspector insp_iter : listaTemp) {
             inspectorTemporal = new UsuarioPojo();
@@ -90,6 +90,27 @@ public class MantenedorInspectorVerListado extends commonFunctions{
        goToPage("/faces/admin/editarInspector.xhtml");
        
     }
+    
+    public void verDetalles(int numInspector) {
+        System.out.println("NÚMERO DE INSPECTOR: "+numInspector);
+        Usuario usuarioVerDetalle = crudInspector.getInspectorByRut(numInspector);
+        if (usuarioVerDetalle != null) {
+            this.mantInsp.setRut(new Integer(usuarioVerDetalle.getRut()));
+            this.mantInsp.setNombre(usuarioVerDetalle.getNombre());
+            this.mantInsp.setApellido1(usuarioVerDetalle.getApellido1());
+            this.mantInsp.setApellido2(usuarioVerDetalle.getApellido2());
+            this.mantInsp.setMail(usuarioVerDetalle.getEmail());
+            this.mantInsp.setUsername(usuarioVerDetalle.getUsername());
+            this.mantInsp.setTelefono(usuarioVerDetalle.getTelefono());
+            System.out.println(this.mantInsp.getApellido1());
+        }
+        else {
+            //MOSTRAR ERROR
+        }
+       goToPage("/faces/users/verDetallesInspector.xhtml");
+       
+    }
+    
     public void eliminar(int numInspector) {
        System.out.println("NÚMERO DE INSPECTOR: "+numInspector);
        //crudInspector.eliminarInspector(new Integer(numInspector));

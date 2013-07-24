@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    
+    <body>
+        <ui:composition template="../mainTemplate.xhtml">
+            <ui:define name="titulo">
+                Detalle inspector
+            </ui:define>
+            
+            <ui:define name="centro">
+                 <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Datos del inspector</f:facet>
+                         
+                        
+                         
+                         <p:outputLabel value="Nombre"/>
+                         <p:inputText value="#{MantenedorInspectorVerDetalles.nombre}" disabled="true" readonly="true" />
+                         
+                         <p:outputLabel value="Apellido paterno"/>
+                         <p:inputText value="#{MantenedorInspectorVerDetalles.apellido1}" disabled="true" readonly="true" />
+                         
+                         <p:outputLabel value="Apellido materno"/>
+                         <p:inputText value="#{MantenedorInspectorVerDetalles.apellido2}" disabled="true" readonly="true" />
+                         
+                         <p:outputLabel value="Rut"/>
+                         <p:inputText value="#{MantenedorInspectorVerDetalles.rut}" disabled="true" readonly="true" />
+                        
+                         <p:outputLabel value="Teléfono"/>
+                         <p:inputText value="#{MantenedorInspectorVerDetalles.telefono}" disabled="true" readonly="true" />
+                         
+                         <p:outputLabel value="E-mail"/>
+                         <p:inputText value="#{MantenedorInspectorVerDetalles.mail}" disabled="true" readonly="true" />
+                         
+                         <p:outputLabel value="Nombre de usuario"/>
+                         <p:inputText value="#{MantenedorInspectorVerDetalles.username}" disabled="true" readonly="true" />
+                         
+                         <p:outputLabel value="Nº de puntos limpios"/>
+                         <p:inputText value="#{MantenedorInspectorVerDetalles.numPuntosLimpios}" disabled="true" readonly="true" />
+                         
+                         <p:outputLabel value="Nº de revisiones realizadas"/>
+                         <p:inputText value="#{MantenedorInspectorVerDetalles.numRevisionesRealizadas}" disabled="true" readonly="true" />
+                         
+                         <p:outputLabel value="Nº de solicitudes de rev. realizadas"/>
+                         <p:inputText value="#{MantenedorInspectorVerDetalles.numSolicitudesMantencionRealizadas}" disabled="true" readonly="true" />
+                         <f:facet name="footer">
+                            
+                            <p:commandButton value="Volver" action="#{MantenedorInspectorVerDetalles.volver()}"/>                         
+                         </f:facet>
+                     </p:panelGrid>                
+                </h:form>               
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>
