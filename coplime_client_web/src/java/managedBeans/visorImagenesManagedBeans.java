@@ -4,7 +4,6 @@
  */
 package managedBeans;
 
-import entities.Notificacion;
 import entities.NotificacionDeUsuario;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -16,9 +15,8 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -27,7 +25,7 @@ import org.primefaces.model.StreamedContent;
  * @author victor
  */
 @Named(value = "visorImagenesManagedBeans")
-@ViewScoped
+@RequestScoped
 public class visorImagenesManagedBeans implements Serializable {
     private DefaultStreamedContent imagen;
     private NotificacionDeUsuario notifTemp;
@@ -55,12 +53,15 @@ public class visorImagenesManagedBeans implements Serializable {
             lector = new FileInputStream(archivoImagen);
             byte[] resultado = new byte[(int)archivoImagen.length()];
             lector.read(resultado);
+            lector.close();
             InputStream datosImagenStream = new ByteArrayInputStream(resultado);
             imagen = new DefaultStreamedContent(datosImagenStream, notifTemp.getTipoImagen());
             System.out.println("se abrió el defaultStreamedContent");
         } catch (FileNotFoundException ex) {
+             System.out.println("se abrió el FileNotFoundException");
             Logger.getLogger(visorImagenesManagedBeans.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
+            System.out.println("se abrió el IOException");
             Logger.getLogger(visorImagenesManagedBeans.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
@@ -94,7 +95,7 @@ public class visorImagenesManagedBeans implements Serializable {
             return;
         }*/
         
-        
+        System.out.println("SE INSTANCIÓ UN VISOR DE IMAGENES");
     }
     
 }

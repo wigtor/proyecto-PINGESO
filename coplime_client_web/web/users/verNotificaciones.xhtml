@@ -24,9 +24,9 @@
                         <f:facet name="header">Listado de notificaciones</f:facet>
                         
                         <p:dataTable value="#{NotificacionVerListado.listaAllNotif}" var="notif" 
-                                     paginator="true" rows="10"
+                                     filteredValue="#{NotificacionVerListado.filteredNotif}"
                                      emptyMessage="No hay notificaciones para usted"
-                                     widgetVar="tablaListado" filterDelay="1000" filterEvent="enter">
+                                     widgetVar="tablaListado">
                             <p:column id="numColumn" sortBy="#{notif.num}" headerText="N°" filterBy="#{notif.num}" filterMatchMode="contains">
                                 <h:outputText value="#{notif.num}"/>
                             </p:column>
@@ -39,11 +39,11 @@
                             <p:column headerText="Revisado">
                                 <p:selectBooleanCheckbox value="#{notif.revisado}"/>
                             </p:column>
-                            <p:column headerText="" >
+                            <p:column headerText="  " >
                                 <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{NotificacionVerListado.verDetalles(notif.num)}">
                                 </p:commandLink>
                             </p:column>                            
-                            <p:column headerText="" >
+                            <p:column headerText="  " >
                                 <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" action="#{NotificacionVerListado.eliminar(notif.num)}">
                                 </p:commandLink>
                             </p:column>

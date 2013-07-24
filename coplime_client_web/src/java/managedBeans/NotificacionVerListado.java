@@ -25,7 +25,7 @@ import sessionBeans.NotificadorLocal;
  * @author victor
  */
 @Named(value = "NotificacionVerListado")
-@ViewScoped
+@RequestScoped
 public class NotificacionVerListado extends commonFunctions implements Serializable {
     @EJB
     private NotificadorLocal notificador;

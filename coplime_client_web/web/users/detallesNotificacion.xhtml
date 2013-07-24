@@ -19,7 +19,7 @@
             </ui:define>
             
             <ui:define name="centro">
-                <h:form>
+                <h:form id="form">
                     <p:panelGrid columns="2" styleClass="centrar">
                         <f:facet name="header">Datos de notificación</f:facet>
                         
@@ -45,7 +45,7 @@
                         <p:selectBooleanCheckbox value="#{NotificacionVerDetalles.resuelta_seleccionado}"/>
                         
                         <p:outputLabel value="Imagen adjunta"/>
-                        <p:graphicImage value="#{NotificacionVerDetalles.imagen}" cache="false" width="80px" alt="No hay imagen adjunta"/>
+                        <p:graphicImage value="#{NotificacionVerDetalles.imagen}" cache="true" width="80px" alt="No hay imagen adjunta"/>
                         
                         <f:facet name="footer">
                             <p:commandButton value="Volver" action="#{NotificacionVerDetalles.volverToListado()}"/>
