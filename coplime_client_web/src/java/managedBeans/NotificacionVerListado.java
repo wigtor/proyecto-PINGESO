@@ -51,6 +51,7 @@ public class NotificacionVerListado extends commonFunctions implements Serializa
     
     private Collection<NotificacionPojo> llenarListaNotificaciones(Collection<Notificacion> listaTemp) {
         NotificacionPojo notifTemp;
+        Calendar f;
         String str_temp;
         Collection<NotificacionPojo> listaResult = new ArrayList();
         for(Notificacion notif_iter : listaTemp) {
@@ -62,11 +63,10 @@ public class NotificacionVerListado extends commonFunctions implements Serializa
                 str_temp = str_temp.substring(0, 25)+"...";
             }
             notifTemp.setDetallesCortado(str_temp);
-            notifTemp.setFecha(notif_iter.getFechaHora().get(Calendar.DAY_OF_MONTH)
+            f = notif_iter.getFechaHora();
+            notifTemp.setFecha(f.get(Calendar.DAY_OF_MONTH)
                     +"-"
-                    +notif_iter.getFechaHora().getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)
-                    +"-"
-                    +notif_iter.getFechaHora().get(Calendar.YEAR));
+                    +f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH));
             notifTemp.setRevisado("No");
             listaResult.add(notifTemp);
         }

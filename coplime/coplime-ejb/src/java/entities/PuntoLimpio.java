@@ -5,7 +5,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,7 +26,9 @@ import javax.persistence.Temporal;
  */
 @Entity
 @NamedQueries( {
-    @NamedQuery(name="PuntoLimpio.findByName", query="SELECT u FROM PuntoLimpio u WHERE u.nombre = :nombre") 
+    @NamedQuery(name="PuntoLimpio.findByName", query="SELECT u FROM PuntoLimpio u WHERE u.nombre = :nombre"),
+    @NamedQuery(name="PuntoLimpio.findByNum", query="SELECT u FROM PuntoLimpio u WHERE u.num = :num"),
+    @NamedQuery(name="PuntoLimpio.deleteByNum", query="DELETE FROM PuntoLimpio u WHERE u.num = :num")
 })
 public class PuntoLimpio implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -49,27 +51,30 @@ public class PuntoLimpio implements Serializable {
     
     private int longitud;
     
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Calendar fechaProxRevision;
+    
     @ManyToOne
     @JoinColumn(nullable = false)
     private Estado estadoGlobal;
     
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne
     @JoinColumn
     private Inspector inspectorEncargado;
     
-    @OneToMany(mappedBy = "puntoLimpio")
+    @OneToMany(mappedBy = "puntoLimpio", cascade = CascadeType.ALL)
     private List<Contenedor> contenedores;
     
-    @OneToMany(mappedBy = "puntoLimpio")
+    @OneToMany(mappedBy = "puntoLimpio", cascade = CascadeType.ALL)
     private List<MantencionPuntoLimpio> mantenciones;
 
-    @OneToMany(mappedBy = "puntoLimpio")
+    @OneToMany(mappedBy = "puntoLimpio", cascade = CascadeType.ALL)
     private List<RevisionPuntoLimpio> revisiones;
     
-    @OneToMany(mappedBy = "puntoLimpio")
+    @OneToMany(mappedBy = "puntoLimpio", cascade = CascadeType.ALL)
     private List<SolicitudMantencion> solicitudesMantencion;
     
-    @OneToMany(mappedBy = "puntoLimpio")
+    @OneToMany(mappedBy = "puntoLimpio", cascade = CascadeType.ALL)
     private List<Notificacion> notificaciones;
     
     public PuntoLimpio() {
@@ -186,17 +191,14 @@ public class PuntoLimpio implements Serializable {
         this.longitud = longitud;
     }
 
-    public Date getFechaProxRevision() {
+    public Calendar getFechaProxRevision() {
         return fechaProxRevision;
     }
 
-    public void setFechaProxRevision(Date fechaProxRevision) {
+    public void setFechaProxRevision(Calendar fechaProxRevision) {
         this.fechaProxRevision = fechaProxRevision;
     }
     
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fechaProxRevision;
-
     public Integer getId() {
         return id;
     }

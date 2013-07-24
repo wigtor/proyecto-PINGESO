@@ -1,52 +1,56 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<f:view xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pm="http://primefaces.org/mobile"
-      contentType="text/html"
-        renderKitId="PRIMEFACES_MOBILE">
-    
-    
-    <pm:page title="Agregar punto limpio">
-        <!-- Main View -->
-        <pm:view id="main">
-            <pm:header title="Agregar punto limpio" swatch="b"/>
-            <pm:content>
-                <h:form>
-                <p:outputPanel>
-                    <p:dataList type="inset" styleClass="ui-li-custom">
+      contentType="text/html">
+    <body>
+       <ui:composition template="../mainTemplate.xhtml">
+           <ui:define name="titulo" >Agregar punto limpio</ui:define>
+           
+           
+           <ui:define name="centro">
+               <h:form>
+                   <p:panelGrid columns="2" styleClass="centrar" >
                         <f:facet name="header">Ingrese los datos del punto limpio</f:facet>
-                        <f:attribute name="icon" value="false" />
-                        <p:inputText label="Nombre del punto limpio" value="#{mantenedorPuntoLimpio.nombre}"/>
-                        <p:selectOneMenu label="Seleccione comuna" value="#{mantenedorPuntoLimpio.comuna_seleccionada}">
-                            <f:selectItems value="#{mantenedorPuntoLimpio.ListaComunas}"  
+                        
+                        <p:outputLabel value="Nombre del punto limpio"/>
+                        <p:inputText value="#{mantenedorPuntoLimpioAgregar.nombre}"/>
+                        
+                        <p:outputLabel value="Seleccione comuna"/>
+                        <h:selectOneMenu label="Seleccione comuna" value="#{mantenedorPuntoLimpioAgregar.comuna_seleccionada}">
+                            <f:selectItems value="#{mantenedorPuntoLimpioAgregar.listaComunas}"  
                                 var="comuna" itemLabel="#{comuna.nombre}" itemValue="#{comuna.nombre}" />
-                        </p:selectOneMenu>
-                        <p:inputText label="Dirección" value="#{mantenedorPuntoLimpio.direccion}"/>
-                        <p:calendar label="Fecha primera revisión" value="#{mantenedorPuntoLimpio.fechaRevision}"/>
-                        <p:selectOneMenu label="Estado global inicial" value="#{mantenedorPuntoLimpio.estado_seleccionado}">
-                            <f:selectItems value="#{mantenedorPuntoLimpio.ListaEstadosPtoLimpio}"  
+                        </h:selectOneMenu>
+                        
+                        <p:outputLabel value="Dirección"/>
+                        <p:inputText value="#{mantenedorPuntoLimpioAgregar.direccion}"/>
+                        
+                        <p:outputLabel value="Fecha primera revisión"/>
+                        <p:calendar value="#{mantenedorPuntoLimpioAgregar.fechaRevision}"/>
+                        
+                        <p:outputLabel value="Estado global inicial"/>
+                        <h:selectOneMenu value="#{mantenedorPuntoLimpioAgregar.estado_seleccionado}">
+                            <f:selectItems value="#{mantenedorPuntoLimpioAgregar.ListaEstadosPtoLimpio}"  
                                 var="estado" itemLabel="#{estado.nombre}" itemValue="#{estado.num}" />
-                        </p:selectOneMenu>
-                        <p:selectOneMenu label="Inspector encargado" value="#{mantenedorPuntoLimpio.inspectorEncargado_seleccionado}">
-                            <f:selectItems value="#{mantenedorPuntoLimpio.ListaInspectores}"  
+                        </h:selectOneMenu>
+                        
+                        <p:outputLabel value="Inspector encargado"/>
+                        <h:selectOneMenu value="#{mantenedorPuntoLimpioAgregar.inspectorEncargado_seleccionado}">
+                            <f:selectItems value="#{mantenedorPuntoLimpioAgregar.listaInspectores}"  
                                 var="InspEncargado" itemLabel="#{InspEncargado.nombre}" itemValue="#{InspEncargado.num}" />
-                        </p:selectOneMenu>
+                        </h:selectOneMenu>
                         
-                        <p:commandButton value="Agregar contenedores" action="#{mantenedorPuntoLimpio.agregarContenedores()}"/>
+                        <p:commandButton value="Agregar contenedores" action="#{mantenedorPuntoLimpioAgregar.agregarContenedores()}"/>
                         
-                        <p:commandButton value="Aceptar" action="#{mantenedorPuntoLimpio.agregarPuntoLimpio()}"/>
-                        <p:commandButton value="Volver" action="#{mantenedorPuntoLimpio.volverToLista()}"/>
-                    </p:dataList>
-                </p:outputPanel>
-                </h:form>
-            </pm:content>
-        </pm:view>
-    </pm:page>
-
-</f:view>
-
-
+                        <p:commandButton value="Aceptar" action="#{mantenedorPuntoLimpioAgregar.agregarPuntoLimpio()}"/>
+                        <p:commandButton value="Volver" action="#{mantenedorPuntoLimpioAgregar.volverToLista()}"/>
+                   
+                   </p:panelGrid>
+               </h:form>
+           </ui:define>
+       </ui:composition>
+    </body>    
+</html>
