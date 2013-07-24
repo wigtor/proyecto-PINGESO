@@ -4,6 +4,8 @@
  */
 package sessionBeans;
 
+import entities.Estado;
+import entities.Inspector;
 import entities.PuntoLimpio;
 import java.util.Calendar;
 import java.util.Collection;
@@ -27,5 +29,9 @@ public interface CrudPuntoLimpioLocal {
     public void editarPuntoLimpio(Integer idPtoLimpio, String nombre, String comuna, Calendar fechaProxRev, String estadoIni, int numInspEnc);
 
     public boolean eliminarPuntoLimpioByNum(Integer num);
+
+    public Collection<Inspector> getAllInspectores();
+
+    public Collection<Estado> getAllEstadosPuntoLimpio();
     
 }

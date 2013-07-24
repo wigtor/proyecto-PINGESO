@@ -5,7 +5,11 @@
 package sessionBeans;
 
 import DAO.DAOFactory;
+import DAO.interfaces.EstadoDAO;
+import DAO.interfaces.InspectorDAO;
 import DAO.interfaces.PuntoLimpioDAO;
+import entities.Estado;
+import entities.Inspector;
 import entities.PuntoLimpio;
 import entities.Usuario;
 import java.util.Calendar;
@@ -40,6 +44,22 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
         return ptoDAO.findAll();
+    }
+    
+    @Override
+    public Collection<Inspector> getAllInspectores() {
+        //Hago los DAO
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        InspectorDAO inspDAO = factoryDeDAOs.getInspectorDAO();
+        return inspDAO.findAll();
+    }
+    
+    @Override
+    public Collection<Estado> getAllEstadosPuntoLimpio() {
+        //Hago los DAO
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        EstadoDAO estDAO = factoryDeDAOs.getEstadoDAO();
+        return estDAO.findAll();
     }
     
     

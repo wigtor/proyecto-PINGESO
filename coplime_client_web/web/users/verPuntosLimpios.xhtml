@@ -22,16 +22,16 @@
                        <p:dataTable value="#{MantenedorPuntoLimpioVerListado.lista}" var="puntoLimpio" 
                                         widgetVar="inspectorTable" emptyMessage="No hay puntos limpios registrados en el sistema" 
                                         filteredValue="#{MantenedorPuntoLimpioVerListado.listaBusqueda}">
-                           <p:column headerText="N°">
+                           <p:column headerText="N°" sortBy="#{puntoLimpio.num}" filterMatchMode="contains" filterBy="#{puntoLimpio.num}">
                                <h:outputText value="#{puntoLimpio.num}"/>
                            </p:column>
-                           <p:column headerText="Nombre">
+                           <p:column headerText="Nombre" sortBy="#{puntoLimpio.nombre}" filterMatchMode="contains" filterBy="#{puntoLimpio.nombre}">
                                <h:outputText value="#{puntoLimpio.nombre}"/>
                            </p:column>
-                           <p:column headerText="estado">
+                           <p:column headerText="estado" sortBy="#{puntoLimpio.estado}" filterMatchMode="contains" filterBy="#{puntoLimpio.estado}">
                                <h:outputText value="#{puntoLimpio.estado}"/>
                            </p:column>
-                           <p:column headerText="Fecha proxima rev" sortBy="#{puntoLimpio.fechaProximaRev}">
+                           <p:column headerText="Fecha proxima rev" sortBy="#{puntoLimpio.fechaProximaRev}" filterMatchMode="contains" filterBy="#{puntoLimpio.fechaProximaRev}">
                                <h:outputText value="#{puntoLimpio.fechaProximaRev}"/>
                            </p:column>
                            <p:column headerText="" >
@@ -50,8 +50,6 @@
                        
                        <f:facet name="footer">
                            <p:commandButton value="Agregar" action="#{MantenedorPuntoLimpioVerListado.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
-                           <p:commandButton value="Volver" action="#{MantenedorPuntoLimpioVerListado.volver()}"/>
-                           
                        </f:facet>
                             
                        
