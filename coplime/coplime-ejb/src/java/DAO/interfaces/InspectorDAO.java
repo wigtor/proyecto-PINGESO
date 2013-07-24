@@ -11,5 +11,6 @@ import entities.Inspector;
  * @author victor
  */
 public interface InspectorDAO extends genericDAO<Inspector>{
-    
+    public Inspector findByRut(int rut);
+    public boolean deleteByRut(int rut);
 }

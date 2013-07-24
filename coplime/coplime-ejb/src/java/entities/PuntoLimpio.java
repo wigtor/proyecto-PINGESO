@@ -53,7 +53,7 @@ public class PuntoLimpio implements Serializable {
     @JoinColumn(nullable = false)
     private Estado estadoGlobal;
     
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn
     private Inspector inspectorEncargado;
     

@@ -154,13 +154,19 @@ public class CrudInspector implements CrudInspectorLocal {
     }
     
     @Override
-    public void eliminarInspector(Integer idUser){
-        if (idUser != null) {
+    public boolean eliminarInspector(Integer rutUser){
+        if (rutUser != null) {
             DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-            UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
-            System.out.println("user id para delete: "+idUser.intValue());
-            userDAO.deleteByRut(idUser.intValue());
+            InspectorDAO inspDAO = factoryDeDAOs.getInspectorDAO();
+            try {
+                return inspDAO.deleteByRut(rutUser);
+            }
+            catch (Exception e) {
+                return false;
+            }
+            
         }
+        return false;
     }
 
     public Usuario getUsertemp() {

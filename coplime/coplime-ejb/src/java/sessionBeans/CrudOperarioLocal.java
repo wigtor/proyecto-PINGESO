@@ -25,5 +25,7 @@ public interface CrudOperarioLocal {
     public Usuario getOperarioByRut(Integer rutUser);
     
     public void editarOperario(Integer rutUser, String userName,String nombre, String apellido1, String apellido2, String mail, boolean resetContraseña,int telefono);
+
+    public boolean eliminarOperario(Integer rutUser);
     
 }

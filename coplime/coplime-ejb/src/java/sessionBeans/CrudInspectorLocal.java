@@ -26,5 +26,5 @@ public interface CrudInspectorLocal {
     
     public void editarInspector(Integer idUser, String userName,String nombre, String apellido1, String apellido2, String mail, boolean resetContraseña,int telefono);
     
-    public void eliminarInspector(Integer idUser);
+    public boolean eliminarInspector(Integer idUser);
 }

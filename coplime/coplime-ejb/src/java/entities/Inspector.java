@@ -12,17 +12,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PreRemove;
 
 /**
  *
  * @author victor
  */
 @Entity
+@NamedQueries( {
+    @NamedQuery(name="Inspector.findByRut", query="SELECT u FROM Inspector u WHERE u.usuario.rut = :rut"),
+})
 public class Inspector implements Serializable {
     @OneToMany(mappedBy = "inspectorEncargado")
     private List<PuntoLimpio> puntosLimpios;
+    
     
     @OneToMany(mappedBy = "inspectorSolicitante")
     private List<SolicitudMantencion> solicitudesMantencionRealizadas;
@@ -67,7 +74,7 @@ public class Inspector implements Serializable {
         this.id = cod;
     }
     
-    @OneToOne(optional = false, cascade = {CascadeType.REFRESH, CascadeType.REMOVE})
+    @OneToOne(optional = false, cascade = {CascadeType.REMOVE, CascadeType.MERGE})
     @JoinColumn(nullable = false)
     private Usuario usuario;
 
@@ -112,4 +119,21 @@ public class Inspector implements Serializable {
         return "entities.Inspector[ id=" + id + " ]";
     }
     
+    @PreRemove
+    public void preRemove(){
+        for(PuntoLimpio p : this.puntosLimpios) {
+            p.setInspectorEncargado(null);
+        }
+        //this.puntosLimpios.clear();
+        
+        for(SolicitudMantencion p : this.solicitudesMantencionRealizadas) {
+            p.setInspectorSolicitante(null);
+        }
+        //this.solicitudesMantencionRealizadas .clear();
+        
+        for(RevisionPuntoLimpio p : this.revisionesRealizadas) {
+            p.setInspectorRevisor(null);
+        }
+        //this.revisionesRealizadas.clear();
+    }
 }

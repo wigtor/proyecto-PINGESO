@@ -151,6 +151,16 @@ public class CrudOperario implements CrudOperarioLocal {
         this.usertemp = editInspector;
         this.usertemp = userDAO.update(editInspector);
     }
+    
+    @Override
+    public boolean eliminarOperario(Integer rutUser){
+        if (rutUser != null) {
+            DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+            OperarioDAO inspDAO = factoryDeDAOs.getOperarioDAO();
+            return inspDAO.deleteByRut(rutUser);
+        }
+        return false;
+    }
 
     public Usuario getUsertemp() {
         return usertemp;

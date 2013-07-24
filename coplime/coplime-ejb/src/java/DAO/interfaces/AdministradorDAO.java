@@ -13,5 +13,5 @@ import entities.Administrador;
 public interface AdministradorDAO extends genericDAO<Administrador>{
     // Interface that all AdministradorDAOs must support
 
-    
+    public boolean deleteByRut(int rut);
 }

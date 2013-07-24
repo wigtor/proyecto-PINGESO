@@ -67,12 +67,23 @@ public class UsuarioDAO_impl extends genericDAO_impl<Usuario> implements Usuario
     
     @Override
     public boolean deleteByRut(int rut) {
-        Query q = this.em.createNamedQuery("Usuario.deleteByRut");
-        q.setParameter("rut", rut);
-        if (q.executeUpdate() > 0) {
-            return true;
+        boolean resultado = false;
+        Query q1 = this.em.createNamedQuery("Usuario.deleteInspectorByRut");
+        q1.setParameter("rut", rut);
+        if (q1.executeUpdate() > 0) {
+            resultado = true;
         }
-        return false;
+        Query q2 = this.em.createNamedQuery("Usuario.deleteOperarioByRut");
+        q2.setParameter("rut", rut);
+        if (q2.executeUpdate() > 0) {
+            resultado = true;
+        }
+        Query q3 = this.em.createNamedQuery("Usuario.deleteAdministradorByRut");
+        q3.setParameter("rut", rut);
+        if (q3.executeUpdate() > 0) {
+            resultado = true;
+        }
         
+        return resultado;
     }
 }

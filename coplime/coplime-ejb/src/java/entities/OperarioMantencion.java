@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -20,6 +22,9 @@ import javax.persistence.OneToOne;
  * @author victor
  */
 @Entity
+@NamedQueries( {
+    @NamedQuery(name="OperarioMantencion.findByRut", query="SELECT u FROM OperarioMantencion u WHERE u.usuario.rut = :rut"),
+})
 public class OperarioMantencion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -57,7 +62,7 @@ public class OperarioMantencion implements Serializable {
         this.id = cod;
     }
     
-    @OneToOne(optional = false, cascade = {CascadeType.REFRESH, CascadeType.REMOVE})
+    @OneToOne(optional = false, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(nullable = false)
     private Usuario usuario;
 
