@@ -13,4 +13,6 @@ import java.util.Collection;
  */
 public interface PuntoLimpioDAO extends genericDAO<PuntoLimpio>{
     public PuntoLimpio find(String puntoLimpioName);
+    public PuntoLimpio findByNum(int num);
+    public boolean deleteByNum(int num);
 }

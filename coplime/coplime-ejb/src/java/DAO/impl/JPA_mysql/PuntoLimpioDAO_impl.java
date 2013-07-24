@@ -34,4 +34,42 @@ public class PuntoLimpioDAO_impl extends genericDAO_impl<PuntoLimpio> implements
             return res.get(0);
         }
     }
+    
+    @Override
+    public PuntoLimpio findByNum(int num) {
+        Query q = this.em.createNamedQuery("PuntoLimpio.findByNum");
+        q.setParameter("num", num);
+        List<PuntoLimpio> res = q.getResultList();
+        if (res.isEmpty()) {
+            return null;
+        }
+        else {
+            return res.get(0);
+        }
+    }
+    
+    @Override
+    public boolean deleteByNum(int num) {
+        //Obtengo el inspector
+        Query q = this.em.createNamedQuery("Inspector.deleteByNum");
+        q.setParameter("num", num);
+        List<PuntoLimpio> res = q.getResultList();
+        if (res.isEmpty()) {
+            return false;
+        }
+        PuntoLimpio ptoToDelete = res.get(0);
+        
+        /*
+        //Actualizo los puntos limpios para desligarlos del inspector
+        List<PuntoLimpio> listaPtos = inspToDelete.getPuntosLimpios();
+        for(PuntoLimpio p : listaPtos) {
+            p.setInspectorEncargado(null);
+            getEntityManager().merge(p);
+        }
+        */
+        
+        //Borro el inspector
+        getEntityManager().remove(ptoToDelete);
+        return true;
+    }
 }

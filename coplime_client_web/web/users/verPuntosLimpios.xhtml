@@ -19,26 +19,38 @@
                   <p:panelGrid columns="5" styleClass="centrar" >
                        <f:facet name="header">Listado de puntos limpios</f:facet>
                        
-                       <p:dataTable value="#{mantenedorPuntoLimpio.lista}" var="puntoLimpio" 
+                       <p:dataTable value="#{MantenedorPuntoLimpioVerListado.lista}" var="puntoLimpio" 
                                         widgetVar="inspectorTable" emptyMessage="No hay puntos limpios registrados en el sistema" 
-                                        filteredValue="#{mantenedorPuntoLimpio.lista}">
-                            <p:column headerText="N°">
-                                <h:outputText value="#{puntoLimpio.num}"/>
-                            </p:column>
-                            <p:column headerText="Nombre">
-                                <h:outputText value="#{puntoLimpio.nombre}"/>
-                            </p:column>
-                            <p:column headerText="estado">
-                                <h:outputText value="#{puntoLimpio.estado}"/>
-                            </p:column>
-                            <p:column headerText="Fecha proxima rev" sortBy="#{puntoLimpio.fechaProximaRev}">
-                                <h:outputText value="#{puntoLimpio.fechaProximaRev}"/>
-                            </p:column>
+                                        filteredValue="#{MantenedorPuntoLimpioVerListado.listaBusqueda}">
+                           <p:column headerText="N°">
+                               <h:outputText value="#{puntoLimpio.num}"/>
+                           </p:column>
+                           <p:column headerText="Nombre">
+                               <h:outputText value="#{puntoLimpio.nombre}"/>
+                           </p:column>
+                           <p:column headerText="estado">
+                               <h:outputText value="#{puntoLimpio.estado}"/>
+                           </p:column>
+                           <p:column headerText="Fecha proxima rev" sortBy="#{puntoLimpio.fechaProximaRev}">
+                               <h:outputText value="#{puntoLimpio.fechaProximaRev}"/>
+                           </p:column>
+                           <p:column headerText="" >
+                               <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorInspectorVerListado.verDetalles(puntoLimpio.id)}">
+                               </p:commandLink>
+                           </p:column>                            
+                           <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
+                               <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{MantenedorPuntoLimpioVerListado.editar(puntoLimpio.id)}">
+                               </p:commandLink>
+                           </p:column>
+                           <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
+                               <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" action="#{MantenedorPuntoLimpioVerListado.eliminar(puntoLimpio.id)}">
+                               </p:commandLink>
+                           </p:column>
                         </p:dataTable>
                        
                        <f:facet name="footer">
-                           <p:commandButton value="Agregar" action="#{mantenedorPuntoLimpio.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
-                           <p:commandButton value="Volver" action="#{mantenedorPuntoLimpio.volver()}"/>
+                           <p:commandButton value="Agregar" action="#{MantenedorPuntoLimpioVerListado.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
+                           <p:commandButton value="Volver" action="#{MantenedorPuntoLimpioVerListado.volver()}"/>
                            
                        </f:facet>
                             

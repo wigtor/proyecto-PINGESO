@@ -29,7 +29,7 @@ public class Administrador implements Serializable {
     
     
     @JoinColumn(nullable = false)
-    @OneToOne(optional = false, cascade = {CascadeType.REFRESH, CascadeType.REMOVE})
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
     private Usuario usuario;
 
     public Usuario getUsuario() {

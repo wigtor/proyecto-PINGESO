@@ -46,7 +46,7 @@ public class Contenedor implements Serializable {
     private int porcentajeUsoEstimado; //Indica lo que el sistema estima
     
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(nullable = false)
     private PuntoLimpio puntoLimpio;
 

@@ -128,7 +128,7 @@ public class configuracionInicial implements configuracionInicialLocal {
     private void cargarPuntosLimpios() {
         PuntoLimpio p1 = new PuntoLimpio("Plaza San Bernardo", "San bernardo", "Plaza de armas", 1);
         p1.setEstadoGlobal(this.estadosPuntosLimpios.get(0));
-        p1.setFechaProxRevision(Calendar.getInstance().getTime());
+        p1.setFechaProxRevision(Calendar.getInstance());
         p1.setInspectorEncargado(this.inspectores.get(0));
         
         PuntoLimpioDAO plDAO = factoryDeDAOs.getPuntoLimpioDAO();
