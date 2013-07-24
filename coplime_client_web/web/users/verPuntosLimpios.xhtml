@@ -1,43 +1,27 @@
-<!DOCTYPE html>
-<f:view xmlns="http://www.w3.org/1999/xhtml"
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pm="http://primefaces.org/mobile"
-      contentType="text/html"
-      renderKitId="PRIMEFACES_MOBILE"
-      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
-    
-    
-    <pm:page title="Ver puntos limpios">
-        <!-- Main View -->
-        <pm:view id="main">
-            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Administrador')}">
-                <ezcomp:menuAdministrador/>
-            </p:overlayPanel>
-            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Inspector')}">
-                <ezcomp:menuInspector/>
-            </p:overlayPanel>
-            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Operario')}">
-                <ezcomp:menuOperario/>
-            </p:overlayPanel>
-            
-            <pm:header title="Ver puntos limpios">
-                <f:facet name="left">
-                    <p:button id="btnPanelContext" value="" iconPos="notext" icon="bars"/>
-                </f:facet>
-            </pm:header>
-            
-            <pm:content>
-                <h:form>
-                    
-                    <p:dataList type="inset">
-                        <f:facet name="header">Listado de puntos limpios</f:facet>
-                        <f:attribute name="icon" value="false" />
-                        
-                        <p:dataTable value="#{mantenedorPuntoLimpio.lista}" var="puntoLimpio" 
-                                     scrollable="true">
+      contentType="text/html">
+    <body>
+       <ui:composition template="../mainTemplate.xhtml">
+           <ui:define name="titulo" >
+               Ver puntos limpios           
+           </ui:define>
+           
+          
+           
+           <ui:define name="centro">
+               <h:form>
+                  <p:panelGrid columns="5" styleClass="centrar" >
+                       <f:facet name="header">Listado de puntos limpios</f:facet>
+                       
+                       <p:dataTable value="#{mantenedorPuntoLimpio.lista}" var="puntoLimpio" 
+                                        widgetVar="inspectorTable" emptyMessage="No hay puntos limpios registrados en el sistema" 
+                                        filteredValue="#{mantenedorPuntoLimpio.lista}">
                             <p:column headerText="N°">
                                 <h:outputText value="#{puntoLimpio.num}"/>
                             </p:column>
@@ -51,19 +35,18 @@
                                 <h:outputText value="#{puntoLimpio.fechaProximaRev}"/>
                             </p:column>
                         </p:dataTable>
-                        
-                        <pm:buttonGroup>
-                        <p:commandButton value="Agregar" action="#{mantenedorPuntoLimpio.agregar()}" rendered="#{request.isUserInRole('Administrador')}" />
-                        <p:commandButton value="Editar" action="#{mantenedorPuntoLimpio.editar()}" rendered="#{request.isUserInRole('Administrador')}" />
-                        <p:commandButton value="Elimnar" action="#{mantenedorPuntoLimpio.eliminar()}" rendered="#{request.isUserInRole('Administrador')}"/>
-                        <p:commandButton value="Ver detalles" action="#{mantenedorPuntoLimpio.verDetalles()}"/>
-                        </pm:buttonGroup>
-                    </p:dataList>
-                </h:form>
-            </pm:content>
-        </pm:view>
-    </pm:page>
-
-</f:view>
-
-
+                       
+                       <f:facet name="footer">
+                           <p:commandButton value="Agregar" action="#{mantenedorPuntoLimpio.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
+                           <p:commandButton value="Volver" action="#{mantenedorPuntoLimpio.volver()}"/>
+                           
+                       </f:facet>
+                            
+                       
+                   </p:panelGrid>
+                   <p:contextMenu beforeShow="pcontext.show()" />
+               </h:form>
+           </ui:define>
+       </ui:composition>
+    </body>    
+</html>

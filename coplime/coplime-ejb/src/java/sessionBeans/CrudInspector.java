@@ -159,7 +159,7 @@ public class CrudInspector implements CrudInspectorLocal {
             DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
             System.out.println("user id para delete: "+idUser.intValue());
-            userDAO.delete(idUser.intValue());
+            userDAO.deleteByRut(idUser.intValue());
         }
     }
 

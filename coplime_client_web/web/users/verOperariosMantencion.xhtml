@@ -29,14 +29,14 @@
                             </p:column>
                             
                             <p:column headerText="" >
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{mantenedorOperario.editar(operario.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{mantenedorOperario.verDetalles(operario.num)}">
                                 </p:commandLink>
                             </p:column>                            
-                            <p:column headerText="" >
+                            <p:column headerText="  " rendered="#{request.isUserInRole('Administrador')}">
                                 <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{mantenedorOperario.editar(operario.num)}">
                                 </p:commandLink>
                             </p:column>
-                            <p:column headerText="" >
+                            <p:column headerText="  " rendered="#{request.isUserInRole('Administrador')}">
                                 <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" action="#{mantenedorOperario.eliminar(operario.num)}">
                                 </p:commandLink>
                             </p:column>
@@ -45,7 +45,6 @@
                        <f:facet name="footer">
                            <p:commandButton value="Agregar" action="#{mantenedorOperario.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
                            <p:commandButton value="Volver" action="#{mantenedorOperario.volver()}"/>
-                           
                        </f:facet>
                             
                        

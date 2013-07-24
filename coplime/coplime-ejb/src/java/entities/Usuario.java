@@ -25,7 +25,8 @@ import javax.persistence.OneToOne;
 @NamedQueries( {
     @NamedQuery(name="Usuario.findByUsernameAndPassword", query="SELECT u FROM Usuario u WHERE u.username = :username AND u.password = :password"), 
     @NamedQuery(name="Usuario.findByUsername", query="SELECT u FROM Usuario u WHERE u.username = :username"),
-    @NamedQuery(name="Usuario.findByRut", query="SELECT u FROM Usuario u WHERE u.rut = :rut")
+    @NamedQuery(name="Usuario.findByRut", query="SELECT u FROM Usuario u WHERE u.rut = :rut"),
+    @NamedQuery(name="Usuario.deleteByRut", query="DELETE FROM Usuario u WHERE u.rut = :rut")
 })
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -38,7 +38,7 @@ public class MantenedorInspectorAgregar extends commonFunctions{
     
     public void agregarInspector() {
         crudInspector.agregarInspector(username, password, rut, nombre, apellido1, apellido2, mail, telefono);
-        this.mantInsp.init();
+        //this.mantInsp.init();
         goToPage("/faces/users/verInspectores.xhtml");       
         
     }

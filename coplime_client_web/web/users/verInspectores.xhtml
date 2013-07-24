@@ -41,21 +41,21 @@
                             </p:column>
                             
                             <p:column headerText="" >
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorInspectorVerListado.editar(insp.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorInspectorVerListado.verDetalles(insp.num)}">
                                 </p:commandLink>
                             </p:column>                            
-                            <p:column headerText="" >
+                            <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
                                 <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{MantenedorInspectorVerListado.editar(insp.num)}">
                                 </p:commandLink>
                             </p:column>
-                            <p:column headerText="" >
+                            <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
                                 <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" action="#{MantenedorInspectorVerListado.eliminar(insp.num)}">
                                 </p:commandLink>
                             </p:column>
                         </p:dataTable>
                        
                        <f:facet name="footer">
-                           <p:commandButton value="Agregar" action="#{MantenedorInspectorVerListado.agregar()}" />
+                           <p:commandButton value="Agregar" action="#{MantenedorInspectorVerListado.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
                            <p:commandButton value="Volver" action="#{MantenedorInspectorVerListado.volver()}"/>
                            
                        </f:facet>
@@ -67,4 +67,4 @@
            </ui:define>
        </ui:composition>
     </body>    
-</html>      
+</html>

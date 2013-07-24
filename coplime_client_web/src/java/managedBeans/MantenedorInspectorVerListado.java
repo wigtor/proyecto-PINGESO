@@ -94,7 +94,7 @@ public class MantenedorInspectorVerListado extends commonFunctions{
        System.out.println("NÚMERO DE INSPECTOR: "+numInspector);
        //crudInspector.eliminarInspector(new Integer(numInspector));
        crudInspector.eliminarInspector(numInspector);
-       init();
+       //init();
        goToPage("/faces/users/verInspectores.xhtml");
        
        //PONER LA LÓGICA DE ELIMINARCIÓN, MOSTRAR MENSAJE DE CONFIRMACIÓN

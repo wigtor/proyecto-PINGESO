@@ -17,4 +17,5 @@ public interface UsuarioDAO extends genericDAO<Usuario>{
     public Usuario find(String username, String password);
     public Usuario find(String username);
     public Usuario findByRut(int rut);
+    public boolean deleteByRut(int rut);
 }

@@ -59,7 +59,7 @@ public class MantenedorInspectorEditar extends commonFunctions{
         System.out.println("Se va a guardar los cambios de un inspector");
         System.out.println("idUser="+rut+" username:"+username+" nombre:"+nombre+" ap1:"+apellido1+" ap2:"+apellido2);
         crudInspector.editarInspector( rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
-        this.mantInspV.init();
+        //this.mantInspV.init();
         goToPage("/faces/users/verInspectores.xhtml");
     }
     
