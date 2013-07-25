@@ -7,20 +7,19 @@ package managedBeans;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import sessionBeans.CrudInspectorLocal;
+import sessionBeans.CrudOperarioLocal;
 
 /**
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorInspectorAgregar")
+@Named(value = "MantenedorOperarioAgregar")
 @RequestScoped
-public class MantenedorInspectorAgregar extends commonFunctions{
+public class MantenedorOperarioAgregar extends commonFunctions{
 
     @EJB
-    private CrudInspectorLocal crudInspector;
-           
+    private CrudOperarioLocal crudOperario;
+    
     private String nombre;
     private String apellido1;
     private String apellido2;
@@ -30,17 +29,17 @@ public class MantenedorInspectorAgregar extends commonFunctions{
     private String mail;
     private Integer telefono;
     
-    public MantenedorInspectorAgregar() {
+    public MantenedorOperarioAgregar() {
     }
     
-    public void agregarInspector() {
-        crudInspector.agregarInspector(username, password, rut, nombre, apellido1, apellido2, mail, telefono);
-        goToPage("/faces/users/verInspectores.xhtml");       
+    public void agregarOperario() {
+        crudOperario.agregarOperario( username, password, rut, nombre, apellido1, apellido2, mail, telefono);
+        goToPage("/faces/users/verOperariosMantencion.xhtml");
         
     }
     
     public void volver() {
-       goToPage("/faces/users/verInspectores.xhtml");
+       goToPage("/faces/users/verOperariosMantencion.xhtml");
        
     }
 
@@ -76,6 +75,14 @@ public class MantenedorInspectorAgregar extends commonFunctions{
         this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Integer getRut() {
         return rut;
     }
@@ -98,14 +105,6 @@ public class MantenedorInspectorAgregar extends commonFunctions{
 
     public void setTelefono(Integer telefono) {
         this.telefono = telefono;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
     
     

@@ -11,43 +11,42 @@
     <body>
         <ui:composition template="../mainTemplate.xhtml">
             <ui:define name="titulo">
-               Agregar operario de mantención
+                Detalle operario
             </ui:define>
             
             <ui:define name="centro">
                  <h:form>
                      <p:panelGrid columns="2" styleClass="centrar">
-                         <f:facet name="header">Ingrese datos del operario</f:facet>
+                         <f:facet name="header">Datos del operario de mantención</f:facet>
                          
                         
                          
                          <p:outputLabel value="Nombre"/>
-                         <p:inputText value="#{MantenedorOperarioAgregar.nombre}" required="true"/>
+                         <p:inputText value="#{MantenedorOperarioVerDetalles.nombre}" disabled="true" readonly="true" />
                          
                          <p:outputLabel value="Apellido paterno"/>
-                         <p:inputText value="#{MantenedorOperarioAgregar.apellido1}" required="true"/>
+                         <p:inputText value="#{MantenedorOperarioVerDetalles.apellido1}" disabled="true" readonly="true" />
                          
                          <p:outputLabel value="Apellido materno"/>
-                         <p:inputText value="#{MantenedorOperarioAgregar.apellido2}" required="true"/>
+                         <p:inputText value="#{MantenedorOperarioVerDetalles.apellido2}" disabled="true" readonly="true" />
                          
                          <p:outputLabel value="Rut"/>
-                         <p:inputText value="#{MantenedorOperarioAgregar.rut}" required="true"/>
+                         <p:inputText value="#{MantenedorOperarioVerDetalles.rut}" disabled="true" readonly="true" />
                         
                          <p:outputLabel value="Teléfono"/>
-                         <p:inputText value="#{MantenedorOperarioAgregar.telefono}" required="true"/>
+                         <p:inputText value="#{MantenedorOperarioVerDetalles.telefono}" disabled="true" readonly="true" />
                          
                          <p:outputLabel value="E-mail"/>
-                         <p:inputText value="#{MantenedorOperarioAgregar.mail}" required="true"/>
+                         <p:inputText value="#{MantenedorOperarioVerDetalles.mail}" disabled="true" readonly="true" />
                          
                          <p:outputLabel value="Nombre de usuario"/>
-                         <p:inputText value="#{MantenedorOperarioAgregar.username}" required="true"/>
-                         
-                         <p:outputLabel value="Contraseña"/>
-                         <p:inputText value="#{MantenedorOperarioAgregar.password}" required="true" type="password"/>
-                         
+                         <p:inputText value="#{MantenedorOperarioVerDetalles.username}" disabled="true" readonly="true" />
+                                               
+                         <p:outputLabel value="Nº de solicitudes de mant. realizadas"/>
+                         <p:inputText value="#{MantenedorOperarioVerDetalles.numSolicitudesMantencionesRealizadas}" disabled="true" readonly="true" />
                          <f:facet name="footer">
-                             <p:commandButton value="Guardar" action="#{MantenedorOperarioAgregar.agregarOperario()}"/>
-                            <p:commandButton value="Volver" action="#{MantenedorOperarioAgregar.volver()}"/>                       
+                            
+                            <p:commandButton value="Volver" action="#{MantenedorOperarioVerDetalles.volver()}"/>                         
                          </f:facet>
                      </p:panelGrid>                
                 </h:form>               
@@ -55,5 +54,3 @@
         </ui:composition>       
     </body>   
 </html>
-
-

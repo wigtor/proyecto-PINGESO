@@ -20,35 +20,35 @@
                          <f:facet name="header">Edición de datos del operario</f:facet>
                          
                          <h:outputLabel value=""/>
-                         <h:inputHidden value="#{mantenedorOperario.rut}"/>
+                         <h:inputHidden value="#{MantenedorOperarioEditar.rut}"/>
                                                   
                          <p:outputLabel value="Rut"/>
-                         <p:inputText value="#{mantenedorOperario.rut}" disabled="true" readonly="true" />
+                         <p:inputText value="#{MantenedorOperarioEditar.rut}" disabled="true" readonly="true" />
                          
                          <p:outputLabel value="Nombre"/>
-                         <p:inputText value="#{mantenedorOperario.nombre}"/>
+                         <p:inputText value="#{MantenedorOperarioEditar.nombre}"/>
                          
                          <p:outputLabel value="Apellido paterno"/>
-                         <p:inputText value="#{mantenedorOperario.apellido1}"/>
+                         <p:inputText value="#{MantenedorOperarioEditar.apellido1}"/>
                          
                          <p:outputLabel value="Apellido materno"/>
-                         <p:inputText value="#{mantenedorOperario.apellido2}"/>
+                         <p:inputText value="#{MantenedorOperarioEditar.apellido2}"/>
                          
                          <p:outputLabel value="Nombre de usuario"/>
-                         <p:inputText value="#{mantenedorOperario.username}"/>
+                         <p:inputText value="#{MantenedorOperarioEditar.username}"/>
                          
                          <p:outputLabel value="Reiniciar contraseña"/>
-                         <p:selectBooleanCheckbox label="Reiniciar contraseña" value="#{mantenedorOperario.checkContraseña}"></p:selectBooleanCheckbox>
+                         <p:selectBooleanCheckbox label="Reiniciar contraseña" value="#{MantenedorOperarioEditar.checkContraseña}"></p:selectBooleanCheckbox>
                          
                          <p:outputLabel value="Teléfono"/>
-                         <p:inputText value="#{mantenedorOperario.telefono}"/>
+                         <p:inputText value="#{MantenedorOperarioEditar.telefono}"/>
                          
                          <p:outputLabel value="E-mail"/>
-                         <p:inputText value="#{mantenedorOperario.mail}"/>
+                         <p:inputText value="#{MantenedorOperarioEditar.mail}"/>
                          
                          <f:facet name="footer">
-                            <p:commandButton value="Guardar" action="#{mantenedorOperario.guardarCambiosOperario()}"/>
-                            <p:commandButton value="Volver" action="#{mantenedorOperario.volver()}"/>                            
+                            <p:commandButton value="Guardar" action="#{MantenedorOperarioEditar.guardarCambiosOperario()}"/>
+                            <p:commandButton value="Volver" action="#{MantenedorOperarioEditar.volver()}"/>                            
                          </f:facet>
                      </p:panelGrid>                
                 </h:form>               

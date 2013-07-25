@@ -9,6 +9,7 @@ import entities.Inspector;
 import entities.OperarioMantencion;
 import entities.Usuario;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -18,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import sessionBeans.CrudOperarioLocal;
@@ -26,9 +28,9 @@ import sessionBeans.CrudOperarioLocal;
  *
  * @author victor
  */
-@Named(value = "mantenedorOperario")
-@RequestScoped
-public class mantenedorOperario extends commonFunctions{
+@Named(value = "MantenedorOperario")
+@SessionScoped
+public class MantenedorOperario extends commonFunctions implements Serializable{
     @EJB
     private CrudOperarioLocal crudOperario;
 
@@ -53,7 +55,7 @@ public class mantenedorOperario extends commonFunctions{
     /**
      * Creates a new instance of mantenedorInspector
      */
-    public mantenedorOperario() {
+    public MantenedorOperario() {
     }
     
     @PostConstruct
