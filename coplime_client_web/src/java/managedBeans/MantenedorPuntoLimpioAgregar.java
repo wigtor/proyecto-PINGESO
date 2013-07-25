@@ -5,6 +5,7 @@
 package managedBeans;
 
 import ObjectsForManagedBeans.SelectElemPojo;
+import entities.Comuna;
 import entities.Estado;
 import entities.Inspector;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions{
     
     private String nombre;
     private String comuna_seleccionada;
-    private List<String> listaComunas;
+    private List<SelectElemPojo> listaComunas;
     private String direccion;
     private String fechaRevision;
     private SelectElemPojo estado_seleccionado;
@@ -48,6 +49,7 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions{
     public void init() {
         cargarEstadosPuntoLimpio();
         cargarInspectores();
+        cargarComunas();
     }
     
     private void cargarInspectores() {
@@ -74,7 +76,18 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions{
             elemTemp.setId(Integer.toString(estado_iter.getId()));
             elemTemp.setLabel(estado_iter.getNombreEstado());
             this.listaEstadosPtoLimpio.add(elemTemp);
-            
+        }
+    }
+    
+    private void cargarComunas() {
+        Collection<Comuna> listaTemp = crudPuntoLimpio.getAllComunas();
+        SelectElemPojo elemTemp;
+        this.listaComunas = new ArrayList();
+        for(Comuna comuna_iter : listaTemp) {
+            elemTemp = new SelectElemPojo();
+            elemTemp.setId(Integer.toString(comuna_iter.getId()));
+            elemTemp.setLabel(comuna_iter.getNombre());
+            this.listaComunas.add(elemTemp);
         }
     }
     
@@ -104,12 +117,8 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions{
         this.comuna_seleccionada = comuna_seleccionada;
     }
 
-    public List<String> getListaComunas() {
+    public List<SelectElemPojo> getListaComunas() {
         return listaComunas;
-    }
-
-    public void setListaComunas(List<String> listaComunas) {
-        this.listaComunas = listaComunas;
     }
 
     public String getDireccion() {

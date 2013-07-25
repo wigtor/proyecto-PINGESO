@@ -39,7 +39,7 @@ public class PuntoLimpio implements Serializable {
     @Column(nullable = false)
     private String nombre;
     
-    private String comuna;
+    private Comuna comuna;
     
     @Column(nullable = false)
     private String ubicacion;
@@ -80,9 +80,8 @@ public class PuntoLimpio implements Serializable {
     public PuntoLimpio() {
     }
     
-    public PuntoLimpio(String nombre, String comuna, String ubicacion, int numero) {
+    public PuntoLimpio(String nombre, String ubicacion, int numero) {
         this.nombre = nombre;
-        this.comuna = comuna;
         this.ubicacion = ubicacion;
         this.num = numero;
     }
@@ -159,11 +158,11 @@ public class PuntoLimpio implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getComuna() {
+    public Comuna getComuna() {
         return comuna;
     }
 
-    public void setComuna(String comuna) {
+    public void setComuna(Comuna comuna) {
         this.comuna = comuna;
     }
 

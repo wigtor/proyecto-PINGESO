@@ -4,6 +4,7 @@
  */
 package sessionBeans;
 
+import entities.Comuna;
 import entities.Estado;
 import entities.Inspector;
 import entities.PuntoLimpio;
@@ -33,5 +34,7 @@ public interface CrudPuntoLimpioLocal {
     public Collection<Inspector> getAllInspectores();
 
     public Collection<Estado> getAllEstadosPuntoLimpio();
+
+    public Collection<Comuna> getAllComunas();
     
 }
