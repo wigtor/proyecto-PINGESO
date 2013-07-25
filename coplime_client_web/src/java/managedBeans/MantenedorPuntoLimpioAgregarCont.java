@@ -4,6 +4,8 @@
  */
 package managedBeans;
 
+import ObjectsForManagedBeans.ContenedorPojo;
+import ObjectsForManagedBeans.PuntoLimpioPojo;
 import ObjectsForManagedBeans.SelectElemPojo;
 import entities.Comuna;
 import entities.Estado;
@@ -16,6 +18,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import sessionBeans.CrudPuntoLimpioLocal;
 
 /**
@@ -28,8 +31,10 @@ public class MantenedorPuntoLimpioAgregarCont extends commonFunctions {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
-    private Integer num;
-    private String nombre;
+    @Inject
+    private MantenedorPuntoLimpio mantPtoLimpio;
+    
+    private Integer numPtoLimpio;
     private Integer material;
     private List<SelectElemPojo> listaMateriales;
     private Integer llenadoContenedor;
@@ -41,12 +46,19 @@ public class MantenedorPuntoLimpioAgregarCont extends commonFunctions {
      */
     public MantenedorPuntoLimpioAgregarCont() {
         System.out.println("Se ha instanciado un MantenedorPuntoLimpioAgregar");
+        this.llenadoContenedor = 0;
     }
     
     @PostConstruct
     public void init() {
         cargarEstadosPuntoLimpio();
         cargarMateriales();
+        if (mantPtoLimpio.getPto_creando() != null) {
+            this.numPtoLimpio = mantPtoLimpio.getPto_creando().getNum();
+        }
+        else {
+            goToPage("/faces/admin/agregarPuntoLimpio.xhtml");
+        }
     }
     
     
@@ -74,30 +86,48 @@ public class MantenedorPuntoLimpioAgregarCont extends commonFunctions {
         }
     }
     
-    public void agregarContenedores() {
-        System.out.println("Se hizo click en 'AgregarContenedores()'");
-        goToPage("/faces/admin/agregarContenedor.xhtml");
+    private void limpiarCampos() {
+        this.material = null;
+        this.estadoContenedor = null;
+        this.llenadoContenedor = null;
+    }
+    
+    private ContenedorPojo crearContenedorTemporal() {
+        ContenedorPojo res = new ContenedorPojo();
+        res.setIdMaterial(material);
+        res.setLlenadoContenedor(llenadoContenedor);
+        res.setEstadoContenedor(estadoContenedor);
+        return res;
+    }
+    
+    public void guardarNvoContenedor_y_otro() {
+        System.out.println("Se hizo click en 'guardarNvoContenedor_y_otro()'");
+        mantPtoLimpio.getContenedores_creando().add(crearContenedorTemporal());
+        
+        
+        //Limpio los campos para agregar un nuevo contenedor
+        limpiarCampos();
+    }
+    
+    public void guardarNvoContenedor() {
+        System.out.println("Se hizo click en 'guardarNvoContenedor()'");
+        mantPtoLimpio.getContenedores_creando().add(crearContenedorTemporal());
+        
+        
+        goToPage("/faces/admin/agregarPuntoLimpio.xhtml");
     }
     
     public void volverToPuntoLimpio() {
         System.out.println("Se hizo click en 'volverToPuntoLimpio()'");
-        goToPage("/faces/users/agregarPuntoLimpio.xhtml");
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+        goToPage("/faces/admin/agregarPuntoLimpio.xhtml");
     }
     
-    public Integer getNum() {
-        return num;
+    public Integer getNumPtoLimpio() {
+        return numPtoLimpio;
     }
 
-    public void setNum(Integer num) {
-        this.num = num;
+    public void setNumPtoLimpio(Integer numPtoLimpio) {
+        this.numPtoLimpio = numPtoLimpio;
     }
 
     public Integer getMaterial() {

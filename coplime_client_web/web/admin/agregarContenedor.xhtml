@@ -17,7 +17,7 @@
                         <f:facet name="header">Ingrese los datos del contenedor</f:facet>
                         
                         <p:outputLabel value="N° de punto limpio"/>
-                        <p:inputText value="#{MantenedorPuntoLimpioAgregarCont.num}" />
+                        <p:inputText value="#{MantenedorPuntoLimpioAgregarCont.numPtoLimpio}" disabled="true"/>
                         
                         <p:outputLabel value="Material que almacena"/>
                         <h:selectOneMenu value="#{MantenedorPuntoLimpioAgregarCont.material}">
@@ -39,8 +39,8 @@
                         
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Guardar y agregar otro" action="#{MantenedorPuntoLimpioAgregarCont.guardaarNvoContenedor_y_otro()}"/>
-                            <p:commandButton value="Guardar" action="#{MantenedorPuntoLimpioAgregarCont.guardaarNvoContenedor()}"/>
+                            <p:commandButton value="Guardar y agregar otro" action="#{MantenedorPuntoLimpioAgregarCont.guardarNvoContenedor_y_otro()}"/>
+                            <p:commandButton value="Guardar" action="#{MantenedorPuntoLimpioAgregarCont.guardarNvoContenedor()}"/>
                             <p:commandButton value="Volver" immediate="true" action="#{MantenedorPuntoLimpioAgregarCont.volverToPuntoLimpio()}"/>
                         </f:facet>
                    </p:panelGrid>

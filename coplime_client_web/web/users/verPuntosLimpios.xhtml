@@ -31,8 +31,8 @@
                            <p:column headerText="estado" sortBy="#{puntoLimpio.estado}" filterMatchMode="contains" filterBy="#{puntoLimpio.estado}">
                                <h:outputText value="#{puntoLimpio.estado}"/>
                            </p:column>
-                           <p:column headerText="Fecha proxima rev" sortBy="#{puntoLimpio.fechaProximaRev}" filterMatchMode="contains" filterBy="#{puntoLimpio.fechaProximaRev}">
-                               <h:outputText value="#{puntoLimpio.fechaProximaRev}"/>
+                           <p:column headerText="Fecha proxima rev" sortBy="#{puntoLimpio.fechaProximaRevStr}" filterMatchMode="contains" filterBy="#{puntoLimpio.fechaProximaRevStr}">
+                               <h:outputText value="#{puntoLimpio.fechaProximaRevStr}"/>
                            </p:column>
                            <p:column headerText="" >
                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorInspectorVerListado.verDetalles(puntoLimpio.id)}">

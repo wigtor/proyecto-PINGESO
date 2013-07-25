@@ -46,9 +46,12 @@
                                            var="InspEncargado" itemLabel="#{InspEncargado.label}" itemValue="#{InspEncargado.id}" />
                         </h:selectOneMenu>
                         
+                        <p:outputLabel value="Cantidad de contenedores"/>
+                        <p:outputLabel value="#{MantenedorPuntoLimpio.contenedores_creando.size()}"/>
+                        
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Agregar contenedores" immediate="true" action="#{MantenedorPuntoLimpioAgregar.agregarContenedores()}"/>
+                            <p:commandButton value="Agregar contenedores" action="#{MantenedorPuntoLimpioAgregar.agregarContenedores()}"/>
 
                             <p:commandButton value="Aceptar" action="#{MantenedorPuntoLimpioAgregar.agregarPuntoLimpio()}"/>
                             <p:commandButton value="Volver" immediate="true" action="#{MantenedorPuntoLimpioAgregar.volverToLista()}"/>

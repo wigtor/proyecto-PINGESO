@@ -4,17 +4,20 @@
  */
 package managedBeans;
 
+import ObjectsForManagedBeans.PuntoLimpioPojo;
 import ObjectsForManagedBeans.SelectElemPojo;
 import entities.Comuna;
 import entities.Estado;
 import entities.Inspector;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import sessionBeans.CrudPuntoLimpioLocal;
 
 /**
@@ -27,12 +30,15 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
+    @Inject
+    private MantenedorPuntoLimpio mantPtoLimpio;
+    
     private Integer num;
     private String nombre;
     private Integer comuna_seleccionada;
     private List<SelectElemPojo> listaComunas;
     private String direccion;
-    private String fechaRevision;
+    private Date fechaRevision;
     private Integer estado_seleccionado;
     private List<SelectElemPojo> listaEstadosPtoLimpio;
     private Integer inspectorEncargado_seleccionado;
@@ -50,6 +56,20 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions {
         cargarEstadosPuntoLimpio();
         cargarInspectores();
         cargarComunas();
+        cargarDatosPtoLimpioTemporal();
+    }
+    
+    private void cargarDatosPtoLimpioTemporal() {
+        if (mantPtoLimpio.getPto_creando() != null) {
+            PuntoLimpioPojo p = mantPtoLimpio.getPto_creando();
+            this.comuna_seleccionada = p.getIdComuma();
+            this.nombre = p.getNombre();
+            this.direccion = p.getDireccion();
+            this.inspectorEncargado_seleccionado = p.getIdInspectorEncargado();
+            this.num = p.getNum();
+            this.estado_seleccionado = p.getIdEstado();
+            this.fechaRevision = p.getFechaProximaRev();
+        }
     }
     
     private void cargarInspectores() {
@@ -91,13 +111,37 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions {
         }
     }
     
+    private PuntoLimpioPojo crearPtoLimpioTemporal() {
+        System.out.println("Creando un pto limpio temporal con nombre: "+nombre + " con num: "+num);
+        PuntoLimpioPojo res = new PuntoLimpioPojo();
+        res.setNum(num);
+        res.setNombre(nombre);
+        res.setIdInspectorEncargado(inspectorEncargado_seleccionado);
+        res.setIdEstado(estado_seleccionado);
+        res.setIdComuma(comuna_seleccionada);
+        res.setDireccion(direccion);
+        res.setFechaProximaRev(fechaRevision);
+        return res;
+    }
+    
     public void agregarContenedores() {
         System.out.println("Se hizo click en 'AgregarContenedores()'");
+        mantPtoLimpio.setPto_creando(crearPtoLimpioTemporal());
+        
         goToPage("/faces/admin/agregarContenedor.xhtml");
+    }
+    
+    public void agregarPuntoLimpio() {
+        System.out.println("Se hizo click en 'agregarPuntoLimpio()'");
+        System.out.println("Cantidad de contenedores: " + mantPtoLimpio.getContenedores_creando().size());
+        
+        volverToLista();
     }
     
     public void volverToLista() {
         System.out.println("Se hizo click en 'volverToLista()'");
+        mantPtoLimpio.setPto_creando(null);
+        mantPtoLimpio.getContenedores_creando().clear();
         goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
 
@@ -129,11 +173,11 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions {
         this.direccion = direccion;
     }
 
-    public String getFechaRevision() {
+    public Date getFechaRevision() {
         return fechaRevision;
     }
 
-    public void setFechaRevision(String fechaRevision) {
+    public void setFechaRevision(Date fechaRevision) {
         this.fechaRevision = fechaRevision;
     }
 

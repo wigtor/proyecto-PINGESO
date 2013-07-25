@@ -55,7 +55,7 @@ public class MantenedorPuntoLimpioVerListado extends commonFunctions{
             ptoTemporal.setEstado(pto_iter.getEstadoGlobal().getNombreEstado());
             ptoTemporal.setNombre(pto_iter.getNombre());
             f = pto_iter.getFechaProxRevision();
-            ptoTemporal.setFechaProximaRev(f.get(Calendar.DAY_OF_MONTH)
+            ptoTemporal.setFechaProximaRevStr(f.get(Calendar.DAY_OF_MONTH)
                     +"-"
                     +f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH));
             this.lista.add(ptoTemporal);

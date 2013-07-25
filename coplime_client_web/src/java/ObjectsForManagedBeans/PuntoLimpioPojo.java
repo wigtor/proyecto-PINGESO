@@ -4,6 +4,8 @@
  */
 package ObjectsForManagedBeans;
 
+import java.util.Date;
+
 /**
  *
  * @author victor
@@ -13,7 +15,14 @@ public class PuntoLimpioPojo {
     private Integer num;
     private String nombre;
     private String estado;
-    private String fechaProximaRev;
+    private Date fechaProximaRev;
+    private String fechaProximaRevStr;
+    
+    //Usados para almacenar temporalmente lo que se ha ingresado para crear un punto limpio
+    private Integer idEstado;
+    private Integer idComuma;
+    private String direccion;
+    private Integer idInspectorEncargado;
 
     public Integer getId() {
         return id;
@@ -47,11 +56,52 @@ public class PuntoLimpioPojo {
         this.estado = estado;
     }
 
-    public String getFechaProximaRev() {
+    public Date getFechaProximaRev() {
         return fechaProximaRev;
     }
 
-    public void setFechaProximaRev(String fechaProximaRev) {
+    public void setFechaProximaRev(Date fechaProximaRev) {
         this.fechaProximaRev = fechaProximaRev;
     }
+    
+    public String getFechaProximaRevStr() {
+        return fechaProximaRevStr;
+    }
+
+    public void setFechaProximaRevStr(String fechaProximaRevStr) {
+        this.fechaProximaRevStr = fechaProximaRevStr;
+    }
+
+    public Integer getIdEstado() {
+        return idEstado;
+    }
+
+    public void setIdEstado(Integer idEstado) {
+        this.idEstado = idEstado;
+    }
+
+    public Integer getIdComuma() {
+        return idComuma;
+    }
+
+    public void setIdComuma(Integer idComuma) {
+        this.idComuma = idComuma;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public Integer getIdInspectorEncargado() {
+        return idInspectorEncargado;
+    }
+
+    public void setIdInspectorEncargado(Integer idInspectorEncargado) {
+        this.idInspectorEncargado = idInspectorEncargado;
+    }
+    
 }
