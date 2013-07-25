@@ -10,11 +10,13 @@ package ObjectsForManagedBeans;
  */
 public class ContenedorPojo {
     Integer idMaterial;
-    Integer llenadoContenedor;
-    Integer estadoContenedor;
+    Integer idLlenadoContenedor;
+    Integer idEstadoContenedor;
+    String nombreMaterial;
+    String nombreEstadoContenedor;
     
     public ContenedorPojo() {
-        llenadoContenedor = 0;
+        idLlenadoContenedor = 0;
     }
 
     public Integer getIdMaterial() {
@@ -26,19 +28,35 @@ public class ContenedorPojo {
     }
 
     public Integer getLlenadoContenedor() {
-        return llenadoContenedor;
+        return idLlenadoContenedor;
     }
 
-    public void setLlenadoContenedor(Integer llenadoContenedor) {
-        this.llenadoContenedor = llenadoContenedor;
+    public void setLlenadoContenedor(Integer idLlenadoContenedor) {
+        this.idLlenadoContenedor = idLlenadoContenedor;
     }
     
     public Integer getEstadoContenedor() {
-        return estadoContenedor;
+        return idEstadoContenedor;
     }
 
-    public void setEstadoContenedor(Integer estadoContenedor) {
-        this.estadoContenedor = estadoContenedor;
+    public void setEstadoContenedor(Integer idEstadoContenedor) {
+        this.idEstadoContenedor = idEstadoContenedor;
+    }
+
+    public String getNombreMaterial() {
+        return nombreMaterial;
+    }
+
+    public void setNombreMaterial(String nombreMaterial) {
+        this.nombreMaterial = nombreMaterial;
+    }
+
+    public String getNombreEstadoContenedor() {
+        return nombreEstadoContenedor;
+    }
+
+    public void setNombreEstadoContenedor(String nombreEstadoContenedor) {
+        this.nombreEstadoContenedor = nombreEstadoContenedor;
     }
     
 }

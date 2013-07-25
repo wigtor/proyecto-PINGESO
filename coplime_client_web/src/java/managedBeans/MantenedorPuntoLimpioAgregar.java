@@ -4,6 +4,7 @@
  */
 package managedBeans;
 
+import ObjectsForManagedBeans.ContenedorPojo;
 import ObjectsForManagedBeans.PuntoLimpioPojo;
 import ObjectsForManagedBeans.SelectElemPojo;
 import entities.Comuna;
@@ -12,6 +13,7 @@ import entities.Inspector;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -43,6 +45,7 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions {
     private List<SelectElemPojo> listaEstadosPtoLimpio;
     private Integer inspectorEncargado_seleccionado;
     private List<SelectElemPojo> listaInspectores;
+    
     
     /**
      * Creates a new instance of MantenedorPuntoLimpioAgregar

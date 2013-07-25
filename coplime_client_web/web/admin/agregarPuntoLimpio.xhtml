@@ -17,7 +17,7 @@
                         <f:facet name="header">Ingrese los datos del punto limpio</f:facet>
                         
                         <p:outputLabel value="N° de punto limpio"/>
-                        <p:inputText value="#{MantenedorPuntoLimpioAgregar.num}" />
+                        <p:inputText value="#{MantenedorPuntoLimpioAgregar.num}" required="true"/>
                         
                         <p:outputLabel value="Nombre del punto limpio"/>
                         <p:inputText value="#{MantenedorPuntoLimpioAgregar.nombre}"/>
@@ -46,9 +46,14 @@
                                            var="InspEncargado" itemLabel="#{InspEncargado.label}" itemValue="#{InspEncargado.id}" />
                         </h:selectOneMenu>
                         
-                        <p:outputLabel value="Cantidad de contenedores"/>
-                        <p:outputLabel value="#{MantenedorPuntoLimpio.contenedores_creando.size()}"/>
-                        
+                        <p:outputLabel value="Contenedores agregados: #{MantenedorPuntoLimpio.contenedores_creando.size()}"/>
+                        <p:dataTable value="#{MantenedorPuntoLimpio.contenedores_creando}" var="contenedor" 
+                                     emptyMessage="No ha agregado contenedores a este punto limpio">
+                            
+                            <p:column headerText="Material" >
+                                <h:outputText value="#{contenedor.nombreMaterial}"/>
+                            </p:column>
+                        </p:dataTable>
                         
                         <f:facet name="footer">
                             <p:commandButton value="Agregar contenedores" action="#{MantenedorPuntoLimpioAgregar.agregarContenedores()}"/>

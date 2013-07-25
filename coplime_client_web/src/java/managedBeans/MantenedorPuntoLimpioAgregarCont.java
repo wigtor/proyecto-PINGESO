@@ -5,11 +5,8 @@
 package managedBeans;
 
 import ObjectsForManagedBeans.ContenedorPojo;
-import ObjectsForManagedBeans.PuntoLimpioPojo;
 import ObjectsForManagedBeans.SelectElemPojo;
-import entities.Comuna;
 import entities.Estado;
-import entities.Inspector;
 import entities.Material;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -97,6 +94,15 @@ public class MantenedorPuntoLimpioAgregarCont extends commonFunctions {
         res.setIdMaterial(material);
         res.setLlenadoContenedor(llenadoContenedor);
         res.setEstadoContenedor(estadoContenedor);
+        Integer intTemp;
+        for(SelectElemPojo matTemp : this.listaMateriales) {
+            intTemp = Integer.parseInt(matTemp.getId());
+            if (intTemp == material) {
+                res.setNombreMaterial(matTemp.getLabel());
+                break;
+            }
+        }
+        
         return res;
     }
     
