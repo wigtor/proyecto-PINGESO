@@ -7,6 +7,7 @@ package sessionBeans;
 import entities.Comuna;
 import entities.Estado;
 import entities.Inspector;
+import entities.Material;
 import entities.PuntoLimpio;
 import java.util.Calendar;
 import java.util.Collection;
@@ -36,5 +37,7 @@ public interface CrudPuntoLimpioLocal {
     public Collection<Estado> getAllEstadosPuntoLimpio();
 
     public Collection<Comuna> getAllComunas();
+
+    public Collection<Material> getAllMateriales();
     
 }

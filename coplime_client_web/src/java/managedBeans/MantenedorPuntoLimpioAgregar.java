@@ -23,19 +23,19 @@ import sessionBeans.CrudPuntoLimpioLocal;
  */
 @Named(value = "MantenedorPuntoLimpioAgregar")
 @RequestScoped
-public class MantenedorPuntoLimpioAgregar extends commonFunctions{
+public class MantenedorPuntoLimpioAgregar extends commonFunctions {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
-    
+    private Integer num;
     private String nombre;
-    private String comuna_seleccionada;
+    private Integer comuna_seleccionada;
     private List<SelectElemPojo> listaComunas;
     private String direccion;
     private String fechaRevision;
-    private SelectElemPojo estado_seleccionado;
+    private Integer estado_seleccionado;
     private List<SelectElemPojo> listaEstadosPtoLimpio;
-    private String inspectorEncargado_seleccionado;
+    private Integer inspectorEncargado_seleccionado;
     private List<SelectElemPojo> listaInspectores;
     
     /**
@@ -109,11 +109,11 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions{
         this.nombre = nombre;
     }
 
-    public String getComuna_seleccionada() {
+    public Integer getComuna_seleccionada() {
         return comuna_seleccionada;
     }
 
-    public void setComuna_seleccionada(String comuna_seleccionada) {
+    public void setComuna_seleccionada(Integer comuna_seleccionada) {
         this.comuna_seleccionada = comuna_seleccionada;
     }
 
@@ -137,11 +137,11 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions{
         this.fechaRevision = fechaRevision;
     }
 
-    public SelectElemPojo getEstado_seleccionado() {
+    public Integer getEstado_seleccionado() {
         return estado_seleccionado;
     }
 
-    public void setEstado_seleccionado(SelectElemPojo estado_seleccionado) {
+    public void setEstado_seleccionado(Integer estado_seleccionado) {
         this.estado_seleccionado = estado_seleccionado;
     }
 
@@ -153,11 +153,11 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions{
         this.listaEstadosPtoLimpio = listaEstadosPtoLimpio;
     }
 
-    public String getInspectorEncargado_seleccionado() {
+    public Integer getInspectorEncargado_seleccionado() {
         return inspectorEncargado_seleccionado;
     }
 
-    public void setInspectorEncargado_seleccionado(String inspectorEncargado_seleccionado) {
+    public void setInspectorEncargado_seleccionado(Integer inspectorEncargado_seleccionado) {
         this.inspectorEncargado_seleccionado = inspectorEncargado_seleccionado;
     }
 
@@ -167,5 +167,13 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions{
 
     public void setListaInspectores(List<SelectElemPojo> listaInspectores) {
         this.listaInspectores = listaInspectores;
+    }
+    
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
     }
 }

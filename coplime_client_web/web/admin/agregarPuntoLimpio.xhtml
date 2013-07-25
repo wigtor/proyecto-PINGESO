@@ -16,6 +16,9 @@
                    <p:panelGrid columns="2" styleClass="centrar" >
                         <f:facet name="header">Ingrese los datos del punto limpio</f:facet>
                         
+                        <p:outputLabel value="N° de punto limpio"/>
+                        <p:inputText value="#{MantenedorPuntoLimpioAgregar.num}" />
+                        
                         <p:outputLabel value="Nombre del punto limpio"/>
                         <p:inputText value="#{MantenedorPuntoLimpioAgregar.nombre}"/>
                         
@@ -45,10 +48,10 @@
                         
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Agregar contenedores" action="#{MantenedorPuntoLimpioAgregar.agregarContenedores()}"/>
+                            <p:commandButton value="Agregar contenedores" immediate="true" action="#{MantenedorPuntoLimpioAgregar.agregarContenedores()}"/>
 
                             <p:commandButton value="Aceptar" action="#{MantenedorPuntoLimpioAgregar.agregarPuntoLimpio()}"/>
-                            <p:commandButton value="Volver" action="#{MantenedorPuntoLimpioAgregar.volverToLista()}"/>
+                            <p:commandButton value="Volver" immediate="true" action="#{MantenedorPuntoLimpioAgregar.volverToLista()}"/>
                         </f:facet>
                    </p:panelGrid>
                </h:form>
