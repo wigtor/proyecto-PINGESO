@@ -6,15 +6,19 @@ package sessionBeans;
 
 import DAO.DAOFactory;
 import DAO.interfaces.ComunaDAO;
+import DAO.interfaces.ContenedorDAO;
 import DAO.interfaces.EstadoDAO;
 import DAO.interfaces.InspectorDAO;
 import DAO.interfaces.MaterialDAO;
 import DAO.interfaces.PuntoLimpioDAO;
+import DAO.interfaces.UnidadMedidaDAO;
 import entities.Comuna;
+import entities.Contenedor;
 import entities.Estado;
 import entities.Inspector;
 import entities.Material;
 import entities.PuntoLimpio;
+import entities.UnidadMedida;
 import entities.Usuario;
 import java.util.Calendar;
 import java.util.Collection;
@@ -38,8 +42,88 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
 
     @TransactionAttribute (TransactionAttributeType.REQUIRED)
     @Override
-    public void agregarPuntoLimpio(String nombre, String comuna, Calendar fechaProxRev, String estadoIni, int numInspEnc){
+    public Integer agregarPuntoLimpio(String nombre, Integer numeroDadoPorCliente, Integer idComuna, String direccion,
+                    Calendar fechaProxRev, Integer idEstadoIni, Integer numInspEnc){
         
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
+        ComunaDAO comDAO = factoryDeDAOs.getComunaDAO();
+        EstadoDAO estDAO = factoryDeDAOs.getEstadoDAO();
+        InspectorDAO inspDAO = factoryDeDAOs.getInspectorDAO();
+        try {
+            PuntoLimpio p = new PuntoLimpio(nombre, direccion, numeroDadoPorCliente);
+            p.setFechaProxRevision(fechaProxRev);
+            
+            Comuna comunaP = comDAO.find(idComuna);
+            p.setComuna(comunaP);
+            
+            Estado estadoP = estDAO.find(idEstadoIni);
+            p.setEstadoGlobal(estadoP);
+            
+            Inspector inspectorEnc = inspDAO.find(numInspEnc);
+            p.setInspectorEncargado(inspectorEnc);
+            
+            ptoDAO.insert(p);
+        }
+        catch (Exception e) {
+            
+            return null;
+        }
+        
+        return numeroDadoPorCliente;
+    }
+    
+    @Override
+    public boolean agregarContenedor(Integer numPuntoLimpio, Integer idMaterial, Integer idEstadoIni, int llenadoIni, int capacidad, Integer idUnidadMedida) {
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
+        ContenedorDAO contDAO = factoryDeDAOs.getContenedorDAO();
+        UnidadMedidaDAO uniMedDAO = factoryDeDAOs.getUnidadMedidaDAO();
+        MaterialDAO matDAO = factoryDeDAOs.getMaterialDAO();
+        EstadoDAO estDAO = factoryDeDAOs.getEstadoDAO();
+        
+        PuntoLimpio p = ptoDAO.findByNum(numPuntoLimpio);
+        if (p == null) {
+            System.out.println("No se encontró el id del puntolimpio al agregar el contenedor");
+            return false;
+        }
+        Estado estTemp = estDAO.find(idEstadoIni.intValue());
+        if (estTemp == null) {
+            System.out.println("No se encontró el id del estado al agregar el contenedor");
+            return false;
+        }
+        
+        Material matTemp = matDAO.find(idMaterial.intValue());
+        if (matTemp == null) {
+            System.out.println("No se encontró el id del material al agregar el contenedor");
+            return false;
+        }
+        
+        UnidadMedida uniTemp = uniMedDAO.find(idUnidadMedida.intValue());
+        if (uniTemp == null) {
+            System.out.println("No se encontró el id de la unidad de medida al agregar el contenedor");
+            return false;
+        }
+        
+        Contenedor nvoCont = new Contenedor();
+        nvoCont.setPuntoLimpio(p);
+        nvoCont.setCapacidad(capacidad);
+        nvoCont.setPorcentajeUsoEstimado(llenadoIni);
+        nvoCont.setProcentajeUso(llenadoIni);
+        
+        nvoCont.setEstadoContenedor(estTemp);
+        nvoCont.setMaterialDeAcopio(matTemp);
+        nvoCont.setUnidadMedida(uniTemp);
+        
+        
+        p.getContenedores().add(nvoCont);
+        try {
+            contDAO.insert(nvoCont);
+        }
+        catch (Exception e) {
+            return false;
+        }
+        return true;
     }
     
     @Override
@@ -56,6 +140,14 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         MaterialDAO matDAO = factoryDeDAOs.getMaterialDAO();
         return matDAO.findAll();
+    }
+    
+    @Override
+    public Collection<UnidadMedida> getAllUnidadesMedida() {
+        //Hago los DAO
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        UnidadMedidaDAO uniMedDAO = factoryDeDAOs.getUnidadMedidaDAO();
+        return uniMedDAO.findAll();
     }
     
     @Override
@@ -95,7 +187,7 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
     
     
     @Override
-    public void editarPuntoLimpio(Integer idPtoLimpio, String nombre, String comuna, Calendar fechaProxRev, String estadoIni, int numInspEnc) {
+    public void editarPuntoLimpio(Integer idPtoLimpio, String nombre, Integer idComuna, String direccion, Calendar fechaProxRev, Integer estadoIni, Integer numInspEnc) {
         if (idPtoLimpio == null) {
             return;
         }
@@ -129,4 +221,5 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
     public void setUsertemp(Usuario usertemp) {
         this.usertemp = usertemp;
     }
+
 }

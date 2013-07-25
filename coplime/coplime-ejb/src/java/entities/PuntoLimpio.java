@@ -6,6 +6,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -39,6 +40,7 @@ public class PuntoLimpio implements Serializable {
     @Column(nullable = false)
     private String nombre;
     
+    @ManyToOne
     private Comuna comuna;
     
     @Column(nullable = false)
@@ -78,12 +80,22 @@ public class PuntoLimpio implements Serializable {
     private List<Notificacion> notificaciones;
     
     public PuntoLimpio() {
+        this.contenedores = new LinkedList();
+        this.mantenciones = new LinkedList();
+        this.solicitudesMantencion =  new LinkedList();
+        this.notificaciones =  new LinkedList();
+        this.revisiones =  new LinkedList();
     }
     
     public PuntoLimpio(String nombre, String ubicacion, int numero) {
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.num = numero;
+        this.contenedores = new LinkedList();
+        this.mantenciones = new LinkedList();
+        this.solicitudesMantencion =  new LinkedList();
+        this.notificaciones =  new LinkedList();
+        this.revisiones =  new LinkedList();
     }
     
     public Estado getEstadoGlobal() {

@@ -11,8 +11,10 @@ import entities.Comuna;
 import entities.Estado;
 import entities.Inspector;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -137,6 +139,31 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions {
     public void agregarPuntoLimpio() {
         System.out.println("Se hizo click en 'agregarPuntoLimpio()'");
         System.out.println("Cantidad de contenedores: " + mantPtoLimpio.getContenedores_creando().size());
+        Calendar fechaComoCalendar = new GregorianCalendar();
+        fechaComoCalendar.setTime(fechaRevision);
+        Integer numPuntoLimpio = crudPuntoLimpio.agregarPuntoLimpio(nombre, num, comuna_seleccionada, direccion, fechaComoCalendar, estado_seleccionado, inspectorEncargado_seleccionado);
+        if (numPuntoLimpio != null) {
+            //Agrego los contenedores ahora
+            boolean resultadoAgregarCont;
+            Integer idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida;
+            List<ContenedorPojo> listaContenedoresTemp = this.mantPtoLimpio.getContenedores_creando();
+            for(ContenedorPojo contTemp : listaContenedoresTemp) {
+                idMaterial = contTemp.getIdMaterial();
+                idEstadoIni = contTemp.getIdEstadoContenedor();
+                llenadoIni = contTemp.getLlenadoContenedor();
+                capacidad = contTemp.getCapacidad();
+                idUnidadMedida = contTemp.getIdUnidadMedida();
+                System.out.format("%d, %d, %d, %d, %d, %d\n\n", numPuntoLimpio, idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida);
+                resultadoAgregarCont = crudPuntoLimpio.agregarContenedor(
+                    numPuntoLimpio, idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida);
+            }
+        }
+        else {
+            //Avisar que ocurrió un error al agregar el punto limpio
+            
+        }
+        
+        
         
         volverToLista();
     }

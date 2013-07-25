@@ -36,8 +36,9 @@ public class Contenedor implements Serializable {
     @Column(nullable = false)
     private int capacidad;
     
-    @Column(nullable = false)
-    private String unidadMedida;
+    
+    @ManyToOne
+    private UnidadMedida unidadMedida;
     
     @Column(nullable = false)
     private int procentajeUso; //Indica lo que últimamente fue revisado y confirmado
@@ -83,11 +84,11 @@ public class Contenedor implements Serializable {
         this.capacidad = capacidad;
     }
 
-    public String getUnidadMedida() {
+    public UnidadMedida getUnidadMedida() {
         return unidadMedida;
     }
 
-    public void setUnidadMedida(String unidadMedida) {
+    public void setUnidadMedida(UnidadMedida unidadMedida) {
         this.unidadMedida = unidadMedida;
     }
 

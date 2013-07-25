@@ -9,6 +9,7 @@ import entities.Estado;
 import entities.Inspector;
 import entities.Material;
 import entities.PuntoLimpio;
+import entities.UnidadMedida;
 import java.util.Calendar;
 import java.util.Collection;
 import javax.ejb.Local;
@@ -26,9 +27,11 @@ public interface CrudPuntoLimpioLocal {
 
     public Collection<PuntoLimpio> getAllPuntosLimpios();
 
-    public void agregarPuntoLimpio(String nombre, String comuna, Calendar fechaProxRev, String estadoIni, int numInspEnc);
-
-    public void editarPuntoLimpio(Integer idPtoLimpio, String nombre, String comuna, Calendar fechaProxRev, String estadoIni, int numInspEnc);
+    public Integer agregarPuntoLimpio(String nombre, Integer numeroDadoPorCliente, Integer idComuna, String direccion, Calendar fechaProxRev, Integer idEstadoIni, Integer numInspEnc);
+    
+    public boolean agregarContenedor( Integer numPuntoLimpio, Integer idMaterial, Integer idEstadoIni, int llenadoIni, int capacidad, Integer idUnidadMedida);
+    
+    public void editarPuntoLimpio(Integer idPtoLimpio, String nombre, Integer idComuna, String direccion, Calendar fechaProxRev, Integer estadoIni, Integer numInspEnc);
 
     public boolean eliminarPuntoLimpioByNum(Integer num);
 
@@ -39,5 +42,7 @@ public interface CrudPuntoLimpioLocal {
     public Collection<Comuna> getAllComunas();
 
     public Collection<Material> getAllMateriales();
+
+    public Collection<UnidadMedida> getAllUnidadesMedida();
     
 }

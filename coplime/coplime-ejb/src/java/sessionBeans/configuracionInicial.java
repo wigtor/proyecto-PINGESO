@@ -16,6 +16,7 @@ import DAO.interfaces.OperarioDAO;
 import DAO.interfaces.PuntoLimpioDAO;
 import DAO.interfaces.RolDAO;
 import DAO.interfaces.TipoIncidenciaDAO;
+import DAO.interfaces.UnidadMedidaDAO;
 import DAO.interfaces.UsuarioDAO;
 import entities.Administrador;
 import entities.Comuna;
@@ -28,6 +29,7 @@ import entities.OperarioMantencion;
 import entities.PuntoLimpio;
 import entities.Rol;
 import entities.TipoIncidencia;
+import entities.UnidadMedida;
 import entities.Usuario;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -53,6 +55,7 @@ public class configuracionInicial implements configuracionInicialLocal {
     List<Estado> estadosPuntosLimpios;
     List<Material> materialesPuntosLimpios;
     List<Comuna> listaComunas;
+    List<UnidadMedida> listaUnidadesMedida;
     
     
     
@@ -65,6 +68,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         cargarEstadosPuntosLimpios();
         cargarTipoIncidencias();
         cargarComunas();
+        cargarUnidadesMedida();
         cargarMateriales();
         cargarPuntosLimpios();
         cargarMantenciones();
@@ -124,6 +128,20 @@ public class configuracionInicial implements configuracionInicialLocal {
         }
     }
     
+    private void cargarUnidadesMedida() {
+        UnidadMedidaDAO uniDAO = factoryDeDAOs.getUnidadMedidaDAO();
+        this.listaUnidadesMedida = new LinkedList();
+        UnidadMedida temp;
+        String[] unidades = {"M^3", "Kg", "Lts"};
+        
+        for(String str : unidades) {
+            temp = new UnidadMedida();
+            temp.setNombreUnidad(str);
+            uniDAO.insert(temp);
+            this.listaUnidadesMedida.add(temp);
+        }
+    }
+    
     private void cargarMateriales() {
         Material m1 = new Material("Vidrio");
         Material m2 = new Material("Papel");
@@ -161,7 +179,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         c1.setEstadoContenedor(this.estadosPuntosLimpios.get(0));
         c1.setCapacidad(200);
         c1.setPuntoLimpio(p1);
-        c1.setUnidadMedida("M^3");
+        c1.setUnidadMedida(listaUnidadesMedida.get(0));
         c1.setPorcentajeUsoEstimado(0);
         c1.setProcentajeUso(0);
         c1.setMaterialDeAcopio(this.materialesPuntosLimpios.get(0));
@@ -170,7 +188,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         c2.setEstadoContenedor(this.estadosPuntosLimpios.get(0));
         c2.setCapacidad(200);
         c2.setPuntoLimpio(p1);
-        c2.setUnidadMedida("M^3");
+        c2.setUnidadMedida(listaUnidadesMedida.get(0));
         c2.setPorcentajeUsoEstimado(0);
         c2.setProcentajeUso(0);
         c2.setMaterialDeAcopio(this.materialesPuntosLimpios.get(1));
@@ -179,7 +197,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         c3.setEstadoContenedor(this.estadosPuntosLimpios.get(0));
         c3.setCapacidad(200);
         c3.setPuntoLimpio(p1);
-        c3.setUnidadMedida("M^3");
+        c3.setUnidadMedida(listaUnidadesMedida.get(0));
         c3.setPorcentajeUsoEstimado(0);
         c3.setProcentajeUso(0);
         c3.setMaterialDeAcopio(this.materialesPuntosLimpios.get(2));

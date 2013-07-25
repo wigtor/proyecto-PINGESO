@@ -25,9 +25,19 @@
                                 var="mat" itemLabel="#{mat.label}" itemValue="#{mat.id}" />
                         </h:selectOneMenu>
                         
+                        <p:outputLabel value="Capacidad del contenedor"/>
+                        <h:panelGroup >
+                            <p:inputText value="#{MantenedorPuntoLimpioAgregarCont.capacidad}"/>
+                            <h:selectOneMenu value="#{MantenedorPuntoLimpioAgregarCont.idUnidadMedida}" styleClass="span3">
+                                <f:selectItems value="#{MantenedorPuntoLimpioAgregarCont.listaUnidadesMedida}"  
+                                    var="unidad" itemLabel="#{unidad.label}" itemValue="#{unidad.id}" />
+                            </h:selectOneMenu>
+                        </h:panelGroup>
+                        
                         <p:outputLabel value="Llenado inicial"/>
                         <h:panelGroup >
-                            <p:inputText id="llenadoInicialContenedor" value="#{MantenedorPuntoLimpioAgregarCont.llenadoContenedor}"/>
+                                <p:inputText id="llenadoInicialContenedor" value="#{MantenedorPuntoLimpioAgregarCont.llenadoContenedor}"/>%
+                            
                             <p:slider step="5" for="llenadoInicialContenedor"/>
                         </h:panelGroup>
                         

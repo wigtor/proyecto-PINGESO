@@ -15,6 +15,7 @@ import DAO.interfaces.EstadoDAO;
 import DAO.interfaces.MaterialDAO;
 import DAO.interfaces.NotificacionDAO;
 import DAO.interfaces.TipoIncidenciaDAO;
+import DAO.interfaces.UnidadMedidaDAO;
 import DAO.interfaces.UsuarioDAO;
 import javax.persistence.EntityManager;
 
@@ -45,6 +46,7 @@ public abstract class DAOFactory {
     public abstract MaterialDAO getMaterialDAO();
     public abstract NotificacionDAO getNotificacionDAO();
     public abstract ComunaDAO getComunaDAO();
+    public abstract UnidadMedidaDAO getUnidadMedidaDAO();
     
     public abstract void close();
 

@@ -16,6 +16,7 @@ import DAO.impl.JPA_mysql.EstadoDAO_impl;
 import DAO.impl.JPA_mysql.MaterialDAO_impl;
 import DAO.impl.JPA_mysql.NotificacionDAO_impl;
 import DAO.impl.JPA_mysql.PuntoLimpioDAO_impl;
+import DAO.impl.JPA_mysql.UnidadMedidaDAO_impl;
 import DAO.interfaces.AdministradorDAO;
 import DAO.interfaces.ComunaDAO;
 import DAO.interfaces.ContenedorDAO;
@@ -28,6 +29,7 @@ import DAO.interfaces.EstadoDAO;
 import DAO.interfaces.MaterialDAO;
 import DAO.interfaces.NotificacionDAO;
 import DAO.interfaces.TipoIncidenciaDAO;
+import DAO.interfaces.UnidadMedidaDAO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -112,5 +114,10 @@ public class JPADAOFactory extends DAOFactory{
     @Override
     public ComunaDAO getComunaDAO() {
         return new ComunaDAO_impl(em);
+    }
+    
+    @Override
+    public UnidadMedidaDAO getUnidadMedidaDAO() {
+        return new UnidadMedidaDAO_impl(em);
     }
 }

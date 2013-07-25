@@ -8,6 +8,7 @@ import ObjectsForManagedBeans.ContenedorPojo;
 import ObjectsForManagedBeans.SelectElemPojo;
 import entities.Estado;
 import entities.Material;
+import entities.UnidadMedida;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -33,6 +34,9 @@ public class MantenedorPuntoLimpioAgregarCont extends commonFunctions {
     
     private Integer numPtoLimpio;
     private Integer material;
+    private int capacidad;
+    private Integer idUnidadMedida;
+    private List<SelectElemPojo> listaUnidadesMedida;
     private List<SelectElemPojo> listaMateriales;
     private Integer llenadoContenedor;
     private List<SelectElemPojo> listaEstadosContenedores;
@@ -50,6 +54,7 @@ public class MantenedorPuntoLimpioAgregarCont extends commonFunctions {
     public void init() {
         cargarEstadosPuntoLimpio();
         cargarMateriales();
+        cargarUnidadesMedida();
         if (mantPtoLimpio.getPto_creando() != null) {
             this.numPtoLimpio = mantPtoLimpio.getPto_creando().getNum();
         }
@@ -83,6 +88,18 @@ public class MantenedorPuntoLimpioAgregarCont extends commonFunctions {
         }
     }
     
+    private void cargarUnidadesMedida() {
+        Collection<UnidadMedida> listaTemp = crudPuntoLimpio.getAllUnidadesMedida();
+        SelectElemPojo elemTemp;
+        this.listaUnidadesMedida = new ArrayList();
+        for(UnidadMedida unidad_iter : listaTemp) {
+            elemTemp = new SelectElemPojo();
+            elemTemp.setId(Integer.toString(unidad_iter.getId()));
+            elemTemp.setLabel(unidad_iter.getNombreUnidad());
+            this.listaUnidadesMedida.add(elemTemp);
+        }
+    }
+    
     private void limpiarCampos() {
         this.material = null;
         this.estadoContenedor = null;
@@ -93,7 +110,9 @@ public class MantenedorPuntoLimpioAgregarCont extends commonFunctions {
         ContenedorPojo res = new ContenedorPojo();
         res.setIdMaterial(material);
         res.setLlenadoContenedor(llenadoContenedor);
-        res.setEstadoContenedor(estadoContenedor);
+        res.setIdEstadoContenedor(estadoContenedor);
+        res.setIdUnidadMedida(idUnidadMedida);
+        res.setCapacidad(capacidad);
         Integer intTemp;
         for(SelectElemPojo matTemp : this.listaMateriales) {
             intTemp = Integer.parseInt(matTemp.getId());
@@ -175,4 +194,29 @@ public class MantenedorPuntoLimpioAgregarCont extends commonFunctions {
     public void setEstadoContenedor(Integer estadoContenedor) {
         this.estadoContenedor = estadoContenedor;
     }
+
+    public int getCapacidad() {
+        return capacidad;
+    }
+
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
+    }
+
+    public Integer getIdUnidadMedida() {
+        return idUnidadMedida;
+    }
+
+    public void setIdUnidadMedida(Integer idUnidadMedida) {
+        this.idUnidadMedida = idUnidadMedida;
+    }
+
+    public List<SelectElemPojo> getListaUnidadesMedida() {
+        return listaUnidadesMedida;
+    }
+
+    public void setListaUnidadesMedida(List<SelectElemPojo> listaUnidadesMedida) {
+        this.listaUnidadesMedida = listaUnidadesMedida;
+    }
+    
 }
