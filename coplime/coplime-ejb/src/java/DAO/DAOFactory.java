@@ -5,6 +5,7 @@
 package DAO;
 
 import DAO.interfaces.AdministradorDAO;
+import DAO.interfaces.ComunaDAO;
 import DAO.interfaces.ContenedorDAO;
 import DAO.interfaces.InspectorDAO;
 import DAO.interfaces.OperarioDAO;
@@ -43,6 +44,7 @@ public abstract class DAOFactory {
     public abstract TipoIncidenciaDAO getTipoIncidenciaDAO();
     public abstract MaterialDAO getMaterialDAO();
     public abstract NotificacionDAO getNotificacionDAO();
+    public abstract ComunaDAO getComunaDAO();
     
     public abstract void close();
 

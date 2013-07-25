@@ -22,7 +22,7 @@
                         <p:outputLabel value="Seleccione comuna"/>
                         <h:selectOneMenu label="Seleccione comuna" value="#{MantenedorPuntoLimpioAgregar.comuna_seleccionada}">
                             <f:selectItems value="#{MantenedorPuntoLimpioAgregar.listaComunas}"  
-                                var="comuna" itemLabel="#{comuna}" itemValue="#{comuna}" />
+                                var="comuna" itemLabel="#{comuna.label}" itemValue="#{comuna.id}" />
                         </h:selectOneMenu>
                         
                         <p:outputLabel value="Dirección"/>

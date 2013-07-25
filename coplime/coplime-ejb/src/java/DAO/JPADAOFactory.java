@@ -5,6 +5,7 @@
 package DAO;
 
 import DAO.impl.JPA_mysql.AdministradorDAO_impl;
+import DAO.impl.JPA_mysql.ComunaDAO_impl;
 import DAO.impl.JPA_mysql.ContenedorDAO_impl;
 import DAO.impl.JPA_mysql.InspectorDAO_impl;
 import DAO.impl.JPA_mysql.OperarioDAO_impl;
@@ -16,6 +17,7 @@ import DAO.impl.JPA_mysql.MaterialDAO_impl;
 import DAO.impl.JPA_mysql.NotificacionDAO_impl;
 import DAO.impl.JPA_mysql.PuntoLimpioDAO_impl;
 import DAO.interfaces.AdministradorDAO;
+import DAO.interfaces.ComunaDAO;
 import DAO.interfaces.ContenedorDAO;
 import DAO.interfaces.InspectorDAO;
 import DAO.interfaces.OperarioDAO;
@@ -105,5 +107,10 @@ public class JPADAOFactory extends DAOFactory{
     @Override
     public NotificacionDAO getNotificacionDAO() {
         return new NotificacionDAO_impl(em);
+    }
+    
+    @Override
+    public ComunaDAO getComunaDAO() {
+        return new ComunaDAO_impl(em);
     }
 }

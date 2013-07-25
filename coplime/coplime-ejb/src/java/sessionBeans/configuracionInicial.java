@@ -6,6 +6,7 @@ package sessionBeans;
 
 import DAO.DAOFactory;
 import DAO.interfaces.AdministradorDAO;
+import DAO.interfaces.ComunaDAO;
 import DAO.interfaces.ContenedorDAO;
 import DAO.interfaces.EstadoDAO;
 import DAO.interfaces.InspectorDAO;
@@ -17,6 +18,7 @@ import DAO.interfaces.RolDAO;
 import DAO.interfaces.TipoIncidenciaDAO;
 import DAO.interfaces.UsuarioDAO;
 import entities.Administrador;
+import entities.Comuna;
 import entities.Contenedor;
 import entities.Estado;
 import entities.Inspector;
@@ -50,6 +52,7 @@ public class configuracionInicial implements configuracionInicialLocal {
     List<PuntoLimpio> puntosLimpios;
     List<Estado> estadosPuntosLimpios;
     List<Material> materialesPuntosLimpios;
+    List<Comuna> listaComunas;
     
     
     
@@ -61,6 +64,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         cargaUsuarios();
         cargarEstadosPuntosLimpios();
         cargarTipoIncidencias();
+        cargarComunas();
         cargarMateriales();
         cargarPuntosLimpios();
         cargarMantenciones();
@@ -103,6 +107,23 @@ public class configuracionInicial implements configuracionInicialLocal {
         tiposIncidencias.add(t4);
     }
     
+    private void cargarComunas() {
+        ComunaDAO comDAO = factoryDeDAOs.getComunaDAO();
+        this.listaComunas = new LinkedList();
+        Comuna temp;
+        String[] comunas = {"San Bernardo", "Santiago", "San Miguel", "La Cisterna", 
+        "Puente Alto", "La Pintana", "El Bosque", "Maipú", "Pedro Aguirre Cerda",
+        "San Ramón", "Estación Central", "Pudahuel", "Providencia", "Las Condes", 
+        "Recoleta", "Independencia", "Renca", "La Florida"};
+        
+        for(String str : comunas) {
+            temp = new Comuna();
+            temp.setNombre(str);
+            comDAO.insert(temp);
+            this.listaComunas.add(temp);
+        }
+    }
+    
     private void cargarMateriales() {
         Material m1 = new Material("Vidrio");
         Material m2 = new Material("Papel");
@@ -126,7 +147,8 @@ public class configuracionInicial implements configuracionInicialLocal {
     }
     
     private void cargarPuntosLimpios() {
-        PuntoLimpio p1 = new PuntoLimpio("Plaza San Bernardo", "San bernardo", "Plaza de armas", 1);
+        PuntoLimpio p1 = new PuntoLimpio("Plaza San Bernardo", "Plaza de armas", 1);
+        p1.setComuna(this.listaComunas.get(0));
         p1.setEstadoGlobal(this.estadosPuntosLimpios.get(0));
         p1.setFechaProxRevision(Calendar.getInstance());
         p1.setInspectorEncargado(this.inspectores.get(0));

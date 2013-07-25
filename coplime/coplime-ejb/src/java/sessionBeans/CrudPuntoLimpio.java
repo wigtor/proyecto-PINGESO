@@ -5,9 +5,11 @@
 package sessionBeans;
 
 import DAO.DAOFactory;
+import DAO.interfaces.ComunaDAO;
 import DAO.interfaces.EstadoDAO;
 import DAO.interfaces.InspectorDAO;
 import DAO.interfaces.PuntoLimpioDAO;
+import entities.Comuna;
 import entities.Estado;
 import entities.Inspector;
 import entities.PuntoLimpio;
@@ -62,6 +64,13 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         return estDAO.findAll();
     }
     
+    @Override
+    public Collection<Comuna> getAllComunas() {
+        //Hago los DAO
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        ComunaDAO comDAO = factoryDeDAOs.getComunaDAO();
+        return comDAO.findAll();
+    }
     
     @Override
     public PuntoLimpio getPuntoLimpioByNum(Integer num) {
