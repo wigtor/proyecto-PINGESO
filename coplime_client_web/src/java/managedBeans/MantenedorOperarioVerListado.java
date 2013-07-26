@@ -56,6 +56,11 @@ public class MantenedorOperarioVerListado extends commonFunctions{
         }
     }
     
+    public void volver() {
+       goToPage("/faces/users/verPuntosLimpios.xhtml");
+        
+    }
+    
     public void agregar() {
        goToPage("/faces/admin/agregarOperarioMantencion.xhtml");
         

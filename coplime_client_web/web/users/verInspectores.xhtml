@@ -22,16 +22,7 @@
                        <p:dataTable id="inspectores" value="#{MantenedorInspectorVerListado.lista}" var="insp" widgetVar="inspectorTable"  
                                       emptyMessage="No hay inspectores registrados en el sistema" 
                                      filteredValue="#{MantenedorInspectorVerListado.listaBusqueda}">
-                           <!--
-                          <f:facet name="header">  
-                                <p:outputPanel>  
-                                    <h:outputText value="Buscar: " /> 
-                                    
-                                    <p:inputText id="globalFilter" onkeyup="inspectorTable.filter()" style="width:150px"  /> 
-                                    
-                                </p:outputPanel>  
-                            </f:facet> -->
-                           
+                                                     
                            <p:column id="rutColumn" sortBy="#{insp.num}" headerText="Rut" filterMatchMode="contains" filterBy="#{insp.num}"  >
                                 <h:outputText value="#{insp.num}" /> 
                                                               
@@ -49,8 +40,16 @@
                                 </p:commandLink>
                             </p:column>
                             <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" action="#{MantenedorInspectorVerListado.eliminar(insp.num)}">
-                                </p:commandLink>
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{insp.num}.show()" />
+                                
+                                <p:confirmDialog message="¿Está seguro que desea eliminar el inspector?"
+                                                 header="Confirmación de eliminación de inspector" severity="alert"
+                                                 widgetVar="cd_#{insp.num}" closeOnEscape="true">
+                                    <p:commandButton value="Si" actionListener="#{MantenedorInspectorVerListado.eliminar(insp.num)}"
+                                                     oncomplete="cd_#{insp.num}.hide();"/>
+                                    <p:commandButton value="No" onclick="cd_#{insp.num}.hide();" type="button" />
+                                </p:confirmDialog>
+                               
                             </p:column>
                         </p:dataTable>
                        
