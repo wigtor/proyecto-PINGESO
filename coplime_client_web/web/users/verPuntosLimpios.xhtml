@@ -7,56 +7,64 @@
       xmlns:p="http://primefaces.org/ui"
       contentType="text/html">
     <body>
-       <ui:composition template="../mainTemplate.xhtml">
-           <ui:define name="titulo" >
-               Ver puntos limpios           
-           </ui:define>
-           
-          
-           
-           <ui:define name="centro">
-               <h:form>
-                  <p:panelGrid columns="5" styleClass="centrar" >
-                       <f:facet name="header">Listado de puntos limpios</f:facet>
-                       
-                       <p:dataTable value="#{MantenedorPuntoLimpioVerListado.lista}" var="puntoLimpio" 
-                                        widgetVar="inspectorTable" emptyMessage="No hay puntos limpios registrados en el sistema" 
-                                        filteredValue="#{MantenedorPuntoLimpioVerListado.listaBusqueda}">
-                           <p:column headerText="N°" sortBy="#{puntoLimpio.num}" filterMatchMode="contains" filterBy="#{puntoLimpio.num}">
-                               <h:outputText value="#{puntoLimpio.num}"/>
-                           </p:column>
-                           <p:column headerText="Nombre" sortBy="#{puntoLimpio.nombre}" filterMatchMode="contains" filterBy="#{puntoLimpio.nombre}">
-                               <h:outputText value="#{puntoLimpio.nombre}"/>
-                           </p:column>
-                           <p:column headerText="estado" sortBy="#{puntoLimpio.estado}" filterMatchMode="contains" filterBy="#{puntoLimpio.estado}">
-                               <h:outputText value="#{puntoLimpio.estado}"/>
-                           </p:column>
-                           <p:column headerText="Fecha proxima rev" sortBy="#{puntoLimpio.fechaProximaRevStr}" filterMatchMode="contains" filterBy="#{puntoLimpio.fechaProximaRevStr}">
-                               <h:outputText value="#{puntoLimpio.fechaProximaRevStr}"/>
-                           </p:column>
-                           <p:column headerText="" >
-                               <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorInspectorVerListado.verDetalles(puntoLimpio.id)}">
-                               </p:commandLink>
-                           </p:column>                            
-                           <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
-                               <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{MantenedorPuntoLimpioVerListado.editar(puntoLimpio.id)}">
-                               </p:commandLink>
-                           </p:column>
-                           <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
-                               <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" action="#{MantenedorPuntoLimpioVerListado.eliminar(puntoLimpio.id)}">
-                               </p:commandLink>
-                           </p:column>
+        <ui:composition template="../mainTemplate.xhtml">
+            <ui:define name="titulo" >
+                Ver puntos limpios           
+            </ui:define>
+
+
+
+            <ui:define name="centro">
+                <h:form>
+                    <p:panelGrid columns="5" styleClass="centrar" >
+                        <f:facet name="header">Listado de puntos limpios</f:facet>
+
+                        <p:dataTable value="#{MantenedorPuntoLimpioVerListado.lista}" var="puntoLimpio" 
+                                     widgetVar="inspectorTable" emptyMessage="No hay puntos limpios registrados en el sistema" 
+                                     filteredValue="#{MantenedorPuntoLimpioVerListado.listaBusqueda}">
+                            <p:column headerText="N°" sortBy="#{puntoLimpio.num}" filterMatchMode="contains" filterBy="#{puntoLimpio.num}">
+                                <h:outputText value="#{puntoLimpio.num}"/>
+                            </p:column>
+                            <p:column headerText="Nombre" sortBy="#{puntoLimpio.nombre}" filterMatchMode="contains" filterBy="#{puntoLimpio.nombre}">
+                                <h:outputText value="#{puntoLimpio.nombre}"/>
+                            </p:column>
+                            <p:column headerText="estado" sortBy="#{puntoLimpio.estado}" filterMatchMode="contains" filterBy="#{puntoLimpio.estado}">
+                                <h:outputText value="#{puntoLimpio.estado}"/>
+                            </p:column>
+                            <p:column headerText="Fecha proxima rev" sortBy="#{puntoLimpio.fechaProximaRevStr}" filterMatchMode="contains" filterBy="#{puntoLimpio.fechaProximaRevStr}">
+                                <h:outputText value="#{puntoLimpio.fechaProximaRevStr}"/>
+                            </p:column>
+                            <p:column headerText="" >
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorInspectorVerListado.verDetalles(puntoLimpio.id)}">
+                                </p:commandLink>
+                            </p:column>                            
+                            <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{MantenedorPuntoLimpioVerListado.editar(puntoLimpio.id)}">
+                                </p:commandLink>
+                            </p:column>
+                            <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{puntoLimpio.id}.show()" />
+
+                                <p:confirmDialog message="¿Está seguro que desea eliminar el punto limpio?"
+                                                 header="Confirmación de eliminación de punto limpio" severity="alert"
+                                                 widgetVar="cd_#{puntoLimpio.id}" closeOnEscape="true">
+                                    <p:commandButton value="Si" actionListener="#{MantenedorPuntoLimpioVerListado.eliminar(puntoLimpio.id)}"
+                                                     oncomplete="cd_#{puntoLimpio.id}.hide();"/>
+                                    <p:commandButton value="No" onclick="cd_#{puntoLimpio.id}.hide();" type="button" />
+                                </p:confirmDialog>
+                            </p:column>
                         </p:dataTable>
-                       
-                       <f:facet name="footer">
-                           <p:commandButton value="Agregar" action="#{MantenedorPuntoLimpioVerListado.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
-                       </f:facet>
-                            
-                       
-                   </p:panelGrid>
-                   <p:contextMenu beforeShow="pcontext.show()" />
-               </h:form>
-           </ui:define>
-       </ui:composition>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Agregar" action="#{MantenedorPuntoLimpioVerListado.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
+                        </f:facet>
+
+
+                    </p:panelGrid>
+
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
     </body>    
 </html>

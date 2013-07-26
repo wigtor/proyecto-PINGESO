@@ -157,14 +157,13 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions {
                 resultadoAgregarCont = crudPuntoLimpio.agregarContenedor(
                     numPuntoLimpio, idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida);
             }
+            //Avisar que se agregó correctamente el punto limpio
+            
         }
         else {
             //Avisar que ocurrió un error al agregar el punto limpio
             
         }
-        
-        
-        
         volverToLista();
     }
     

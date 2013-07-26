@@ -129,15 +129,12 @@ public class MantenedorPuntoLimpioAgregarCont extends commonFunctions {
         System.out.println("Se hizo click en 'guardarNvoContenedor_y_otro()'");
         mantPtoLimpio.getContenedores_creando().add(crearContenedorTemporal());
         
-        
-        //Limpio los campos para agregar un nuevo contenedor
-        limpiarCampos();
+        goToPage("/faces/admin/agregarContenedor.xhtml");
     }
     
     public void guardarNvoContenedor() {
         System.out.println("Se hizo click en 'guardarNvoContenedor()'");
         mantPtoLimpio.getContenedores_creando().add(crearContenedorTemporal());
-        
         
         goToPage("/faces/admin/agregarPuntoLimpio.xhtml");
     }
