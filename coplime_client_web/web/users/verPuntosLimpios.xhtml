@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui"
       contentType="text/html">
     <body>
-        <ui:composition template="../mainTemplate.xhtml">
+        <ui:composition template="/mainTemplate.xhtml">
             <ui:define name="titulo" >
                 Ver puntos limpios           
             </ui:define>
@@ -56,6 +56,9 @@
                         </p:dataTable>
 
                         <f:facet name="footer">
+                            <p:commandButton value="Agregar revisión" action="/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Inspector')}"/>
+                            <p:commandButton value="Solicitar mantención" action="/faces/users/inspector/solicitarMantencionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Inspector')}"/>
+                            <p:commandButton value="Agregar mantención" action="/faces/users/operario/agregarMantencionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Operario')}"/>
                             <p:commandButton value="Agregar" action="#{MantenedorPuntoLimpioVerListado.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
                         </f:facet>
 

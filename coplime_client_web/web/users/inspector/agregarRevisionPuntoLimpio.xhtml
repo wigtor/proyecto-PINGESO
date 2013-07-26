@@ -7,29 +7,30 @@
       xmlns:p="http://primefaces.org/ui"
       contentType="text/html">
     <body>
-        <ui:composition template="../mainTemplate.xhtml">
+        <ui:composition template="/mainTemplate.xhtml">
             <ui:define name="titulo" >Agregar revisión de punto limpio</ui:define>
 
 
             <ui:define name="centro">
                 <h:form>
-                    <p:panelGrid columns="5" styleClass="centrar" >
+                    <p:panelGrid columns="2" styleClass="centrar" >
                         <f:facet name="header">Ingrese datos de revisión realizada</f:facet>
 
                         <p:outputLabel value="Seleccione punto limpio" />
-                        <h:selectOneMenu value="#{agregarRevision.ptoLimpio_seleccionado}">
-                            <f:selectItems value="#{agregarRevision.listaPuntosLimpios}"  
-                                var="ptoLimpio" itemLabel="#{ptoLimpio.nombre}" itemValue="#{ptoLimpio.num}" />
+                        <h:selectOneMenu value="#{AgregarRevision.numPtoLimpio}">
+                            <f:selectItems value="#{AgregarRevision.listaPuntosLimpios}"  
+                                var="ptoLimpio" itemLabel="#{ptoLimpio.label}" itemValue="#{ptoLimpio.id}" />
                         </h:selectOneMenu>
 
-                        <p:commandButton value="Cambiar estado" action="#{agregarRevision.cambiarEstadoPtoLimpio()}"/>
+                        <p:outputLabel value="Cambiar su estado" />
+                        <p:commandButton value="Cambiar estado" action="#{AgregarRevision.cambiarEstadoPtoLimpio()}"/>
 
-                        <p:outputLabel value="Detalle" />
-                        <p:inputTextarea value="#{agregarRevision.detalle}"/>
+                        <p:outputLabel value="Detalles de la revisión" />
+                        <p:inputTextarea value="#{AgregarRevision.detalle}"/>
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Guardar revisión" action="#{agregarRevision.guardarMantencion()}"/>
-                            <p:commandButton value="Volver" action="#{agregarRevision.volverToListado()}"/>
+                            <p:commandButton value="Guardar revisión" action="#{AgregarRevision.guardarMantencion()}"/>
+                            <p:commandButton value="Volver" action="#{AgregarRevision.volverToLista()}"/>
                         </f:facet>
                     </p:panelGrid>
 

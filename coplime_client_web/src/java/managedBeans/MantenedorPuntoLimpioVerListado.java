@@ -40,13 +40,15 @@ public class MantenedorPuntoLimpioVerListado extends commonFunctions{
     
     
     @PostConstruct
-    public void init() {         
-        
-        ///////////////VER/////////////////////
+    public void init() {
+        this.lista = cargarPuntosLimpios();
+    }
+    
+    private List<PuntoLimpioPojo> cargarPuntosLimpios(){
         Collection<PuntoLimpio> listaTemp = crudPuntoLimpio.getAllPuntosLimpios();
         PuntoLimpioPojo ptoTemporal;
         Calendar f;
-        this.lista = new ArrayList();
+        List<PuntoLimpioPojo> listaResult = new ArrayList();
         for(PuntoLimpio pto_iter : listaTemp) {
             ptoTemporal = new PuntoLimpioPojo();
             
@@ -58,11 +60,10 @@ public class MantenedorPuntoLimpioVerListado extends commonFunctions{
             ptoTemporal.setFechaProximaRevStr(f.get(Calendar.DAY_OF_MONTH)
                     +"-"
                     +f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH));
-            this.lista.add(ptoTemporal);
-            
+            listaResult.add(ptoTemporal);
         }
+        return listaResult;
     }
-    
     
     public List<PuntoLimpioPojo> getLista() {
         return lista;
