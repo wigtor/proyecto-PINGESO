@@ -29,7 +29,8 @@ public class AgregarRevision extends commonFunctions {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
-    @Inject private AgregarRevisionSession agregarRevision_session;
+    @Inject
+    private CambioEstadoPuntoLimpio_session cambioEstadoSessionBean;
     
     private Integer numPtoLimpio;
     private List<SelectElemPojo> listaPuntosLimpios;
@@ -62,18 +63,21 @@ public class AgregarRevision extends commonFunctions {
     
     public void cambiarEstadoPtoLimpio() {
         //Almaceno en el managed bean session el punto limpio que se está editando
-        
+        cambioEstadoSessionBean.setIdPuntoLimpioToChange(numPtoLimpio);
         
         goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml");
     }
     
-    public void guardarMantencion() {
-         System.out.println("Se hizo click en 'guardarMantencion()'");
+    public void guardarRevision() {
+         System.out.println("Se hizo click en 'guardarRevision()'");
+         
+         
+         
     }
     
     public void volverToLista() {
         System.out.println("Se hizo click en 'volverToLista()'");
-        agregarRevision_session.setPuntoLimpioToChange(null);
+        cambioEstadoSessionBean.limpiarCampos();
         goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
 

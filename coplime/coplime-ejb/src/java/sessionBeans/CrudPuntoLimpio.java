@@ -222,4 +222,12 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         this.usertemp = usertemp;
     }
 
+    @Override
+    public Contenedor getContenedor(Integer id) {
+        if (id == null)
+            return null;
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        ContenedorDAO contDAO = factoryDeDAOs.getContenedorDAO();
+        return contDAO.find(id.intValue());
+    }
 }

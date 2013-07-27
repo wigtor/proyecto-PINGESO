@@ -5,6 +5,7 @@
 package sessionBeans;
 
 import entities.Comuna;
+import entities.Contenedor;
 import entities.Estado;
 import entities.Inspector;
 import entities.Material;
@@ -44,5 +45,7 @@ public interface CrudPuntoLimpioLocal {
     public Collection<Material> getAllMateriales();
 
     public Collection<UnidadMedida> getAllUnidadesMedida();
+
+    public Contenedor getContenedor(Integer id);
     
 }

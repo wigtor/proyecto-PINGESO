@@ -16,18 +16,19 @@
                     <p:panelGrid columns="2" styleClass="centrar" >
                         <f:facet name="header">Ingrese los datos del estado del punto limpio</f:facet>
 
-                        <h:selectOneMenu label="Estado global" value="#{mantenedorPuntoLimpio.materialContenedor_seleccionado}">
-                            <f:selectItems value="#{mantenedorPuntoLimpio.ListaMateriales}"  
+                        <p:outputLabel value="Estado global"/>
+                        <h:selectOneMenu value="#{CambioEstadoPuntoLimpio.estadoPuntoLimpio}">
+                            <f:selectItems value="#{CambioEstadoPuntoLimpio.listaEstadosPtoLimpio}" 
                                 var="mat" itemLabel="#{mat.label}" itemValue="#{mat.id}" />
                         </h:selectOneMenu>
                         
-                        <p:outputLabel>Cambiar estado de los contenedores</p:outputLabel>
-                        <p:commandButton value="Actualizar contenedores" action="#{mantenedorPuntoLimpio.cambiarEstadoContenedor()}"/>
+                        <p:outputLabel value="Cambiar estado de los contenedores" />
+                        <p:commandButton value="Actualizar contenedores" action="#{CambioEstadoPuntoLimpio.cambiarEstadoContenedor()}"/>
                         
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Aceptar" action="#{mantenedorPuntoLimpio.guardarCambiosEstadoPuntoLimpio()}"/>
-                            <p:commandButton value="Volver" action="#{mantenedorPuntoLimpio.volverToLista()}"/>
+                            <p:commandButton value="Aceptar" action="#{CambioEstadoPuntoLimpio.guardarCambios()}"/>
+                            <p:commandButton value="Volver" action="#{CambioEstadoPuntoLimpio.volver()}"/>
                         </f:facet>
                     </p:panelGrid>
 

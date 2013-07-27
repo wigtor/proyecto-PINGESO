@@ -39,6 +39,12 @@ public class commonFunctions {
         return request.getRemoteUser();
     }
     
+    public boolean isUserInRole(String nombreRol) {
+        HttpServletRequest request = (HttpServletRequest) 
+                (FacesContext.getCurrentInstance().getExternalContext().getRequest());
+        return request.isUserInRole(nombreRol);
+    }
+    
     public boolean isGetMethod() {
         HttpServletRequest request = (HttpServletRequest) 
                 (FacesContext.getCurrentInstance().getExternalContext().getRequest());
