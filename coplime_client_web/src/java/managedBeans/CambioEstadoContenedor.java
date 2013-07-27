@@ -4,6 +4,7 @@
  */
 package managedBeans;
 
+import ObjectsForManagedBeans.ContenedorPojo;
 import ObjectsForManagedBeans.SelectElemPojo;
 import entities.Contenedor;
 import entities.Estado;
@@ -74,12 +75,18 @@ public class CambioEstadoContenedor extends commonFunctions {
     }
     
     public void guardarCambios() {
-        
+        ContenedorPojo contModificado = new ContenedorPojo();
+        contModificado.setId(this.idContenedor);
+        contModificado.setLlenadoContenedor(llenado);
+        contModificado.setIdEstadoContenedor(idEstado);
+        this.cambioEstadoSessionBean.getListaContenedoresModificados().add(contModificado);
+        this.cambioEstadoSessionBean.setIdContenedorToChange(null); //Sólo el contenedor lo mando a null
+        goToPage("/faces/users/operario/cambiarEstadoPuntoLimpio.xhtml");
     }
     
     public void volver() {
         System.out.println("Se hizo click en 'volver()'");
-        cambioEstadoSessionBean.limpiarCampos();
+        cambioEstadoSessionBean.setIdContenedorToChange(null);
         goToPage("/faces/users/operario/cambiarEstadoPuntoLimpio.xhtml");
     }
 

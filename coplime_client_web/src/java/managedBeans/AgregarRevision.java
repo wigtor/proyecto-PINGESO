@@ -4,6 +4,7 @@
  */
 package managedBeans;
 
+import ObjectsForManagedBeans.ContenedorPojo;
 import ObjectsForManagedBeans.PuntoLimpioPojo;
 import ObjectsForManagedBeans.SelectElemPojo;
 import entities.PuntoLimpio;
@@ -45,6 +46,8 @@ public class AgregarRevision extends commonFunctions {
     @PostConstruct
     public void init() {
         this.listaPuntosLimpios = cargarPuntosLimpios();
+        detalle = cambioEstadoSessionBean.getDetalle();
+        
     }
     
     private List<SelectElemPojo> cargarPuntosLimpios(){
@@ -63,6 +66,7 @@ public class AgregarRevision extends commonFunctions {
     
     public void cambiarEstadoPtoLimpio() {
         //Almaceno en el managed bean session el punto limpio que se está editando
+        cambioEstadoSessionBean.setDetalle(detalle);
         cambioEstadoSessionBean.setIdPuntoLimpioToChange(numPtoLimpio);
         
         goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml");
@@ -72,7 +76,23 @@ public class AgregarRevision extends commonFunctions {
          System.out.println("Se hizo click en 'guardarRevision()'");
          
          
+         System.out.println("Detalle: " + detalle);
+         System.out.println("Punto limpio a modificar: "+ numPtoLimpio);
+         System.out.println("Estado global old del punto limpio: " + cambioEstadoSessionBean.getOld_idEstadoGlobal());
+         System.out.println("Estado global nvo del punto limpio: " + cambioEstadoSessionBean.getNvo_idEstadoGlobal());
+         System.out.println("Cantidad de contenedores modificados: " + cambioEstadoSessionBean.getListaContenedoresModificados().size());
+         for(ContenedorPojo c : cambioEstadoSessionBean.getListaContenedoresModificados()) {
+             System.out.println("Id del contenedor: "+c.getId());
+             System.out.println("Id del estado del contenedor: "+c.getIdEstadoContenedor());
+             System.out.println("Llenado del contenedor: "+c.getLlenadoContenedor());
+         }
+         //Envío al session bean los cambios para que se persistan a nivel de DB
          
+         
+         
+         
+         
+         volverToLista();
     }
     
     public void volverToLista() {

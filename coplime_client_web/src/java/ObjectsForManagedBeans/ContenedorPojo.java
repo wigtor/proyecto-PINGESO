@@ -9,6 +9,7 @@ package ObjectsForManagedBeans;
  * @author victor
  */
 public class ContenedorPojo {
+    Integer id;
     Integer idMaterial;
     Integer idLlenadoContenedor;
     Integer idEstadoContenedor;
@@ -19,6 +20,14 @@ public class ContenedorPojo {
     
     public ContenedorPojo() {
         idLlenadoContenedor = 0;
+    }
+    
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getIdMaterial() {

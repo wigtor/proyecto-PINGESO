@@ -42,6 +42,10 @@ public class CambioEstadoPuntoLimpio extends commonFunctions {
     @PostConstruct
     public void init() {
         cargarEstadosPuntoLimpio();
+        
+        //La primera vez que se ejecuta se setea el id del estado global old
+        if (this.cambioEstadoSessionBean == null)
+            this.cambioEstadoSessionBean.setOld_idEstadoGlobal(estadoPuntoLimpio);
     }
     
     private void cargarEstadosPuntoLimpio() {
@@ -64,7 +68,14 @@ public class CambioEstadoPuntoLimpio extends commonFunctions {
     }
     
     public void guardarCambios() {
+        System.out.println("Se hizo click en 'guardarCambios()'");
+        cambioEstadoSessionBean.setNvo_idEstadoGlobal(estadoPuntoLimpio);
         
+        cambioEstadoSessionBean.setIdPuntoLimpioToChange(null);
+        if (isUserInRole("Inspector"))
+            goToPage("/faces/users/inspector/AgregarRevision.xhtml");
+        if (isUserInRole("Operario"))
+            goToPage("/faces/users/operario/AgregarMantención.xhtml");
     }
     
     public void volver() {
