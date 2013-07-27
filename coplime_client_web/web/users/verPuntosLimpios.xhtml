@@ -35,30 +35,30 @@
                                 <h:outputText value="#{puntoLimpio.fechaProximaRevStr}"/>
                             </p:column>
                             <p:column headerText="" >
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorInspectorVerListado.verDetalles(puntoLimpio.id)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorPuntoLimpioVerListado.verDetalles(puntoLimpio.num)}">
                                 </p:commandLink>
                             </p:column>                            
                             <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{MantenedorPuntoLimpioVerListado.editar(puntoLimpio.id)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{MantenedorPuntoLimpioVerListado.editar(puntoLimpio.num)}">
                                 </p:commandLink>
                             </p:column>
                             <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{puntoLimpio.id}.show()" />
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{puntoLimpio.num}.show();" />
 
                                 <p:confirmDialog message="¿Está seguro que desea eliminar el punto limpio?"
                                                  header="Confirmación de eliminación de punto limpio" severity="alert"
-                                                 widgetVar="cd_#{puntoLimpio.id}" closeOnEscape="true">
-                                    <p:commandButton value="Si" actionListener="#{MantenedorPuntoLimpioVerListado.eliminar(puntoLimpio.id)}"
-                                                     oncomplete="cd_#{puntoLimpio.id}.hide();"/>
-                                    <p:commandButton value="No" onclick="cd_#{puntoLimpio.id}.hide();" type="button" />
+                                                 widgetVar="cd_#{puntoLimpio.num}" closeOnEscape="true">
+                                    <p:commandButton value="Si" actionListener="#{MantenedorPuntoLimpioVerListado.eliminar(puntoLimpio.num)}"
+                                                     oncomplete="cd_#{puntoLimpio.num}.hide();"/>
+                                    <p:commandButton value="No" onclick="cd_#{puntoLimpio.num}.hide();" type="button" />
                                 </p:confirmDialog>
                             </p:column>
                         </p:dataTable>
 
                         <f:facet name="footer">
-                            <p:commandButton value="Agregar revisión" action="/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Inspector')}"/>
-                            <p:commandButton value="Solicitar mantención" action="/faces/users/inspector/solicitarMantencionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Inspector')}"/>
-                            <p:commandButton value="Agregar mantención" action="/faces/users/operario/agregarMantencionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Operario')}"/>
+                            <p:button value="Agregar revisión" href="/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Inspector')}"/>
+                            <p:button value="Solicitar mantención" href="/faces/users/inspector/solicitarMantencionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Inspector')}"/>
+                            <p:button value="Agregar mantención" href="/faces/users/operario/agregarMantencionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Operario')}"/>
                             <p:commandButton value="Agregar" action="#{MantenedorPuntoLimpioVerListado.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
                         </f:facet>
 

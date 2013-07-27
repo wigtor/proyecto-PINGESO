@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    
+    <body>
+        <ui:composition template="/mainTemplate.xhtml">
+            <ui:define name="titulo">Detalle punto limpio</ui:define>
+            
+            <ui:define name="centro">
+                 <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Datos del punto limpio</f:facet>
+                         
+                         <p:outputLabel value="N°"/>
+                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.num}" />
+                         
+                         <p:outputLabel value="Nombre"/>
+                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.nombre}" />
+                         
+                         <p:outputLabel value="Comuna"/>
+                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.comuna}" />
+                         
+                         <p:outputLabel value="Dirección"/>
+                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.direccion}" />
+                        
+                         <p:outputLabel value="Fecha de última revisión"/>
+                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.fechaUltimaRevision}" />
+                         
+                         <p:outputLabel value="Fecha de próxima revisión"/>
+                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.fechaProximaRevision}" />
+                         
+                         <p:outputLabel value="Estado actual"/>
+                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.estado}" />
+                         
+                         <p:outputLabel value="Inspector encargado"/>
+                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.inspectorEncargado}" />
+                         
+                         <p:outputLabel value="Nº de revisiones realizadas"/>
+                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.numRevisionesRealizadas}" />
+                         
+                         <p:outputLabel value="Nº de mantenciones realizadas"/>
+                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.numMantencionesRealizadas}" />
+                         
+                         <f:facet name="footer">
+                            <p:commandButton value="Editar" action="#{MantenedorPuntoLimpioVerDetalles.goToEditar()}" rendered="#{request.isUserInRole('Administrador')}" />
+                            <p:commandButton value="Volver" action="#{MantenedorPuntoLimpioVerDetalles.volverToLista()}"/>                         
+                         </f:facet>
+                     </p:panelGrid>                
+                </h:form>               
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>

@@ -11,7 +11,6 @@ import java.util.Date;
  * @author victor
  */
 public class PuntoLimpioPojo {
-    private Integer id;
     private Integer num;
     private String nombre;
     private String estado;
@@ -23,14 +22,6 @@ public class PuntoLimpioPojo {
     private Integer idComuma;
     private String direccion;
     private Integer idInspectorEncargado;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
     
     public Integer getNum() {
         return num;

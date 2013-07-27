@@ -59,6 +59,8 @@ public class MantenedorPuntoLimpioAgregarCont extends commonFunctions {
             this.numPtoLimpio = mantPtoLimpio.getPto_creando().getNum();
         }
         else {
+            //MOSTRAR ERROR
+            
             goToPage("/faces/admin/agregarPuntoLimpio.xhtml");
         }
     }

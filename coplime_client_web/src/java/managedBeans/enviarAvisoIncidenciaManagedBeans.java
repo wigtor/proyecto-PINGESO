@@ -116,7 +116,7 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions {
             elemTemp = new SelectElemPojo();
             
             elemTemp.setId(temp.getId().toString());
-            elemTemp.setLabel("N°"+temp.getNum()+ " - " + temp.getUbicacion());
+            elemTemp.setLabel("N°"+temp.getId()+ " - " + temp.getUbicacion());
             this.listaPuntosLimpios.add(elemTemp);
         
         }

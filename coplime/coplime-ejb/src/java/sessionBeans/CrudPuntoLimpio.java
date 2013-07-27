@@ -82,7 +82,7 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         MaterialDAO matDAO = factoryDeDAOs.getMaterialDAO();
         EstadoDAO estDAO = factoryDeDAOs.getEstadoDAO();
         
-        PuntoLimpio p = ptoDAO.findByNum(numPuntoLimpio);
+        PuntoLimpio p = ptoDAO.find(numPuntoLimpio.intValue());
         if (p == null) {
             System.out.println("No se encontró el id del puntolimpio al agregar el contenedor");
             return false;
@@ -182,7 +182,7 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         }
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
-        return ptoDAO.findByNum(num.intValue());
+        return ptoDAO.find(num.intValue());
     }
     
     
@@ -199,7 +199,7 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         if (num != null) {
             DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
-            return ptoDAO.deleteByNum(num);
+            return ptoDAO.delete(num);
         }
         return false;
     }

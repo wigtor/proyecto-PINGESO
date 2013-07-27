@@ -27,14 +27,12 @@ import javax.persistence.Temporal;
  */
 @Entity
 @NamedQueries( {
-    @NamedQuery(name="PuntoLimpio.findByName", query="SELECT u FROM PuntoLimpio u WHERE u.nombre = :nombre"),
-    @NamedQuery(name="PuntoLimpio.findByNum", query="SELECT u FROM PuntoLimpio u WHERE u.num = :num"),
-    @NamedQuery(name="PuntoLimpio.deleteByNum", query="DELETE FROM PuntoLimpio u WHERE u.num = :num")
+    @NamedQuery(name="PuntoLimpio.findByName", query="SELECT u FROM PuntoLimpio u WHERE u.nombre = :nombre")
 })
 public class PuntoLimpio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY) //El usuario le da la llave primaria
     private Integer id;
     
     @Column(nullable = false)
@@ -45,9 +43,6 @@ public class PuntoLimpio implements Serializable {
     
     @Column(nullable = false)
     private String ubicacion;
-    
-    @Column(nullable = false)
-    private int num;
     
     private int latitud;
     
@@ -90,7 +85,7 @@ public class PuntoLimpio implements Serializable {
     public PuntoLimpio(String nombre, String ubicacion, int numero) {
         this.nombre = nombre;
         this.ubicacion = ubicacion;
-        this.num = numero;
+        this.id = numero;
         this.contenedores = new LinkedList();
         this.mantenciones = new LinkedList();
         this.solicitudesMantencion =  new LinkedList();
@@ -152,14 +147,6 @@ public class PuntoLimpio implements Serializable {
 
     public void setInspectorEncargado(Inspector inspectorEncargado) {
         this.inspectorEncargado = inspectorEncargado;
-    }
-
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
     }
 
     public String getNombre() {

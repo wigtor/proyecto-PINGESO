@@ -19,6 +19,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import sessionBeans.CrudPuntoLimpioLocal;
 
 /**
@@ -31,6 +32,9 @@ import sessionBeans.CrudPuntoLimpioLocal;
 public class MantenedorPuntoLimpioVerListado extends commonFunctions{
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
+    
+    @Inject
+    private MantenedorPuntoLimpio mantPtoLimpio;
     
     private List<PuntoLimpioPojo> lista;
     
@@ -52,8 +56,7 @@ public class MantenedorPuntoLimpioVerListado extends commonFunctions{
         for(PuntoLimpio pto_iter : listaTemp) {
             ptoTemporal = new PuntoLimpioPojo();
             
-            ptoTemporal.setId(pto_iter.getId());
-            ptoTemporal.setNum(pto_iter.getNum());
+            ptoTemporal.setNum(pto_iter.getId());
             ptoTemporal.setEstado(pto_iter.getEstadoGlobal().getNombreEstado());
             ptoTemporal.setNombre(pto_iter.getNombre());
             f = pto_iter.getFechaProxRevision();
@@ -102,33 +105,40 @@ public class MantenedorPuntoLimpioVerListado extends commonFunctions{
        }
     }
     
+    public void verDetalles(Integer numPtoLimpio) {
+        System.out.println("NÚMERO DE INSPECTOR: "+numPtoLimpio);
+        PuntoLimpio ptoLimpioSelec = crudPuntoLimpio.getPuntoLimpioByNum(numPtoLimpio);
+        
+        if (ptoLimpioSelec != null) { //Verifico que exista
+            this.mantPtoLimpio.setIdPuntoLimpioDetalles(numPtoLimpio);
+        }
+        else {
+            //MOSTRAR ERROR
+            goToPage("/faces/users/verPuntosLimpios.xhtml");
+        }
+       goToPage("/faces/users/verDetallesPuntoLimpio.xhtml");
+       
+    }
+    
     public void editar(int numPto) {
         System.out.println("NÚMERO DE PUNTO LIMPIO: "+numPto);
         PuntoLimpio ptoEdit = crudPuntoLimpio.getPuntoLimpioByNum(numPto);
         if (ptoEdit != null) {
-            /*
-            this.mantInsp.setRut(new Integer(usuarioEdit.getRut()));
-            this.mantInsp.setNombre(usuarioEdit.getNombre());
-            this.mantInsp.setApellido1(usuarioEdit.getApellido1());
-            this.mantInsp.setApellido2(usuarioEdit.getApellido2());
-            this.mantInsp.setMail(usuarioEdit.getEmail());
-            this.mantInsp.setUsername(usuarioEdit.getUsername());
-            this.mantInsp.setTelefono(usuarioEdit.getTelefono());
-            System.out.println(this.mantInsp.getApellido1());
-            */
+            this.mantPtoLimpio.setIdPuntoLimpioDetalles(numPto);
+            goToPage("/faces/admin/editarPuntoLimpio.xhtml");
         }
         else {
             //MOSTRAR ERROR
+            this.mantPtoLimpio.limpiarDatos();
+            goToPage("/faces/users/verPuntosLimpios.xhtml");
         }
-       goToPage("/faces/admin/editarPuntoLimpio.xhtml");
        
     }
     
     public void eliminar(int numPto) {
        System.out.println("NÚMERO DE PUNTO LIMPIO: "+numPto);
-       //crudInspector.eliminarInspector(new Integer(numInspector));
        crudPuntoLimpio.eliminarPuntoLimpio(numPto);
-       //init();
+       this.mantPtoLimpio.limpiarDatos();
        goToPage("/faces/users/verPuntosLimpios.xhtml");
        
        //MOSTRAR MENSAJE DE ACCION REALIZADA SATISFACTORIAMENTE

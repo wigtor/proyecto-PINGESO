@@ -28,15 +28,15 @@
                     <f:facet name="header">Menu para Administrador
                         <h:outputLabel value="#{Autenticador.username}"/>
                     </f:facet>
-                    <h:outputLink value="/coplime_client_web/faces/users/infoUsuario.xhtml">Información del usuario</h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/verNotificaciones.xhtml">Ver notificaciones
+                    <h:outputLink value="#{request.contextPath}/faces/users/infoUsuario.xhtml">Información del usuario</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verNotificaciones.xhtml">Ver notificaciones
                         <h:outputText id="txt_num_notif" styleClass="ui-li-count" value="#{notificacionesManagedBeans.cantidadNotificaciones}"/>
                         <p:poll interval="30" autoStart="true" listener="#{notificacionesManagedBeans.refresNotificaciones(null)}" update="txt_num_notif"/>
                     </h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención</h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/verOperariosMantencion.xhtml">Ver operarios de mantención</h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/verInspectores.xhtml">Ver inspectores</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verOperariosMantencion.xhtml">Ver operarios de mantención</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verInspectores.xhtml">Ver inspectores</h:outputLink>
                     <h:outputLink >Generar reportes</h:outputLink>
                     <h:outputLink >Ayuda</h:outputLink>
                     <h:commandLink action="#{Autenticador.logout()}">Cerrar sesión</h:commandLink>
@@ -50,17 +50,17 @@
                     <f:facet name="header">Menu para Inspector
                         <h:outputLabel value="#{Autenticador.username}"/>
                     </f:facet>
-                    <h:outputLink value="/coplime_client_web/faces/users/infoUsuario.xhtml">Información del usuario</h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/verNotificaciones.xhtml">Ver notificaciones
+                    <h:outputLink value="#{request.contextPath}/faces/users/infoUsuario.xhtml">Información del usuario</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verNotificaciones.xhtml">Ver notificaciones
                         <h:outputText id="txt_num_notif" styleClass="ui-li-count" value="#{notificacionesManagedBeans.cantidadNotificaciones}"/>
                         <p:poll interval="30" autoStart="true" listener="#{notificacionesManagedBeans.refresNotificaciones(null)}" update="txt_num_notif"/>
                     </h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención</h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/verOperariosMantencion.xhtml">Ver operarios de mantención</h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/verInspectores.xhtml">Ver inspectores</h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml">Agregar revisión de punto limpio</h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/inspector/solicitarMantencionPuntoLimpio.xhtml">Agregar revisión de punto limpio</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verOperariosMantencion.xhtml">Ver operarios de mantención</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verInspectores.xhtml">Ver inspectores</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml">Agregar revisión de punto limpio</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/inspector/solicitarMantencionPuntoLimpio.xhtml">Agregar revisión de punto limpio</h:outputLink>
                     <h:outputLink >Generar reportes</h:outputLink>
                     <h:outputLink >Ayuda</h:outputLink>
                     <h:commandLink action="#{Autenticador.logout()}">Cerrar sesión</h:commandLink>
@@ -74,16 +74,16 @@
                     <f:facet name="header">Menu para Operario
                         <h:outputLabel value="#{Autenticador.username}"/>
                     </f:facet>
-                    <h:outputLink value="/coplime_client_web/faces/users/infoUsuario.xhtml">Información del usuario</h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/verNotificaciones.xhtml">Ver notificaciones
+                    <h:outputLink value="#{request.contextPath}/faces/users/infoUsuario.xhtml">Información del usuario</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verNotificaciones.xhtml">Ver notificaciones
                         <h:outputText id="txt_num_notif" styleClass="ui-li-count" value="#{notificacionesManagedBeans.cantidadNotificaciones}"/>
                         <p:poll interval="30" autoStart="true" listener="#{notificacionesManagedBeans.refresNotificaciones(null)}" update="txt_num_notif"/>
                     </h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención</h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/verOperariosMantencion.xhtml">Ver operarios de mantención</h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/verInspectores.xhtml">Ver inspectores</h:outputLink>
-                    <h:outputLink value="/coplime_client_web/faces/users/operario/agregarMantencionPuntoLimpio.xhtml">Agregar mantención de punto limpio</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verOperariosMantencion.xhtml">Ver operarios de mantención</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verInspectores.xhtml">Ver inspectores</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/operario/agregarMantencionPuntoLimpio.xhtml">Agregar mantención de punto limpio</h:outputLink>
                     <h:outputLink >Generar reportes</h:outputLink>
                     <h:outputLink >Ayuda</h:outputLink>
                     <h:commandLink action="#{Autenticador.logout()}">Cerrar sesión</h:commandLink>
