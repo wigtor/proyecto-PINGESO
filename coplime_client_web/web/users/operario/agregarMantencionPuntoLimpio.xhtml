@@ -1,54 +1,41 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<f:view xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pm="http://primefaces.org/mobile"
-      contentType="text/html"
-      renderKitId="PRIMEFACES_MOBILE"
-      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
-    
-    
-    <pm:page title="Agregar mantención de punto limpio">
-        <!-- Main View -->
-        <pm:view id="main">
-            <pm:header title="Agregar mantención de punto limpio">
-                <f:facet name="left">
-                    <p:button id="btnPanelContext" value="" iconPos="notext" icon="bars"/>
-                </f:facet>
-            </pm:header>
+      contentType="text/html">
+    <body>
+        <ui:composition template="/mainTemplate.xhtml">
+            <ui:define name="titulo" >Agregar mantención de punto limpio</ui:define>
 
-            <pm:content>
-                <p:outputPanel>
-                    <p:dataList type="inset" styleClass="ui-li-custom">
-                        <f:facet name="header">Ingrese datos de mantención realizada</f:facet>
-                        <f:attribute name="icon" value="false" />
-                        
-                        <p:dataList type="inset" styleClass="ui-li-custom">
-                            <f:facet name="header">Punto limpio</f:facet>
-                            <f:attribute name="icon" value="false" />
 
-                            <p:selectOneMenu label="Seleccione punto limpio" value="#{agregarMantencion.ptoLimpio_seleccionado}">
-                                <f:selectItems value="#{agregarMantencion.ListaPuntosLimpios}"  
-                                    var="ptoLimpio" itemLabel="#{ptoLimpio.nombre}" itemValue="#{ptoLimpio.num}" />
-                            </p:selectOneMenu>
+            <ui:define name="centro">
+                <h:form>
+                    <p:panelGrid columns="2" styleClass="centrar" >
+                        <f:facet name="header">Ingrese datos de la mantención realizada</f:facet>
 
-                            <p:commandButton value="Cambiar estado" action="#{agregarMantencion.cambiarEstadoPtoLimpio()}"/>
-                        </p:dataList>
-                        
-                        <p:inputTextarea label="Detalle" value="#{agregarMantencion.detalle}"/>
-                        
-                        <p:commandButton value="Guardar revisión" action="#{agregarMantencion.guardarMantencion()}"/>
-                        <p:commandButton value="Volver" action="#{agregarMantencion.volverToListado()}"/>
-                        
-                    </p:dataList>
-                    
-                </p:outputPanel>
-                <p:contextMenu event="swiperight" beforeShow="panelContext.hide()" />
-            </pm:content>
-        </pm:view>
-    </pm:page>
+                        <p:outputLabel value="Seleccione punto limpio" />
+                        <h:selectOneMenu value="#{AgregarMantencion.numPtoLimpio}">
+                            <f:selectItems value="#{AgregarMantencion.listaPuntosLimpios}"  
+                                var="ptoLimpio" itemLabel="#{ptoLimpio.label}" itemValue="#{ptoLimpio.id}" />
+                        </h:selectOneMenu>
 
-</f:view>
+                        <p:outputLabel value="Cambiar su estado" />
+                        <p:commandButton value="Cambiar estado" action="#{AgregarMantencion.cambiarEstadoPtoLimpio()}"/>
+
+                        <p:outputLabel value="Detalles de la mantención" />
+                        <p:inputTextarea value="#{AgregarMantencion.detalle}"/>
+                        
+                        <f:facet name="footer">
+                            <p:commandButton value="Guardar mantención" action="#{AgregarMantencion.guardarMantencion()}"/>
+                            <p:commandButton value="Volver" action="#{AgregarMantencion.volverToLista()}"/>
+                        </f:facet>
+                    </p:panelGrid>
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>    
+</html>
