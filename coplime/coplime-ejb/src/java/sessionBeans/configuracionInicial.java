@@ -206,8 +206,42 @@ public class configuracionInicial implements configuracionInicialLocal {
         contDAO.insert(c2);
         contDAO.insert(c3);
         
-        
         this.puntosLimpios = new LinkedList();
+        this.puntosLimpios.add(p1);
+        
+        
+        
+        
+        p1 = new PuntoLimpio("Homecenter Plaza vespucio", "Av. Américo Vespucio #4335", 2);
+        p1.setComuna(this.listaComunas.get(2));
+        p1.setEstadoGlobal(this.estadosPuntosLimpios.get(0));
+        p1.setFechaProxRevision(Calendar.getInstance());
+        p1.setInspectorEncargado(this.inspectores.get(0));
+        
+        plDAO.insert(p1);
+        
+        c1 = new Contenedor();
+        c1.setEstadoContenedor(this.estadosPuntosLimpios.get(0));
+        c1.setCapacidad(500);
+        c1.setPuntoLimpio(p1);
+        c1.setUnidadMedida(listaUnidadesMedida.get(0));
+        c1.setPorcentajeUsoEstimado(0);
+        c1.setProcentajeUso(0);
+        c1.setMaterialDeAcopio(this.materialesPuntosLimpios.get(3));
+        
+        c2 = new Contenedor();
+        c2.setEstadoContenedor(this.estadosPuntosLimpios.get(0));
+        c2.setCapacidad(500);
+        c2.setPuntoLimpio(p1);
+        c2.setUnidadMedida(listaUnidadesMedida.get(0));
+        c2.setPorcentajeUsoEstimado(0);
+        c2.setProcentajeUso(0);
+        c2.setMaterialDeAcopio(this.materialesPuntosLimpios.get(4));
+        
+        
+        contDAO.insert(c1);
+        contDAO.insert(c2);
+        
         this.puntosLimpios.add(p1);
     }
     
