@@ -4,6 +4,8 @@
  */
 package sessionBeans;
 
+import entities.Administrador;
+import java.util.Collection;
 import javax.ejb.Local;
 
 /**
@@ -16,5 +18,7 @@ public interface CrudAdministradorLocal {
     void agregarAdministrador(String username, String password, int rut, String nombre, String apellido1, String apellido2, String mail, int telefono);
 
     public boolean eliminarAdministrador(Integer rutUser);
+    
+    public Collection<Administrador> getAllAdministradores();
 
 }

@@ -13,6 +13,7 @@ import entities.Rol;
 import entities.Usuario;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -78,6 +79,15 @@ public class CrudAdministrador implements CrudAdministradorLocal {
         adminDAO.insert(nvoAdmin);
         System.out.println("Insertado");
         //factoryDeDAOs.close();
+    }
+    
+    @Override
+    public Collection<Administrador> getAllAdministradores() {
+        //Hago los DAO
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        AdministradorDAO adminDAO = factoryDeDAOs.getAdministradorDAO();
+        return adminDAO.findAll();
+        
     }
     
     @Override

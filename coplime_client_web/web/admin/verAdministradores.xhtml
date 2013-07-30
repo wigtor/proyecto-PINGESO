@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    <body>
+       <ui:composition template="/mainTemplate.xhtml">
+           <ui:define name="titulo" >
+               Ver administradores           
+           </ui:define>
+           
+          
+           
+           <ui:define name="centro">
+               <h:form>
+                  <p:panelGrid columns="5" styleClass="centrar" >
+                       <f:facet name="header">Listado de administradores</f:facet>
+                       
+                       <p:dataTable id="administradores" value="#{MantenedorAdministradorVerListado.lista}" var="adm" widgetVar="administradorTable"  
+                                      emptyMessage="No hay administradores registrados en el sistema" 
+                                     filteredValue="#{MantenedorAdministradorVerListado.listaBusqueda}">
+                                                     
+                           <p:column id="rutColumn" sortBy="#{adm.num}" headerText="Rut" filterMatchMode="contains" filterBy="#{adm.num}"  >
+                                <h:outputText value="#{adm.num}" /> 
+                                                              
+                            </p:column>
+                            <p:column id="nomColumn" sortBy="#{adm.nombre}" headerText="Nombre" filterMatchMode="contains" filterBy="#{adm.nombre}">
+                                <h:outputText value="#{adm.nombre}" />                                
+                            </p:column>
+                            
+                            <p:column headerText="" >
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorAdministradorVerListado.verDetalles(adm.num)}">
+                                </p:commandLink>
+                            </p:column>                            
+                            <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{MantenedorAdministradorVerListado.editar(adm.num)}">
+                                </p:commandLink>
+                            </p:column>
+                            <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{adm.num}.show()" />
+                                
+                                <p:confirmDialog message="¿Está seguro que desea eliminar el administrador?"
+                                                 header="Confirmación de eliminación de administrador" severity="alert"
+                                                 widgetVar="cd_#{adm.num}" closeOnEscape="true">
+                                    <p:commandButton value="Si" actionListener="#{MantenedorAdministradorVerListado.eliminar(adm.num)}"
+                                                     oncomplete="cd_#{adm.num}.hide();"/>
+                                    <p:commandButton value="No" onclick="cd_#{adm.num}.hide();" type="button" />
+                                </p:confirmDialog>
+                               
+                            </p:column>
+                        </p:dataTable>
+                       
+                       <f:facet name="footer">
+                           <p:commandButton value="Agregar" action="#{MantenedorAdministradorVerListado.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
+                           <p:commandButton value="Volver" action="#{MantenedorAdministradorVerListado.volver()}"/>
+                           
+                       </f:facet>
+                            
+                       
+                   </p:panelGrid>
+                   <p:contextMenu beforeShow="pcontext.show()" />
+               </h:form>
+           </ui:define>
+       </ui:composition>
+    </body>    
+</html>

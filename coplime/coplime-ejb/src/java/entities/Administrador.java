@@ -23,6 +23,7 @@ import javax.persistence.OneToOne;
 @Entity
 @NamedQueries( {
     @NamedQuery(name="Administrador.findByRut", query="SELECT u FROM Administrador u WHERE u.usuario.rut = :rut")
+    
 })
 public class Administrador implements Serializable {
     private static final long serialVersionUID = 1L;
