@@ -5,10 +5,12 @@
 package DAO.interfaces;
 
 import entities.Contenedor;
+import java.util.List;
 
 /**
  *
  * @author victor
  */
 public interface ContenedorDAO  extends genericDAO<Contenedor>{
+    public List<Contenedor> findByPuntoLimpio(int idPtoLimpio);
 }

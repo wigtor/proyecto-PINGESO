@@ -67,7 +67,15 @@ public class CambioEstadoContenedor extends commonFunctions {
     private void cargarDatosContenedor() {
         this.idPtoLimpio = cambioEstadoSessionBean.getIdEstadoToChange();
         this.idContenedor = cambioEstadoSessionBean.getIdContenedorToChange();
+        if (this.idContenedor == null) {
+            //Error
+            goToIndex();
+            return;
+        }
         Contenedor cont = crudPuntoLimpio.getContenedor(this.idContenedor);
+        if (cont == null) {
+            return;
+        }
         this.material = cont.getMaterialDeAcopio().getNombre_material();
         this.ptoLimpio = cont.getPuntoLimpio().getId() + " - " + cont.getPuntoLimpio().getNombre();
         this.idEstado = cont.getEstadoContenedor().getId();
@@ -81,13 +89,14 @@ public class CambioEstadoContenedor extends commonFunctions {
         contModificado.setIdEstadoContenedor(idEstado);
         this.cambioEstadoSessionBean.getListaContenedoresModificados().add(contModificado);
         this.cambioEstadoSessionBean.setIdContenedorToChange(null); //Sólo el contenedor lo mando a null
-        goToPage("/faces/users/operario/cambiarEstadoPuntoLimpio.xhtml");
+        
+        goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml");
     }
     
     public void volver() {
         System.out.println("Se hizo click en 'volver()'");
         cambioEstadoSessionBean.setIdContenedorToChange(null);
-        goToPage("/faces/users/operario/cambiarEstadoPuntoLimpio.xhtml");
+        goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml");
     }
 
     public List<SelectElemPojo> getListaEstados() {

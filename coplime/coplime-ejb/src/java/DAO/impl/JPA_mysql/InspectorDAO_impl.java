@@ -72,4 +72,16 @@ public class InspectorDAO_impl extends genericDAO_impl<Inspector> implements Ins
         getEntityManager().remove(inspToDelete);
         return true;
     }
+    
+    public Inspector findByUsername(String username) {
+        Query q = this.em.createNamedQuery("Inspector.findByUsername");
+        q.setParameter("username", username);
+        List<Inspector> res = q.getResultList();
+        if (res.isEmpty()) {
+            return null;
+        }
+        else {
+            return res.get(0);
+        }
+    }
 }

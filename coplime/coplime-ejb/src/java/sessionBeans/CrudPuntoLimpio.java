@@ -11,6 +11,7 @@ import DAO.interfaces.EstadoDAO;
 import DAO.interfaces.InspectorDAO;
 import DAO.interfaces.MaterialDAO;
 import DAO.interfaces.PuntoLimpioDAO;
+import DAO.interfaces.RevisionDAO;
 import DAO.interfaces.UnidadMedidaDAO;
 import entities.Comuna;
 import entities.Contenedor;
@@ -18,10 +19,12 @@ import entities.Estado;
 import entities.Inspector;
 import entities.Material;
 import entities.PuntoLimpio;
+import entities.RevisionPuntoLimpio;
 import entities.UnidadMedida;
 import entities.Usuario;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.List;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -229,5 +232,59 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         ContenedorDAO contDAO = factoryDeDAOs.getContenedorDAO();
         return contDAO.find(id.intValue());
+    }
+    
+    @Override
+    public List<Contenedor> getContenedoresByPuntoLimpio(Integer idPtoLimpio) {
+        if (idPtoLimpio == null)
+            return null;
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        ContenedorDAO contDAO = factoryDeDAOs.getContenedorDAO();
+        return contDAO.findByPuntoLimpio(idPtoLimpio.intValue());
+    }
+    
+    @Override
+    public boolean agregarRevision(Integer numPtoLimpio, String usernameLogueado, String detalle, Integer nvoEstado) {
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        PuntoLimpioDAO puntDAO = factoryDeDAOs.getPuntoLimpioDAO();
+        EstadoDAO estDAO = factoryDeDAOs.getEstadoDAO();
+        InspectorDAO inspDAO = factoryDeDAOs.getInspectorDAO();
+        RevisionDAO revDAO = factoryDeDAOs.getRevisionDAO();
+        
+        Inspector ins = inspDAO.findByUsername(usernameLogueado);
+        Estado e = estDAO.find(nvoEstado);
+        PuntoLimpio p = puntDAO.find(numPtoLimpio.intValue());
+        p.setEstadoGlobal(e);
+        puntDAO.update(p);
+        
+        RevisionPuntoLimpio nvaRev = new RevisionPuntoLimpio(p, ins, detalle);
+        nvaRev.setFecha(Calendar.getInstance());
+        revDAO.insert(nvaRev);
+        
+        return true;
+    }
+    
+    @Override
+    public boolean cambiarEstadoContenedor(Integer idContenedor, Integer idEstadoContenedor, int llenadoContenedor) {
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        ContenedorDAO contDAO = factoryDeDAOs.getContenedorDAO();
+        EstadoDAO estDAO = factoryDeDAOs.getEstadoDAO();
+        try {
+            if (idEstadoContenedor == null)
+                return false;
+            Estado e = estDAO.find(idEstadoContenedor.intValue());
+            if (idContenedor == null)
+                return false;
+            Contenedor cont = contDAO.find(idContenedor.intValue());
+            if (cont == null)
+                return false;
+            cont.setEstadoContenedor(e);
+            cont.setProcentajeUso(llenadoContenedor);
+        }
+        catch (Exception e) {
+            System.out.print("Error: "+e.getMessage());
+            return false;
+        }
+        return true;
     }
 }

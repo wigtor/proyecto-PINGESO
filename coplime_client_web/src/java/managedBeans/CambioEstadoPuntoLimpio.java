@@ -5,7 +5,9 @@
 package managedBeans;
 
 import ObjectsForManagedBeans.SelectElemPojo;
+import entities.Contenedor;
 import entities.Estado;
+import entities.PuntoLimpio;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -29,9 +31,17 @@ public class CambioEstadoPuntoLimpio extends commonFunctions {
     @Inject
     private CambioEstadoPuntoLimpio_session cambioEstadoSessionBean;
     
+    private Integer idPtoLimpio;
+    
+    private String nombrePtoLimpio;
+    
     private List<SelectElemPojo> listaEstadosPtoLimpio;
     
     private Integer estadoPuntoLimpio;
+    
+    private Integer idContenedorSeleccionado;
+    
+    private List<SelectElemPojo> listaContenedores;
     
     /**
      * Creates a new instance of CambioEstadoPuntoLimpio
@@ -41,10 +51,13 @@ public class CambioEstadoPuntoLimpio extends commonFunctions {
     
     @PostConstruct
     public void init() {
+        this.idPtoLimpio = cambioEstadoSessionBean.getIdPuntoLimpioToChange();
+        cargarDatosPtoLimpio();
         cargarEstadosPuntoLimpio();
-        
+        cargarContenedoresPuntoLimpio();
+        //this.estadoPuntoLimpio = 
         //La primera vez que se ejecuta se setea el id del estado global old
-        if (this.cambioEstadoSessionBean == null)
+        if (this.cambioEstadoSessionBean.getOld_idEstadoGlobal() == null)
             this.cambioEstadoSessionBean.setOld_idEstadoGlobal(estadoPuntoLimpio);
     }
     
@@ -60,10 +73,29 @@ public class CambioEstadoPuntoLimpio extends commonFunctions {
         }
     }
     
+    private void cargarContenedoresPuntoLimpio() {
+        List<Contenedor> listaTemp = crudPuntoLimpio.getContenedoresByPuntoLimpio(this.idPtoLimpio);
+        SelectElemPojo elemTemp;
+        this.listaContenedores = new ArrayList();
+        for(Contenedor cont : listaTemp) {
+            elemTemp = new SelectElemPojo();
+            elemTemp.setId(Integer.toString(cont.getId()));
+            elemTemp.setLabel(cont.getId() +" - "+ cont.getMaterialDeAcopio().getNombre_material());
+            this.listaContenedores.add(elemTemp);
+        }
+        
+    }
+    
+    private void cargarDatosPtoLimpio() {
+        PuntoLimpio p = crudPuntoLimpio.getPuntoLimpioByNum(this.idPtoLimpio);
+        this.nombrePtoLimpio = p.getId()+" - "+p.getNombre();
+    }
+    
     public void cambiarEstadoContenedor() {
         System.out.println("Se hizo click en 'cambiarEstadoContenedor()'");
         
         cambioEstadoSessionBean.setIdEstadoToChange(this.estadoPuntoLimpio);
+        cambioEstadoSessionBean.setIdContenedorToChange(idContenedorSeleccionado);
         goToPage("/faces/users/cambiarEstadoContenedor.xhtml");
     }
     
@@ -73,18 +105,18 @@ public class CambioEstadoPuntoLimpio extends commonFunctions {
         
         cambioEstadoSessionBean.setIdPuntoLimpioToChange(null);
         if (isUserInRole("Inspector"))
-            goToPage("/faces/users/inspector/AgregarRevision.xhtml");
+            goToPage("/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml");
         if (isUserInRole("Operario"))
-            goToPage("/faces/users/operario/AgregarMantención.xhtml");
+            goToPage("/faces/users/operario/agregarMantenciónPuntoLimpio.xhtml");
     }
     
     public void volver() {
         System.out.println("Se hizo click en 'volver()'");
         cambioEstadoSessionBean.limpiarCampos();
         if (isUserInRole("Inspector"))
-            goToPage("/faces/users/inspector/AgregarRevision.xhtml");
+            goToPage("/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml");
         if (isUserInRole("Operario"))
-            goToPage("/faces/users/operario/AgregarMantención.xhtml");
+            goToPage("/faces/users/operario/agregarMantenciónPuntoLimpio.xhtml");
     }
 
     public List<SelectElemPojo> getListaEstadosPtoLimpio() {
@@ -101,6 +133,22 @@ public class CambioEstadoPuntoLimpio extends commonFunctions {
 
     public void setEstadoPuntoLimpio(Integer estadoPuntoLimpio) {
         this.estadoPuntoLimpio = estadoPuntoLimpio;
+    }
+
+    public Integer getIdContenedorSeleccionado() {
+        return idContenedorSeleccionado;
+    }
+
+    public void setIdContenedorSeleccionado(Integer idContenedorSeleccionado) {
+        this.idContenedorSeleccionado = idContenedorSeleccionado;
+    }
+
+    public List<SelectElemPojo> getListaContenedores() {
+        return listaContenedores;
+    }
+
+    public void setListaContenedores(List<SelectElemPojo> listaContenedores) {
+        this.listaContenedores = listaContenedores;
     }
     
 }

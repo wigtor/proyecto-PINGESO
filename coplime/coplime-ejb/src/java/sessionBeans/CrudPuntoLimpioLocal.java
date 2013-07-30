@@ -13,6 +13,7 @@ import entities.PuntoLimpio;
 import entities.UnidadMedida;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -47,5 +48,10 @@ public interface CrudPuntoLimpioLocal {
     public Collection<UnidadMedida> getAllUnidadesMedida();
 
     public Contenedor getContenedor(Integer id);
+
+    public List<Contenedor> getContenedoresByPuntoLimpio(Integer idPtoLimpio);
+
+    public boolean agregarRevision(Integer numPtoLimpio, String usernameLogueado, String detalle, Integer nvoEstado);
     
+    public boolean cambiarEstadoContenedor(Integer idContenedor, Integer idEstadoContenedor, int llenadoContenedor);
 }

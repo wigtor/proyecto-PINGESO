@@ -23,8 +23,13 @@
                         </h:selectOneMenu>
                         
                         <p:outputLabel value="Cambiar estado de los contenedores" />
-                        <p:commandButton value="Actualizar contenedores" action="#{CambioEstadoPuntoLimpio.cambiarEstadoContenedor()}"/>
-                        
+                        <h:panelGroup >
+                            <h:selectOneMenu value="#{CambioEstadoPuntoLimpio.idContenedorSeleccionado}">
+                                <f:selectItems value="#{CambioEstadoPuntoLimpio.listaContenedores}" 
+                                    var="cont" itemLabel="#{cont.label}" itemValue="#{cont.id}" />
+                            </h:selectOneMenu>
+                            <p:commandButton value="Actualizar contenedores" action="#{CambioEstadoPuntoLimpio.cambiarEstadoContenedor()}"/>
+                        </h:panelGroup >
                         
                         <f:facet name="footer">
                             <p:commandButton value="Aceptar" action="#{CambioEstadoPuntoLimpio.guardarCambios()}"/>

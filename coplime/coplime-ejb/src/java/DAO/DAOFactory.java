@@ -14,6 +14,7 @@ import DAO.interfaces.RolDAO;
 import DAO.interfaces.EstadoDAO;
 import DAO.interfaces.MaterialDAO;
 import DAO.interfaces.NotificacionDAO;
+import DAO.interfaces.RevisionDAO;
 import DAO.interfaces.TipoIncidenciaDAO;
 import DAO.interfaces.UnidadMedidaDAO;
 import DAO.interfaces.UsuarioDAO;
@@ -47,6 +48,7 @@ public abstract class DAOFactory {
     public abstract NotificacionDAO getNotificacionDAO();
     public abstract ComunaDAO getComunaDAO();
     public abstract UnidadMedidaDAO getUnidadMedidaDAO();
+    public abstract RevisionDAO getRevisionDAO();
     
     public abstract void close();
 

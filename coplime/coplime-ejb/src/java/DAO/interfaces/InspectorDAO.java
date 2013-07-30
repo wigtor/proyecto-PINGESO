@@ -13,4 +13,5 @@ import entities.Inspector;
 public interface InspectorDAO extends genericDAO<Inspector>{
     public Inspector findByRut(int rut);
     public boolean deleteByRut(int rut);
+    public Inspector findByUsername(String username);
 }

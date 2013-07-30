@@ -22,5 +22,13 @@ public class ContenedorDAO_impl extends genericDAO_impl<Contenedor> implements C
     }
     
     //Poner otras funciones extra que sólo haga este DAO
+
+    @Override
+    public List<Contenedor> findByPuntoLimpio(int idPtoLimpio) {
+        Query q = this.em.createNamedQuery("Contenedor.findByPuntoLimpio");
+        q.setParameter("idPtoLimpio", idPtoLimpio);
+        List<Contenedor> res = q.getResultList();
+        return res;
+    }
     
 }

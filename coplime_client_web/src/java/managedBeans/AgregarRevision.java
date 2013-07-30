@@ -17,7 +17,9 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import sessionBeans.CrudPuntoLimpioLocal;
 
 /**
@@ -86,11 +88,15 @@ public class AgregarRevision extends commonFunctions {
              System.out.println("Id del estado del contenedor: "+c.getIdEstadoContenedor());
              System.out.println("Llenado del contenedor: "+c.getLlenadoContenedor());
          }
+         HttpServletRequest request = (HttpServletRequest) 
+                (FacesContext.getCurrentInstance().getExternalContext().getRequest());
+         String usernameLogueado = request.getRemoteUser();
+         
          //Envío al session bean los cambios para que se persistan a nivel de DB
-         
-         
-         
-         
+         crudPuntoLimpio.agregarRevision(numPtoLimpio, usernameLogueado, detalle, cambioEstadoSessionBean.getNvo_idEstadoGlobal());
+         for(ContenedorPojo c : cambioEstadoSessionBean.getListaContenedoresModificados()) {
+             crudPuntoLimpio.cambiarEstadoContenedor(c.getId(), c.getIdEstadoContenedor(), c.getLlenadoContenedor());
+         }
          
          volverToLista();
     }

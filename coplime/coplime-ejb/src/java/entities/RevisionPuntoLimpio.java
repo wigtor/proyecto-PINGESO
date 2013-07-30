@@ -35,6 +35,8 @@ public class RevisionPuntoLimpio implements Serializable {
     @OneToMany(mappedBy = "revisionOriginadora")
     private List<SolicitudMantencion> solicitudesPorMantencion; //Casi siempre es sólo una, no varias
 
+    private String detalles;
+    
     @ManyToOne
     @JoinColumn(nullable = false)
     private Inspector inspectorRevisor;
@@ -43,6 +45,16 @@ public class RevisionPuntoLimpio implements Serializable {
     @JoinColumn(nullable = false)
     private PuntoLimpio puntoLimpio;
 
+    
+    public RevisionPuntoLimpio() {
+        
+    }
+    
+    public RevisionPuntoLimpio(PuntoLimpio p, Inspector ins, String detalles) {
+        this.puntoLimpio = p;
+        this.inspectorRevisor = ins;
+        this.detalles = detalles;
+    }
     
     public Inspector getInspectorRevisor() {
         return inspectorRevisor;
@@ -90,6 +102,14 @@ public class RevisionPuntoLimpio implements Serializable {
 
     public void setId(Integer id) {
         this.num = id;
+    }
+
+    public String getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(String detalles) {
+        this.detalles = detalles;
     }
 
     @Override

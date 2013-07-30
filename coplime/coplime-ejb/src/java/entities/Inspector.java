@@ -25,6 +25,7 @@ import javax.persistence.PreRemove;
 @Entity
 @NamedQueries( {
     @NamedQuery(name="Inspector.findByRut", query="SELECT u FROM Inspector u WHERE u.usuario.rut = :rut"),
+    @NamedQuery(name="Inspector.findByUsername", query="SELECT u FROM Inspector u WHERE u.usuario.username = :username")
 })
 public class Inspector implements Serializable {
     @OneToMany(mappedBy = "inspectorEncargado")
