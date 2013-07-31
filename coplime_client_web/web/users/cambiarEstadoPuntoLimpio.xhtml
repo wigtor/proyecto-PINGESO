@@ -16,6 +16,9 @@
                     <p:panelGrid columns="2" styleClass="centrar" >
                         <f:facet name="header">Ingrese los datos del estado del punto limpio</f:facet>
 
+                        <p:outputLabel value="Punto limpio"/>
+                        <p:outputLabel value="#{CambioEstadoPuntoLimpio.nombrePtoLimpio}"/>
+                        
                         <p:outputLabel value="Estado global"/>
                         <h:selectOneMenu value="#{CambioEstadoPuntoLimpio.estadoPuntoLimpio}">
                             <f:selectItems value="#{CambioEstadoPuntoLimpio.listaEstadosPtoLimpio}" 

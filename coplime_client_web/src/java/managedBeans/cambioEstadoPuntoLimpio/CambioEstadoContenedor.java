@@ -38,7 +38,7 @@ public class CambioEstadoContenedor {
     private Integer idContenedor;
     private Integer idEstado;
     private Integer llenado;
-    private String ptoLimpio;
+    private String nombrePtoLimpio;
     private String material;
     
     /**
@@ -70,7 +70,7 @@ public class CambioEstadoContenedor {
         this.idContenedor = cambioEstadoSessionBean.getIdContenedorToChange();
         if (this.idContenedor == null) {
             //Error
-            CommonFunctions.goToIndex();
+            CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
             return;
         }
         Contenedor cont = crudPuntoLimpio.getContenedor(this.idContenedor);
@@ -78,9 +78,28 @@ public class CambioEstadoContenedor {
             return;
         }
         this.material = cont.getMaterialDeAcopio().getNombre_material();
-        this.ptoLimpio = cont.getPuntoLimpio().getId() + " - " + cont.getPuntoLimpio().getNombre();
-        this.idEstado = cont.getEstadoContenedor().getId();
-        this.llenado = cont.getProcentajeUso();
+        this.nombrePtoLimpio = cont.getPuntoLimpio().getId() + " - " + cont.getPuntoLimpio().getNombre();
+        int indice = buscarSiContenedorFueModificado(idContenedor);
+        if (indice >= 0) {
+            ContenedorPojo c = cambioEstadoSessionBean.getListaContenedoresModificados().get(indice);
+            this.idEstado = c.getIdEstadoContenedor();
+            this.llenado = c.getLlenadoContenedor();
+        }
+        else {
+            this.idEstado = cont.getEstadoContenedor().getId();
+            this.llenado = cont.getProcentajeUso();
+        }
+    }
+    
+    private int buscarSiContenedorFueModificado(Integer idContenedor) {
+        int index = 0;
+        for(ContenedorPojo c : cambioEstadoSessionBean.getListaContenedoresModificados()) {
+            if (c.getId().intValue() == idContenedor.intValue()) {
+                return index;
+            }
+            index++;
+        }
+        return -1;
     }
     
     public void guardarCambios() {
@@ -112,8 +131,8 @@ public class CambioEstadoContenedor {
         this.idEstado = idEstado;
     }
     
-    public String getPtoLimpio() {
-        return ptoLimpio;
+    public String getNombrePtoLimpio() {
+        return nombrePtoLimpio;
     }
     
     public String getMaterial() {

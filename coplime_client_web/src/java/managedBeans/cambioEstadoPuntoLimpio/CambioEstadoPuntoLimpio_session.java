@@ -24,8 +24,6 @@ public class CambioEstadoPuntoLimpio_session implements Serializable {
     private Integer idContenedorToChange;
     private Integer idEstadoToChange;
     private List<ContenedorPojo> listaContenedoresModificados;
-    private Integer nvo_idEstadoGlobal;
-    private Integer old_idEstadoGlobal;
     private String detalle;
     
     /**
@@ -69,22 +67,6 @@ public class CambioEstadoPuntoLimpio_session implements Serializable {
 
     public List<ContenedorPojo> getListaContenedoresModificados() {
         return listaContenedoresModificados;
-    }
-
-    public Integer getNvo_idEstadoGlobal() {
-        return nvo_idEstadoGlobal;
-    }
-
-    public void setNvo_idEstadoGlobal(Integer nvo_idEstadoGlobal) {
-        this.nvo_idEstadoGlobal = nvo_idEstadoGlobal;
-    }
-    
-    public Integer getOld_idEstadoGlobal() {
-        return old_idEstadoGlobal;
-    }
-
-    public void setOld_idEstadoGlobal(Integer old_idEstadoGlobal) {
-        this.old_idEstadoGlobal = old_idEstadoGlobal;
     }
 
     public String getDetalle() {

@@ -20,18 +20,18 @@
                         <p:inputText value="#{MantenedorPuntoLimpioAgregarCont.numPtoLimpio}" disabled="true"/>
                         
                         <p:outputLabel value="Material que almacena"/>
-                        <h:selectOneMenu value="#{MantenedorPuntoLimpioAgregarCont.material}">
+                        <p:selectOneMenu value="#{MantenedorPuntoLimpioAgregarCont.material}">
                             <f:selectItems value="#{MantenedorPuntoLimpioAgregarCont.listaMateriales}"  
                                 var="mat" itemLabel="#{mat.label}" itemValue="#{mat.id}" />
-                        </h:selectOneMenu>
+                        </p:selectOneMenu>
                         
                         <p:outputLabel value="Capacidad del contenedor"/>
                         <h:panelGroup >
                             <p:inputText value="#{MantenedorPuntoLimpioAgregarCont.capacidad}"/>
-                            <h:selectOneMenu value="#{MantenedorPuntoLimpioAgregarCont.idUnidadMedida}" styleClass="span3">
+                            <p:selectOneMenu value="#{MantenedorPuntoLimpioAgregarCont.idUnidadMedida}" styleClass="span3">
                                 <f:selectItems value="#{MantenedorPuntoLimpioAgregarCont.listaUnidadesMedida}"  
                                     var="unidad" itemLabel="#{unidad.label}" itemValue="#{unidad.id}" />
-                            </h:selectOneMenu>
+                            </p:selectOneMenu>
                         </h:panelGroup>
                         
                         <p:outputLabel value="Llenado inicial"/>
@@ -41,10 +41,10 @@
                         </h:panelGroup>
                         
                         <p:outputLabel value="Estado inicial"/>
-                        <h:selectOneMenu value="#{MantenedorPuntoLimpioAgregarCont.estadoContenedor}">
+                        <p:selectOneMenu value="#{MantenedorPuntoLimpioAgregarCont.estadoContenedor}">
                             <f:selectItems value="#{MantenedorPuntoLimpioAgregarCont.listaEstadosContenedores}"  
                                 var="estadoCont" itemLabel="#{estadoCont.label}" itemValue="#{estadoCont.id}" />
-                        </h:selectOneMenu>
+                        </p:selectOneMenu>
                         
                         
                         <f:facet name="footer">

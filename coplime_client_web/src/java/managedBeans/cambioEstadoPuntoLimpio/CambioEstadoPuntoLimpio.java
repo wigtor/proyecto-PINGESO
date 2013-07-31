@@ -57,9 +57,11 @@ public class CambioEstadoPuntoLimpio {
         cargarEstadosPuntoLimpio();
         cargarContenedoresPuntoLimpio();
         //this.estadoPuntoLimpio = 
-        //La primera vez que se ejecuta se setea el id del estado global old
-        if (this.cambioEstadoSessionBean.getOld_idEstadoGlobal() == null)
-            this.cambioEstadoSessionBean.setOld_idEstadoGlobal(estadoPuntoLimpio);
+        //La primera vez que se ejecuta se setea el id del estado global
+        if (this.cambioEstadoSessionBean.getIdEstadoToChange()!= null)
+            this.estadoPuntoLimpio = this.cambioEstadoSessionBean.getIdEstadoToChange();
+        else 
+            this.cambioEstadoSessionBean.setIdEstadoToChange(this.estadoPuntoLimpio);
     }
     
     private void cargarEstadosPuntoLimpio() {
@@ -90,6 +92,7 @@ public class CambioEstadoPuntoLimpio {
     private void cargarDatosPtoLimpio() {
         PuntoLimpio p = crudPuntoLimpio.getPuntoLimpioByNum(this.idPtoLimpio);
         this.nombrePtoLimpio = p.getId()+" - "+p.getNombre();
+        this.estadoPuntoLimpio = p.getEstadoGlobal().getId();
     }
     
     public void cambiarEstadoContenedor() {
@@ -102,9 +105,9 @@ public class CambioEstadoPuntoLimpio {
     
     public void guardarCambios() {
         System.out.println("Se hizo click en 'guardarCambios()'");
-        cambioEstadoSessionBean.setNvo_idEstadoGlobal(estadoPuntoLimpio);
+        cambioEstadoSessionBean.setIdEstadoToChange(this.estadoPuntoLimpio);
         
-        cambioEstadoSessionBean.setIdPuntoLimpioToChange(null);
+        //cambioEstadoSessionBean.setIdPuntoLimpioToChange(null);
         if (CommonFunctions.isUserInRole("Inspector"))
             CommonFunctions.goToPage("/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml");
         if (CommonFunctions.isUserInRole("Operario"))
@@ -151,5 +154,20 @@ public class CambioEstadoPuntoLimpio {
     public void setListaContenedores(List<SelectElemPojo> listaContenedores) {
         this.listaContenedores = listaContenedores;
     }
-    
+
+    public Integer getIdPtoLimpio() {
+        return idPtoLimpio;
+    }
+
+    public void setIdPtoLimpio(Integer idPtoLimpio) {
+        this.idPtoLimpio = idPtoLimpio;
+    }
+
+    public String getNombrePtoLimpio() {
+        return nombrePtoLimpio;
+    }
+
+    public void setNombrePtoLimpio(String nombrePtoLimpio) {
+        this.nombrePtoLimpio = nombrePtoLimpio;
+    }
 }

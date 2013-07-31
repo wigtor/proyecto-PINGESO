@@ -2,9 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.cambioEstadoPuntoLimpio;
 
-import managedBeans.cambioEstadoPuntoLimpio.CambioEstadoPuntoLimpio_session;
 import ObjectsForManagedBeans.ContenedorPojo;
 import ObjectsForManagedBeans.SelectElemPojo;
 import entities.PuntoLimpio;
@@ -15,23 +14,25 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import otros.CommonFunctions;
-import sessionBeans.CrudMantencionPuntoLimpioLocal;
 import sessionBeans.CrudPuntoLimpioLocal;
+import sessionBeans.CrudRevisionPuntoLimpioLocal;
 
 /**
  *
  * @author victor
  */
-@Named(value = "AgregarMantencion")
+@Named(value = "AgregarRevision")
 @RequestScoped
-public class AgregarMantencion {
+public class AgregarRevision {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
     @EJB
-    private CrudMantencionPuntoLimpioLocal crudMantencion;
+    private CrudRevisionPuntoLimpioLocal crudRevision;
     
     @Inject
     private CambioEstadoPuntoLimpio_session cambioEstadoSessionBean;
@@ -43,14 +44,25 @@ public class AgregarMantencion {
     /**
      * Creates a new instance of AgregarRevision
      */
-    public AgregarMantencion() {
+    public AgregarRevision() {
     }
     
     @PostConstruct
     public void init() {
         this.listaPuntosLimpios = cargarPuntosLimpios();
-        detalle = cambioEstadoSessionBean.getDetalle();
+        if (detalle == null) {
+            detalle = cambioEstadoSessionBean.getDetalle();
+        }
+        else if (detalle.trim().isEmpty()) {
+            detalle = cambioEstadoSessionBean.getDetalle();
+        }
         
+        if (this.cambioEstadoSessionBean.getIdPuntoLimpioToChange()!= null) {
+            this.numPtoLimpio = this.cambioEstadoSessionBean.getIdPuntoLimpioToChange();
+        }
+        else {
+            this.cambioEstadoSessionBean.setIdPuntoLimpioToChange(this.numPtoLimpio);
+        }
     }
     
     private List<SelectElemPojo> cargarPuntosLimpios(){
@@ -75,13 +87,25 @@ public class AgregarMantencion {
         CommonFunctions.goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml");
     }
     
-    public void guardarMantencion() {
+    public void guardarRevision() {
          System.out.println("Se hizo click en 'guardarRevision()'");
          
-         String usernameLogueado = CommonFunctions.getUsuarioLogueado();
+         
+         System.out.println("Detalle: " + detalle);
+         System.out.println("Punto limpio a modificar: "+ numPtoLimpio);
+         System.out.println("Estado global del punto limpio: " + cambioEstadoSessionBean.getIdEstadoToChange());
+         System.out.println("Cantidad de contenedores modificados: " + cambioEstadoSessionBean.getListaContenedoresModificados().size());
+         for(ContenedorPojo c : cambioEstadoSessionBean.getListaContenedoresModificados()) {
+             System.out.println("Id del contenedor: "+c.getId());
+             System.out.println("Id del estado del contenedor: "+c.getIdEstadoContenedor());
+             System.out.println("Llenado del contenedor: "+c.getLlenadoContenedor());
+         }
+         HttpServletRequest request = (HttpServletRequest) 
+                (FacesContext.getCurrentInstance().getExternalContext().getRequest());
+         String usernameLogueado = request.getRemoteUser();
          
          //Envío al session bean los cambios para que se persistan a nivel de DB
-         crudMantencion.agregarMantencion(numPtoLimpio, usernameLogueado, detalle, cambioEstadoSessionBean.getNvo_idEstadoGlobal());
+         crudRevision.agregarRevision(numPtoLimpio, usernameLogueado, detalle, cambioEstadoSessionBean.getIdEstadoToChange());
          for(ContenedorPojo c : cambioEstadoSessionBean.getListaContenedoresModificados()) {
              crudPuntoLimpio.cambiarEstadoContenedor(c.getId(), c.getIdEstadoContenedor(), c.getLlenadoContenedor());
          }

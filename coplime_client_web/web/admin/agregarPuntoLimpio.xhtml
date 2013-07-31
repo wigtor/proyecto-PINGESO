@@ -23,10 +23,10 @@
                         <p:inputText value="#{MantenedorPuntoLimpioAgregar.nombre}"/>
                         
                         <p:outputLabel value="Seleccione comuna"/>
-                        <h:selectOneMenu label="Seleccione comuna" value="#{MantenedorPuntoLimpioAgregar.comuna_seleccionada}">
+                        <p:selectOneMenu label="Seleccione comuna" value="#{MantenedorPuntoLimpioAgregar.comuna_seleccionada}">
                             <f:selectItems value="#{MantenedorPuntoLimpioAgregar.listaComunas}"  
                                 var="comuna" itemLabel="#{comuna.label}" itemValue="#{comuna.id}" />
-                        </h:selectOneMenu>
+                        </p:selectOneMenu>
                         
                         <p:outputLabel value="Dirección"/>
                         <p:inputText value="#{MantenedorPuntoLimpioAgregar.direccion}"/>
@@ -35,16 +35,16 @@
                         <p:calendar value="#{MantenedorPuntoLimpioAgregar.fechaRevision}"/>
                         
                         <p:outputLabel value="Estado global inicial"/>
-                        <h:selectOneMenu value="#{MantenedorPuntoLimpioAgregar.estado_seleccionado}">
+                        <p:selectOneMenu value="#{MantenedorPuntoLimpioAgregar.estado_seleccionado}">
                             <f:selectItems value="#{MantenedorPuntoLimpioAgregar.listaEstadosPtoLimpio}"  
                                 var="estado" itemLabel="#{estado.label}" itemValue="#{estado.id}" />
-                        </h:selectOneMenu>
+                        </p:selectOneMenu>
                         
                         <p:outputLabel value="Inspector encargado"/>
-                        <h:selectOneMenu value="#{MantenedorPuntoLimpioAgregar.inspectorEncargado_seleccionado}">
+                        <p:selectOneMenu value="#{MantenedorPuntoLimpioAgregar.inspectorEncargado_seleccionado}">
                             <f:selectItems value="#{MantenedorPuntoLimpioAgregar.listaInspectores}"  
                                            var="InspEncargado" itemLabel="#{InspEncargado.label}" itemValue="#{InspEncargado.id}" />
-                        </h:selectOneMenu>
+                        </p:selectOneMenu>
                         
                         <p:outputLabel value="Contenedores agregados: #{MantenedorPuntoLimpio.contenedores_creando.size()}"/>
                         <p:dataTable value="#{MantenedorPuntoLimpio.contenedores_creando}" var="contenedor" 
