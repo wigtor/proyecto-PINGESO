@@ -2,29 +2,33 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.mantenedores.operario;
 
+import DAO.interfaces.OperarioDAO;
 import entities.Inspector;
+import entities.OperarioMantencion;
 import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import otros.CommonFunctions;
 import sessionBeans.CrudInspectorLocal;
+import sessionBeans.CrudOperarioLocal;
 
 /**
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorInspectorVerDetalles")
+@Named(value = "MantenedorOperarioVerDetalles")
 @RequestScoped
-public class MantenedorInspectorVerDetalles extends commonFunctions{
+public class MantenedorOperarioVerDetalles {
 
     @EJB
-    private CrudInspectorLocal crudInspector;
+    private CrudOperarioLocal crudOperario;
     @Inject 
-    private MantenedorInspector mantInsp;
+    private MantenedorOperario mantOp;
     
     private String nombre;
     private String apellido1;
@@ -33,34 +37,30 @@ public class MantenedorInspectorVerDetalles extends commonFunctions{
     private Integer rut;
     private String mail;
     private Integer telefono;
-    private Integer numPuntosLimpios;
-    private Integer numRevisionesRealizadas;
     private Integer numSolicitudesMantencionesRealizadas;
     
-    public MantenedorInspectorVerDetalles() {
+    public MantenedorOperarioVerDetalles() {
     }
     
     @PostConstruct
     public void init() { 
-        System.out.println("inspector en vista ver"+this.mantInsp.getApellido1());
+        System.out.println("inspector en vista ver"+this.mantOp.getApellido1());
        
-        this.rut = this.mantInsp.getRut();
-        this.nombre = this.mantInsp.getNombre();
-        this.apellido1 = this.mantInsp.getApellido1();
-        this.apellido2 = this.mantInsp.getApellido2();
-        this.mail = this.mantInsp.getMail();
-        this.username = this.mantInsp.getUsername();
-        this.telefono = this.mantInsp.getTelefono();
+        this.rut = this.mantOp.getRut();
+        this.nombre = this.mantOp.getNombre();
+        this.apellido1 = this.mantOp.getApellido1();
+        this.apellido2 = this.mantOp.getApellido2();
+        this.mail = this.mantOp.getMail();
+        this.username = this.mantOp.getUsername();
+        this.telefono = this.mantOp.getTelefono();
         
         
-        Collection<Inspector> listaTemp = crudInspector.getAllInspectores();
+        Collection<OperarioMantencion> listaTemp = crudOperario.getAllOperarios();
         
-        for(Inspector insp_iter : listaTemp){
-            if(this.rut.equals(insp_iter.getUsuario().getRut()) ){
+        for(OperarioMantencion op_iter : listaTemp){
+            if(this.rut.equals(op_iter.getUsuario().getRut()) ){
                
-               this.numPuntosLimpios = insp_iter.getPuntosLimpios().size();
-               this.numRevisionesRealizadas = insp_iter.getRevisionesRealizadas().size();
-               this.numSolicitudesMantencionesRealizadas = insp_iter.getSolicitudesMantencionRealizadas().size();
+               this.numSolicitudesMantencionesRealizadas = op_iter.getSolicitudesMantencionRealizadas().size();
                break;
             }
         }
@@ -68,7 +68,7 @@ public class MantenedorInspectorVerDetalles extends commonFunctions{
     }
     
     public void volver() {
-       goToPage("/faces/users/verInspectores.xhtml");
+        CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
        
     }
 
@@ -128,22 +128,6 @@ public class MantenedorInspectorVerDetalles extends commonFunctions{
         this.telefono = telefono;
     }
 
-    public Integer getNumPuntosLimpios() {
-        return numPuntosLimpios;
-    }
-
-    public void setNumPuntosLimpios(Integer numPuntosLimpios) {
-        this.numPuntosLimpios = numPuntosLimpios;
-    }
-
-    public Integer getNumRevisionesRealizadas() {
-        return numRevisionesRealizadas;
-    }
-
-    public void setNumRevisionesRealizadas(Integer numRevisionesRealizadas) {
-        this.numRevisionesRealizadas = numRevisionesRealizadas;
-    }
-
     public Integer getNumSolicitudesMantencionesRealizadas() {
         return numSolicitudesMantencionesRealizadas;
     }
@@ -151,9 +135,6 @@ public class MantenedorInspectorVerDetalles extends commonFunctions{
     public void setNumSolicitudesMantencionesRealizadas(Integer numSolicitudesMantencionesRealizadas) {
         this.numSolicitudesMantencionesRealizadas = numSolicitudesMantencionesRealizadas;
     }
-
-    
-    
     
     
 }

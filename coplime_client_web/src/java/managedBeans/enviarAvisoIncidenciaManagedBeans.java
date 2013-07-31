@@ -19,6 +19,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import org.primefaces.model.UploadedFile;
+import otros.CommonFunctions;
 import sessionBeans.AvisosIncidenciaLocal;
 
 /**
@@ -27,7 +28,7 @@ import sessionBeans.AvisosIncidenciaLocal;
  */
 @Named(value = "enviarAvisoIncidenciaManagedBeans")
 @RequestScoped
-public class enviarAvisoIncidenciaManagedBeans extends commonFunctions {
+public class enviarAvisoIncidenciaManagedBeans {
     @EJB
     private AvisosIncidenciaLocal avisosIncidencia;
     
@@ -46,7 +47,7 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions {
         System.out.println("Ejecutando init enviarAvisoIncidencia");
         if (!seIntentaSeleccionarPuntoLimpio()) {
             if (!puntoLimpioIsSelected()) {
-                goToPage("/faces/selectPtoLimpioAviso.xhtml");
+                CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml");
             }
             cargarTiposIncidencia();
         }
@@ -137,7 +138,7 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions {
             if (tipoIncidenciaSeleccionada != null)
             avisosIncidencia.guardarAvisoIncidencia(numPuntoLimpio.intValue(), emailContacto, detalles, tipoIncidenciaSeleccionada.intValue(), datosImagen, tipoArchivo);
         }
-        goToPage("/faces/index.xhtml?success=1");
+        CommonFunctions.goToPage("/faces/index.xhtml?success=1");
     }
     
     public void submitCaptcha(ActionEvent event) {  
@@ -215,11 +216,11 @@ public class enviarAvisoIncidenciaManagedBeans extends commonFunctions {
     
     public void goToEnviarAviso(int idSeleccionado) {
         System.out.println("idPtoLimpio="+idSeleccionado);
-        goToPage("/faces/enviarAvisoIncidencia.xhtml"+"?id="+idSeleccionado);
+        CommonFunctions.goToPage("/faces/enviarAvisoIncidencia.xhtml"+"?id="+idSeleccionado);
     }
     
     public void goToSeleccionarPuntoLimpio() {
-        goToPage("/faces/selectPtoLimpioAviso.xhtml");
+        CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml");
     }
     /**
      * Creates a new instance of enviarAvisoIncidenciaManagedBeans

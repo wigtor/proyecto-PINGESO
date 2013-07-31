@@ -12,6 +12,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import otros.CommonFunctions;
 import sessionBeans.UserServiceLocal;
 
 /**
@@ -20,7 +21,7 @@ import sessionBeans.UserServiceLocal;
  */
 @Named(value = "cambioPassManagedBeans")
 @RequestScoped
-public class cambioPassManagedBeans extends commonFunctions{
+public class cambioPassManagedBeans {
     @EJB
     private UserServiceLocal userService;
     String username;
@@ -34,7 +35,7 @@ public class cambioPassManagedBeans extends commonFunctions{
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         if (!userService.setUsuarioLogueado(request.getRemoteUser())) {
-            goToPage("/faces/users/logout.xhtml");
+            CommonFunctions.goToPage("/faces/users/logout.xhtml");
         }
         this.username = userService.getUsername();
     }
@@ -48,7 +49,7 @@ public class cambioPassManagedBeans extends commonFunctions{
         else {
             try {
                 userService.cambiarPass(passActual, nvaPass);
-                goToPage("/faces/users/infoUsuario.xhtml");
+                CommonFunctions.goToPage("/faces/users/infoUsuario.xhtml");
             }
             catch (Exception e) {
                 //Muestro el mensaje de error
@@ -58,7 +59,7 @@ public class cambioPassManagedBeans extends commonFunctions{
     }
     
     public void goToInfoUsuario() {
-       goToPage("/faces/users/infoUsuario.xhtml");
+        CommonFunctions.goToPage("/faces/users/infoUsuario.xhtml");
     }
     
     

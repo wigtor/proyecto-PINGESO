@@ -2,28 +2,24 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.mantenedores.operario;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
+import otros.CommonFunctions;
 import sessionBeans.CrudOperarioLocal;
 
 /**
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorOperarioEditar")
+@Named(value = "MantenedorOperarioAgregar")
 @RequestScoped
-public class MantenedorOperarioEditar extends commonFunctions{
+public class MantenedorOperarioAgregar {
 
     @EJB
     private CrudOperarioLocal crudOperario;
-    
-    @Inject 
-    private MantenedorOperario mantOp;
     
     private String nombre;
     private String apellido1;
@@ -33,40 +29,19 @@ public class MantenedorOperarioEditar extends commonFunctions{
     private Integer rut;
     private String mail;
     private Integer telefono;
-    private boolean checkContraseña;
     
-    public MantenedorOperarioEditar() {
+    public MantenedorOperarioAgregar() {
     }
     
-    @PostConstruct
-    public void init() { 
-        System.out.println("inspector en vista edit"+this.mantOp.getApellido1());
-       
-        this.rut = this.mantOp.getRut();
-        this.nombre = this.mantOp.getNombre();
-        this.apellido1 = this.mantOp.getApellido1();
-        this.apellido2 = this.mantOp.getApellido2();
-        this.mail = this.mantOp.getMail();
-        this.username = this.mantOp.getUsername();
-        this.telefono = this.mantOp.getTelefono();
-    }
-    
-    public void guardarCambiosOperario(){
-        crudOperario.editarOperario(rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
-        goToPage("/faces/users/verOperariosMantencion.xhtml");
+    public void agregarOperario() {
+        crudOperario.agregarOperario( username, password, rut, nombre, apellido1, apellido2, mail, telefono);
+        CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
+        
     }
     
     public void volver() {
-       goToPage("/faces/users/verOperariosMantencion.xhtml");
+        CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
        
-    }
-
-    public MantenedorOperario getMantOp() {
-        return mantOp;
-    }
-
-    public void setMantOp(MantenedorOperario mantOp) {
-        this.mantOp = mantOp;
     }
 
     public String getNombre() {
@@ -131,14 +106,6 @@ public class MantenedorOperarioEditar extends commonFunctions{
 
     public void setTelefono(Integer telefono) {
         this.telefono = telefono;
-    }
-
-    public boolean isCheckContraseña() {
-        return checkContraseña;
-    }
-
-    public void setCheckContraseña(boolean checkContraseña) {
-        this.checkContraseña = checkContraseña;
     }
     
     

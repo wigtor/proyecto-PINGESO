@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.mantenedores.operario;
 
 import ObjectsForManagedBeans.UsuarioPojo;
 import entities.Inspector;
@@ -22,6 +22,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import otros.CommonFunctions;
 import sessionBeans.CrudOperarioLocal;
 
 /**
@@ -30,7 +31,7 @@ import sessionBeans.CrudOperarioLocal;
  */
 @Named(value = "MantenedorOperario")
 @SessionScoped
-public class MantenedorOperario extends commonFunctions implements Serializable{
+public class MantenedorOperario implements Serializable{
     @EJB
     private CrudOperarioLocal crudOperario;
 
@@ -109,7 +110,7 @@ public class MantenedorOperario extends commonFunctions implements Serializable{
     public void agregarOperario() {
         crudOperario.agregarOperario( username, password, rut, nombre, apellido1, apellido2, mail, telefono);
         this.init();
-        goToPage("/faces/users/verOperariosMantencion.xhtml");
+        CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
         
     }
     
@@ -119,7 +120,7 @@ public class MantenedorOperario extends commonFunctions implements Serializable{
         System.out.println("idUser="+rut+" username:"+username+" nombre:"+nombre+" ap1:"+apellido1+" ap2:"+apellido2);
         crudOperario.editarOperario(rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
         this.init();
-        goToPage("/faces/users/verOperariosMantencion.xhtml");
+        CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
     }
     
     public void editar(int numOperario) {
@@ -127,17 +128,17 @@ public class MantenedorOperario extends commonFunctions implements Serializable{
        FacesContext context = FacesContext.getCurrentInstance();
        Map<String,Object> variableSession = context.getExternalContext().getSessionMap();
        variableSession.put("idUserToEdit", new Integer(numOperario));      
-       goToPage("/faces/admin/editarOperarioMantencion.xhtml");
+       CommonFunctions.goToPage("/faces/admin/editarOperarioMantencion.xhtml");
        
     }
     
     public void volver() {
-       goToPage("/faces/users/verPuntosLimpios.xhtml");
+       CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
        
     }
     
     public void agregar() {
-        goToPage("/faces/admin/agregarOperarioMantencion.xhtml");
+        CommonFunctions.goToPage("/faces/admin/agregarOperarioMantencion.xhtml");
        
     }
     public String ObtineUserName(int rut){

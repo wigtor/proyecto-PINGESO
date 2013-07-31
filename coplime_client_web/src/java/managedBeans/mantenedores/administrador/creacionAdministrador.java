@@ -2,12 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.mantenedores.administrador;
 
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import otros.CommonFunctions;
 import sessionBeans.CrudAdministradorLocal;
 
 /**
@@ -16,7 +17,7 @@ import sessionBeans.CrudAdministradorLocal;
  */
 @Named(value = "creacionAdministrador")
 @RequestScoped
-public class creacionAdministrador extends commonFunctions{
+public class creacionAdministrador {
     @EJB
     private CrudAdministradorLocal crudAdministrador;
     
@@ -38,7 +39,7 @@ public class creacionAdministrador extends commonFunctions{
     
     public void agregarAdministrador() {
         crudAdministrador.agregarAdministrador( username, password, rut, nombre, apellido1, apellido2, mail, telefono);
-        goToPage("/faces/index.xhtml");
+        CommonFunctions.goToPage("/faces/index.xhtml");
     }
     
     public String getUsername() {

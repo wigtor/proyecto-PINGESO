@@ -16,6 +16,7 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import otros.CommonFunctions;
 import sessionBeans.CrudPuntoLimpioLocal;
 
 /**
@@ -24,7 +25,7 @@ import sessionBeans.CrudPuntoLimpioLocal;
  */
 @Named(value = "CambioEstadoPuntoLimpio")
 @RequestScoped
-public class CambioEstadoPuntoLimpio extends commonFunctions {
+public class CambioEstadoPuntoLimpio {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
@@ -96,7 +97,7 @@ public class CambioEstadoPuntoLimpio extends commonFunctions {
         
         cambioEstadoSessionBean.setIdEstadoToChange(this.estadoPuntoLimpio);
         cambioEstadoSessionBean.setIdContenedorToChange(idContenedorSeleccionado);
-        goToPage("/faces/users/cambiarEstadoContenedor.xhtml");
+        CommonFunctions.goToPage("/faces/users/cambiarEstadoContenedor.xhtml");
     }
     
     public void guardarCambios() {
@@ -104,19 +105,19 @@ public class CambioEstadoPuntoLimpio extends commonFunctions {
         cambioEstadoSessionBean.setNvo_idEstadoGlobal(estadoPuntoLimpio);
         
         cambioEstadoSessionBean.setIdPuntoLimpioToChange(null);
-        if (isUserInRole("Inspector"))
-            goToPage("/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml");
-        if (isUserInRole("Operario"))
-            goToPage("/faces/users/operario/agregarMantenciónPuntoLimpio.xhtml");
+        if (CommonFunctions.isUserInRole("Inspector"))
+            CommonFunctions.goToPage("/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml");
+        if (CommonFunctions.isUserInRole("Operario"))
+            CommonFunctions.goToPage("/faces/users/operario/agregarMantenciónPuntoLimpio.xhtml");
     }
     
     public void volver() {
         System.out.println("Se hizo click en 'volver()'");
         cambioEstadoSessionBean.limpiarCampos();
-        if (isUserInRole("Inspector"))
-            goToPage("/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml");
-        if (isUserInRole("Operario"))
-            goToPage("/faces/users/operario/agregarMantenciónPuntoLimpio.xhtml");
+        if (CommonFunctions.isUserInRole("Inspector"))
+            CommonFunctions.goToPage("/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml");
+        if (CommonFunctions.isUserInRole("Operario"))
+            CommonFunctions.goToPage("/faces/users/operario/agregarMantenciónPuntoLimpio.xhtml");
     }
 
     public List<SelectElemPojo> getListaEstadosPtoLimpio() {

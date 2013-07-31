@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.mantenedores.puntoLimpio;
 
 import ObjectsForManagedBeans.PuntoLimpioPojo;
 import entities.PuntoLimpio;
@@ -20,6 +20,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import otros.CommonFunctions;
 import sessionBeans.CrudPuntoLimpioLocal;
 
 /**
@@ -29,7 +30,7 @@ import sessionBeans.CrudPuntoLimpioLocal;
 @ManagedBean
 @Named(value = "MantenedorPuntoLimpioVerListado")
 @RequestScoped
-public class MantenedorPuntoLimpioVerListado extends commonFunctions{
+public class MantenedorPuntoLimpioVerListado {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
@@ -114,9 +115,9 @@ public class MantenedorPuntoLimpioVerListado extends commonFunctions{
         }
         else {
             //MOSTRAR ERROR
-            goToPage("/faces/users/verPuntosLimpios.xhtml");
+            CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
         }
-       goToPage("/faces/users/verDetallesPuntoLimpio.xhtml");
+       CommonFunctions.goToPage("/faces/users/verDetallesPuntoLimpio.xhtml");
        
     }
     
@@ -125,12 +126,12 @@ public class MantenedorPuntoLimpioVerListado extends commonFunctions{
         PuntoLimpio ptoEdit = crudPuntoLimpio.getPuntoLimpioByNum(numPto);
         if (ptoEdit != null) {
             this.mantPtoLimpio.setIdPuntoLimpioDetalles(numPto);
-            goToPage("/faces/admin/editarPuntoLimpio.xhtml");
+            CommonFunctions.goToPage("/faces/admin/editarPuntoLimpio.xhtml");
         }
         else {
             //MOSTRAR ERROR
             this.mantPtoLimpio.limpiarDatos();
-            goToPage("/faces/users/verPuntosLimpios.xhtml");
+            CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
         }
        
     }
@@ -139,7 +140,7 @@ public class MantenedorPuntoLimpioVerListado extends commonFunctions{
        System.out.println("NÚMERO DE PUNTO LIMPIO: "+numPto);
        crudPuntoLimpio.eliminarPuntoLimpio(numPto);
        this.mantPtoLimpio.limpiarDatos();
-       goToPage("/faces/users/verPuntosLimpios.xhtml");
+       CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
        
        //MOSTRAR MENSAJE DE ACCION REALIZADA SATISFACTORIAMENTE
     }

@@ -13,6 +13,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import otros.CommonFunctions;
 import sessionBeans.UserServiceLocal;
 
 /**
@@ -21,7 +22,7 @@ import sessionBeans.UserServiceLocal;
  */
 @Named(value = "infoUsuarioManagedBeans")
 @RequestScoped
-public class infoUsuarioManagedBeans extends commonFunctions{
+public class infoUsuarioManagedBeans {
     @EJB
     private UserServiceLocal userService;
     
@@ -42,7 +43,7 @@ public class infoUsuarioManagedBeans extends commonFunctions{
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         System.out.println("nombre de usuario: "+request.getRemoteUser());
         if (!userService.setUsuarioLogueado(request.getRemoteUser())) {
-            goToPage("/faces/users/logout.xhtml");
+            CommonFunctions.goToPage("/faces/users/logout.xhtml");
         }
         nombres = userService.getNombres();
         apellidos = userService.getApellidos();
@@ -61,15 +62,15 @@ public class infoUsuarioManagedBeans extends commonFunctions{
 
     public void guardarCambios() {
         userService.cambiarDatosContacto(telefono, email);
-        goToPage("/faces/users/verPuntosLimpios.xhtml");
+        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
     
     public void goToPuntosLimpios() {
-       goToPage("/faces/users/verPuntosLimpios.xhtml");
+       CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
     
     public void goToCambiarContrasegna() {
-        goToPage("/faces/users/cambiarContrasegna.xhtml");
+        CommonFunctions.goToPage("/faces/users/cambiarContrasegna.xhtml");
     }
     
     

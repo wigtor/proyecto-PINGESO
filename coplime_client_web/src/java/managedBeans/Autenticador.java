@@ -13,6 +13,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
+import otros.CommonFunctions;
 //import com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm;
 
 /**
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Named(value = "Autenticador")
 @SessionScoped
-public class Autenticador extends commonFunctions implements Serializable {
+public class Autenticador implements Serializable {
 
     private String username;
     private String password;
@@ -60,7 +61,7 @@ public class Autenticador extends commonFunctions implements Serializable {
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         if (request.getRemoteUser() != null) {
-            goToPage("/faces/users/verPuntosLimpios.xhtml");
+            CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
             return true;
         }
         return false;
@@ -84,15 +85,15 @@ public class Autenticador extends commonFunctions implements Serializable {
     public void logout() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.invalidateSession();
-        goToPage("/faces/index.xhtml");
+        CommonFunctions.goToPage("/faces/index.xhtml");
     }
     
     public void goToEnviarAvisoIncidencia() {
-        goToPage("/faces/selectPtoLimpioAviso.xhtml");
+        CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml");
     }
     
     public void indexLoggued() {
-        goToPage("/faces/users/verPuntosLimpios.xhtml");
+        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
 
     // Getters/setters for username and password.

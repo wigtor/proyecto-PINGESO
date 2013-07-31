@@ -20,6 +20,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import otros.CommonFunctions;
 import sessionBeans.CrudPuntoLimpioLocal;
 
 /**
@@ -28,7 +29,7 @@ import sessionBeans.CrudPuntoLimpioLocal;
  */
 @Named(value = "AgregarRevision")
 @RequestScoped
-public class AgregarRevision extends commonFunctions {
+public class AgregarRevision {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
@@ -71,7 +72,7 @@ public class AgregarRevision extends commonFunctions {
         cambioEstadoSessionBean.setDetalle(detalle);
         cambioEstadoSessionBean.setIdPuntoLimpioToChange(numPtoLimpio);
         
-        goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml");
+        CommonFunctions.goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml");
     }
     
     public void guardarRevision() {
@@ -104,7 +105,7 @@ public class AgregarRevision extends commonFunctions {
     public void volverToLista() {
         System.out.println("Se hizo click en 'volverToLista()'");
         cambioEstadoSessionBean.limpiarCampos();
-        goToPage("/faces/users/verPuntosLimpios.xhtml");
+        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
 
     public Integer getNumPtoLimpio() {

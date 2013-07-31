@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.notificaciones;
 
 import entities.Notificacion;
 import entities.NotificacionDeUsuario;
@@ -28,6 +28,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import otros.CommonFunctions;
 import sessionBeans.NotificadorLocal;
 
 /**
@@ -36,7 +37,7 @@ import sessionBeans.NotificadorLocal;
  */
 @Named(value = "NotificacionVerDetalles")
 @RequestScoped
-public class NotificacionVerDetalles extends commonFunctions implements Serializable {
+public class NotificacionVerDetalles implements Serializable {
     @EJB
     private NotificadorLocal notificador;
     
@@ -89,10 +90,10 @@ public class NotificacionVerDetalles extends commonFunctions implements Serializ
     public void init() {
         System.out.println("Ejecutando init de NotificacionesVerDetalles");
         
-        if (isGetMethod()) {
+        if (CommonFunctions.isGetMethod()) {
             System.out.println("Se hizo un GET");
             if (!notificacionIsSelected()) {
-                goToPage("/faces/users/verNotificaciones.xhtml");
+                CommonFunctions.goToPage("/faces/users/verNotificaciones.xhtml");
                 return;
             }
             Notificacion notifTemp = notificador.getNotificacion(this.numNotif);
@@ -144,11 +145,11 @@ public class NotificacionVerDetalles extends commonFunctions implements Serializ
     
     public void verDetalles(Integer idSeleccionado) {
         System.out.println("Se quiere ver los detalles: "+idSeleccionado);
-        goToPage("/faces/users/detallesNotificacion.xhtml"+"?id="+idSeleccionado);
+        CommonFunctions.goToPage("/faces/users/detallesNotificacion.xhtml"+"?id="+idSeleccionado);
     }
     
     public void volverToListado() {
-        goToPage("/faces/users/verNotificaciones.xhtml");
+        CommonFunctions.goToPage("/faces/users/verNotificaciones.xhtml");
     }
     
     public void eliminar(Integer num) {

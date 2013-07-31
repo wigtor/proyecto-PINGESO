@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.mantenedores.puntoLimpio;
 
 import ObjectsForManagedBeans.ContenedorPojo;
 import ObjectsForManagedBeans.SelectElemPojo;
@@ -17,6 +17,7 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import otros.CommonFunctions;
 import sessionBeans.CrudPuntoLimpioLocal;
 
 /**
@@ -25,7 +26,7 @@ import sessionBeans.CrudPuntoLimpioLocal;
  */
 @Named(value = "MantenedorPuntoLimpioAgregarCont")
 @RequestScoped
-public class MantenedorPuntoLimpioAgregarCont extends commonFunctions {
+public class MantenedorPuntoLimpioAgregarCont {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
@@ -61,7 +62,7 @@ public class MantenedorPuntoLimpioAgregarCont extends commonFunctions {
         else {
             //MOSTRAR ERROR
             
-            goToPage("/faces/admin/agregarPuntoLimpio.xhtml");
+            CommonFunctions.goToPage("/faces/admin/agregarPuntoLimpio.xhtml");
         }
     }
     
@@ -131,19 +132,19 @@ public class MantenedorPuntoLimpioAgregarCont extends commonFunctions {
         System.out.println("Se hizo click en 'guardarNvoContenedor_y_otro()'");
         mantPtoLimpio.getContenedores_creando().add(crearContenedorTemporal());
         
-        goToPage("/faces/admin/agregarContenedor.xhtml");
+        CommonFunctions.goToPage("/faces/admin/agregarContenedor.xhtml");
     }
     
     public void guardarNvoContenedor() {
         System.out.println("Se hizo click en 'guardarNvoContenedor()'");
         mantPtoLimpio.getContenedores_creando().add(crearContenedorTemporal());
         
-        goToPage("/faces/admin/agregarPuntoLimpio.xhtml");
+        CommonFunctions.goToPage("/faces/admin/agregarPuntoLimpio.xhtml");
     }
     
     public void volverToPuntoLimpio() {
         System.out.println("Se hizo click en 'volverToPuntoLimpio()'");
-        goToPage("/faces/admin/agregarPuntoLimpio.xhtml");
+        CommonFunctions.goToPage("/faces/admin/agregarPuntoLimpio.xhtml");
     }
     
     public Integer getNumPtoLimpio() {

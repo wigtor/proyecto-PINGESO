@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.mantenedores.puntoLimpio;
 
 import ObjectsForManagedBeans.PuntoLimpioPojo;
 import entities.Contenedor;
@@ -17,6 +17,7 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import otros.CommonFunctions;
 import sessionBeans.CrudPuntoLimpioLocal;
 
 /**
@@ -25,7 +26,7 @@ import sessionBeans.CrudPuntoLimpioLocal;
  */
 @Named(value = "MantenedorPuntoLimpioVerDetalles")
 @RequestScoped
-public class MantenedorPuntoLimpioVerDetalles extends commonFunctions {
+public class MantenedorPuntoLimpioVerDetalles {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
@@ -71,7 +72,7 @@ public class MantenedorPuntoLimpioVerDetalles extends commonFunctions {
         PuntoLimpio ptoEdit = crudPuntoLimpio.getPuntoLimpioByNum(numPtoLimpio);
         
         if (ptoEdit != null) {
-            goToPage("/faces/admin/editarPuntoLimpio.xhtml");
+            CommonFunctions.goToPage("/faces/admin/editarPuntoLimpio.xhtml");
             
         }
         else {
@@ -122,7 +123,7 @@ public class MantenedorPuntoLimpioVerDetalles extends commonFunctions {
     public void volverToLista() {
         System.out.println("Se hizo click en 'volverToLista()'");
         mantPtoLimpio.limpiarDatos();
-        goToPage("/faces/users/verPuntosLimpios.xhtml");
+        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
 
     public String getNombre() {

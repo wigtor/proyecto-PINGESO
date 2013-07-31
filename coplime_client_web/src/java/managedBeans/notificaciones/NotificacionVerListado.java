@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.notificaciones;
 
 import ObjectsForManagedBeans.NotificacionPojo;
 import entities.Notificacion;
@@ -18,6 +18,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import otros.CommonFunctions;
 import sessionBeans.NotificadorLocal;
 
 /**
@@ -26,7 +27,7 @@ import sessionBeans.NotificadorLocal;
  */
 @Named(value = "NotificacionVerListado")
 @RequestScoped
-public class NotificacionVerListado extends commonFunctions implements Serializable {
+public class NotificacionVerListado implements Serializable {
     @EJB
     private NotificadorLocal notificador;
     
@@ -38,9 +39,9 @@ public class NotificacionVerListado extends commonFunctions implements Serializa
     public void init() {
         System.out.println("Ejecutando init de NotificacionesVerListado");
         
-        String username = getUsuarioLogueado();
+        String username = CommonFunctions.getUsuarioLogueado();
         if (username == null) {
-            goToIndex();
+            CommonFunctions.goToIndex();
         }
 
         Collection<Notificacion> listaTemp = notificador.getAllNotificaciones(username);
@@ -75,11 +76,11 @@ public class NotificacionVerListado extends commonFunctions implements Serializa
     
     public void verDetalles(Integer idSeleccionado) {
         System.out.println("Se quiere ver los detalles: "+idSeleccionado);
-        goToPage("/faces/users/detallesNotificacion.xhtml"+"?id="+idSeleccionado);
+        CommonFunctions.goToPage("/faces/users/verDetallesNotificacion.xhtml"+"?id="+idSeleccionado);
     }
     
     public void volverToListado() {
-        goToPage("/faces/users/verNotificaciones.xhtml");
+        CommonFunctions.goToPage("/faces/users/verNotificaciones.xhtml");
     }
     
     public void eliminar(Integer num) {

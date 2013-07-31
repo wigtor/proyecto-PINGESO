@@ -2,12 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.mantenedores.inspector;
 
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import otros.CommonFunctions;
 import sessionBeans.CrudInspectorLocal;
 
 /**
@@ -16,7 +17,7 @@ import sessionBeans.CrudInspectorLocal;
  */
 @Named(value = "MantenedorInspectorAgregar")
 @RequestScoped
-public class MantenedorInspectorAgregar extends commonFunctions{
+public class MantenedorInspectorAgregar {
 
     @EJB
     private CrudInspectorLocal crudInspector;
@@ -35,12 +36,12 @@ public class MantenedorInspectorAgregar extends commonFunctions{
     
     public void agregarInspector() {
         crudInspector.agregarInspector(username, password, rut, nombre, apellido1, apellido2, mail, telefono);
-        goToPage("/faces/users/verInspectores.xhtml");       
+        CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");       
         
     }
     
     public void volver() {
-       goToPage("/faces/users/verInspectores.xhtml");
+        CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");
        
     }
 

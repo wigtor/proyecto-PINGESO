@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.mantenedores.puntoLimpio;
 
 import ObjectsForManagedBeans.ContenedorPojo;
 import ObjectsForManagedBeans.PuntoLimpioPojo;
@@ -22,6 +22,7 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import otros.CommonFunctions;
 import sessionBeans.CrudPuntoLimpioLocal;
 
 /**
@@ -30,7 +31,7 @@ import sessionBeans.CrudPuntoLimpioLocal;
  */
 @Named(value = "MantenedorPuntoLimpioAgregar")
 @RequestScoped
-public class MantenedorPuntoLimpioAgregar extends commonFunctions {
+public class MantenedorPuntoLimpioAgregar {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
@@ -133,7 +134,7 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions {
         System.out.println("Se hizo click en 'AgregarContenedores()'");
         mantPtoLimpio.setPto_creando(crearPtoLimpioTemporal());
         
-        goToPage("/faces/admin/agregarContenedor.xhtml");
+        CommonFunctions.goToPage("/faces/admin/agregarContenedor.xhtml");
     }
     
     public void agregarPuntoLimpio() {
@@ -171,7 +172,7 @@ public class MantenedorPuntoLimpioAgregar extends commonFunctions {
         System.out.println("Se hizo click en 'volverToLista()'");
         mantPtoLimpio.setPto_creando(null);
         mantPtoLimpio.getContenedores_creando().clear();
-        goToPage("/faces/users/verPuntosLimpios.xhtml");
+        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
 
     public String getNombre() {

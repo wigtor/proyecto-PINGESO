@@ -16,6 +16,7 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import otros.CommonFunctions;
 import sessionBeans.CrudPuntoLimpioLocal;
 
 /**
@@ -24,7 +25,7 @@ import sessionBeans.CrudPuntoLimpioLocal;
  */
 @Named(value = "CambioEstadoContenedor")
 @RequestScoped
-public class CambioEstadoContenedor extends commonFunctions {
+public class CambioEstadoContenedor {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
@@ -69,7 +70,7 @@ public class CambioEstadoContenedor extends commonFunctions {
         this.idContenedor = cambioEstadoSessionBean.getIdContenedorToChange();
         if (this.idContenedor == null) {
             //Error
-            goToIndex();
+            CommonFunctions.goToIndex();
             return;
         }
         Contenedor cont = crudPuntoLimpio.getContenedor(this.idContenedor);
@@ -90,13 +91,13 @@ public class CambioEstadoContenedor extends commonFunctions {
         this.cambioEstadoSessionBean.getListaContenedoresModificados().add(contModificado);
         this.cambioEstadoSessionBean.setIdContenedorToChange(null); //Sólo el contenedor lo mando a null
         
-        goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml");
+        CommonFunctions.goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml");
     }
     
     public void volver() {
         System.out.println("Se hizo click en 'volver()'");
         cambioEstadoSessionBean.setIdContenedorToChange(null);
-        goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml");
+        CommonFunctions.goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml");
     }
 
     public List<SelectElemPojo> getListaEstados() {

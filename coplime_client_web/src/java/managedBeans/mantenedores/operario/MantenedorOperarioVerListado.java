@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.mantenedores.operario;
 
 import ObjectsForManagedBeans.UsuarioPojo;
 import entities.OperarioMantencion;
@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import otros.CommonFunctions;
 import sessionBeans.CrudOperarioLocal;
 
 /**
@@ -23,7 +24,7 @@ import sessionBeans.CrudOperarioLocal;
  */
 @Named(value = "MantenedorOperarioVerListado")
 @RequestScoped
-public class MantenedorOperarioVerListado extends commonFunctions{
+public class MantenedorOperarioVerListado {
 
     @EJB
     private CrudOperarioLocal crudOperario;
@@ -57,12 +58,12 @@ public class MantenedorOperarioVerListado extends commonFunctions{
     }
     
     public void volver() {
-       goToPage("/faces/users/verPuntosLimpios.xhtml");
+       CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
         
     }
     
     public void agregar() {
-       goToPage("/faces/admin/agregarOperarioMantencion.xhtml");
+       CommonFunctions.goToPage("/faces/admin/agregarOperarioMantencion.xhtml");
         
     }
     
@@ -82,7 +83,7 @@ public class MantenedorOperarioVerListado extends commonFunctions{
         else {
             //MOSTRAR ERROR
         }
-       goToPage("/faces/users/verDetallesOperarioMantencion.xhtml");
+       CommonFunctions.goToPage("/faces/users/verDetallesOperarioMantencion.xhtml");
        
     }
     
@@ -102,7 +103,7 @@ public class MantenedorOperarioVerListado extends commonFunctions{
         else {
             //MOSTRAR ERROR
         }
-       goToPage("/faces/admin/editarOperarioMantencion.xhtml");
+       CommonFunctions.goToPage("/faces/admin/editarOperarioMantencion.xhtml");
        
     }
     
@@ -111,7 +112,7 @@ public class MantenedorOperarioVerListado extends commonFunctions{
        //crudInspector.eliminarInspector(new Integer(numOperario));
        crudOperario.eliminarOperario(numOperario);
        //init();
-       goToPage("/faces/users/verOperariosMantencion.xhtml");
+        CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
        
     }
     

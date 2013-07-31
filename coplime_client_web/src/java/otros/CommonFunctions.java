@@ -1,25 +1,26 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package managedBeans;
+
+package otros;
 
 import java.io.IOException;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /**
  *
  * @author victor
  */
-public class commonFunctions {
-    
+public class CommonFunctions {
     /**
      * Pasale una url incluyendo /faces/ y te redirecciona
      * @param pagina 
      */
-    public void goToPage(String pagina) {
+    public static void goToPage(String pagina) {
        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
        try {
            externalContext.redirect(externalContext.getRequestContextPath() + pagina);
@@ -29,23 +30,23 @@ public class commonFunctions {
        }
     }
     
-    public void goToIndex() {
+    public static void goToIndex() {
         goToPage("/faces/index.xhtml");
     }
     
-    public String getUsuarioLogueado() {
+    public static String getUsuarioLogueado() {
         HttpServletRequest request = (HttpServletRequest) 
                 (FacesContext.getCurrentInstance().getExternalContext().getRequest());
         return request.getRemoteUser();
     }
     
-    public boolean isUserInRole(String nombreRol) {
+    public static boolean isUserInRole(String nombreRol) {
         HttpServletRequest request = (HttpServletRequest) 
                 (FacesContext.getCurrentInstance().getExternalContext().getRequest());
         return request.isUserInRole(nombreRol);
     }
     
-    public boolean isGetMethod() {
+    public static boolean isGetMethod() {
         HttpServletRequest request = (HttpServletRequest) 
                 (FacesContext.getCurrentInstance().getExternalContext().getRequest());
         if (request.getMethod().equals("GET")) {

@@ -2,28 +2,29 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.mantenedores.operario;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import sessionBeans.CrudInspectorLocal;
+import otros.CommonFunctions;
+import sessionBeans.CrudOperarioLocal;
 
 /**
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorInspectorEditar")
+@Named(value = "MantenedorOperarioEditar")
 @RequestScoped
-public class MantenedorInspectorEditar extends commonFunctions{
+public class MantenedorOperarioEditar {
 
     @EJB
-    private CrudInspectorLocal crudInspector;
-           
+    private CrudOperarioLocal crudOperario;
+    
     @Inject 
-    private MantenedorInspector mantInsp;
+    private MantenedorOperario mantOp;
     
     private String nombre;
     private String apellido1;
@@ -35,41 +36,38 @@ public class MantenedorInspectorEditar extends commonFunctions{
     private Integer telefono;
     private boolean checkContraseña;
     
+    public MantenedorOperarioEditar() {
+    }
+    
     @PostConstruct
     public void init() { 
-        System.out.println("inspector en vista edit"+this.mantInsp.getApellido1());
+        System.out.println("inspector en vista edit"+this.mantOp.getApellido1());
        
-        this.rut = this.mantInsp.getRut();
-        this.nombre = this.mantInsp.getNombre();
-        this.apellido1 = this.mantInsp.getApellido1();
-        this.apellido2 = this.mantInsp.getApellido2();
-        this.mail = this.mantInsp.getMail();
-        this.username = this.mantInsp.getUsername();
-        this.telefono = this.mantInsp.getTelefono();
+        this.rut = this.mantOp.getRut();
+        this.nombre = this.mantOp.getNombre();
+        this.apellido1 = this.mantOp.getApellido1();
+        this.apellido2 = this.mantOp.getApellido2();
+        this.mail = this.mantOp.getMail();
+        this.username = this.mantOp.getUsername();
+        this.telefono = this.mantOp.getTelefono();
     }
     
-    public MantenedorInspectorEditar() {
-    }
-    
-    public void guardarCambiosInspector(){
-        System.out.println("this.rut: "+this.rut);
-        System.out.println("Se va a guardar los cambios de un inspector");
-        System.out.println("idUser="+rut+" username:"+username+" nombre:"+nombre+" ap1:"+apellido1+" ap2:"+apellido2);
-        crudInspector.editarInspector( rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
-        goToPage("/faces/users/verInspectores.xhtml");
+    public void guardarCambiosOperario(){
+        crudOperario.editarOperario(rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
+        CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
     }
     
     public void volver() {
-       goToPage("/faces/users/verInspectores.xhtml");
+       CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
        
     }
 
-    public MantenedorInspector getMantInsp() {
-        return mantInsp;
+    public MantenedorOperario getMantOp() {
+        return mantOp;
     }
 
-    public void setMantInsp(MantenedorInspector mantInsp) {
-        this.mantInsp = mantInsp;
+    public void setMantOp(MantenedorOperario mantOp) {
+        this.mantOp = mantOp;
     }
 
     public String getNombre() {

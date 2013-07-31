@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.mantenedores.inspector;
 
 import ObjectsForManagedBeans.UsuarioPojo;
 import entities.Inspector;
@@ -36,7 +36,7 @@ import org.primefaces.event.SelectEvent;
  */
 @Named(value = "MantenedorInspector")
 @SessionScoped
-public class MantenedorInspector extends commonFunctions implements Serializable{
+public class MantenedorInspector implements Serializable{
        
 
     private String nombre;

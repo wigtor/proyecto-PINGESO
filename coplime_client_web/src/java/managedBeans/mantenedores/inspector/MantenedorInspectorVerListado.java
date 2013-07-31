@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.mantenedores.inspector;
 
 import ObjectsForManagedBeans.UsuarioPojo;
 import entities.Inspector;
@@ -20,6 +20,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import otros.CommonFunctions;
 import sessionBeans.CrudInspectorLocal;
 
 /**
@@ -30,7 +31,7 @@ import sessionBeans.CrudInspectorLocal;
 //@ViewScoped
 //@SessionScoped
 @RequestScoped
-public class MantenedorInspectorVerListado extends commonFunctions{
+public class MantenedorInspectorVerListado {
 
     @EJB
     private CrudInspectorLocal crudInspector;
@@ -46,7 +47,7 @@ public class MantenedorInspectorVerListado extends commonFunctions{
     public MantenedorInspectorVerListado() {
     }
     
-    
+    /*
     @PostConstruct
     public void init() {         
         
@@ -67,8 +68,10 @@ public class MantenedorInspectorVerListado extends commonFunctions{
             
         }
     }
+    * 
+    */
     public void agregar() {
-       goToPage("/faces/admin/agregarInspector.xhtml");
+       CommonFunctions.goToPage("/faces/admin/agregarInspector.xhtml");
         
     }
     public void editar(int numInspector) {
@@ -87,7 +90,7 @@ public class MantenedorInspectorVerListado extends commonFunctions{
         else {
             //MOSTRAR ERROR
         }
-       goToPage("/faces/admin/editarInspector.xhtml");
+       CommonFunctions.goToPage("/faces/admin/editarInspector.xhtml");
        
     }
     
@@ -107,7 +110,7 @@ public class MantenedorInspectorVerListado extends commonFunctions{
         else {
             //MOSTRAR ERROR
         }
-       goToPage("/faces/users/verDetallesInspector.xhtml");
+       CommonFunctions.goToPage("/faces/users/verDetallesInspector.xhtml");
        
     }
     
@@ -116,13 +119,13 @@ public class MantenedorInspectorVerListado extends commonFunctions{
        //crudInspector.eliminarInspector(new Integer(numInspector));
        crudInspector.eliminarInspector(numInspector);
        //init();
-       goToPage("/faces/users/verInspectores.xhtml");
+        CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");
        
        //PONER LA LÓGICA DE ELIMINARCIÓN, MOSTRAR MENSAJE DE CONFIRMACIÓN
     }
     
     public void volver() {
-       goToPage("/faces/users/verPuntosLimpios.xhtml");
+       CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
        
     }
 
