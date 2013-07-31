@@ -31,6 +31,9 @@ public class NotificacionVerListado implements Serializable {
     @EJB
     private NotificadorLocal notificador;
     
+    @Inject
+    private MantenedorNotificaciones mantNotificaciones;
+    
     private Collection<NotificacionPojo> listaAllNotif;
     
     private Collection<NotificacionPojo> filteredNotif;
@@ -38,19 +41,16 @@ public class NotificacionVerListado implements Serializable {
     @PostConstruct
     public void init() {
         System.out.println("Ejecutando init de NotificacionesVerListado");
-        
+        cargarListaNotificaciones();
+    }
+    
+    private void cargarListaNotificaciones() {
         String username = CommonFunctions.getUsuarioLogueado();
         if (username == null) {
             CommonFunctions.goToIndex();
         }
-
-        Collection<Notificacion> listaTemp = notificador.getAllNotificaciones(username);
-        this.listaAllNotif = llenarListaNotificaciones(listaTemp);
         
-        System.out.println("listo init() de NotificacionesVerListado");
-    }
-    
-    private Collection<NotificacionPojo> llenarListaNotificaciones(Collection<Notificacion> listaTemp) {
+        Collection<Notificacion> listaTemp = notificador.getAllNotificaciones(username);
         NotificacionPojo notifTemp;
         Calendar f;
         String str_temp;
@@ -71,15 +71,17 @@ public class NotificacionVerListado implements Serializable {
             notifTemp.setRevisado("No");
             listaResult.add(notifTemp);
         }
-        return listaResult;
+        this.listaAllNotif = listaResult;
     }
     
     public void verDetalles(Integer idSeleccionado) {
         System.out.println("Se quiere ver los detalles: "+idSeleccionado);
-        CommonFunctions.goToPage("/faces/users/verDetallesNotificacion.xhtml"+"?id="+idSeleccionado);
+        mantNotificaciones.setIdNotificacionSeleccionada(idSeleccionado);
+        CommonFunctions.goToPage("/faces/users/verDetallesNotificacion.xhtml");
     }
     
     public void volverToListado() {
+        mantNotificaciones.limpiarDatos();
         CommonFunctions.goToPage("/faces/users/verNotificaciones.xhtml");
     }
     

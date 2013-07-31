@@ -42,7 +42,7 @@ public class NotificacionVerDetalles implements Serializable {
     private NotificadorLocal notificador;
     
     @Inject
-    private visorImagenesManagedBeans imb;
+    private MantenedorNotificaciones mantNotificacion;
     
     private Integer numNotif;
     private String origen_seleccionado;
@@ -51,96 +51,69 @@ public class NotificacionVerDetalles implements Serializable {
     private String detalleCompleto_seleccionado;
     private boolean revisada_seleccionado;
     private boolean resuelta_seleccionado;
+    private String path_imagen;
+    private String tipo_imagen;
+    private DefaultStreamedContent imagen;
     
     
-    private StreamedContent imagen;
-    
-    public void setNotifTemp(NotificacionDeUsuario notifTemp) {
-        FileInputStream lector = null;
-        try {
-            
-            String path = notifTemp.getImagenAdjunta();
-        
-            System.out.println("Path de imagen a abrir: " + path);
-            File archivoImagen = new File(path);
-            lector = new FileInputStream(archivoImagen);
-            byte[] resultado = new byte[(int)archivoImagen.length()];
-            lector.read(resultado);
-            lector.close();
-            InputStream datosImagenStream = new ByteArrayInputStream(resultado);
-            imagen = new DefaultStreamedContent(datosImagenStream, notifTemp.getTipoImagen());
-            System.out.println("se abrió el defaultStreamedContent");
-            
-        } catch (FileNotFoundException ex) {
-             System.out.println("se abrió el FileNotFoundException");
-            Logger.getLogger(visorImagenesManagedBeans.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            System.out.println("se abrió el IOException");
-            Logger.getLogger(visorImagenesManagedBeans.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                lector.close();
-            } catch (IOException ex) {
-                Logger.getLogger(visorImagenesManagedBeans.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
     
     @PostConstruct
     public void init() {
         System.out.println("Ejecutando init de NotificacionesVerDetalles");
-        
-        if (CommonFunctions.isGetMethod()) {
-            System.out.println("Se hizo un GET");
-            if (!notificacionIsSelected()) {
-                CommonFunctions.goToPage("/faces/users/verNotificaciones.xhtml");
-                return;
-            }
-            Notificacion notifTemp = notificador.getNotificacion(this.numNotif);
-            this.detalleCompleto_seleccionado = notifTemp.getComentario();
-            this.fecha_seleccionado = notifTemp.getFechaHora().get(Calendar.DAY_OF_MONTH)
-                        +"-"
-                        +notifTemp.getFechaHora().getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)
-                        +"-"
-                        +notifTemp.getFechaHora().get(Calendar.YEAR)
-                        +" a las "+notifTemp.getFechaHora().get(Calendar.HOUR)
-                        +":"+notifTemp.getFechaHora().get(Calendar.MINUTE);
-            this.tipo_seleccionado = notifTemp.getTipoIncidencia().getNombreIncidencia();
-            this.origen_seleccionado = notificador.getOrigenIncidencia(notifTemp);
-
-            if (notificador.isNotificacionUsuario(notifTemp)) {
-                NotificacionDeUsuario notifUsuarioTemp = (NotificacionDeUsuario)notifTemp;
-                System.out.println("Se seteo la notificación en imv");
-                imb.setNotifTemp(notifUsuarioTemp);
-                this.imagen = imb.getImagen();
-            }
+        if (mantNotificacion.getIdNotificacionSeleccionada()!= null) {
+            numNotif = mantNotificacion.getIdNotificacionSeleccionada();
+            cargarDatosNotificacion();
+            cargarImagen();
         }
         else {
-            System.out.println("Se hizo un POST");
+            //MOSTRAR ERROR
+            
+            volverToLista();
         }
-        System.out.println("listo init() de NotificacionesVerDetalles");
     }
     
-    private boolean notificacionIsSelected() {
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        String paramNumNotif = externalContext.getRequestParameterMap().get("id");
-        if (paramNumNotif == null){ //No se ha seleccionado aún, redirecciono
-            return false;
-        }
-        
-        //Validar que existe y es un número realmente
-        try {
-            this.numNotif = Integer.parseInt(paramNumNotif);
-        }
-        catch (NumberFormatException nfe) {
-            return false;
-        }
-        
+    private void cargarDatosNotificacion() {
         Notificacion notifTemp = notificador.getNotificacion(this.numNotif);
-        if (notifTemp == null) {
-            return false;
+        this.detalleCompleto_seleccionado = notifTemp.getComentario();
+        this.fecha_seleccionado = Integer.toString(notifTemp.getFechaHora().get(Calendar.DAY_OF_MONTH)).concat(
+                    "-").concat(
+                    notifTemp.getFechaHora().getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)).concat(
+                    "-").concat(
+                    Integer.toString(notifTemp.getFechaHora().get(Calendar.YEAR))).concat(
+                    " a las ").concat(
+                    Integer.toString(notifTemp.getFechaHora().get(Calendar.HOUR))).concat(
+                    ":").concat(
+                    Integer.toString(notifTemp.getFechaHora().get(Calendar.MINUTE)));
+        this.tipo_seleccionado = notifTemp.getTipoIncidencia().getNombreIncidencia();
+        this.origen_seleccionado = notificador.getOrigenIncidencia(notifTemp);
+
+        if (notificador.isNotificacionUsuario(notifTemp)) {
+            NotificacionDeUsuario notifUsuarioTemp = (NotificacionDeUsuario)notifTemp;
+            System.out.println("Se seteo la notificación en imv");
+            this.path_imagen = notifUsuarioTemp.getImagenAdjunta();
+            this.tipo_imagen = notifUsuarioTemp.getTipoImagen();
         }
-        return true;
+    }
+    
+    private void cargarImagen() {
+        try {
+            FileInputStream lector;
+            String path = this.path_imagen;
+
+            System.out.println("Path de imagen a abrir: " + path);
+            File archivoImagen = new File(path);
+            lector = new FileInputStream(archivoImagen);
+            byte[] resultado = new byte[(int) archivoImagen.length()];
+            lector.read(resultado);
+            lector.close();
+            InputStream datosImagenStream = new ByteArrayInputStream(resultado);
+            imagen = new DefaultStreamedContent(datosImagenStream, this.tipo_imagen);
+            System.out.println("se abrió el defaultStreamedContent");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(NotificacionVerDetalles.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(NotificacionVerDetalles.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void verDetalles(Integer idSeleccionado) {
@@ -148,7 +121,7 @@ public class NotificacionVerDetalles implements Serializable {
         CommonFunctions.goToPage("/faces/users/detallesNotificacion.xhtml"+"?id="+idSeleccionado);
     }
     
-    public void volverToListado() {
+    public void volverToLista() {
         CommonFunctions.goToPage("/faces/users/verNotificaciones.xhtml");
     }
     
@@ -220,32 +193,10 @@ public class NotificacionVerDetalles implements Serializable {
     }
 
     public StreamedContent getImagen() {
-        /*
-        try {
-            File archivoImagen = new File("C:\\glassfish3\\jdk7\\uploads_coplime\\img_notif_1374215183342.jpeg");
-            FileInputStream lector = new FileInputStream(archivoImagen);
-            byte[] resultado = new byte[(int)archivoImagen.length()];
-            lector.read(resultado);
-            InputStream datosImagenStream = new ByteArrayInputStream(resultado);
-            this.imagen = new DefaultStreamedContent(datosImagenStream, "image/jpeg");
-            System.out.println("Se abrió la imagen: +" + this.imagen);
-            return this.imagen;
-        }
-        catch (Exception e) {
-            return null;
-        }
-        */
-        
-        if (this.imagen != null) {
-            System.out.println("this.image != null");
-            return this.imagen;
-        }
-        else {
-            System.out.println("this.image es NULL");
-            System.out.println(this.numNotif);
-            return imb.getImagen();
-        }
-        
+        return this.imagen;
     }
     
+    public String getTipoImagen() {
+        return this.tipo_imagen;
+    }
 }
