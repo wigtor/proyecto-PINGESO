@@ -32,16 +32,6 @@ public class MantenedorPuntoLimpio implements Serializable {
         contenedores_creando = new LinkedList();
     }
     
-    @PostConstruct
-    public void init() {
-        System.out.println("Creando el bean con sessionScoped: MantenedorPuntoLimpio");
-    }
-    
-    @PreDestroy
-    public void destruir() {
-        System.out.println("Destruyendo el bean con sessionScoped: MantenedorPuntoLimpio");
-    }
-    
     public void limpiarDatos() {
         pto_creando = null;
         contenedores_creando.clear();

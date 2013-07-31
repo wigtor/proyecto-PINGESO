@@ -75,7 +75,6 @@ public class NotificacionVerListado implements Serializable {
     }
     
     public void verDetalles(Integer idSeleccionado) {
-        System.out.println("Se quiere ver los detalles: "+idSeleccionado);
         mantNotificaciones.setIdNotificacionSeleccionada(idSeleccionado);
         CommonFunctions.goToPage("/faces/users/verDetallesNotificacion.xhtml");
     }

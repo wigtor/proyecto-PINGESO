@@ -59,7 +59,6 @@ public class NotificacionVerDetalles implements Serializable {
     
     @PostConstruct
     public void init() {
-        System.out.println("Ejecutando init de NotificacionesVerDetalles");
         if (mantNotificacion.getIdNotificacionSeleccionada()!= null) {
             numNotif = mantNotificacion.getIdNotificacionSeleccionada();
             cargarDatosNotificacion();
@@ -89,26 +88,24 @@ public class NotificacionVerDetalles implements Serializable {
 
         if (notificador.isNotificacionUsuario(notifTemp)) {
             NotificacionDeUsuario notifUsuarioTemp = (NotificacionDeUsuario)notifTemp;
-            System.out.println("Se seteo la notificación en imv");
             this.path_imagen = notifUsuarioTemp.getImagenAdjunta();
             this.tipo_imagen = notifUsuarioTemp.getTipoImagen();
         }
     }
     
     private void cargarImagen() {
+        if (this.path_imagen == null) {
+            return;
+        }
         try {
             FileInputStream lector;
-            String path = this.path_imagen;
-
-            System.out.println("Path de imagen a abrir: " + path);
-            File archivoImagen = new File(path);
+            File archivoImagen = new File(this.path_imagen);
             lector = new FileInputStream(archivoImagen);
             byte[] resultado = new byte[(int) archivoImagen.length()];
             lector.read(resultado);
             lector.close();
             InputStream datosImagenStream = new ByteArrayInputStream(resultado);
             imagen = new DefaultStreamedContent(datosImagenStream, this.tipo_imagen);
-            System.out.println("se abrió el defaultStreamedContent");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(NotificacionVerDetalles.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -116,17 +113,13 @@ public class NotificacionVerDetalles implements Serializable {
         }
     }
     
-    public void verDetalles(Integer idSeleccionado) {
-        System.out.println("Se quiere ver los detalles: "+idSeleccionado);
-        CommonFunctions.goToPage("/faces/users/detallesNotificacion.xhtml"+"?id="+idSeleccionado);
-    }
-    
     public void volverToLista() {
+        mantNotificacion.limpiarDatos();
         CommonFunctions.goToPage("/faces/users/verNotificaciones.xhtml");
     }
     
     public void eliminar(Integer num) {
-        
+        //Este método debe eliminar la notificación que se está viendo actualmente
     }
     
     

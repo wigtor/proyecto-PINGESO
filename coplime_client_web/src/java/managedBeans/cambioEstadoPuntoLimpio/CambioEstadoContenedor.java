@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package managedBeans.cambioEstadoPuntoLimpio;
 
 import ObjectsForManagedBeans.ContenedorPojo;
 import ObjectsForManagedBeans.SelectElemPojo;

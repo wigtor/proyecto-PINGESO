@@ -4,15 +4,13 @@
  */
 package managedBeans;
 
+import managedBeans.cambioEstadoPuntoLimpio.CambioEstadoPuntoLimpio_session;
 import ObjectsForManagedBeans.ContenedorPojo;
-import ObjectsForManagedBeans.PuntoLimpioPojo;
 import ObjectsForManagedBeans.SelectElemPojo;
 import entities.PuntoLimpio;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;

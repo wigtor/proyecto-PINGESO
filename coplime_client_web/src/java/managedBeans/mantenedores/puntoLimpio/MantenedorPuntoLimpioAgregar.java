@@ -54,7 +54,6 @@ public class MantenedorPuntoLimpioAgregar {
      * Creates a new instance of MantenedorPuntoLimpioAgregar
      */
     public MantenedorPuntoLimpioAgregar() {
-        System.out.println("Se ha instanciado un MantenedorPuntoLimpioAgregar");
     }
     
     @PostConstruct
@@ -131,9 +130,7 @@ public class MantenedorPuntoLimpioAgregar {
     }
     
     public void agregarContenedores() {
-        System.out.println("Se hizo click en 'AgregarContenedores()'");
         mantPtoLimpio.setPto_creando(crearPtoLimpioTemporal());
-        
         CommonFunctions.goToPage("/faces/admin/agregarContenedor.xhtml");
     }
     
@@ -157,6 +154,9 @@ public class MantenedorPuntoLimpioAgregar {
                 System.out.format("%d, %d, %d, %d, %d, %d\n\n", numPuntoLimpio, idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida);
                 resultadoAgregarCont = crudPuntoLimpio.agregarContenedor(
                     numPuntoLimpio, idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida);
+                if (!resultadoAgregarCont) {
+                    //Mostrar error
+                }
             }
             //Avisar que se agregó correctamente el punto limpio
             
