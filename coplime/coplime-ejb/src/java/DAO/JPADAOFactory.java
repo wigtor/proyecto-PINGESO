@@ -13,6 +13,7 @@ import DAO.impl.JPA_mysql.RolDAO_impl;
 import DAO.impl.JPA_mysql.UsuarioDAO_impl;
 import DAO.impl.JPA_mysql.TipoIncidenciaDAO_impl;
 import DAO.impl.JPA_mysql.EstadoDAO_impl;
+import DAO.impl.JPA_mysql.MantencionDAO_impl;
 import DAO.impl.JPA_mysql.MaterialDAO_impl;
 import DAO.impl.JPA_mysql.NotificacionDAO_impl;
 import DAO.impl.JPA_mysql.PuntoLimpioDAO_impl;
@@ -27,6 +28,7 @@ import DAO.interfaces.PuntoLimpioDAO;
 import DAO.interfaces.RolDAO;
 import DAO.interfaces.UsuarioDAO;
 import DAO.interfaces.EstadoDAO;
+import DAO.interfaces.MantencionDAO;
 import DAO.interfaces.MaterialDAO;
 import DAO.interfaces.NotificacionDAO;
 import DAO.interfaces.RevisionDAO;
@@ -126,5 +128,10 @@ public class JPADAOFactory extends DAOFactory{
     @Override
     public RevisionDAO getRevisionDAO() {
         return new RevisionDAO_impl(em);
+    }
+
+    @Override
+    public MantencionDAO getMantencionDAO() {
+        return new MantencionDAO_impl(em);
     }
 }

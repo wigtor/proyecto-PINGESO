@@ -41,6 +41,16 @@ public class MantencionPuntoLimpio implements Serializable {
     private OperarioMantencion operarioMantencion;
 
     
+    public MantencionPuntoLimpio() {
+        
+    }
+    
+    public MantencionPuntoLimpio(PuntoLimpio p, OperarioMantencion operario, String comentarios) {
+        this.puntoLimpio = p;
+        this.operarioMantencion = operario;
+        this.comentarios = comentarios;
+    }
+    
     public OperarioMantencion getOperarioMantencion() {
         return operarioMantencion;
     }

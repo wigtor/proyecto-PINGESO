@@ -108,7 +108,7 @@ public class CambioEstadoPuntoLimpio {
         if (CommonFunctions.isUserInRole("Inspector"))
             CommonFunctions.goToPage("/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml");
         if (CommonFunctions.isUserInRole("Operario"))
-            CommonFunctions.goToPage("/faces/users/operario/agregarMantenciónPuntoLimpio.xhtml");
+            CommonFunctions.goToPage("/faces/users/operario/agregarMantencionPuntoLimpio.xhtml");
     }
     
     public void volver() {
@@ -117,7 +117,7 @@ public class CambioEstadoPuntoLimpio {
         if (CommonFunctions.isUserInRole("Inspector"))
             CommonFunctions.goToPage("/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml");
         if (CommonFunctions.isUserInRole("Operario"))
-            CommonFunctions.goToPage("/faces/users/operario/agregarMantenciónPuntoLimpio.xhtml");
+            CommonFunctions.goToPage("/faces/users/operario/agregarMantencionPuntoLimpio.xhtml");
     }
 
     public List<SelectElemPojo> getListaEstadosPtoLimpio() {

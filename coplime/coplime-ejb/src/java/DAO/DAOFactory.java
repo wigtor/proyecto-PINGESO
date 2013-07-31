@@ -12,6 +12,7 @@ import DAO.interfaces.OperarioDAO;
 import DAO.interfaces.PuntoLimpioDAO;
 import DAO.interfaces.RolDAO;
 import DAO.interfaces.EstadoDAO;
+import DAO.interfaces.MantencionDAO;
 import DAO.interfaces.MaterialDAO;
 import DAO.interfaces.NotificacionDAO;
 import DAO.interfaces.RevisionDAO;
@@ -49,6 +50,7 @@ public abstract class DAOFactory {
     public abstract ComunaDAO getComunaDAO();
     public abstract UnidadMedidaDAO getUnidadMedidaDAO();
     public abstract RevisionDAO getRevisionDAO();
+    public abstract MantencionDAO getMantencionDAO();
     
     public abstract void close();
 

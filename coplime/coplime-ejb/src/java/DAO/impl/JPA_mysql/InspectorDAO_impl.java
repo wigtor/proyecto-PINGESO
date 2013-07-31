@@ -73,6 +73,7 @@ public class InspectorDAO_impl extends genericDAO_impl<Inspector> implements Ins
         return true;
     }
     
+    @Override
     public Inspector findByUsername(String username) {
         Query q = this.em.createNamedQuery("Inspector.findByUsername");
         q.setParameter("username", username);

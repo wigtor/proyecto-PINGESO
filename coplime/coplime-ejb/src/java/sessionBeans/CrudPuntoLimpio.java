@@ -25,7 +25,7 @@ import entities.Usuario;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
@@ -35,7 +35,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author victor
  */
-@Stateful
+@Stateless
 public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
     @PersistenceContext(unitName = "coplime-ejbPU")
     private EntityManager em;
@@ -241,27 +241,6 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         ContenedorDAO contDAO = factoryDeDAOs.getContenedorDAO();
         return contDAO.findByPuntoLimpio(idPtoLimpio.intValue());
-    }
-    
-    @Override
-    public boolean agregarRevision(Integer numPtoLimpio, String usernameLogueado, String detalle, Integer nvoEstado) {
-        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-        PuntoLimpioDAO puntDAO = factoryDeDAOs.getPuntoLimpioDAO();
-        EstadoDAO estDAO = factoryDeDAOs.getEstadoDAO();
-        InspectorDAO inspDAO = factoryDeDAOs.getInspectorDAO();
-        RevisionDAO revDAO = factoryDeDAOs.getRevisionDAO();
-        
-        Inspector ins = inspDAO.findByUsername(usernameLogueado);
-        Estado e = estDAO.find(nvoEstado);
-        PuntoLimpio p = puntDAO.find(numPtoLimpio.intValue());
-        p.setEstadoGlobal(e);
-        puntDAO.update(p);
-        
-        RevisionPuntoLimpio nvaRev = new RevisionPuntoLimpio(p, ins, detalle);
-        nvaRev.setFecha(Calendar.getInstance());
-        revDAO.insert(nvaRev);
-        
-        return true;
     }
     
     @Override

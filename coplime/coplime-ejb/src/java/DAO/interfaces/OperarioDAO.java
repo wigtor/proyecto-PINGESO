@@ -12,4 +12,5 @@ import entities.OperarioMantencion;
  */
 public interface OperarioDAO extends genericDAO<OperarioMantencion>{
     public boolean deleteByRut(int rut);
+    public OperarioMantencion findByUsername(String username);
 }

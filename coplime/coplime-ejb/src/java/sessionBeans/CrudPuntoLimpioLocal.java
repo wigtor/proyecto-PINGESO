@@ -51,7 +51,5 @@ public interface CrudPuntoLimpioLocal {
 
     public List<Contenedor> getContenedoresByPuntoLimpio(Integer idPtoLimpio);
 
-    public boolean agregarRevision(Integer numPtoLimpio, String usernameLogueado, String detalle, Integer nvoEstado);
-    
     public boolean cambiarEstadoContenedor(Integer idContenedor, Integer idEstadoContenedor, int llenadoContenedor);
 }

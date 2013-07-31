@@ -53,4 +53,17 @@ public class OperarioDAO_impl extends genericDAO_impl<OperarioMantencion> implem
         getEntityManager().remove(operarioToDelete);
         return true;
     }
+    
+    @Override
+    public OperarioMantencion findByUsername(String username) {
+        Query q = this.em.createNamedQuery("OperarioMantencion.findByUsername");
+        q.setParameter("username", username);
+        List<OperarioMantencion> res = q.getResultList();
+        if (res.isEmpty()) {
+            return null;
+        }
+        else {
+            return res.get(0);
+        }
+    }
 }
