@@ -47,7 +47,7 @@ public class MantenedorInspectorVerListado {
     public MantenedorInspectorVerListado() {
     }
     
-    /*
+    
     @PostConstruct
     public void init() {         
         
@@ -68,8 +68,7 @@ public class MantenedorInspectorVerListado {
             
         }
     }
-    * 
-    */
+    
     public void agregar() {
        CommonFunctions.goToPage("/faces/admin/agregarInspector.xhtml");
         
