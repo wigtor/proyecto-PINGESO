@@ -14,27 +14,8 @@ import javax.ejb.Local;
 @Local
 public interface UserServiceLocal {
 
-    Usuario buscarUsuario(String username, String password);
-
-    boolean cambiarDatosContacto(int telefono, String email);
-    public String getNombres();
-    
-    public String getApellidos();
-    
-    public String getRol();
-    
-    public String getIdUsuario();
-    
-    public String getEmail();
-
-    public Integer getTelefono();
-    
-    public boolean setUsuarioLogueado(String username);
-
-    public Integer getRut();
-
-    public String getUsername();
-
-    public void cambiarPass(String passActual, String nvaPass) throws Exception;
+    public Usuario buscarUsuario(String username);
+    public void cambiarDatosContacto(String username, int telefono, String email) throws Exception;
+    public void cambiarPass(String username, String passActual, String nvaPass) throws Exception;
 
 }
