@@ -4,7 +4,10 @@
  */
 package managedBeans.infoUsuario;
 
+import entities.Usuario;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -41,27 +44,27 @@ public class infoUsuarioManagedBeans {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        System.out.println("nombre de usuario: "+request.getRemoteUser());
-        if (!userService.setUsuarioLogueado(request.getRemoteUser())) {
-            CommonFunctions.goToPage("/faces/users/logout.xhtml");
+        System.out.println("nombre de usuario: "+request.getRemoteUser() + " "+ CommonFunctions.getUsuarioLogueado());
+        Usuario user = userService.buscarUsuario(CommonFunctions.getUsuarioLogueado());
+        if (user == null) {
+            CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
+            return;
         }
-        nombres = userService.getNombres();
-        apellidos = userService.getApellidos();
-        rol = userService.getRol();
-        rut = userService.getRut();
-        idUsuario = userService.getIdUsuario();
-        email = userService.getEmail();
-        telefono = userService.getTelefono();
-        /*
-        System.out.println("Es administrador: "+request.isUserInRole("Administrador"));
-        System.out.println("Es inspector: "+request.isUserInRole("Inspector"));
-        System.out.println("Es operario: "+request.isUserInRole("Operario"));
-        System.out.println("Es cualquier wea: "+request.isUserInRole("blabla"));
-        */
+        nombres = user.getNombre();
+        apellidos = user.getApellido1().concat(user.getApellido2());
+        rol = user.getRol().getNombreRol();
+        rut = user.getRut();
+        idUsuario = Integer.toString(user.getId());
+        email = user.getEmail();
+        telefono = user.getTelefono();
     }
 
     public void guardarCambios() {
-        userService.cambiarDatosContacto(telefono, email);
+        try {
+            userService.cambiarDatosContacto(CommonFunctions.getUsuarioLogueado(), telefono, email);
+        } catch (Exception ex) {
+            Logger.getLogger(infoUsuarioManagedBeans.class.getName()).log(Level.SEVERE, null, ex);
+        }
         CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
     
@@ -70,6 +73,7 @@ public class infoUsuarioManagedBeans {
     }
     
     public void goToCambiarContrasegna() {
+        System.out.println("Se va a cambiar la contraseña");
         CommonFunctions.goToPage("/faces/users/cambiarContrasegna.xhtml");
     }
     

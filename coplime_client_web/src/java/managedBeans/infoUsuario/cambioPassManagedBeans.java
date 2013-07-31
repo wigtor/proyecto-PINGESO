@@ -8,10 +8,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 import otros.CommonFunctions;
 import sessionBeans.UserServiceLocal;
 
@@ -31,13 +29,7 @@ public class cambioPassManagedBeans {
 
     @PostConstruct
     public void init() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        if (!userService.setUsuarioLogueado(request.getRemoteUser())) {
-            CommonFunctions.goToPage("/faces/users/logout.xhtml");
-        }
-        this.username = userService.getUsername();
+        this.username = CommonFunctions.getUsuarioLogueado();
     }
 
     public void guardarPass() {
@@ -48,7 +40,7 @@ public class cambioPassManagedBeans {
         }
         else {
             try {
-                userService.cambiarPass(passActual, nvaPass);
+                userService.cambiarPass(CommonFunctions.getUsuarioLogueado(), passActual, nvaPass);
                 CommonFunctions.goToPage("/faces/users/infoUsuario.xhtml");
             }
             catch (Exception e) {
