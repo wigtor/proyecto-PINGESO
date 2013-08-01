@@ -7,17 +7,17 @@ package managedBeans.mantenedores.administrador;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
 import otros.CommonFunctions;
 import sessionBeans.CrudAdministradorLocal;
 
 /**
  *
- * @author victor
+ * @author Carlos Barrera
  */
-@Named(value = "creacionAdministrador")
+@Named(value = "MantenedorAdministradorAgregar")
 @RequestScoped
-public class creacionAdministrador {
+public class MantenedorAdministradorAgregar {
+
     @EJB
     private CrudAdministradorLocal crudAdministrador;
     
@@ -26,22 +26,23 @@ public class creacionAdministrador {
     private String nombre;
     private String apellido1;
     private String apellido2;
-    private int rut;
+    private Integer rut;
     private String mail;
-    private int telefono;
+    private Integer telefono;   
     
-    /**
-     * Creates a new instance of creacionAdministrador
-     */
-    public creacionAdministrador() {
+    public MantenedorAdministradorAgregar() {
     }
-    
     
     public void agregarAdministrador() {
         crudAdministrador.agregarAdministrador( username, password, rut, nombre, apellido1, apellido2, mail, telefono);
-        CommonFunctions.goToPage("/faces/index.xhtml");
+        CommonFunctions.goToPage("/faces/admin/verAdministradores.xhtml");
     }
     
+    public void volver() {
+        CommonFunctions.goToPage("/faces/admin/verAdministradores.xhtml");
+       
+    }
+
     public String getUsername() {
         return username;
     }
@@ -82,6 +83,14 @@ public class creacionAdministrador {
         this.apellido2 = apellido2;
     }
 
+    public Integer getRut() {
+        return rut;
+    }
+
+    public void setRut(Integer rut) {
+        this.rut = rut;
+    }
+
     public String getMail() {
         return mail;
     }
@@ -89,20 +98,14 @@ public class creacionAdministrador {
     public void setMail(String mail) {
         this.mail = mail;
     }
-    
-    public int getRut() {
-        return rut;
-    }
 
-    public void setRut(int rut) {
-        this.rut = rut;
-    }
-    
-    public int getTelefono() {
+    public Integer getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(Integer telefono) {
         this.telefono = telefono;
     }
+    
+    
 }

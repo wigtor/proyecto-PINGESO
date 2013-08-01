@@ -28,8 +28,6 @@ import sessionBeans.CrudInspectorLocal;
  * @author Carlos Barrera
  */
 @Named(value = "MantenedorInspectorVerListado")
-//@ViewScoped
-//@SessionScoped
 @RequestScoped
 public class MantenedorInspectorVerListado {
 

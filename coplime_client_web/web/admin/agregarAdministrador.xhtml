@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    
+    <body>
+        <ui:composition template="../mainTemplate.xhtml">
+            <ui:define name="titulo">
+                Agregar administrador
+            </ui:define>
+            
+            <ui:define name="centro">
+                 <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Ingrese datos del administrador</f:facet>
+                         
+                        
+                         
+                         <p:outputLabel value="Nombre"/>
+                         <p:inputText value="#{MantenedorAdministradorAgregar.nombre}" required="true"/>
+                         
+                         <p:outputLabel value="Apellido paterno"/>
+                         <p:inputText value="#{MantenedorAdministradorAgregar.apellido1}" required="true"/>
+                         
+                         <p:outputLabel value="Apellido materno"/>
+                         <p:inputText value="#{MantenedorAdministradorAgregar.apellido2}" required="true"/>
+                         
+                         <p:outputLabel value="Rut"/>
+                         <p:inputText value="#{MantenedorAdministradorAgregar.rut}" required="true"/>
+                        
+                         <p:outputLabel value="Teléfono"/>
+                         <p:inputText value="#{MantenedorAdministradorAgregar.telefono}" required="true"/>
+                         
+                         <p:outputLabel value="E-mail"/>
+                         <p:inputText value="#{MantenedorAdministradorAgregar.mail}" required="true"/>
+                         
+                         <p:outputLabel value="Nombre de usuario"/>
+                         <p:inputText value="#{MantenedorAdministradorAgregar.username}" required="true"/>
+                         
+                         <p:outputLabel value="Contraseña"/>
+                         <p:inputText value="#{MantenedorAdministradorAgregar.password}" required="true" type="password"/>
+                         
+                         <f:facet name="footer">
+                            <p:commandButton value="Guardar" action="#{MantenedorAdministradorAgregar.agregarAdministrador()}"/>
+                            <p:commandButton value="Volver" action="#{MantenedorAdministradorAgregar.volver()}"/>                         
+                         </f:facet>
+                     </p:panelGrid>                
+                </h:form>               
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

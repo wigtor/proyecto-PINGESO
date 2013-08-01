@@ -52,8 +52,8 @@ public class MantenedorInspector implements Serializable{
     
     public MantenedorInspector() {
                
-    }       
-       
+    }   
+    
     
     public String getNombre() {
         return nombre;

@@ -2,53 +2,47 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans.mantenedores.inspector;
+package managedBeans.mantenedores.administrador;
 
-import javax.ejb.EJB;
+import java.io.Serializable;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import otros.CommonFunctions;
-import sessionBeans.CrudInspectorLocal;
+import javax.enterprise.context.SessionScoped;
 
 /**
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorInspectorAgregar")
-@RequestScoped
-public class MantenedorInspectorAgregar {
+@Named(value = "MantenedorAdministrador")
+@SessionScoped
+public class MantenedorAdministrador implements Serializable{
 
-    @EJB
-    private CrudInspectorLocal crudInspector;
-    @Inject 
-    private MantenedorInspectorEditar mantInsp;
-           
+    private String username;
+    private String password;
     private String nombre;
     private String apellido1;
     private String apellido2;
-    private String username;
-    private String password;
     private Integer rut;
     private String mail;
     private Integer telefono;
     
-    public MantenedorInspectorAgregar() {
+    public MantenedorAdministrador() {
     }
-    
-    public void agregarInspector() {
-        crudInspector.agregarInspector(username, password, rut, nombre, apellido1, apellido2, mail, telefono);
-        CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");       
-        
+
+    public String getUsername() {
+        return username;
     }
-    
-    public void volver() {
-        
-        CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");
-       
+
+    public void setUsername(String username) {
+        this.username = username;
     }
-    
-    
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getNombre() {
         return nombre;
@@ -74,14 +68,6 @@ public class MantenedorInspectorAgregar {
         this.apellido2 = apellido2;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public Integer getRut() {
         return rut;
     }
@@ -104,14 +90,6 @@ public class MantenedorInspectorAgregar {
 
     public void setTelefono(Integer telefono) {
         this.telefono = telefono;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
     
     

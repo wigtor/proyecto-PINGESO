@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    
+    <body>
+        <ui:composition template="../mainTemplate.xhtml">
+            <ui:define name="titulo">
+                Editar administrador
+            </ui:define>
+            
+            <ui:define name="centro">
+                 <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Edición de datos del administrador</f:facet>
+                         
+                         <h:outputLabel value=""/>
+                         <h:inputHidden value="#{MantenedorAdministradorEditar.rut}"/>
+                                                  
+                         <p:outputLabel value="Rut"/>
+                         <p:inputText value="#{MantenedorAdministradorEditar.rut}" disabled="true" readonly="true" />
+                         
+                         <p:outputLabel value="Nombre"/>
+                         <p:inputText value="#{MantenedorAdministradorEditar.nombre}"/>
+                         
+                         <p:outputLabel value="Apellido paterno"/>
+                         <p:inputText value="#{MantenedorAdministradorEditar.apellido1}"/>
+                         
+                         <p:outputLabel value="Apellido materno"/>
+                         <p:inputText value="#{MantenedorAdministradorEditar.apellido2}"/>
+                         
+                         <p:outputLabel value="Nombre de usuario"/>
+                         <p:inputText value="#{MantenedorAdministradorEditar.username}"/>
+                         
+                         <p:outputLabel value="Reiniciar contraseña"/>
+                         <p:selectBooleanCheckbox label="Reiniciar contraseña" value="#{MantenedorAdministradorEditar.checkContraseña}"></p:selectBooleanCheckbox>
+                         
+                         <p:outputLabel value="Teléfono"/>
+                         <p:inputText value="#{MantenedorAdministradorEditar.telefono}"/>
+                         
+                         <p:outputLabel value="E-mail"/>
+                         <p:inputText value="#{MantenedorAdministradorEditar.mail}"/>
+                         
+                         <f:facet name="footer">
+                            <p:commandButton value="Guardar" action="#{MantenedorAdministradorEditar.guardarCambiosAdministrador()}"/>
+                            <p:commandButton value="Volver" action="#{MantenedorAdministradorEditar.volver()}"/>                            
+                         </f:facet>
+                     </p:panelGrid>                
+                </h:form>               
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>

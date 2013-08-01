@@ -21,13 +21,13 @@
                        
                        <p:dataTable id="administradores" value="#{MantenedorAdministradorVerListado.lista}" var="adm" widgetVar="administradorTable"  
                                       emptyMessage="No hay administradores registrados en el sistema" 
-                                     filteredValue="#{MantenedorAdministradorVerListado.listaBusqueda}">
+                                      filteredValue="#{MantenedorAdministradorVerListado.listaBusqueda}" >
                                                      
-                           <p:column id="rutColumn" sortBy="#{adm.num}" headerText="Rut" filterMatchMode="contains" filterBy="#{adm.num}"  >
+                           <p:column id="rutColumn"  sortBy="#{adm.num}" headerText="Rut" filterMatchMode="contains" filterBy="#{adm.num}"  >
                                 <h:outputText value="#{adm.num}" /> 
                                                               
                             </p:column>
-                            <p:column id="nomColumn" sortBy="#{adm.nombre}" headerText="Nombre" filterMatchMode="contains" filterBy="#{adm.nombre}">
+                            <p:column id="nomColumn" width="30px" sortBy="#{adm.nombre}" headerText="Nombre" filterMatchMode="contains" filterBy="#{adm.nombre}">
                                 <h:outputText value="#{adm.nombre}" />                                
                             </p:column>
                             
@@ -35,11 +35,11 @@
                                 <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorAdministradorVerListado.verDetalles(adm.num)}">
                                 </p:commandLink>
                             </p:column>                            
-                            <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
+                            <p:column headerText=""  rendered="#{request.isUserInRole('Administrador')}">
                                 <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{MantenedorAdministradorVerListado.editar(adm.num)}">
                                 </p:commandLink>
                             </p:column>
-                            <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
+                            <p:column headerText=""  rendered="#{request.isUserInRole('Administrador')}">
                                 <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{adm.num}.show()" />
                                 
                                 <p:confirmDialog message="¿Está seguro que desea eliminar el administrador?"

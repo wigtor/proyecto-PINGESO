@@ -5,6 +5,7 @@
 package sessionBeans;
 
 import entities.Administrador;
+import entities.Usuario;
 import java.util.Collection;
 import javax.ejb.Local;
 
@@ -20,5 +21,9 @@ public interface CrudAdministradorLocal {
     public boolean eliminarAdministrador(Integer rutUser);
     
     public Collection<Administrador> getAllAdministradores();
+    
+    public Usuario getAdministradorByRut(Integer rutUser);
+    
+    public void editarAdministrador(Integer rutUser, String userName,String nombre, String apellido1, String apellido2, String mail, boolean resetContraseña,int telefono); 
 
 }

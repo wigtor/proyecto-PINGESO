@@ -2,54 +2,64 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans.mantenedores.inspector;
+package managedBeans.mantenedores.administrador;
 
+import entities.Administrador;
+import entities.Inspector;
+import java.util.Collection;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import managedBeans.mantenedores.inspector.MantenedorInspector;
 import otros.CommonFunctions;
+import sessionBeans.CrudAdministradorLocal;
 import sessionBeans.CrudInspectorLocal;
 
 /**
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorInspectorAgregar")
+@Named(value = "MantenedorAdministradorVerDetalles")
 @RequestScoped
-public class MantenedorInspectorAgregar {
+public class MantenedorAdministradorVerDetalles {
 
-    @EJB
-    private CrudInspectorLocal crudInspector;
     @Inject 
-    private MantenedorInspectorEditar mantInsp;
-           
+    private MantenedorAdministrador mantAdm;
+    
     private String nombre;
     private String apellido1;
     private String apellido2;
     private String username;
-    private String password;
     private Integer rut;
     private String mail;
     private Integer telefono;
     
-    public MantenedorInspectorAgregar() {
+    public MantenedorAdministradorVerDetalles() {
     }
     
-    public void agregarInspector() {
-        crudInspector.agregarInspector(username, password, rut, nombre, apellido1, apellido2, mail, telefono);
-        CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");       
-        
+    
+    @PostConstruct
+    public void init() { 
+        System.out.println("inspector en vista ver"+this.mantAdm.getApellido1());
+       
+        this.rut = this.mantAdm.getRut();
+        this.nombre = this.mantAdm.getNombre();
+        this.apellido1 = this.mantAdm.getApellido1();
+        this.apellido2 = this.mantAdm.getApellido2();
+        this.mail = this.mantAdm.getMail();
+        this.username = this.mantAdm.getUsername();
+        this.telefono = this.mantAdm.getTelefono();
+               
     }
     
     public void volver() {
-        
-        CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");
+        CommonFunctions.goToPage("/faces/admin/verAdministradores.xhtml");
        
     }
-    
-    
 
+    
     public String getNombre() {
         return nombre;
     }
@@ -104,14 +114,6 @@ public class MantenedorInspectorAgregar {
 
     public void setTelefono(Integer telefono) {
         this.telefono = telefono;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
     
     

@@ -6,6 +6,7 @@ package managedBeans.mantenedores.administrador;
 
 import managedBeans.mantenedores.inspector.MantenedorInspector;
 import ObjectsForManagedBeans.UsuarioPojo;
+import entities.Administrador;
 import entities.Inspector;
 import entities.Usuario;
 import java.io.Serializable;
@@ -22,6 +23,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import otros.CommonFunctions;
+import sessionBeans.CrudAdministradorLocal;
 import sessionBeans.CrudInspectorLocal;
 
 /**
@@ -35,9 +37,9 @@ import sessionBeans.CrudInspectorLocal;
 public class MantenedorAdministradorVerListado {
 
     @EJB
-    private CrudInspectorLocal crudInspector;
+    private CrudAdministradorLocal crudAdministrador;
     @Inject 
-    private MantenedorInspector mantInsp;
+    private MantenedorAdministrador mantAdm;
    
     
     private List<UsuarioPojo> listaBusqueda;
@@ -53,74 +55,71 @@ public class MantenedorAdministradorVerListado {
     public void init() {         
         
         ///////////////VER/////////////////////
-        Collection<Inspector> listaTemp = crudInspector.getAllInspectores();
-        UsuarioPojo inspectorTemporal;
+        Collection<Administrador> listaTemp = crudAdministrador.getAllAdministradores();
+        UsuarioPojo administradorTemporal;
         
         this.lista = new ArrayList();
-        for(Inspector insp_iter : listaTemp) {
-            inspectorTemporal = new UsuarioPojo();
+        for(Administrador adm_iter : listaTemp) {
+            administradorTemporal = new UsuarioPojo();
             
-            inspectorTemporal.setNombre(insp_iter.getUsuario().getNombre()+" "+
-                    insp_iter.getUsuario().getApellido1()+" "+
-                    insp_iter.getUsuario().getApellido2());
-            inspectorTemporal.setNum(insp_iter.getUsuario().getRut());
-            inspectorTemporal.setUserName(insp_iter.getUsuario().getUsername());
-            this.lista.add(inspectorTemporal);
+            administradorTemporal.setNombre(adm_iter.getUsuario().getNombre()+" "+
+                    adm_iter.getUsuario().getApellido1()+" "+
+                    adm_iter.getUsuario().getApellido2());
+            administradorTemporal.setNum(adm_iter.getUsuario().getRut());
+            administradorTemporal.setUserName(adm_iter.getUsuario().getUsername());
+            this.lista.add(administradorTemporal);
             
         }
     }
     public void agregar() {
-       CommonFunctions.goToPage("/faces/admin/agregarInspector.xhtml");
+       CommonFunctions.goToPage("/faces/admin/agregarAdministrador.xhtml");
         
     }
-    public void editar(int numInspector) {
-        System.out.println("NÚMERO DE INSPECTOR: "+numInspector);
-        Usuario usuarioEdit = crudInspector.getInspectorByRut(numInspector);
+    
+    public void editar(int numAdministrador) {
+        System.out.println("NÚMERO DE INSPECTOR: "+numAdministrador);
+        Usuario usuarioEdit = crudAdministrador.getAdministradorByRut(numAdministrador);
         if (usuarioEdit != null) {
-            this.mantInsp.setRut(new Integer(usuarioEdit.getRut()));
-            this.mantInsp.setNombre(usuarioEdit.getNombre());
-            this.mantInsp.setApellido1(usuarioEdit.getApellido1());
-            this.mantInsp.setApellido2(usuarioEdit.getApellido2());
-            this.mantInsp.setMail(usuarioEdit.getEmail());
-            this.mantInsp.setUsername(usuarioEdit.getUsername());
-            this.mantInsp.setTelefono(usuarioEdit.getTelefono());
-            System.out.println(this.mantInsp.getApellido1());
+            this.mantAdm.setRut(new Integer(usuarioEdit.getRut()));
+            this.mantAdm.setNombre(usuarioEdit.getNombre());
+            this.mantAdm.setApellido1(usuarioEdit.getApellido1());
+            this.mantAdm.setApellido2(usuarioEdit.getApellido2());
+            this.mantAdm.setMail(usuarioEdit.getEmail());
+            this.mantAdm.setUsername(usuarioEdit.getUsername());
+            this.mantAdm.setTelefono(usuarioEdit.getTelefono());
+            System.out.println(this.mantAdm.getApellido1());
         }
         else {
             //MOSTRAR ERROR
         }
-       CommonFunctions.goToPage("/faces/admin/editarInspector.xhtml");
+       CommonFunctions.goToPage("/faces/admin/editarAdministrador.xhtml");
        
     }
     
-    public void verDetalles(int numInspector) {
-        System.out.println("NÚMERO DE INSPECTOR: "+numInspector);
-        Usuario usuarioVerDetalle = crudInspector.getInspectorByRut(numInspector);
+    public void verDetalles(int numAdministrador) {
+        Usuario usuarioVerDetalle = crudAdministrador.getAdministradorByRut(numAdministrador);
         if (usuarioVerDetalle != null) {
-            this.mantInsp.setRut(new Integer(usuarioVerDetalle.getRut()));
-            this.mantInsp.setNombre(usuarioVerDetalle.getNombre());
-            this.mantInsp.setApellido1(usuarioVerDetalle.getApellido1());
-            this.mantInsp.setApellido2(usuarioVerDetalle.getApellido2());
-            this.mantInsp.setMail(usuarioVerDetalle.getEmail());
-            this.mantInsp.setUsername(usuarioVerDetalle.getUsername());
-            this.mantInsp.setTelefono(usuarioVerDetalle.getTelefono());
-            System.out.println(this.mantInsp.getApellido1());
+            this.mantAdm.setRut(new Integer(usuarioVerDetalle.getRut()));
+            this.mantAdm.setNombre(usuarioVerDetalle.getNombre());
+            this.mantAdm.setApellido1(usuarioVerDetalle.getApellido1());
+            this.mantAdm.setApellido2(usuarioVerDetalle.getApellido2());
+            this.mantAdm.setMail(usuarioVerDetalle.getEmail());
+            this.mantAdm.setUsername(usuarioVerDetalle.getUsername());
+            this.mantAdm.setTelefono(usuarioVerDetalle.getTelefono());
+            System.out.println(this.mantAdm.getApellido1());
         }
         else {
             //MOSTRAR ERROR
         }
-       CommonFunctions.goToPage("/faces/users/verDetallesInspector.xhtml");
+       CommonFunctions.goToPage("/faces/admin/verDetallesAdministrador.xhtml");
        
     }
     
-    public void eliminar(int numInspector) {
-       System.out.println("NÚMERO DE INSPECTOR: "+numInspector);
-       //crudInspector.eliminarInspector(new Integer(numInspector));
-       crudInspector.eliminarInspector(numInspector);
-       //init();
-       CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");
+    public void eliminar(int numAdministrador) {
+       System.out.println("NÚMERO DE INSPECTOR: "+numAdministrador);
+       crudAdministrador.eliminarAdministrador(numAdministrador);
+       CommonFunctions.goToPage("/faces/admin/verAdministradores.xhtml");
        
-       //PONER LA LÓGICA DE ELIMINARCIÓN, MOSTRAR MENSAJE DE CONFIRMACIÓN
     }
     
     public void volver() {
