@@ -5,6 +5,7 @@
 package DAO.interfaces;
 
 import entities.RevisionPuntoLimpio;
+import java.util.Collection;
 
 /**
  *
@@ -13,4 +14,5 @@ import entities.RevisionPuntoLimpio;
 public interface RevisionDAO extends genericDAO<RevisionPuntoLimpio>{
     // Interface that all AdministradorDAOs must support
 
+    public Collection<RevisionPuntoLimpio> findAllFromInspector(Integer idUsuario);
 }

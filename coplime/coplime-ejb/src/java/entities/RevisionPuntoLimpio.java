@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
@@ -22,6 +24,9 @@ import javax.persistence.Temporal;
  * @author victor
  */
 @Entity
+@NamedQueries( {
+    @NamedQuery(name="RevisionPuntoLimpio.findByInspector", query="SELECT u FROM RevisionPuntoLimpio u WHERE u.inspectorRevisor.usuario.id = :idUsuario") 
+})
 public class RevisionPuntoLimpio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

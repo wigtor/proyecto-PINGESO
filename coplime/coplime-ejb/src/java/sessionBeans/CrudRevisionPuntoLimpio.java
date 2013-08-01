@@ -5,14 +5,19 @@
 package sessionBeans;
 
 import DAO.DAOFactory;
+import DAO.interfaces.AdministradorDAO;
 import DAO.interfaces.EstadoDAO;
 import DAO.interfaces.InspectorDAO;
 import DAO.interfaces.PuntoLimpioDAO;
 import DAO.interfaces.RevisionDAO;
+import DAO.interfaces.UsuarioDAO;
 import entities.Estado;
 import entities.Inspector;
 import entities.PuntoLimpio;
+import entities.RevisionPuntoLimpio;
+import entities.Usuario;
 import java.util.Calendar;
+import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -47,5 +52,30 @@ public class CrudRevisionPuntoLimpio implements CrudRevisionPuntoLimpioLocal {
         revDAO.insert(nvaRev);
         
         return true;
+    }
+
+    @Override
+    public RevisionPuntoLimpio getRevisionById(Integer idRevision) {
+        if (idRevision == null)
+            return null;
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        RevisionDAO revDAO = factoryDeDAOs.getRevisionDAO();
+        return revDAO.find(idRevision.intValue());
+        
+    }
+
+    @Override
+    public Collection<RevisionPuntoLimpio> getAllRevisiones(String usernameQuienPregunta) {
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        RevisionDAO revDAO = factoryDeDAOs.getRevisionDAO();
+        UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
+        Usuario userPreguntante = userDAO.find(usernameQuienPregunta);
+        if (userPreguntante.getRol().getNombreRol().equals("Administrador")) {
+            return revDAO.findAll();
+        }
+        if (userPreguntante.getRol().getNombreRol().equals("Inspector")) {
+            return revDAO.findAllFromInspector(userPreguntante.getId());
+        }
+        return null; //El operario no tiene permiso para ver las revisiones
     }
 }

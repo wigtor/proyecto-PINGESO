@@ -94,13 +94,13 @@ public class MantenedorPuntoLimpioVerDetalles {
         this.direccion = ptoLimpioSelec.getUbicacion();
         this.estado = ptoLimpioSelec.getEstadoGlobal().getNombreEstado();
         Usuario userEncargado = ptoLimpioSelec.getInspectorEncargado().getUsuario();
-        this.inspectorEncargado = userEncargado.getRut() + " - " + userEncargado.getNombre() + " " + userEncargado.getApellido1();
+        this.inspectorEncargado = Integer.toString(userEncargado.getRut()).concat(" - ")
+                .concat(userEncargado.getNombre()).concat(" ").concat(userEncargado.getApellido1());
         this.numMantencionesRealizadas = ptoLimpioSelec.getMantenciones().size();
         this.numRevisionesRealizadas = ptoLimpioSelec.getRevisiones().size();
         Calendar f = ptoLimpioSelec.getFechaProxRevision();
-        this.fechaProximaRevision = f.get(Calendar.DAY_OF_MONTH)
-                    +"-"
-                    +f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH);
+        this.fechaProximaRevision = Integer.toString(f.get(Calendar.DAY_OF_MONTH)).concat("-").concat(
+                    f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH));
         List<RevisionPuntoLimpio> listaRevisiones = ptoLimpioSelec.getRevisiones();
         this.fechaUltimaRevision = "Nunca revisado";
         if (listaRevisiones != null) {

@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    <body>
+        <ui:composition template="/mainTemplate.xhtml">
+            <ui:define name="titulo" >Ver revisiones</ui:define>
+
+
+            <ui:define name="centro">
+                <h:form>
+                    <p:panelGrid columns="5" styleClass="centrar" >
+                        <f:facet name="header">Listado de revisiones</f:facet>
+
+                        <p:dataTable value="#{MantenedorRevisionVerListado.lista}" var="rev" 
+                                     widgetVar="inspectorTable" emptyMessage="No hay revisiones registradas en el sistema" 
+                                     filteredValue="#{MantenedorRevisionVerListado.listaBusqueda}">
+                            <p:column headerText="N°" sortBy="#{rev.num}" filterMatchMode="contains" filterBy="#{rev.num}">
+                                <h:outputText value="#{rev.num}"/>
+                            </p:column>
+                            <p:column headerText="Detalle" sortBy="#{rev.detalleCortado}" filterMatchMode="contains" filterBy="#{rev.detalleCortado}">
+                                <h:outputText value="#{rev.detalleCortado}"/>
+                            </p:column>
+                            <p:column headerText="Fecha" sortBy="#{rev.fecha}" filterMatchMode="contains" filterBy="#{rev.fecha}">
+                                <h:outputText value="#{rev.fecha}"/>
+                            </p:column>
+                            <p:column headerText="Inspector revisor" rendered="#{request.isUserInRole('Administrador')}" >
+                                <h:outputText value="#{rev.inspector}"/>
+                            </p:column>
+                            <p:column headerText="" >
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorRevisionVerListado.verDetalles(rev.num)}">
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+
+                        <f:facet name="footer">
+                            <p:button value="Agregar revisión" href="/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Inspector')}"/>
+                            <p:commandButton value="Volver" action="#{MantenedorRevisionVerListado.volver()}"/>
+                        </f:facet>
+
+
+                    </p:panelGrid>
+
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>    
+</html>

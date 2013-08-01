@@ -1,75 +1,66 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<f:view xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pm="http://primefaces.org/mobile"
-      contentType="text/html"
-      renderKitId="PRIMEFACES_MOBILE"
-      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
-    
-    
-    <pm:page title="Ver mantenciones">
-        <!-- Main View -->
-        <pm:view id="main">
-            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Administrador')}">
-                <ezcomp:menuAdministrador/>
-            </p:overlayPanel>
-            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Inspector')}">
-                <ezcomp:menuInspector/>
-            </p:overlayPanel>
-            <p:overlayPanel for="btnPanelContext" widgetVar="pcontext" rendered="#{request.isUserInRole('Operario')}">
-                <ezcomp:menuOperario/>
-            </p:overlayPanel>
-            
-            <pm:header title="Ver mantenciones" >
-                <f:facet name="left">
-                    <p:button id="btnPanelContext" value="" iconPos="notext" icon="bars"/>
-                </f:facet>
-            </pm:header>
-            
-            <pm:content>
+      contentType="text/html">
+    <body>
+        <ui:composition template="/mainTemplate.xhtml">
+            <ui:define name="titulo" >Ver mantenciones</ui:define>
+
+
+            <ui:define name="centro">
                 <h:form>
-                <p:outputPanel>
-                    <p:dataList type="inset" styleClass="ui-li-custom">
+                    <p:panelGrid columns="5" styleClass="centrar" >
                         <f:facet name="header">Listado de mantenciones</f:facet>
-                        <f:attribute name="icon" value="false" />
-                        
-                        <p:dataTable value="#{verMantenciones.lista}" var="mant" 
-                                     scrollable="true" scrollHeight="200" 
-                                     paginator="true" rows="10">
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="N°"/>
-                                </f:facet>
+
+                        <p:dataTable value="#{MantenedorPuntoLimpioVerListado.lista}" var="mant" 
+                                     widgetVar="inspectorTable" emptyMessage="No hay puntos limpios registrados en el sistema" 
+                                     filteredValue="#{MantenedorPuntoLimpioVerListado.listaBusqueda}">
+                            <p:column headerText="N°" sortBy="#{mant.num}" filterMatchMode="contains" filterBy="#{mant.num}">
                                 <h:outputText value="#{mant.num}"/>
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Detalle"/>
-                                </f:facet>
-                                <h:outputText value="#{mant.detallesCortado}"/>
+                            <p:column headerText="Detalle" sortBy="#{mant.detalleCortado}" filterMatchMode="contains" filterBy="#{mant.detalleCortado}">
+                                <h:outputText value="#{mant.detalleCortado}"/>
                             </p:column>
-                            <p:column sortBy="#{mant.fecha}">
-                                <f:facet name="header">
-                                    <h:outputText value="Fecha"/>
-                                </f:facet>
+                            <p:column headerText="Fecha" sortBy="#{mant.fecha}" filterMatchMode="contains" filterBy="#{mant.fecha}">
                                 <h:outputText value="#{mant.fecha}"/>
                             </p:column>
+                            <p:column headerText="Operario encargado" rendered="#{request.isUserInRole('Administrador')}" >
+                                <h:outputText value="#{mant.operario}"/>
+                            </p:column>
+                            <p:column headerText="" >
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorPuntoLimpioVerListado.verDetalles(puntoLimpio.num)}">
+                                </p:commandLink>
+                            </p:column>
+                            <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{puntoLimpio.num}.show();" />
+
+                                <p:confirmDialog message="¿Está seguro que desea eliminar el punto limpio?"
+                                                 header="Confirmación de eliminación de punto limpio" severity="alert"
+                                                 widgetVar="cd_#{puntoLimpio.num}" closeOnEscape="true">
+                                    <p:commandButton value="Si" actionListener="#{MantenedorPuntoLimpioVerListado.eliminar(puntoLimpio.num)}"
+                                                     oncomplete="cd_#{puntoLimpio.num}.hide();"/>
+                                    <p:commandButton value="No" onclick="cd_#{puntoLimpio.num}.hide();" type="button" />
+                                </p:confirmDialog>
+                            </p:column>
                         </p:dataTable>
-                        
-                        <p:commandButton value="Ver detalles" action="#{verMantenciones.verDetalles()}"/>
-                        <p:commandButton value="Volver" action="#{verMantenciones.volver()}"/>
-                        
-                    </p:dataList>
-                </p:outputPanel>
+
+                        <f:facet name="footer">
+                            <p:button value="Solicitar mantención" href="/faces/users/inspector/solicitarMantencionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Inspector')}"/>
+                            <p:button value="Agregar mantención" href="/faces/users/operario/agregarMantencionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Operario')}"/>
+                            <p:commandButton value="Ver detalles" action="#{verMantenciones.verDetalles()}"/>
+                            <p:commandButton value="Volver" action="#{verMantenciones.volver()}"/>
+                        </f:facet>
+
+
+                    </p:panelGrid>
+
+
                 </h:form>
-            </pm:content>
-        </pm:view>
-    </pm:page>
-
-</f:view>
-
-
+            </ui:define>
+        </ui:composition>
+    </body>    
+</html>
