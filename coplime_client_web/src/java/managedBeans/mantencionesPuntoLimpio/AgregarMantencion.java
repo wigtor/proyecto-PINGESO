@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans.cambioEstadoPuntoLimpio;
+package managedBeans.mantencionesPuntoLimpio;
 
 import ObjectsForManagedBeans.ContenedorPojo;
 import ObjectsForManagedBeans.SelectElemPojo;
@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import managedBeans.cambioEstadoPuntoLimpio.CambioEstadoPuntoLimpio_session;
 import otros.CommonFunctions;
 import sessionBeans.CrudMantencionPuntoLimpioLocal;
 import sessionBeans.CrudPuntoLimpioLocal;

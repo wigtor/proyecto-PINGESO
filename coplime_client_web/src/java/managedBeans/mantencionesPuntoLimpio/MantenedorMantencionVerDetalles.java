@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans.revisionesPuntoLimpio;
+package managedBeans.mantencionesPuntoLimpio;
 
 import entities.RevisionPuntoLimpio;
 import java.util.Calendar;
@@ -19,14 +19,14 @@ import sessionBeans.CrudRevisionPuntoLimpioLocal;
  *
  * @author victor
  */
-@Named(value = "MantenedorRevisionVerDetalles")
+@Named(value = "MantenedorMantencionVerDetalles")
 @RequestScoped
-public class MantenedorRevisionVerDetalles {
+public class MantenedorMantencionVerDetalles {
     @EJB
     CrudRevisionPuntoLimpioLocal crudRevision;
     
     @Inject
-    private MantenedorRevision mantRevisiones;
+    private MantenedorMantencion mantMantenciones;
     
     private Integer num;
     
@@ -34,19 +34,19 @@ public class MantenedorRevisionVerDetalles {
     
     private String fecha;
     
-    private String inspector;
+    private String operario;
     
     private String detalles;
     
     
     @PostConstruct
     public void init() {
-        this.num = this.mantRevisiones.getIdRevisionDetalles();
+        this.num = this.mantMantenciones.getIdMantencionDetalles();
         
-        cargarDatosRevision();
+        cargarDatosMantencion();
     }
     
-    private void cargarDatosRevision(){
+    private void cargarDatosMantencion(){
         RevisionPuntoLimpio rev = this.crudRevision.getRevisionById(num);
         if (rev == null) {
              volver();
@@ -62,7 +62,7 @@ public class MantenedorRevisionVerDetalles {
         String nombre = rev.getInspectorRevisor().getUsuario().getNombre();
         String apellido1 = rev.getInspectorRevisor().getUsuario().getApellido1();
         //String apellido2 = rev.getInspectorRevisor().getUsuario().getApellido2();
-        this.inspector = rut.concat(" - ").concat(nombre).concat(" ").concat(apellido1);
+        this.operario = rut.concat(" - ").concat(nombre).concat(" ").concat(apellido1);
     }
     
     public void volver() {
@@ -73,7 +73,7 @@ public class MantenedorRevisionVerDetalles {
     /**
      * Creates a new instance of MantenedorRevisionVerListado
      */
-    public MantenedorRevisionVerDetalles() {
+    public MantenedorMantencionVerDetalles() {
     }
 
     public Integer getNum() {
@@ -100,12 +100,12 @@ public class MantenedorRevisionVerDetalles {
         this.fecha = fecha;
     }
 
-    public String getInspector() {
-        return inspector;
+    public String getOperario() {
+        return operario;
     }
 
-    public void setInspector(String inspector) {
-        this.inspector = inspector;
+    public void setOperario(String operario) {
+        this.operario = operario;
     }
     
     public String getDetalles() {
