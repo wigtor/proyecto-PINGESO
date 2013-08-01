@@ -9,11 +9,14 @@ import DAO.interfaces.EstadoDAO;
 import DAO.interfaces.MantencionDAO;
 import DAO.interfaces.OperarioDAO;
 import DAO.interfaces.PuntoLimpioDAO;
+import DAO.interfaces.UsuarioDAO;
 import entities.Estado;
 import entities.MantencionPuntoLimpio;
 import entities.OperarioMantencion;
 import entities.PuntoLimpio;
+import entities.Usuario;
 import java.util.Calendar;
+import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -46,5 +49,33 @@ public class CrudMantencionPuntoLimpio implements CrudMantencionPuntoLimpioLocal
         mantDAO.insert(nvaMant);
         
         return true;
+    }
+    
+    @Override
+    public MantencionPuntoLimpio getMantencionById(Integer idMantencion) {
+        if (idMantencion == null)
+            return null;
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        MantencionDAO mantDAO = factoryDeDAOs.getMantencionDAO();
+        return mantDAO.find(idMantencion.intValue());
+        
+    }
+
+    @Override
+    public Collection<MantencionPuntoLimpio> getAllMantenciones(String usernameQuienPregunta) {
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        MantencionDAO revDAO = factoryDeDAOs.getMantencionDAO();
+        UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
+        Usuario userPreguntante = userDAO.find(usernameQuienPregunta);
+        if (userPreguntante == null) {
+            return null;
+        }
+        if (userPreguntante.getRol().getNombreRol().equals("Administrador")) {
+            return revDAO.findAll();
+        }
+        if (userPreguntante.getRol().getNombreRol().equals("Operario")) {
+            return revDAO.findAllFromOperario(userPreguntante.getId());
+        }
+        return null; //El inspector no tiene permiso para ver las revisiones
     }
 }

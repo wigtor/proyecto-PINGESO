@@ -7,7 +7,10 @@ package DAO.impl.JPA_mysql;
 import DAO.interfaces.MantencionDAO;
 import DAO.interfaces.RevisionDAO;
 import entities.MantencionPuntoLimpio;
+import java.util.Collection;
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -20,4 +23,11 @@ public class MantencionDAO_impl extends genericDAO_impl<MantencionPuntoLimpio> i
         this.em = em;
     }
     
+    @Override
+    public Collection<MantencionPuntoLimpio> findAllFromOperario(Integer idUsuario) {
+        Query q = this.em.createNamedQuery("MantencionPuntoLimpio.findByOperario");
+        q.setParameter("idUsuario", idUsuario);
+        List<MantencionPuntoLimpio> res = q.getResultList();
+        return res;
+    }
 }

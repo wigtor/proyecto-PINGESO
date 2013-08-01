@@ -4,9 +4,8 @@
  */
 package managedBeans.mantencionesPuntoLimpio;
 
-import managedBeans.revisionesPuntoLimpio.*;
 import ObjectsForManagedBeans.RevisionPojo;
-import entities.RevisionPuntoLimpio;
+import entities.MantencionPuntoLimpio;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -18,7 +17,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import otros.CommonFunctions;
-import sessionBeans.CrudRevisionPuntoLimpioLocal;
+import sessionBeans.CrudMantencionPuntoLimpioLocal;
 
 /**
  *
@@ -28,10 +27,10 @@ import sessionBeans.CrudRevisionPuntoLimpioLocal;
 @RequestScoped
 public class MantenedorMantencionVerListado {
     @EJB
-    CrudRevisionPuntoLimpioLocal crudRevision;
+    CrudMantencionPuntoLimpioLocal crudMantencion;
     
     @Inject
-    private MantenedorRevision mantRevisiones;
+    private MantenedorMantencion mantMantenciones;
     
     private List<RevisionPojo> lista;
     
@@ -42,16 +41,18 @@ public class MantenedorMantencionVerListado {
     
     @PostConstruct
     public void init() {
-        cargarRevisiones();
+        cargarMantenciones();
     }
     
-    private void cargarRevisiones(){
-        Collection<RevisionPuntoLimpio> listaTemp = crudRevision.getAllRevisiones(CommonFunctions.getUsuarioLogueado());
+    private void cargarMantenciones(){
+        Collection<MantencionPuntoLimpio> listaTemp = crudMantencion.getAllMantenciones(CommonFunctions.getUsuarioLogueado());
+        if (listaTemp == null)
+            return;
         RevisionPojo revTemporal;
         Calendar f;
         String str_temp, rut, nombre, apellido1;
         List<RevisionPojo> listaResult = new ArrayList();
-        for(RevisionPuntoLimpio rev_iter : listaTemp) {
+        for(MantencionPuntoLimpio rev_iter : listaTemp) {
             revTemporal = new RevisionPojo();
             
             revTemporal.setNum(rev_iter.getId());
@@ -60,16 +61,16 @@ public class MantenedorMantencionVerListado {
                     +"-"
                     +f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH));
             
-            str_temp = rev_iter.getDetalles();
+            str_temp = rev_iter.getComentarios();
             if (str_temp.length() > 21) {
                 str_temp = str_temp.substring(0, 25)+"...";
             }
             revTemporal.setDetalleCortado(str_temp);
             
-            rut = Integer.toString(rev_iter.getInspectorRevisor().getUsuario().getRut());
-            nombre = rev_iter.getInspectorRevisor().getUsuario().getNombre();
-            apellido1 = rev_iter.getInspectorRevisor().getUsuario().getApellido1();
-            revTemporal.setInspector(rut.concat(" - ").concat(nombre).concat(apellido1));
+            rut = Integer.toString(rev_iter.getOperarioMantencion().getUsuario().getRut());
+            nombre = rev_iter.getOperarioMantencion().getUsuario().getNombre();
+            apellido1 = rev_iter.getOperarioMantencion().getUsuario().getApellido1();
+            revTemporal.setUsuario(rut.concat(" - ").concat(nombre).concat(apellido1));
             listaResult.add(revTemporal);
         }
         this.lista = listaResult;
@@ -77,21 +78,21 @@ public class MantenedorMantencionVerListado {
     
     public void verDetalles(Integer numRevision) {
         System.out.println("NÚMERO DE REVISION: "+numRevision);
-        RevisionPuntoLimpio revisionSelec = crudRevision.getRevisionById(numRevision);
+        MantencionPuntoLimpio revisionSelec = crudMantencion.getMantencionById(numRevision);
         
         if (revisionSelec != null) { //Verifico que exista
-            this.mantRevisiones.setIdRevisionDetalles(numRevision);
+            this.mantMantenciones.setIdMantencionDetalles(numRevision);
         }
         else {
             //MOSTRAR ERROR
             CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
         }
-        CommonFunctions.goToPage("/faces/users/verDetallesRevision.xhtml");
+        CommonFunctions.goToPage("/faces/users/verDetallesMantencion.xhtml");
        
     }
     
     public void volver() {
-        mantRevisiones.limpiarDatos();
+        mantMantenciones.limpiarDatos();
         CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
     
@@ -100,14 +101,6 @@ public class MantenedorMantencionVerListado {
      * Creates a new instance of MantenedorMantencionVerListado
      */
     public MantenedorMantencionVerListado() {
-    }
-
-    public MantenedorRevision getMantRevisiones() {
-        return mantRevisiones;
-    }
-
-    public void setMantRevisiones(MantenedorRevision mantRevisiones) {
-        this.mantRevisiones = mantRevisiones;
     }
 
     public List<RevisionPojo> getLista() {

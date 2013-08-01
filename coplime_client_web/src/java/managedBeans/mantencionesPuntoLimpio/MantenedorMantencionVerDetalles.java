@@ -4,7 +4,7 @@
  */
 package managedBeans.mantencionesPuntoLimpio;
 
-import entities.RevisionPuntoLimpio;
+import entities.MantencionPuntoLimpio;
 import java.util.Calendar;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
@@ -13,7 +13,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import otros.CommonFunctions;
-import sessionBeans.CrudRevisionPuntoLimpioLocal;
+import sessionBeans.CrudMantencionPuntoLimpioLocal;
 
 /**
  *
@@ -23,7 +23,7 @@ import sessionBeans.CrudRevisionPuntoLimpioLocal;
 @RequestScoped
 public class MantenedorMantencionVerDetalles {
     @EJB
-    CrudRevisionPuntoLimpioLocal crudRevision;
+    CrudMantencionPuntoLimpioLocal crudMantencion;
     
     @Inject
     private MantenedorMantencion mantMantenciones;
@@ -47,26 +47,26 @@ public class MantenedorMantencionVerDetalles {
     }
     
     private void cargarDatosMantencion(){
-        RevisionPuntoLimpio rev = this.crudRevision.getRevisionById(num);
+        MantencionPuntoLimpio rev = this.crudMantencion.getMantencionById(num);
         if (rev == null) {
              volver();
              return;
         }
         this.puntoLimpio = Integer.toString(rev.getPuntoLimpio().getId()).concat(" - ").concat(rev.getPuntoLimpio().getNombre());
-        this.detalles = rev.getDetalles();
+        this.detalles = rev.getComentarios();
         Calendar f = rev.getFecha();
         this.fecha = Integer.toString(f.get(Calendar.DAY_OF_MONTH)).concat("-").concat(
                     f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)).concat(
                 "-").concat(Integer.toString(f.get(Calendar.YEAR)));
-        String rut = Integer.toString(rev.getInspectorRevisor().getUsuario().getRut());
-        String nombre = rev.getInspectorRevisor().getUsuario().getNombre();
-        String apellido1 = rev.getInspectorRevisor().getUsuario().getApellido1();
-        //String apellido2 = rev.getInspectorRevisor().getUsuario().getApellido2();
+        String rut = Integer.toString(rev.getOperarioMantencion().getUsuario().getRut());
+        String nombre = rev.getOperarioMantencion().getUsuario().getNombre();
+        String apellido1 = rev.getOperarioMantencion().getUsuario().getApellido1();
+        //String apellido2 = rev.getOperarioMantencion().getUsuario().getApellido2();
         this.operario = rut.concat(" - ").concat(nombre).concat(" ").concat(apellido1);
     }
     
     public void volver() {
-       CommonFunctions.goToPage("/faces/users/verRevisiones.xhtml");
+       CommonFunctions.goToPage("/faces/users/verMantenciones.xhtml");
     }
     
     

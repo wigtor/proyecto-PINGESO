@@ -4,6 +4,8 @@
  */
 package sessionBeans;
 
+import entities.MantencionPuntoLimpio;
+import java.util.Collection;
 import javax.ejb.Local;
 
 /**
@@ -14,5 +16,6 @@ import javax.ejb.Local;
 public interface CrudMantencionPuntoLimpioLocal {
 
     public boolean agregarMantencion(Integer numPtoLimpio, String usernameLogueado, String detalle, Integer nvoEstado);
-    
+    public MantencionPuntoLimpio getMantencionById(Integer numMantencion);
+    public Collection<MantencionPuntoLimpio> getAllMantenciones(String usernameQuienPregunta);
 }

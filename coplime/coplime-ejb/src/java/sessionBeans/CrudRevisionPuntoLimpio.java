@@ -70,6 +70,9 @@ public class CrudRevisionPuntoLimpio implements CrudRevisionPuntoLimpioLocal {
         RevisionDAO revDAO = factoryDeDAOs.getRevisionDAO();
         UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
         Usuario userPreguntante = userDAO.find(usernameQuienPregunta);
+        if (userPreguntante == null) {
+            return null;
+        }
         if (userPreguntante.getRol().getNombreRol().equals("Administrador")) {
             return revDAO.findAll();
         }

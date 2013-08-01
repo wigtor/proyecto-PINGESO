@@ -5,6 +5,7 @@
 package DAO.interfaces;
 
 import entities.MantencionPuntoLimpio;
+import java.util.Collection;
 
 /**
  *
@@ -12,5 +13,5 @@ import entities.MantencionPuntoLimpio;
  */
 public interface MantencionDAO extends genericDAO<MantencionPuntoLimpio>{
     // Interface that all AdministradorDAOs must support
-
+    public Collection<MantencionPuntoLimpio> findAllFromOperario(Integer idUsuario);
 }

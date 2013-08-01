@@ -17,7 +17,7 @@
                         <f:facet name="header">Listado de mantenciones</f:facet>
 
                         <p:dataTable value="#{MantenedorMantencionVerListado.lista}" var="rev" 
-                                     widgetVar="inspectorTable" emptyMessage="No hay revisiones registradas en el sistema" 
+                                     widgetVar="inspectorTable" emptyMessage="No hay mantenciones registradas en el sistema" 
                                      filteredValue="#{MantenedorMantencionVerListado.listaBusqueda}">
                             <p:column headerText="N°" sortBy="#{rev.num}" filterMatchMode="contains" filterBy="#{rev.num}">
                                 <h:outputText value="#{rev.num}"/>
@@ -29,7 +29,7 @@
                                 <h:outputText value="#{rev.fecha}"/>
                             </p:column>
                             <p:column headerText="Operario encargado" rendered="#{request.isUserInRole('Administrador')}" >
-                                <h:outputText value="#{rev.operario}"/>
+                                <h:outputText value="#{rev.usuario}"/>
                             </p:column>
                             <p:column headerText="" >
                                 <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorMantencionVerListado.verDetalles(rev.num)}">

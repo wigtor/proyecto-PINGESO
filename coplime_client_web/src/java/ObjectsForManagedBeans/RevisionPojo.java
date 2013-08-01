@@ -12,7 +12,7 @@ public class RevisionPojo {
     Integer num;
     String detalleCortado;
     String fecha;
-    String inspector;
+    String usuario;
 
     public Integer getNum() {
         return num;
@@ -38,12 +38,12 @@ public class RevisionPojo {
         this.fecha = fecha;
     }
 
-    public String getInspector() {
-        return inspector;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setInspector(String inspector) {
-        this.inspector = inspector;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
     
 }

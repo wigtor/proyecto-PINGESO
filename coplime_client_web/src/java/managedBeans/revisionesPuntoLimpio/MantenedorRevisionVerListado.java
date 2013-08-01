@@ -46,6 +46,8 @@ public class MantenedorRevisionVerListado {
     
     private void cargarRevisiones(){
         Collection<RevisionPuntoLimpio> listaTemp = crudRevision.getAllRevisiones(CommonFunctions.getUsuarioLogueado());
+        if (listaTemp == null)
+            return;
         RevisionPojo revTemporal;
         Calendar f;
         String str_temp, rut, nombre, apellido1;
@@ -68,7 +70,7 @@ public class MantenedorRevisionVerListado {
             rut = Integer.toString(rev_iter.getInspectorRevisor().getUsuario().getRut());
             nombre = rev_iter.getInspectorRevisor().getUsuario().getNombre();
             apellido1 = rev_iter.getInspectorRevisor().getUsuario().getApellido1();
-            revTemporal.setInspector(rut.concat(" - ").concat(nombre).concat(apellido1));
+            revTemporal.setUsuario(rut.concat(" - ").concat(nombre).concat(apellido1));
             listaResult.add(revTemporal);
         }
         this.lista = listaResult;
@@ -99,14 +101,6 @@ public class MantenedorRevisionVerListado {
      * Creates a new instance of MantenedorRevisionVerListado
      */
     public MantenedorRevisionVerListado() {
-    }
-
-    public MantenedorRevision getMantRevisiones() {
-        return mantRevisiones;
-    }
-
-    public void setMantRevisiones(MantenedorRevision mantRevisiones) {
-        this.mantRevisiones = mantRevisiones;
     }
 
     public List<RevisionPojo> getLista() {
