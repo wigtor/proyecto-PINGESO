@@ -43,13 +43,13 @@ public class MantenedorSolicitudVerDetallesMB {
     public void init() {
         this.num = this.mantSolicitudes.getIdSolicitudDetalles();
         
-        cargarDatosMantencion();
+        cargarDatosSolicitud();
     }
     
-    private void cargarDatosMantencion(){
+    private void cargarDatosSolicitud(){
         MantencionPuntoLimpio rev = this.crudMantencion.getMantencionById(num);
         if (rev == null) {
-             volver();
+             volverToLista();
              return;
         }
         this.puntoLimpio = Integer.toString(rev.getPuntoLimpio().getId()).concat(" - ").concat(rev.getPuntoLimpio().getNombre());
@@ -65,14 +65,11 @@ public class MantenedorSolicitudVerDetallesMB {
         this.operario = rut.concat(" - ").concat(nombre).concat(" ").concat(apellido1);
     }
     
-    public void volver() {
-       CommonFunctions.goToPage("/faces/users/verMantenciones.xhtml");
+    public void volverToLista() {
+       CommonFunctions.goToPage("/faces/users/verSolicitudesMantencion.xhtml");
     }
     
     
-    /**
-     * Creates a new instance of MantenedorRevisionVerListado
-     */
     public MantenedorSolicitudVerDetallesMB() {
     }
 

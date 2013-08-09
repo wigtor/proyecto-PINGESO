@@ -19,6 +19,10 @@
                      <p:panelGrid columns="2" styleClass="centrar">
                          <f:facet name="header">Edición de datos del inspector</f:facet>
                          
+                         
+                         <p:outputLabel value="N° de inspector"/>
+                         <p:inputText value="#{mantenedorInspectorEditarMB.numeroInspector}" disabled="true" readonly="true" />
+                         
                          <h:outputLabel value=""/>
                          <h:inputHidden value="#{mantenedorInspectorEditarMB.rut}"/>
                                                   
@@ -48,7 +52,7 @@
                          
                          <f:facet name="footer">
                             <p:commandButton value="Guardar" action="#{mantenedorInspectorEditarMB.guardarCambiosInspector()}"/>
-                            <p:commandButton value="Volver" action="#{mantenedorInspectorEditarMB.volver()}"/>                            
+                            <p:commandButton value="Volver" action="#{mantenedorInspectorEditarMB.volverToLista()}"/>                            
                          </f:facet>
                      </p:panelGrid>                
                 </h:form>               

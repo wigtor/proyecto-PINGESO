@@ -102,7 +102,18 @@ public class CrudInspector implements CrudInspectorLocal {
     }
     
     @Override
-    public Usuario getInspectorByRut(Integer rutUser) {
+    public Inspector getInspectorByRut(Integer rutUser) {
+        //Hago los DAO
+        if (rutUser == null) {
+            return null;
+        }
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        InspectorDAO inspectorDAO = factoryDeDAOs.getInspectorDAO();
+        return inspectorDAO.findByRut(rutUser.intValue());
+    }
+    
+    @Override
+    public Usuario getUsuarioByRut(Integer rutUser) {
         //Hago los DAO
         if (rutUser == null) {
             return null;

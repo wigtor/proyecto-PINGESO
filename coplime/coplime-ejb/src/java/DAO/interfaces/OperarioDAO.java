@@ -11,6 +11,7 @@ import entities.OperarioMantencion;
  * @author victor
  */
 public interface OperarioDAO extends genericDAO<OperarioMantencion>{
+    public OperarioMantencion findByRut(int rut);
     public boolean deleteByRut(int rut);
     public OperarioMantencion findByUsername(String username);
 }

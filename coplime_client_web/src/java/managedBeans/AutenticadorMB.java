@@ -36,7 +36,7 @@ public class AutenticadorMB implements Serializable {
         System.out.println("URL Original: "+originalURL);
         if (originalURL == null) {
             originalURL = FacesContext.getCurrentInstance().getExternalContext()
-                    .getRequestContextPath()+"/faces/users/verPuntosLimpios.xhtml";
+                    .getRequestContextPath().concat("/faces/users/verPuntosLimpios.xhtml");
         }
     }
     
@@ -61,7 +61,7 @@ public class AutenticadorMB implements Serializable {
             externalContext.redirect(originalURL);
         }
         catch (Exception e) {
-            System.out.println("MENSAJE DE EXCEPCIÓN: "+e.getMessage());
+            System.out.println("MENSAJE DE EXCEPCIÓN EN LOGIN: "+e.getMessage());
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Nombre de usuario o contraseña incorrectos", ""));
         }
     }

@@ -35,7 +35,7 @@ public class pobladoInicial {
         ExternalContext externalContext = context.getExternalContext();
         try {
             String pre = externalContext.getRequestContextPath();
-            externalContext.redirect(pre+"/faces/index.xhtml");
+            externalContext.redirect(pre.concat("/faces/index.xhtml"));
         }
         catch (IOException ioe) {
             System.out.println(ioe.getMessage());

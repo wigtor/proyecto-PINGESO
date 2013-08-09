@@ -120,7 +120,6 @@ public class MantenedorPuntoLimpioVerDetallesMB {
     }
     
     public void volverToLista() {
-        System.out.println("Se hizo click en 'volverToLista()'");
         mantPtoLimpio.limpiarDatos();
         CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }

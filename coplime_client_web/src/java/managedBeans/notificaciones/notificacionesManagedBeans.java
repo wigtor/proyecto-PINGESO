@@ -4,7 +4,6 @@
  */
 package managedBeans.notificaciones;
 
-import ObjectsForManagedBeans.NotificacionPojo;
 import java.awt.event.ActionEvent;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -52,7 +51,6 @@ public class notificacionesManagedBeans implements Serializable {
     }
     
     public int getCantidadNotificaciones() {
-        System.out.println("Accediendo a la cantidad de notificaciones");
         return cantidadNotificaciones;
     }
 

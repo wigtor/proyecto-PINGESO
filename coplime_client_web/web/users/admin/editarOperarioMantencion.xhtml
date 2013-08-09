@@ -19,6 +19,10 @@
                      <p:panelGrid columns="2" styleClass="centrar">
                          <f:facet name="header">Edición de datos del operario</f:facet>
                          
+                         
+                         <p:outputLabel value="N° de operario"/>
+                         <p:inputText value="#{mantenedorOperarioEditarMB.numeroOperario}" disabled="true" readonly="true" />
+                         
                          <h:outputLabel value=""/>
                          <h:inputHidden value="#{mantenedorOperarioEditarMB.rut}"/>
                                                   
@@ -48,7 +52,7 @@
                          
                          <f:facet name="footer">
                             <p:commandButton value="Guardar" action="#{mantenedorOperarioEditarMB.guardarCambiosOperario()}"/>
-                            <p:commandButton value="Volver" action="#{mantenedorOperarioEditarMB.volver()}"/>                            
+                            <p:commandButton value="Volver" action="#{mantenedorOperarioEditarMB.volverToLista()}"/>                            
                          </f:facet>
                      </p:panelGrid>                
                 </h:form>               

@@ -4,6 +4,8 @@
  */
 package managedBeans.mantenedores.inspector;
 
+import entities.Inspector;
+import entities.Usuario;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -26,6 +28,7 @@ public class MantenedorInspectorEditarMB {
     @Inject 
     private MantenedorInspectorConversation mantInsp;
     
+    private Integer numeroInspector;
     private String nombre;
     private String apellido1;
     private String apellido2;
@@ -38,19 +41,32 @@ public class MantenedorInspectorEditarMB {
     
     @PostConstruct
     public void init() { 
-        System.out.println("inspector en vista edit"+this.mantInsp.getApellido1());
-       
-        this.rut = this.mantInsp.getRut();
-        this.nombre = this.mantInsp.getNombre();
-        this.apellido1 = this.mantInsp.getApellido1();
-        this.apellido2 = this.mantInsp.getApellido2();
-        this.mail = this.mantInsp.getMail();
-        this.username = this.mantInsp.getUsername();
-        this.telefono = this.mantInsp.getTelefono();
+        if (mantInsp.getIdUsuarioDetalles()!= null) {
+            Integer numInsp = mantInsp.getIdUsuarioDetalles();
+            cargarDatosInspector(numInsp);
+        }
+        else {
+            //MOSTRAR ERROR
+            volverToLista();
+        }
     }
     
-    public MantenedorInspectorEditarMB() {
+    private void cargarDatosInspector(Integer numInsp) {
+        Inspector inspSelect = crudInspector.getInspectorByRut(numInsp);
+        if (inspSelect == null) {
+            volverToLista();
+            return;
+        }
+        this.numeroInspector = inspSelect.getId();
+        this.rut = inspSelect.getUsuario().getRut();
+        this.nombre = inspSelect.getUsuario().getNombre();
+        this.apellido1 = inspSelect.getUsuario().getApellido1();
+        this.apellido2 = inspSelect.getUsuario().getApellido2();
+        this.mail = inspSelect.getUsuario().getEmail();
+        this.username = inspSelect.getUsuario().getUsername();
+        this.telefono = inspSelect.getUsuario().getTelefono();
     }
+    
     
     public void guardarCambiosInspector(){
         System.out.println("this.rut: "+this.rut);
@@ -60,9 +76,13 @@ public class MantenedorInspectorEditarMB {
         CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");
     }
     
-    public void volver() {
+    public void volverToLista() {
        CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");
        
+    }
+    
+    
+    public MantenedorInspectorEditarMB() {
     }
 
     public MantenedorInspectorConversation getMantInsp() {
@@ -91,6 +111,14 @@ public class MantenedorInspectorEditarMB {
 
     public String getApellido2() {
         return apellido2;
+    }
+
+    public Integer getNumeroInspector() {
+        return numeroInspector;
+    }
+
+    public void setNumeroInspector(Integer numeroInspector) {
+        this.numeroInspector = numeroInspector;
     }
 
     public void setApellido2(String apellido2) {

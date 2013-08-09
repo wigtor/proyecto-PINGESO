@@ -4,6 +4,7 @@
  */
 package managedBeans.mantenedores.operario;
 
+import entities.OperarioMantencion;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -26,6 +27,7 @@ public class MantenedorOperarioEditarMB {
     @Inject 
     private MantenedorOperarioConversation mantOp;
     
+    private Integer numeroOperario;
     private String nombre;
     private String apellido1;
     private String apellido2;
@@ -41,15 +43,31 @@ public class MantenedorOperarioEditarMB {
     
     @PostConstruct
     public void init() { 
-        System.out.println("inspector en vista edit"+this.mantOp.getApellido1());
-       
-        this.rut = this.mantOp.getRut();
-        this.nombre = this.mantOp.getNombre();
-        this.apellido1 = this.mantOp.getApellido1();
-        this.apellido2 = this.mantOp.getApellido2();
-        this.mail = this.mantOp.getMail();
-        this.username = this.mantOp.getUsername();
-        this.telefono = this.mantOp.getTelefono();
+        if (mantOp.getIdUsuarioDetalles()!= null) {
+            Integer numOp = mantOp.getIdUsuarioDetalles();
+            cargarDatosOperario(numOp);
+        }
+        else {
+            //MOSTRAR ERROR
+            
+            volverToLista();
+        }
+    }
+    
+    private void cargarDatosOperario(Integer numAdmin) {
+        OperarioMantencion operarioSelect = crudOperario.getOperarioByRut(numAdmin);
+        if (operarioSelect == null) {
+            volverToLista();
+            return;
+        }
+        this.numeroOperario = operarioSelect.getId();
+        this.rut = operarioSelect.getUsuario().getRut();
+        this.nombre = operarioSelect.getUsuario().getNombre();
+        this.apellido1 = operarioSelect.getUsuario().getApellido1();
+        this.apellido2 = operarioSelect.getUsuario().getApellido2();
+        this.mail = operarioSelect.getUsuario().getEmail();
+        this.username = operarioSelect.getUsuario().getUsername();
+        this.telefono = operarioSelect.getUsuario().getTelefono();
     }
     
     public void guardarCambiosOperario(){
@@ -57,7 +75,7 @@ public class MantenedorOperarioEditarMB {
         CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
     }
     
-    public void volver() {
+    public void volverToLista() {
        CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
        
     }
@@ -69,7 +87,14 @@ public class MantenedorOperarioEditarMB {
     public void setMantOp(MantenedorOperarioConversation mantOp) {
         this.mantOp = mantOp;
     }
+    
+    public Integer getNumeroOperario() {
+        return numeroOperario;
+    }
 
+    public void setNumeroOperario(Integer numeroOperario) {
+        this.numeroOperario = numeroOperario;
+    }
     public String getNombre() {
         return nombre;
     }

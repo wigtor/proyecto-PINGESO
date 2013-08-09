@@ -6,7 +6,6 @@ package managedBeans.mantenedores.puntoLimpio;
 
 import ObjectsForManagedBeans.PuntoLimpioPojo;
 import entities.PuntoLimpio;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -46,10 +45,10 @@ public class MantenedorPuntoLimpioVerListadoMB {
     
     @PostConstruct
     public void init() {
-        this.lista = cargarPuntosLimpios();
+        cargarPuntosLimpios();
     }
     
-    private List<PuntoLimpioPojo> cargarPuntosLimpios(){
+    private void cargarPuntosLimpios(){
         Collection<PuntoLimpio> listaTemp = crudPuntoLimpio.getAllPuntosLimpios();
         PuntoLimpioPojo ptoTemporal;
         Calendar f;
@@ -61,12 +60,12 @@ public class MantenedorPuntoLimpioVerListadoMB {
             ptoTemporal.setEstado(pto_iter.getEstadoGlobal().getNombreEstado());
             ptoTemporal.setNombre(pto_iter.getNombre());
             f = pto_iter.getFechaProxRevision();
-            ptoTemporal.setFechaProximaRevStr(f.get(Calendar.DAY_OF_MONTH)
-                    +"-"
-                    +f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH));
+            ptoTemporal.setFechaProximaRevStr(Integer.toString(f.get(Calendar.DAY_OF_MONTH))
+                    .concat("-")
+                    .concat(f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)));
             listaResult.add(ptoTemporal);
         }
-        return listaResult;
+        this.lista = listaResult;
     }
     
     public List<PuntoLimpioPojo> getLista() {
@@ -90,24 +89,14 @@ public class MantenedorPuntoLimpioVerListadoMB {
     }
     
     
-    /**
-     * Creates a new instance of MantenedorPuntoLimpioVerListadoMB
-     */
     public MantenedorPuntoLimpioVerListadoMB() {
     }
     
     public void agregar() {
-       ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-       try {
-           externalContext.redirect(externalContext.getRequestContextPath() + "/faces/users/admin/agregarPuntoLimpio.xhtml");
-       }
-       catch (IOException e) {
-           System.out.println(e.getMessage());
-       }
+        CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml");
     }
     
     public void verDetalles(Integer numPtoLimpio) {
-        System.out.println("NÚMERO DE INSPECTOR: "+numPtoLimpio);
         PuntoLimpio ptoLimpioSelec = crudPuntoLimpio.getPuntoLimpioByNum(numPtoLimpio);
         
         if (ptoLimpioSelec != null) { //Verifico que exista
@@ -118,7 +107,6 @@ public class MantenedorPuntoLimpioVerListadoMB {
             CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
         }
        CommonFunctions.goToPage("/faces/users/verDetallesPuntoLimpio.xhtml");
-       
     }
     
     public void editar(int numPto) {
@@ -133,7 +121,6 @@ public class MantenedorPuntoLimpioVerListadoMB {
             this.mantPtoLimpio.limpiarDatos();
             CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
         }
-       
     }
     
     public void eliminar(int numPto) {

@@ -26,7 +26,7 @@ import sessionBeans.AvisosIncidenciaLocal;
  *
  * @author victor
  */
-@Named(value = "EnviarAvisoIncidenciaMB")
+@Named(value = "enviarAvisoIncidenciaMB")
 @RequestScoped
 public class EnviarAvisoIncidenciaMB {
     @EJB
@@ -75,7 +75,7 @@ public class EnviarAvisoIncidenciaMB {
         String paramNumPtoLimpio = FacesContext.getCurrentInstance().
                 getExternalContext().getRequestParameterMap().
                 get("id");
-        System.out.println("param: "+ paramNumPtoLimpio);
+        System.out.println("param: ".concat(paramNumPtoLimpio));
         if (paramNumPtoLimpio == null ){ //No se ha seleccionado aún, redirecciono
             return false;
         }
@@ -214,7 +214,7 @@ public class EnviarAvisoIncidenciaMB {
     }
     
     public void goToEnviarAviso(int idSeleccionado) {
-        System.out.println("idPtoLimpio="+idSeleccionado);
+        System.out.println("idPtoLimpio=".concat(Integer.toString(idSeleccionado)));
         CommonFunctions.goToPage("/faces/enviarAvisoIncidencia.xhtml"+"?id="+idSeleccionado);
     }
     

@@ -66,4 +66,17 @@ public class OperarioDAO_impl extends genericDAO_impl<OperarioMantencion> implem
             return res.get(0);
         }
     }
+
+    @Override
+    public OperarioMantencion findByRut(int rut) {
+        Query q = this.em.createNamedQuery("OperarioMantencion.findByRut");
+        q.setParameter("rut", rut);
+        List<OperarioMantencion> res = q.getResultList();
+        if (res.isEmpty()) {
+            return null;
+        }
+        else {
+            return res.get(0);
+        }
+    }
 }

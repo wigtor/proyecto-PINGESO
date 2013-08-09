@@ -61,13 +61,13 @@ public class MantenedorNotificacionVerListadoMB implements Serializable {
             notifTemp.setNum(notif_iter.getId());
             str_temp = notif_iter.getComentario();
             if (str_temp.length() > 21) {
-                str_temp = str_temp.substring(0, 25)+"...";
+                str_temp = str_temp.substring(0, 25).concat("...");
             }
             notifTemp.setDetallesCortado(str_temp);
             f = notif_iter.getFechaHora();
-            notifTemp.setFecha(f.get(Calendar.DAY_OF_MONTH)
-                    +"-"
-                    +f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH));
+            notifTemp.setFecha(Integer.toString(f.get(Calendar.DAY_OF_MONTH))
+                    .concat("-")
+                    .concat(f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)));
             notifTemp.setRevisado("No");
             listaResult.add(notifTemp);
         }

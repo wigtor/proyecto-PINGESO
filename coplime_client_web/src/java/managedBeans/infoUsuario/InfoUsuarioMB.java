@@ -5,10 +5,8 @@
 package managedBeans.infoUsuario;
 
 import entities.Usuario;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -43,14 +41,13 @@ public class InfoUsuarioMB {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        System.out.println("nombre de usuario: "+request.getRemoteUser() + " "+ CommonFunctions.getUsuarioLogueado());
         Usuario user = userService.buscarUsuario(CommonFunctions.getUsuarioLogueado());
         if (user == null) {
             CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
             return;
         }
         nombres = user.getNombre();
-        apellidos = user.getApellido1().concat(user.getApellido2());
+        apellidos = user.getApellido1().concat(" ").concat(user.getApellido2());
         rol = user.getRol().getNombreRol();
         rut = user.getRut();
         idUsuario = Integer.toString(user.getId());

@@ -46,8 +46,8 @@
                                            var="InspEncargado" itemLabel="#{InspEncargado.label}" itemValue="#{InspEncargado.id}" />
                         </p:selectOneMenu>
                         
-                        <p:outputLabel value="Contenedores agregados: #{MantenedorPuntoLimpio.contenedores_creando.size()}"/>
-                        <p:dataTable value="#{MantenedorPuntoLimpio.contenedores_creando}" var="contenedor" 
+                        <p:outputLabel value="Contenedores agregados: #{mantenedorPuntoLimpioConversation.contenedores_creando.size()}"/>
+                        <p:dataTable value="#{mantenedorPuntoLimpioConversation.contenedores_creando}" var="contenedor" 
                                      emptyMessage="No ha agregado contenedores a este punto limpio">
                             
                             <p:column headerText="Material" >

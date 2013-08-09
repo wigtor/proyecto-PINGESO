@@ -5,7 +5,6 @@
 package managedBeans.cambioEstadoPuntoLimpio;
 
 import ObjectsForManagedBeans.ContenedorPojo;
-import ObjectsForManagedBeans.PuntoLimpioPojo;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;

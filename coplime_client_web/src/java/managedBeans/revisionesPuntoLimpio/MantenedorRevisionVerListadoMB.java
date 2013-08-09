@@ -57,13 +57,13 @@ public class MantenedorRevisionVerListadoMB {
             
             revTemporal.setNum(rev_iter.getId());
             f = rev_iter.getFecha();
-            revTemporal.setFecha(f.get(Calendar.DAY_OF_MONTH)
-                    +"-"
-                    +f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH));
+            revTemporal.setFecha(Integer.toString(f.get(Calendar.DAY_OF_MONTH))
+                    .concat("-")
+                    .concat(f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)));
             
             str_temp = rev_iter.getDetalles();
             if (str_temp.length() > 21) {
-                str_temp = str_temp.substring(0, 25)+"...";
+                str_temp = str_temp.substring(0, 25).concat("...");
             }
             revTemporal.setDetalleCortado(str_temp);
             
@@ -77,7 +77,6 @@ public class MantenedorRevisionVerListadoMB {
     }
     
     public void verDetalles(Integer numRevision) {
-        System.out.println("NÚMERO DE REVISION: "+numRevision);
         RevisionPuntoLimpio revisionSelec = crudRevision.getRevisionById(numRevision);
         
         if (revisionSelec != null) { //Verifico que exista
@@ -97,9 +96,6 @@ public class MantenedorRevisionVerListadoMB {
     }
     
     
-    /**
-     * Creates a new instance of MantenedorRevisionVerListadoMB
-     */
     public MantenedorRevisionVerListadoMB() {
     }
 

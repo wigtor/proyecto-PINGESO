@@ -19,7 +19,9 @@
                      <p:panelGrid columns="2" styleClass="centrar">
                          <f:facet name="header">Datos del inspector</f:facet>
                          
-                        
+                         
+                         <p:outputLabel value="N° de inspector"/>
+                         <p:inputText value="#{mantenedorInspectorVerDetallesMB.numeroInspector}" disabled="true" readonly="true" />
                          
                          <p:outputLabel value="Nombre"/>
                          <p:inputText value="#{mantenedorInspectorVerDetallesMB.nombre}" disabled="true" readonly="true" />
@@ -52,7 +54,7 @@
                          <p:inputText value="#{mantenedorInspectorVerDetallesMB.numSolicitudesMantencionesRealizadas}" disabled="true" readonly="true" />
                          <f:facet name="footer">
                             
-                            <p:commandButton value="Volver" action="#{mantenedorInspectorVerDetallesMB.volver()}"/>                         
+                            <p:commandButton value="Volver" action="#{mantenedorInspectorVerDetallesMB.volverToLista()}"/>                         
                          </f:facet>
                      </p:panelGrid>                
                 </h:form>               

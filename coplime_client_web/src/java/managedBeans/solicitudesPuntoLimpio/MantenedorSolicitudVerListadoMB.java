@@ -41,10 +41,10 @@ public class MantenedorSolicitudVerListadoMB {
     
     @PostConstruct
     public void init() {
-        cargarMantenciones();
+        cargarSolicitudes();
     }
     
-    private void cargarMantenciones(){
+    private void cargarSolicitudes(){
         Collection<MantencionPuntoLimpio> listaTemp = crudMantencion.getAllMantenciones(CommonFunctions.getUsuarioLogueado());
         if (listaTemp == null)
             return;
@@ -57,13 +57,13 @@ public class MantenedorSolicitudVerListadoMB {
             
             revTemporal.setNum(rev_iter.getId());
             f = rev_iter.getFecha();
-            revTemporal.setFecha(f.get(Calendar.DAY_OF_MONTH)
-                    +"-"
-                    +f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH));
+            revTemporal.setFecha(Integer.toString(f.get(Calendar.DAY_OF_MONTH))
+                    .concat("-")
+                    .concat(f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)));
             
             str_temp = rev_iter.getComentarios();
             if (str_temp.length() > 21) {
-                str_temp = str_temp.substring(0, 25)+"...";
+                str_temp = str_temp.substring(0, 25).concat("...");
             }
             revTemporal.setDetalleCortado(str_temp);
             
@@ -76,18 +76,17 @@ public class MantenedorSolicitudVerListadoMB {
         this.lista = listaResult;
     }
     
-    public void verDetalles(Integer numRevision) {
-        System.out.println("NÚMERO DE REVISION: "+numRevision);
-        MantencionPuntoLimpio revisionSelec = crudMantencion.getMantencionById(numRevision);
+    public void verDetalles(Integer numSolicitud) {
+        MantencionPuntoLimpio revisionSelec = crudMantencion.getMantencionById(numSolicitud);
         
         if (revisionSelec != null) { //Verifico que exista
-            this.mantSolicitudes.setIdMantencionDetalles(numRevision);
+            this.mantSolicitudes.setIdMantencionDetalles(numSolicitud);
         }
         else {
             //MOSTRAR ERROR
             CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
         }
-        CommonFunctions.goToPage("/faces/users/verDetallesMantencion.xhtml");
+        CommonFunctions.goToPage("/faces/users/verDetallesSolicitudMantencion.xhtml");
        
     }
     
@@ -97,9 +96,6 @@ public class MantenedorSolicitudVerListadoMB {
     }
     
     
-    /**
-     * Creates a new instance of MantenedorSolicitudVerListadoMB
-     */
     public MantenedorSolicitudVerListadoMB() {
     }
 

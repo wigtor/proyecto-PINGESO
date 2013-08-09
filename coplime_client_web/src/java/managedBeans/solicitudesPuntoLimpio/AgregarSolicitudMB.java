@@ -101,7 +101,6 @@ public class AgregarSolicitudMB {
     }
     
     public void volverToLista() {
-        System.out.println("Se hizo click en 'volverToLista()'");
         cambioEstadoSessionBean.limpiarCampos();
         CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }

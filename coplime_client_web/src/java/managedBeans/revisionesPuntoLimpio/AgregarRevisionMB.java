@@ -90,8 +90,6 @@ public class AgregarRevisionMB {
     
     public void guardarRevision() {
          System.out.println("Se hizo click en 'guardarRevision()'");
-         
-         
          System.out.println("Detalle: " + detalle);
          System.out.println("Punto limpio a modificar: "+ numPtoLimpio);
          System.out.println("Estado global del punto limpio: " + cambioEstadoSessionBean.getIdEstadoToChange());
@@ -101,6 +99,9 @@ public class AgregarRevisionMB {
              System.out.println("Id del estado del contenedor: "+c.getIdEstadoContenedor());
              System.out.println("Llenado del contenedor: "+c.getLlenadoContenedor());
          }
+         //BORRAR LOS PRINTLN ANTERIORES
+         
+         
          HttpServletRequest request = (HttpServletRequest) 
                 (FacesContext.getCurrentInstance().getExternalContext().getRequest());
          String usernameLogueado = request.getRemoteUser();
@@ -115,7 +116,6 @@ public class AgregarRevisionMB {
     }
     
     public void volverToLista() {
-        System.out.println("Se hizo click en 'volverToLista()'");
         cambioEstadoSessionBean.limpiarCampos();
         CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }

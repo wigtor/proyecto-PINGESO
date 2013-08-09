@@ -68,43 +68,27 @@ public class MantenedorOperarioVerListadoMB {
     }
     
     public void verDetalles(int numOperario) {
-        System.out.println("NÚMERO DE INSPECTOR: "+numOperario);
-        Usuario usuarioVerDetalle = crudOperario.getOperarioByRut(numOperario);
+        Usuario usuarioVerDetalle = crudOperario.getUsuarioByRut(numOperario);
         if (usuarioVerDetalle != null) {
-            this.mantOp.setRut(new Integer(usuarioVerDetalle.getRut()));
-            this.mantOp.setNombre(usuarioVerDetalle.getNombre());
-            this.mantOp.setApellido1(usuarioVerDetalle.getApellido1());
-            this.mantOp.setApellido2(usuarioVerDetalle.getApellido2());
-            this.mantOp.setMail(usuarioVerDetalle.getEmail());
-            this.mantOp.setUsername(usuarioVerDetalle.getUsername());
-            this.mantOp.setTelefono(usuarioVerDetalle.getTelefono());
-            System.out.println(this.mantOp.getApellido1());
+            this.mantOp.setIdUsuarioDetalles(numOperario);
+            CommonFunctions.goToPage("/faces/users/verDetallesOperarioMantencion.xhtml");
         }
         else {
             //MOSTRAR ERROR
+            CommonFunctions.goToPage("/faces/users/admin/verOperariosMantencion.xhtml");
         }
-       CommonFunctions.goToPage("/faces/users/verDetallesOperarioMantencion.xhtml");
-       
     }
     
     public void editar(int numOperario) {
-        System.out.println("NÚMERO DE INSPECTOR: "+numOperario);
-        Usuario usuarioEdit = crudOperario.getOperarioByRut(numOperario);
+        Usuario usuarioEdit = crudOperario.getUsuarioByRut(numOperario);
         if (usuarioEdit != null) {
-            this.mantOp.setRut(new Integer(usuarioEdit.getRut()));
-            this.mantOp.setNombre(usuarioEdit.getNombre());
-            this.mantOp.setApellido1(usuarioEdit.getApellido1());
-            this.mantOp.setApellido2(usuarioEdit.getApellido2());
-            this.mantOp.setMail(usuarioEdit.getEmail());
-            this.mantOp.setUsername(usuarioEdit.getUsername());
-            this.mantOp.setTelefono(usuarioEdit.getTelefono());
-            System.out.println(this.mantOp.getApellido1());
+            this.mantOp.setIdUsuarioDetalles(numOperario);
+            CommonFunctions.goToPage("/faces/users/admin/editarOperarioMantencion.xhtml");
         }
         else {
             //MOSTRAR ERROR
+            CommonFunctions.goToPage("/faces/users/admin/verOperariosMantencion.xhtml");
         }
-       CommonFunctions.goToPage("/faces/users/admin/editarOperarioMantencion.xhtml");
-       
     }
     
     public void eliminar(int numOperario) {

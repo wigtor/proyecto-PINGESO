@@ -101,7 +101,18 @@ public class CrudOperario implements CrudOperarioLocal {
     }
     
     @Override
-    public Usuario getOperarioByRut(Integer rutUser) {
+    public OperarioMantencion getOperarioByRut(Integer rutUser) {
+        //Hago los DAO
+        if (rutUser == null) {
+            return null;
+        }
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        OperarioDAO operarioDAO = factoryDeDAOs.getOperarioDAO();
+        return operarioDAO.findByRut(rutUser.intValue());
+    }
+    
+    @Override
+    public Usuario getUsuarioByRut(Integer rutUser) {
         //Hago los DAO
         if (rutUser == null) {
             return null;

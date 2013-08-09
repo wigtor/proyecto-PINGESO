@@ -19,7 +19,9 @@
                      <p:panelGrid columns="2" styleClass="centrar">
                          <f:facet name="header">Datos del operario de mantención</f:facet>
                          
-                        
+                         
+                         <p:outputLabel value="N° de operario"/>
+                         <p:inputText value="#{mantenedorOperarioVerDetallesMB.numeroOperario}" disabled="true" readonly="true" />
                          
                          <p:outputLabel value="Nombre"/>
                          <p:inputText value="#{mantenedorOperarioVerDetallesMB.nombre}" disabled="true" readonly="true" />
@@ -46,7 +48,7 @@
                          <p:inputText value="#{mantenedorOperarioVerDetallesMB.numSolicitudesMantencionesRealizadas}" disabled="true" readonly="true" />
                          <f:facet name="footer">
                             
-                            <p:commandButton value="Volver" action="#{mantenedorOperarioVerDetallesMB.volver()}"/>                         
+                            <p:commandButton value="Volver" action="#{mantenedorOperarioVerDetallesMB.volverToLista()}"/>                         
                          </f:facet>
                      </p:panelGrid>                
                 </h:form>               

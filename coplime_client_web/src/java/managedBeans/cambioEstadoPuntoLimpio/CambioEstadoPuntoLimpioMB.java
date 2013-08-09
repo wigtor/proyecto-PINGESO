@@ -83,7 +83,7 @@ public class CambioEstadoPuntoLimpioMB {
         for(Contenedor cont : listaTemp) {
             elemTemp = new SelectElemPojo();
             elemTemp.setId(Integer.toString(cont.getId()));
-            elemTemp.setLabel(cont.getId() +" - "+ cont.getMaterialDeAcopio().getNombre_material());
+            elemTemp.setLabel(Integer.toString(cont.getId()).concat(" - ").concat(cont.getMaterialDeAcopio().getNombre_material()));
             this.listaContenedores.add(elemTemp);
         }
         
@@ -91,7 +91,7 @@ public class CambioEstadoPuntoLimpioMB {
     
     private void cargarDatosPtoLimpio() {
         PuntoLimpio p = crudPuntoLimpio.getPuntoLimpioByNum(this.idPtoLimpio);
-        this.nombrePtoLimpio = p.getId()+" - "+p.getNombre();
+        this.nombrePtoLimpio = Integer.toString(p.getId()).concat(" - ").concat(p.getNombre());
         this.estadoPuntoLimpio = p.getEstadoGlobal().getId();
     }
     
@@ -115,7 +115,6 @@ public class CambioEstadoPuntoLimpioMB {
     }
     
     public void volver() {
-        System.out.println("Se hizo click en 'volver()'");
         cambioEstadoSessionBean.limpiarCampos();
         if (CommonFunctions.isUserInRole("Inspector"))
             CommonFunctions.goToPage("/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml");

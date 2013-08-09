@@ -4,13 +4,13 @@
  */
 package managedBeans.mantenedores.administrador;
 
+import entities.Usuario;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import otros.CommonFunctions;
-import sessionBeans.CrudAdministrador;
 import sessionBeans.CrudAdministradorLocal;
 
 /**
@@ -38,18 +38,31 @@ public class MantenedorAdministradorEditarMB {
     private boolean checkContraseña;
     
     @PostConstruct
-    public void init() { 
-        System.out.println("inspector en vista edit"+this.mantAdm.getApellido1());
-       
-        this.rut = this.mantAdm.getRut();
-        this.nombre = this.mantAdm.getNombre();
-        this.apellido1 = this.mantAdm.getApellido1();
-        this.apellido2 = this.mantAdm.getApellido2();
-        this.mail = this.mantAdm.getMail();
-        this.username = this.mantAdm.getUsername();
-        this.telefono = this.mantAdm.getTelefono();
+    public void init() {
+        if (mantAdm.getIdUsuarioDetalles()!= null) {
+            Integer numAdmin = mantAdm.getIdUsuarioDetalles();
+            cargarDatosAdministrador(numAdmin);
+        }
+        else {
+            //MOSTRAR ERROR
+            
+            volverToLista();
+        }
     }
-    public MantenedorAdministradorEditarMB() {
+    
+    private void cargarDatosAdministrador(Integer numAdmin) {
+        Usuario adminSelect = crudAdministrador.getAdministradorByRut(numAdmin);
+        if (adminSelect == null) {
+            volverToLista();
+            return;
+        }
+        this.rut = adminSelect.getRut();
+        this.nombre = adminSelect.getNombre();
+        this.apellido1 = adminSelect.getApellido1();
+        this.apellido2 = adminSelect.getApellido2();
+        this.mail = adminSelect.getEmail();
+        this.username = adminSelect.getUsername();
+        this.telefono = adminSelect.getTelefono();
     }
     
     public void guardarCambiosAdministrador(){
@@ -60,9 +73,11 @@ public class MantenedorAdministradorEditarMB {
         CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
     }
     
-    public void volver() {
+    public void volverToLista() {
        CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
-       
+    }
+    
+    public MantenedorAdministradorEditarMB() {
     }
 
     public MantenedorAdministradorConversation getMantAdm() {

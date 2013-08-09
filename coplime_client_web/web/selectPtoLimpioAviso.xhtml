@@ -17,7 +17,7 @@
             </ui:define>
             
             <ui:define name="botonesBarra">
-                <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{Autenticador.goToIndex()}" />
+                <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{autenticadorMB.goToIndex()}" />
             </ui:define>
             
             <ui:define name="centro">
@@ -26,12 +26,12 @@
                         <f:facet name="header">Seleccionar un punto limpio para generar el aviso</f:facet>
                         
                         <p:outputLabel value="Seleccione el punto limpio"/>
-                        <p:selectOneListbox value="#{enviarAvisoIncidenciaManagedBeans.numPuntoLimpio}" style="width: 100%;">
-                            <f:selectItems value="#{enviarAvisoIncidenciaManagedBeans.listaPuntosLimpios}" var="t_ptoLimpio" itemValue="#{t_ptoLimpio.id}" itemLabel="#{t_ptoLimpio.label}"/>
+                        <p:selectOneListbox value="#{enviarAvisoIncidenciaMB.numPuntoLimpio}" style="width: 100%;">
+                            <f:selectItems value="#{enviarAvisoIncidenciaMB.listaPuntosLimpios}" var="t_ptoLimpio" itemValue="#{t_ptoLimpio.id}" itemLabel="#{t_ptoLimpio.label}"/>
                         </p:selectOneListbox>
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Siguiente" action="#{enviarAvisoIncidenciaManagedBeans.goToEnviarAviso(enviarAvisoIncidenciaManagedBeans.numPuntoLimpio)}"></p:commandButton>
+                            <p:commandButton value="Siguiente" action="#{enviarAvisoIncidenciaMB.goToEnviarAviso(enviarAvisoIncidenciaMB.numPuntoLimpio)}"></p:commandButton>
                         </f:facet>
                     </p:panelGrid>
                 </h:form>

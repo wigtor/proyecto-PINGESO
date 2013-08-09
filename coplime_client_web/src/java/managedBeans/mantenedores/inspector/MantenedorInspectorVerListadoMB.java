@@ -67,53 +67,35 @@ public class MantenedorInspectorVerListadoMB {
         
     }
     public void editar(int numInspector) {
-        System.out.println("NÚMERO DE INSPECTOR: "+numInspector);
-        Usuario usuarioEdit = crudInspector.getInspectorByRut(numInspector);
+        Inspector usuarioEdit = crudInspector.getInspectorByRut(numInspector);
         if (usuarioEdit != null) {
-            this.mantInsp.setRut(new Integer(usuarioEdit.getRut()));
-            this.mantInsp.setNombre(usuarioEdit.getNombre());
-            this.mantInsp.setApellido1(usuarioEdit.getApellido1());
-            this.mantInsp.setApellido2(usuarioEdit.getApellido2());
-            this.mantInsp.setMail(usuarioEdit.getEmail());
-            this.mantInsp.setUsername(usuarioEdit.getUsername());
-            this.mantInsp.setTelefono(usuarioEdit.getTelefono());
-            System.out.println(this.mantInsp.getApellido1());
+            this.mantInsp.setIdUsuarioDetalles(numInspector);
+            CommonFunctions.goToPage("/faces/users/admin/editarInspector.xhtml");
         }
         else {
             //MOSTRAR ERROR
+            this.mantInsp.limpiarDatos();
+            CommonFunctions.goToPage("/faces/users/admin/verInspectores.xhtml");
         }
-       CommonFunctions.goToPage("/faces/users/admin/editarInspector.xhtml");
-       
     }
     
     public void verDetalles(int numInspector) {
-        System.out.println("NÚMERO DE INSPECTOR: "+numInspector);
-        Usuario usuarioVerDetalle = crudInspector.getInspectorByRut(numInspector);
+        Inspector usuarioVerDetalle = crudInspector.getInspectorByRut(numInspector);
         if (usuarioVerDetalle != null) {
-            this.mantInsp.setRut(new Integer(usuarioVerDetalle.getRut()));
-            this.mantInsp.setNombre(usuarioVerDetalle.getNombre());
-            this.mantInsp.setApellido1(usuarioVerDetalle.getApellido1());
-            this.mantInsp.setApellido2(usuarioVerDetalle.getApellido2());
-            this.mantInsp.setMail(usuarioVerDetalle.getEmail());
-            this.mantInsp.setUsername(usuarioVerDetalle.getUsername());
-            this.mantInsp.setTelefono(usuarioVerDetalle.getTelefono());
-            System.out.println(this.mantInsp.getApellido1());
+            this.mantInsp.setIdUsuarioDetalles(numInspector);
+            CommonFunctions.goToPage("/faces/users/verDetallesInspector.xhtml");
         }
         else {
             //MOSTRAR ERROR
+            this.mantInsp.limpiarDatos();
+            CommonFunctions.goToPage("/faces/users/admin/verInspectores.xhtml");
         }
-       CommonFunctions.goToPage("/faces/users/verDetallesInspector.xhtml");
-       
     }
     
     public void eliminar(int numInspector) {
-       System.out.println("NÚMERO DE INSPECTOR: "+numInspector);
-       //crudInspector.eliminarInspector(new Integer(numInspector));
-       crudInspector.eliminarInspector(numInspector);
-       //init();
+        System.out.println("NÚMERO DE INSPECTOR: "+numInspector);
+        crudInspector.eliminarInspector(numInspector);
         CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");
-       
-       //PONER LA LÓGICA DE ELIMINARCIÓN, MOSTRAR MENSAJE DE CONFIRMACIÓN
     }
     
     public void volver() {

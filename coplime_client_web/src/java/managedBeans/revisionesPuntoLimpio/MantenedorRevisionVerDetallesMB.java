@@ -49,7 +49,7 @@ public class MantenedorRevisionVerDetallesMB {
     private void cargarDatosRevision(){
         RevisionPuntoLimpio rev = this.crudRevision.getRevisionById(num);
         if (rev == null) {
-             volver();
+             volverToLista();
              return;
         }
         this.puntoLimpio = Integer.toString(rev.getPuntoLimpio().getId()).concat(" - ").concat(rev.getPuntoLimpio().getNombre());
@@ -65,7 +65,7 @@ public class MantenedorRevisionVerDetallesMB {
         this.inspector = rut.concat(" - ").concat(nombre).concat(" ").concat(apellido1);
     }
     
-    public void volver() {
+    public void volverToLista() {
        CommonFunctions.goToPage("/faces/users/verRevisiones.xhtml");
     }
     

@@ -78,7 +78,7 @@ public class CambioEstadoContenedorMB {
             return;
         }
         this.material = cont.getMaterialDeAcopio().getNombre_material();
-        this.nombrePtoLimpio = cont.getPuntoLimpio().getId() + " - " + cont.getPuntoLimpio().getNombre();
+        this.nombrePtoLimpio = Integer.toString(cont.getPuntoLimpio().getId()).concat(" - ").concat(cont.getPuntoLimpio().getNombre());
         int indice = buscarSiContenedorFueModificado(idContenedor);
         if (indice >= 0) {
             ContenedorPojo c = cambioEstadoSessionBean.getListaContenedoresModificados().get(indice);
@@ -114,7 +114,6 @@ public class CambioEstadoContenedorMB {
     }
     
     public void volver() {
-        System.out.println("Se hizo click en 'volver()'");
         cambioEstadoSessionBean.setIdContenedorToChange(null);
         CommonFunctions.goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml");
     }

@@ -5,6 +5,7 @@
 package managedBeans.mantenedores.operario;
 
 import entities.OperarioMantencion;
+import entities.Usuario;
 import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -27,6 +28,7 @@ public class MantenedorOperarioVerDetallesMB {
     @Inject 
     private MantenedorOperarioConversation mantOp;
     
+    private Integer numeroOperario;
     private String nombre;
     private String apellido1;
     private String apellido2;
@@ -41,32 +43,46 @@ public class MantenedorOperarioVerDetallesMB {
     
     @PostConstruct
     public void init() { 
-        System.out.println("inspector en vista ver"+this.mantOp.getApellido1());
-       
-        this.rut = this.mantOp.getRut();
-        this.nombre = this.mantOp.getNombre();
-        this.apellido1 = this.mantOp.getApellido1();
-        this.apellido2 = this.mantOp.getApellido2();
-        this.mail = this.mantOp.getMail();
-        this.username = this.mantOp.getUsername();
-        this.telefono = this.mantOp.getTelefono();
-        
-        
-        Collection<OperarioMantencion> listaTemp = crudOperario.getAllOperarios();
-        
-        for(OperarioMantencion op_iter : listaTemp){
-            if(this.rut.equals(op_iter.getUsuario().getRut()) ){
-               
-               this.numSolicitudesMantencionesRealizadas = op_iter.getSolicitudesMantencionRealizadas().size();
-               break;
-            }
+        if (mantOp.getIdUsuarioDetalles()!= null) {
+            Integer numOp = mantOp.getIdUsuarioDetalles();
+            cargarDatosOperario(numOp);
         }
-        
+        else {
+            //MOSTRAR ERROR
+            
+            volverToLista();
+        }
     }
     
-    public void volver() {
+    private void cargarDatosOperario(Integer numAdmin) {
+        OperarioMantencion operarioSelect = crudOperario.getOperarioByRut(numAdmin);
+        if (operarioSelect == null) {
+            volverToLista();
+            return;
+        }
+        this.numeroOperario = operarioSelect.getId();
+        this.rut = operarioSelect.getUsuario().getRut();
+        this.nombre = operarioSelect.getUsuario().getNombre();
+        this.apellido1 = operarioSelect.getUsuario().getApellido1();
+        this.apellido2 = operarioSelect.getUsuario().getApellido2();
+        this.mail = operarioSelect.getUsuario().getEmail();
+        this.username = operarioSelect.getUsuario().getUsername();
+        this.telefono = operarioSelect.getUsuario().getTelefono();
+        
+        this.numSolicitudesMantencionesRealizadas = operarioSelect.getSolicitudesMantencionRealizadas().size();
+    }
+    
+    public void volverToLista() {
         CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
        
+    }
+
+    public Integer getNumeroOperario() {
+        return numeroOperario;
+    }
+
+    public void setNumeroOperario(Integer numeroOperario) {
+        this.numeroOperario = numeroOperario;
     }
 
     public String getNombre() {

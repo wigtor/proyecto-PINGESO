@@ -5,7 +5,6 @@
 package managedBeans.mantenedores.inspector;
 
 import entities.Inspector;
-import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -27,6 +26,7 @@ public class MantenedorInspectorVerDetallesMB {
     @Inject 
     private MantenedorInspectorConversation mantInsp;
     
+    private Integer numeroInspector;
     private String nombre;
     private String apellido1;
     private String apellido2;
@@ -42,35 +42,49 @@ public class MantenedorInspectorVerDetallesMB {
     }
     
     @PostConstruct
-    public void init() { 
-        System.out.println("inspector en vista ver"+this.mantInsp.getApellido1());
-       
-        this.rut = this.mantInsp.getRut();
-        this.nombre = this.mantInsp.getNombre();
-        this.apellido1 = this.mantInsp.getApellido1();
-        this.apellido2 = this.mantInsp.getApellido2();
-        this.mail = this.mantInsp.getMail();
-        this.username = this.mantInsp.getUsername();
-        this.telefono = this.mantInsp.getTelefono();
-        
-        
-        Collection<Inspector> listaTemp = crudInspector.getAllInspectores();
-        
-        for(Inspector insp_iter : listaTemp){
-            if(this.rut.equals(insp_iter.getUsuario().getRut()) ){
-               
-               this.numPuntosLimpios = insp_iter.getPuntosLimpios().size();
-               this.numRevisionesRealizadas = insp_iter.getRevisionesRealizadas().size();
-               this.numSolicitudesMantencionesRealizadas = insp_iter.getSolicitudesMantencionRealizadas().size();
-               break;
-            }
+    public void init() {
+        if (mantInsp.getIdUsuarioDetalles()!= null) {
+            Integer numInsp = mantInsp.getIdUsuarioDetalles();
+            cargarDatosInspector(numInsp);
         }
+        else {
+            //MOSTRAR ERROR
+            
+            volverToLista();
+        }
+    }
+    
+    private void cargarDatosInspector(Integer numInsp) {
+        Inspector inspSelect = crudInspector.getInspectorByRut(numInsp);
+        if (inspSelect == null) {
+            volverToLista();
+            return;
+        }
+        this.numeroInspector = inspSelect.getId();
+        this.rut = inspSelect.getUsuario().getRut();
+        this.nombre = inspSelect.getUsuario().getNombre();
+        this.apellido1 = inspSelect.getUsuario().getApellido1();
+        this.apellido2 = inspSelect.getUsuario().getApellido2();
+        this.mail = inspSelect.getUsuario().getEmail();
+        this.username = inspSelect.getUsuario().getUsername();
+        this.telefono = inspSelect.getUsuario().getTelefono();
+    
+        this.numPuntosLimpios = inspSelect.getPuntosLimpios().size();
+        this.numRevisionesRealizadas = inspSelect.getRevisionesRealizadas().size();
+        this.numSolicitudesMantencionesRealizadas = inspSelect.getSolicitudesMantencionRealizadas().size();
         
     }
     
-    public void volver() {
+    public void volverToLista() {
         CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");
-       
+    }
+
+    public Integer getNumeroInspector() {
+        return numeroInspector;
+    }
+
+    public void setNumeroInspector(Integer numeroInspector) {
+        this.numeroInspector = numeroInspector;
     }
 
     public String getNombre() {

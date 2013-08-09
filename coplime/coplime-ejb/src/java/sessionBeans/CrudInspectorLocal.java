@@ -22,7 +22,9 @@ public interface CrudInspectorLocal {
     
     public Usuario getInspector(String userName);
     
-    public Usuario getInspectorByRut(Integer rutUSer);
+    public Usuario getUsuarioByRut(Integer rutUSer);
+    
+    public Inspector getInspectorByRut(Integer rutUSer);
     
     public void editarInspector(Integer idUser, String userName,String nombre, String apellido1, String apellido2, String mail, boolean resetContraseña,int telefono);
     

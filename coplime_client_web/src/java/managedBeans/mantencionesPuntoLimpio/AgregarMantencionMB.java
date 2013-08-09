@@ -24,9 +24,9 @@ import sessionBeans.CrudPuntoLimpioLocal;
  *
  * @author victor
  */
-@Named(value = "solicitarMantencionMB")
+@Named(value = "agregarMantencionMB")
 @RequestScoped
-public class SolicitarMantencionMB {
+public class AgregarMantencionMB {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
@@ -41,9 +41,9 @@ public class SolicitarMantencionMB {
     private String detalle;
     
     /**
-     * Creates a new instance of SolicitarMantencionMB
+     * Creates a new instance of AgregarMantencionMB
      */
-    public SolicitarMantencionMB() {
+    public AgregarMantencionMB() {
     }
     
     @PostConstruct

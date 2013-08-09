@@ -4,11 +4,14 @@
  */
 package managedBeans.mantenedores.administrador;
 
+import entities.Usuario;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import otros.CommonFunctions;
+import sessionBeans.CrudAdministradorLocal;
 
 /**
  *
@@ -18,6 +21,9 @@ import otros.CommonFunctions;
 @RequestScoped
 public class MantenedorAdministradorVerDetallesMB {
 
+    @EJB
+    private CrudAdministradorLocal crudAdministrador;
+    
     @Inject 
     private MantenedorAdministradorConversation mantAdm;
     
@@ -29,29 +35,42 @@ public class MantenedorAdministradorVerDetallesMB {
     private String mail;
     private Integer telefono;
     
-    public MantenedorAdministradorVerDetallesMB() {
-    }
-    
     
     @PostConstruct
     public void init() { 
-        System.out.println("inspector en vista ver"+this.mantAdm.getApellido1());
-       
-        this.rut = this.mantAdm.getRut();
-        this.nombre = this.mantAdm.getNombre();
-        this.apellido1 = this.mantAdm.getApellido1();
-        this.apellido2 = this.mantAdm.getApellido2();
-        this.mail = this.mantAdm.getMail();
-        this.username = this.mantAdm.getUsername();
-        this.telefono = this.mantAdm.getTelefono();
-               
+        if (mantAdm.getIdUsuarioDetalles()!= null) {
+            Integer numAdmin = mantAdm.getIdUsuarioDetalles();
+            cargarDatosAdministrador(numAdmin);
+        }
+        else {
+            //MOSTRAR ERROR
+            
+            volverToLista();
+        }
     }
     
-    public void volver() {
-        CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
-       
+    private void cargarDatosAdministrador(Integer numAdmin) {
+        Usuario adminSelect = crudAdministrador.getAdministradorByRut(numAdmin);
+        if (adminSelect == null) {
+            volverToLista();
+            return;
+        }
+        this.rut = adminSelect.getRut();
+        this.nombre = adminSelect.getNombre();
+        this.apellido1 = adminSelect.getApellido1();
+        this.apellido2 = adminSelect.getApellido2();
+        this.mail = adminSelect.getEmail();
+        this.username = adminSelect.getUsername();
+        this.telefono = adminSelect.getTelefono();
     }
-
+    
+    public void volverToLista() {
+        CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
+    }
+    
+    
+    public MantenedorAdministradorVerDetallesMB() {
+    }
     
     public String getNombre() {
         return nombre;
@@ -108,6 +127,5 @@ public class MantenedorAdministradorVerDetallesMB {
     public void setTelefono(Integer telefono) {
         this.telefono = telefono;
     }
-    
     
 }
