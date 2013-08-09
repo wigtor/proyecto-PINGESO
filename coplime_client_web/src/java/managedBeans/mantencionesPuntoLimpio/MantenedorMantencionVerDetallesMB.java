@@ -19,14 +19,14 @@ import sessionBeans.CrudMantencionPuntoLimpioLocal;
  *
  * @author victor
  */
-@Named(value = "MantenedorMantencionVerDetalles")
+@Named(value = "mantenedorMantencionVerDetallesMB")
 @RequestScoped
-public class MantenedorMantencionVerDetalles {
+public class MantenedorMantencionVerDetallesMB {
     @EJB
     CrudMantencionPuntoLimpioLocal crudMantencion;
     
     @Inject
-    private MantenedorMantencion mantMantenciones;
+    private MantenedorMantencionConversation mantMantenciones;
     
     private Integer num;
     
@@ -71,9 +71,9 @@ public class MantenedorMantencionVerDetalles {
     
     
     /**
-     * Creates a new instance of MantenedorRevisionVerListado
+     * Creates a new instance of MantenedorMantencionVerDetallesMB
      */
-    public MantenedorMantencionVerDetalles() {
+    public MantenedorMantencionVerDetallesMB() {
     }
 
     public Integer getNum() {

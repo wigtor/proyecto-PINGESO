@@ -4,29 +4,22 @@
  */
 package managedBeans.mantenedores.administrador;
 
-import entities.Administrador;
-import entities.Inspector;
-import java.util.Collection;
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import managedBeans.mantenedores.inspector.MantenedorInspector;
 import otros.CommonFunctions;
-import sessionBeans.CrudAdministradorLocal;
-import sessionBeans.CrudInspectorLocal;
 
 /**
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorAdministradorVerDetalles")
+@Named(value = "mantenedorAdministradorVerDetallesMB")
 @RequestScoped
-public class MantenedorAdministradorVerDetalles {
+public class MantenedorAdministradorVerDetallesMB {
 
     @Inject 
-    private MantenedorAdministrador mantAdm;
+    private MantenedorAdministradorConversation mantAdm;
     
     private String nombre;
     private String apellido1;
@@ -36,7 +29,7 @@ public class MantenedorAdministradorVerDetalles {
     private String mail;
     private Integer telefono;
     
-    public MantenedorAdministradorVerDetalles() {
+    public MantenedorAdministradorVerDetallesMB() {
     }
     
     
@@ -55,7 +48,7 @@ public class MantenedorAdministradorVerDetalles {
     }
     
     public void volver() {
-        CommonFunctions.goToPage("/faces/admin/verAdministradores.xhtml");
+        CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
        
     }
 

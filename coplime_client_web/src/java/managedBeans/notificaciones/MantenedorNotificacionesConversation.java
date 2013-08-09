@@ -7,8 +7,6 @@ package managedBeans.notificaciones;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
@@ -16,15 +14,15 @@ import javax.annotation.PreDestroy;
  *
  * @author victor
  */
-@Named(value = "MantenedorNotificaciones")
+@Named(value = "mantenedorNotificacionesConversation")
 @SessionScoped
-public class MantenedorNotificaciones implements Serializable {
+public class MantenedorNotificacionesConversation implements Serializable {
     private Integer idNotificacionSeleccionada;
     
     /**
      * Creates a new instance of MantenedorPuntoLimpio
      */
-    public MantenedorNotificaciones() {
+    public MantenedorNotificacionesConversation() {
     }
     
     @PostConstruct

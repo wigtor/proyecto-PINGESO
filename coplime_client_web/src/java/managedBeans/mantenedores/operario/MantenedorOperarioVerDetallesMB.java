@@ -4,8 +4,6 @@
  */
 package managedBeans.mantenedores.operario;
 
-import DAO.interfaces.OperarioDAO;
-import entities.Inspector;
 import entities.OperarioMantencion;
 import java.util.Collection;
 import javax.annotation.PostConstruct;
@@ -14,21 +12,20 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import otros.CommonFunctions;
-import sessionBeans.CrudInspectorLocal;
 import sessionBeans.CrudOperarioLocal;
 
 /**
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorOperarioVerDetalles")
+@Named(value = "mantenedorOperarioVerDetallesMB")
 @RequestScoped
-public class MantenedorOperarioVerDetalles {
+public class MantenedorOperarioVerDetallesMB {
 
     @EJB
     private CrudOperarioLocal crudOperario;
     @Inject 
-    private MantenedorOperario mantOp;
+    private MantenedorOperarioConversation mantOp;
     
     private String nombre;
     private String apellido1;
@@ -39,7 +36,7 @@ public class MantenedorOperarioVerDetalles {
     private Integer telefono;
     private Integer numSolicitudesMantencionesRealizadas;
     
-    public MantenedorOperarioVerDetalles() {
+    public MantenedorOperarioVerDetallesMB() {
     }
     
     @PostConstruct

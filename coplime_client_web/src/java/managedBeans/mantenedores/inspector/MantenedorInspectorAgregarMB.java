@@ -15,14 +15,14 @@ import sessionBeans.CrudInspectorLocal;
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorInspectorAgregar")
+@Named(value = "mantenedorInspectorAgregarMB")
 @RequestScoped
-public class MantenedorInspectorAgregar {
+public class MantenedorInspectorAgregarMB {
 
     @EJB
     private CrudInspectorLocal crudInspector;
     @Inject 
-    private MantenedorInspectorEditar mantInsp;
+    private MantenedorInspectorEditarMB mantInsp;
            
     private String nombre;
     private String apellido1;
@@ -33,7 +33,7 @@ public class MantenedorInspectorAgregar {
     private String mail;
     private Integer telefono;
     
-    public MantenedorInspectorAgregar() {
+    public MantenedorInspectorAgregarMB() {
     }
     
     public void agregarInspector() {

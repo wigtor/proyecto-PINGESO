@@ -25,14 +25,14 @@ import sessionBeans.NotificadorLocal;
  *
  * @author victor
  */
-@Named(value = "NotificacionVerListado")
+@Named(value = "mantenedorNotificacionVerListadoMB")
 @RequestScoped
-public class NotificacionVerListado implements Serializable {
+public class MantenedorNotificacionVerListadoMB implements Serializable {
     @EJB
     private NotificadorLocal notificador;
     
     @Inject
-    private MantenedorNotificaciones mantNotificaciones;
+    private MantenedorNotificacionesConversation mantNotificaciones;
     
     private Collection<NotificacionPojo> listaAllNotif;
     
@@ -90,9 +90,9 @@ public class NotificacionVerListado implements Serializable {
     
     
     /**
-     * Creates a new instance of NotificacionVerListado
+     * Creates a new instance of MantenedorNotificacionVerListadoMB
      */
-    public NotificacionVerListado() {
+    public MantenedorNotificacionVerListadoMB() {
     }
     
     public Collection<NotificacionPojo> getListaAllNotif() {

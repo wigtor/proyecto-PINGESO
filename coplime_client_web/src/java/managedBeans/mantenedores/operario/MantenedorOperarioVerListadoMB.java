@@ -22,20 +22,20 @@ import sessionBeans.CrudOperarioLocal;
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorOperarioVerListado")
+@Named(value = "mantenedorOperarioVerListadoMB")
 @RequestScoped
-public class MantenedorOperarioVerListado {
+public class MantenedorOperarioVerListadoMB {
 
     @EJB
     private CrudOperarioLocal crudOperario;
     
     @Inject 
-    private MantenedorOperario mantOp;
+    private MantenedorOperarioConversation mantOp;
     
     private List<UsuarioPojo> listaBusqueda;
     private List<UsuarioPojo> lista;
     
-    public MantenedorOperarioVerListado() {
+    public MantenedorOperarioVerListadoMB() {
     }
     
     @PostConstruct
@@ -63,7 +63,7 @@ public class MantenedorOperarioVerListado {
     }
     
     public void agregar() {
-       CommonFunctions.goToPage("/faces/admin/agregarOperarioMantencion.xhtml");
+       CommonFunctions.goToPage("/faces/users/admin/agregarOperarioMantencion.xhtml");
         
     }
     
@@ -103,7 +103,7 @@ public class MantenedorOperarioVerListado {
         else {
             //MOSTRAR ERROR
         }
-       CommonFunctions.goToPage("/faces/admin/editarOperarioMantencion.xhtml");
+       CommonFunctions.goToPage("/faces/users/admin/editarOperarioMantencion.xhtml");
        
     }
     

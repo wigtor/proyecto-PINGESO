@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans.mantencionesPuntoLimpio;
+package managedBeans.solicitudesPuntoLimpio;
 
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -12,29 +12,29 @@ import java.io.Serializable;
  *
  * @author victor
  */
-@Named(value = "MantenedorMantencion")
+@Named(value = "MantenedorSolicitudConversation")
 @SessionScoped
-public class MantenedorMantencion implements Serializable {
+public class MantenedorSolicitudConversation implements Serializable {
 
-    private Integer idMantencionDetalles;
+    private Integer idSolicitudDetalles;
     
     
     public void limpiarDatos() {
-        idMantencionDetalles = null;
+        idSolicitudDetalles = null;
     }
     
     /**
-     * Creates a new instance of MantenedorRevision
+     * Creates a new instance of MantenedorSolicitudConversation
      */
-    public MantenedorMantencion() {
+    public MantenedorSolicitudConversation() {
     }
 
-    public Integer getIdMantencionDetalles() {
-        return idMantencionDetalles;
+    public Integer getIdSolicitudDetalles() {
+        return idSolicitudDetalles;
     }
 
-    public void setIdMantencionDetalles(Integer idMantencionDetalles) {
-        this.idMantencionDetalles = idMantencionDetalles;
+    public void setIdSolicitudDetalles(Integer idSolicitudDetalles) {
+        this.idSolicitudDetalles = idSolicitudDetalles;
     }
     
 }

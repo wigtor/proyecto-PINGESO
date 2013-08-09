@@ -4,39 +4,18 @@
  */
 package managedBeans.mantenedores.inspector;
 
-import ObjectsForManagedBeans.UsuarioPojo;
-import entities.Inspector;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
-import sessionBeans.CrudInspectorLocal;
-import entities.Usuario;
 import java.io.Serializable;
-import java.util.Map;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.inject.Inject;
-import org.primefaces.event.SelectEvent;
 
-
-
-
-
-
- 
 
 /**
  *
  * @author victor
  */
-@Named(value = "MantenedorInspector")
+@Named(value = "mantenedorInspectorConversation")
 @SessionScoped
-public class MantenedorInspector implements Serializable{
+public class MantenedorInspectorConversation implements Serializable{
        
 
     private String nombre;
@@ -50,7 +29,7 @@ public class MantenedorInspector implements Serializable{
        
     
     
-    public MantenedorInspector() {
+    public MantenedorInspectorConversation() {
                
     }   
     

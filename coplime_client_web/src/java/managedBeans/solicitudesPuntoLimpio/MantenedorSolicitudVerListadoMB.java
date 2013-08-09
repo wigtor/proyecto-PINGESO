@@ -23,14 +23,14 @@ import sessionBeans.CrudMantencionPuntoLimpioLocal;
  *
  * @author victor
  */
-@Named(value = "MantenedorMantencionVerListado")
+@Named(value = "mantenedorSolicitudVerListadoMB")
 @RequestScoped
-public class MantenedorMantencionVerListado {
+public class MantenedorSolicitudVerListadoMB {
     @EJB
     CrudMantencionPuntoLimpioLocal crudMantencion;
     
     @Inject
-    private MantenedorMantencion mantMantenciones;
+    private MantenedorMantencionConversation mantSolicitudes;
     
     private List<RevisionPojo> lista;
     
@@ -81,7 +81,7 @@ public class MantenedorMantencionVerListado {
         MantencionPuntoLimpio revisionSelec = crudMantencion.getMantencionById(numRevision);
         
         if (revisionSelec != null) { //Verifico que exista
-            this.mantMantenciones.setIdMantencionDetalles(numRevision);
+            this.mantSolicitudes.setIdMantencionDetalles(numRevision);
         }
         else {
             //MOSTRAR ERROR
@@ -92,15 +92,15 @@ public class MantenedorMantencionVerListado {
     }
     
     public void volver() {
-        mantMantenciones.limpiarDatos();
+        mantSolicitudes.limpiarDatos();
         CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
     
     
     /**
-     * Creates a new instance of MantenedorMantencionVerListado
+     * Creates a new instance of MantenedorSolicitudVerListadoMB
      */
-    public MantenedorMantencionVerListado() {
+    public MantenedorSolicitudVerListadoMB() {
     }
 
     public List<RevisionPojo> getLista() {

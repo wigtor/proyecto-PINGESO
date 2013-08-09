@@ -23,14 +23,14 @@ import sessionBeans.CrudPuntoLimpioLocal;
  *
  * @author victor
  */
-@Named(value = "CambioEstadoPuntoLimpio")
+@Named(value = "cambioEstadoPuntoLimpioMB")
 @RequestScoped
-public class CambioEstadoPuntoLimpio {
+public class CambioEstadoPuntoLimpioMB {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
     @Inject
-    private CambioEstadoPuntoLimpio_session cambioEstadoSessionBean;
+    private CambioEstadoPuntoLimpioConversation cambioEstadoSessionBean;
     
     private Integer idPtoLimpio;
     
@@ -45,9 +45,9 @@ public class CambioEstadoPuntoLimpio {
     private List<SelectElemPojo> listaContenedores;
     
     /**
-     * Creates a new instance of CambioEstadoPuntoLimpio
+     * Creates a new instance of CambioEstadoPuntoLimpioMB
      */
-    public CambioEstadoPuntoLimpio() {
+    public CambioEstadoPuntoLimpioMB() {
     }
     
     @PostConstruct

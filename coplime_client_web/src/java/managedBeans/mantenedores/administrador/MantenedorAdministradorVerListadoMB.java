@@ -4,42 +4,32 @@
  */
 package managedBeans.mantenedores.administrador;
 
-import managedBeans.mantenedores.inspector.MantenedorInspector;
 import ObjectsForManagedBeans.UsuarioPojo;
 import entities.Administrador;
-import entities.Inspector;
 import entities.Usuario;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudAdministradorLocal;
-import sessionBeans.CrudInspectorLocal;
 
 /**
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorAdministradorVerListado")
-//@ViewScoped
-//@SessionScoped
+@Named(value = "mantenedorAdministradorVerListadoMB")
 @RequestScoped
-public class MantenedorAdministradorVerListado {
+public class MantenedorAdministradorVerListadoMB {
 
     @EJB
     private CrudAdministradorLocal crudAdministrador;
     @Inject 
-    private MantenedorAdministrador mantAdm;
+    private MantenedorAdministradorConversation mantAdm;
    
     
     private List<UsuarioPojo> listaBusqueda;
@@ -47,7 +37,7 @@ public class MantenedorAdministradorVerListado {
     /**
      * Creates a new instance of MantenedorInspectorVerListado
      */
-    public MantenedorAdministradorVerListado() {
+    public MantenedorAdministradorVerListadoMB() {
     }
     
     
@@ -72,7 +62,7 @@ public class MantenedorAdministradorVerListado {
         }
     }
     public void agregar() {
-       CommonFunctions.goToPage("/faces/admin/agregarAdministrador.xhtml");
+       CommonFunctions.goToPage("/faces/users/admin/agregarAdministrador.xhtml");
         
     }
     
@@ -92,7 +82,7 @@ public class MantenedorAdministradorVerListado {
         else {
             //MOSTRAR ERROR
         }
-       CommonFunctions.goToPage("/faces/admin/editarAdministrador.xhtml");
+       CommonFunctions.goToPage("/faces/users/admin/editarAdministrador.xhtml");
        
     }
     
@@ -111,14 +101,14 @@ public class MantenedorAdministradorVerListado {
         else {
             //MOSTRAR ERROR
         }
-       CommonFunctions.goToPage("/faces/admin/verDetallesAdministrador.xhtml");
+       CommonFunctions.goToPage("/faces/users/admin/verDetallesAdministrador.xhtml");
        
     }
     
     public void eliminar(int numAdministrador) {
        System.out.println("NÚMERO DE INSPECTOR: "+numAdministrador);
        crudAdministrador.eliminarAdministrador(numAdministrador);
-       CommonFunctions.goToPage("/faces/admin/verAdministradores.xhtml");
+       CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
        
     }
     

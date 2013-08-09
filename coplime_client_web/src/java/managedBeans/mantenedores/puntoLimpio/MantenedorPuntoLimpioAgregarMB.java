@@ -15,7 +15,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -29,14 +28,14 @@ import sessionBeans.CrudPuntoLimpioLocal;
  *
  * @author victor
  */
-@Named(value = "MantenedorPuntoLimpioAgregar")
+@Named(value = "mantenedorPuntoLimpioAgregarMB")
 @RequestScoped
-public class MantenedorPuntoLimpioAgregar {
+public class MantenedorPuntoLimpioAgregarMB {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
     @Inject
-    private MantenedorPuntoLimpio mantPtoLimpio;
+    private MantenedorPuntoLimpioConversation mantPtoLimpio;
     
     private Integer num;
     private String nombre;
@@ -51,9 +50,9 @@ public class MantenedorPuntoLimpioAgregar {
     
     
     /**
-     * Creates a new instance of MantenedorPuntoLimpioAgregar
+     * Creates a new instance of MantenedorPuntoLimpioAgregarMB
      */
-    public MantenedorPuntoLimpioAgregar() {
+    public MantenedorPuntoLimpioAgregarMB() {
     }
     
     @PostConstruct
@@ -131,7 +130,7 @@ public class MantenedorPuntoLimpioAgregar {
     
     public void agregarContenedores() {
         mantPtoLimpio.setPto_creando(crearPtoLimpioTemporal());
-        CommonFunctions.goToPage("/faces/admin/agregarContenedor.xhtml");
+        CommonFunctions.goToPage("/faces/users/admin/agregarContenedor.xhtml");
     }
     
     public void agregarPuntoLimpio() {

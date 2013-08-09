@@ -16,9 +16,9 @@ import java.util.List;
  *
  * @author victor
  */
-@Named(value = "cambioEstadoPuntoLimpio_session")
+@Named(value = "cambioEstadoPuntoLimpioConversation")
 @SessionScoped
-public class CambioEstadoPuntoLimpio_session implements Serializable {
+public class CambioEstadoPuntoLimpioConversation implements Serializable {
 
     private Integer idPuntoLimpioToChange;
     private Integer idContenedorToChange;
@@ -27,9 +27,9 @@ public class CambioEstadoPuntoLimpio_session implements Serializable {
     private String detalle;
     
     /**
-     * Creates a new instance of CambioEstadoPuntoLimpio_session
+     * Creates a new instance of CambioEstadoPuntoLimpioConversation
      */
-    public CambioEstadoPuntoLimpio_session() {
+    public CambioEstadoPuntoLimpioConversation() {
         this.listaContenedoresModificados = new ArrayList();
     }
     

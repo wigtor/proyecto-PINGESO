@@ -18,14 +18,14 @@ import sessionBeans.CrudInspectorLocal;
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorInspectorVerDetalles")
+@Named(value = "mantenedorInspectorVerDetallesMB")
 @RequestScoped
-public class MantenedorInspectorVerDetalles {
+public class MantenedorInspectorVerDetallesMB {
 
     @EJB
     private CrudInspectorLocal crudInspector;
     @Inject 
-    private MantenedorInspector mantInsp;
+    private MantenedorInspectorConversation mantInsp;
     
     private String nombre;
     private String apellido1;
@@ -38,7 +38,7 @@ public class MantenedorInspectorVerDetalles {
     private Integer numRevisionesRealizadas;
     private Integer numSolicitudesMantencionesRealizadas;
     
-    public MantenedorInspectorVerDetalles() {
+    public MantenedorInspectorVerDetallesMB() {
     }
     
     @PostConstruct

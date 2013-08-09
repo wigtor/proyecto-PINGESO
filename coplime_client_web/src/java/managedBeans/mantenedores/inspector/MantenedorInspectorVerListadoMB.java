@@ -7,18 +7,13 @@ package managedBeans.mantenedores.inspector;
 import ObjectsForManagedBeans.UsuarioPojo;
 import entities.Inspector;
 import entities.Usuario;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudInspectorLocal;
@@ -27,22 +22,22 @@ import sessionBeans.CrudInspectorLocal;
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorInspectorVerListado")
+@Named(value = "mantenedorInspectorVerListadoMB")
 @RequestScoped
-public class MantenedorInspectorVerListado {
+public class MantenedorInspectorVerListadoMB {
 
     @EJB
     private CrudInspectorLocal crudInspector;
     @Inject 
-    private MantenedorInspector mantInsp;
+    private MantenedorInspectorConversation mantInsp;
    
     
     private List<UsuarioPojo> listaBusqueda;
     private List<UsuarioPojo> lista; 
     /**
-     * Creates a new instance of MantenedorInspectorVerListado
+     * Creates a new instance of MantenedorInspectorVerListadoMB
      */
-    public MantenedorInspectorVerListado() {
+    public MantenedorInspectorVerListadoMB() {
     }
     
     
@@ -68,7 +63,7 @@ public class MantenedorInspectorVerListado {
     }
     
     public void agregar() {
-       CommonFunctions.goToPage("/faces/admin/agregarInspector.xhtml");
+       CommonFunctions.goToPage("/faces/users/admin/agregarInspector.xhtml");
         
     }
     public void editar(int numInspector) {
@@ -87,7 +82,7 @@ public class MantenedorInspectorVerListado {
         else {
             //MOSTRAR ERROR
         }
-       CommonFunctions.goToPage("/faces/admin/editarInspector.xhtml");
+       CommonFunctions.goToPage("/faces/users/admin/editarInspector.xhtml");
        
     }
     

@@ -17,24 +17,24 @@
                         <f:facet name="header">Ingrese datos de la solicitud</f:facet>
 
                         <p:outputLabel value="Seleccione punto limpio" />
-                        <p:selectOneMenu value="#{solicitarMantencion.idPuntoLimpio}">
-                            <f:selectItems value="#{solicitarMantencion.listaPuntosLimpios}"  
+                        <p:selectOneMenu value="#{solicitarMantencionMB.idPuntoLimpio}">
+                            <f:selectItems value="#{solicitarMantencionMB.listaPuntosLimpios}"  
                                 var="ptoLimpio" itemLabel="#{ptoLimpio.label}" itemValue="#{ptoLimpio.id}" />
                         </p:selectOneMenu>
                         
                         <p:outputLabel value="Seleccione operario encargado" />
-                        <p:selectOneMenu value="#{solicitarMantencion.idOperario}">
-                            <f:selectItems value="#{solicitarMantencion.listaOperarios}"  
+                        <p:selectOneMenu value="#{solicitarMantencionMB.idOperario}">
+                            <f:selectItems value="#{solicitarMantencionMB.listaOperarios}"  
                                 var="operarioEncargado" itemLabel="#{operarioEncargado.nombre}" itemValue="#{operarioEncargado.num}" />
                         </p:selectOneMenu>
                         
                         <p:outputLabel value="Detalle" />
-                        <p:inputTextarea value="#{solicitarMantencion.detalle_solicitud}"/>
+                        <p:inputTextarea value="#{solicitarMantencionMB.detalle_solicitud}"/>
                         
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Realizar solicitud" action="#{solicitarMantencion.guardarSolicitud()}"/>
-                            <p:commandButton value="Volver" action="#{solicitarMantencion.volverToLista()}"/>
+                            <p:commandButton value="Realizar solicitud" action="#{solicitarMantencionMB.guardarSolicitud()}"/>
+                            <p:commandButton value="Volver" action="#{solicitarMantencionMB.volverToLista()}"/>
                         </f:facet>
                     </p:panelGrid>
 

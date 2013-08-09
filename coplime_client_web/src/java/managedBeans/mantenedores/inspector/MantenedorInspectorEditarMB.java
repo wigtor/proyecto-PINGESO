@@ -16,15 +16,15 @@ import sessionBeans.CrudInspectorLocal;
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorInspectorEditar")
+@Named(value = "mantenedorInspectorEditarMB")
 @RequestScoped
-public class MantenedorInspectorEditar {
+public class MantenedorInspectorEditarMB {
 
     @EJB
     private CrudInspectorLocal crudInspector;
            
     @Inject 
-    private MantenedorInspector mantInsp;
+    private MantenedorInspectorConversation mantInsp;
     
     private String nombre;
     private String apellido1;
@@ -49,7 +49,7 @@ public class MantenedorInspectorEditar {
         this.telefono = this.mantInsp.getTelefono();
     }
     
-    public MantenedorInspectorEditar() {
+    public MantenedorInspectorEditarMB() {
     }
     
     public void guardarCambiosInspector(){
@@ -65,11 +65,11 @@ public class MantenedorInspectorEditar {
        
     }
 
-    public MantenedorInspector getMantInsp() {
+    public MantenedorInspectorConversation getMantInsp() {
         return mantInsp;
     }
 
-    public void setMantInsp(MantenedorInspector mantInsp) {
+    public void setMantInsp(MantenedorInspectorConversation mantInsp) {
         this.mantInsp = mantInsp;
     }
 

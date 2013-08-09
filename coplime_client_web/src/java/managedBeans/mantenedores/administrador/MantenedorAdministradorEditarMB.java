@@ -17,15 +17,15 @@ import sessionBeans.CrudAdministradorLocal;
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorAdministradorEditar")
+@Named(value = "mantenedorAdministradorEditarMB")
 @RequestScoped
-public class MantenedorAdministradorEditar {
+public class MantenedorAdministradorEditarMB {
 
     @EJB
     private CrudAdministradorLocal crudAdministrador;
            
     @Inject 
-    private MantenedorAdministrador mantAdm;
+    private MantenedorAdministradorConversation mantAdm;
     
     private String nombre;
     private String apellido1;
@@ -49,7 +49,7 @@ public class MantenedorAdministradorEditar {
         this.username = this.mantAdm.getUsername();
         this.telefono = this.mantAdm.getTelefono();
     }
-    public MantenedorAdministradorEditar() {
+    public MantenedorAdministradorEditarMB() {
     }
     
     public void guardarCambiosAdministrador(){
@@ -57,19 +57,19 @@ public class MantenedorAdministradorEditar {
         System.out.println("Se va a guardar los cambios de un inspector");
         System.out.println("idUser="+rut+" username:"+username+" nombre:"+nombre+" ap1:"+apellido1+" ap2:"+apellido2);
         crudAdministrador.editarAdministrador(rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
-        CommonFunctions.goToPage("/faces/admin/verAdministradores.xhtml");
+        CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
     }
     
     public void volver() {
-       CommonFunctions.goToPage("/faces/admin/verAdministradores.xhtml");
+       CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
        
     }
 
-    public MantenedorAdministrador getMantAdm() {
+    public MantenedorAdministradorConversation getMantAdm() {
         return mantAdm;
     }
 
-    public void setMantAdm(MantenedorAdministrador mantAdm) {
+    public void setMantAdm(MantenedorAdministradorConversation mantAdm) {
         this.mantAdm = mantAdm;
     }
 

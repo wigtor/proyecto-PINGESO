@@ -20,10 +20,6 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.model.DefaultStreamedContent;
@@ -35,14 +31,14 @@ import sessionBeans.NotificadorLocal;
  *
  * @author victor
  */
-@Named(value = "NotificacionVerDetalles")
+@Named(value = "mantenedorNotificacionVerDetallesMB")
 @RequestScoped
-public class NotificacionVerDetalles implements Serializable {
+public class MantenedorNotificacionVerDetallesMB implements Serializable {
     @EJB
     private NotificadorLocal notificador;
     
     @Inject
-    private MantenedorNotificaciones mantNotificacion;
+    private MantenedorNotificacionesConversation mantNotificacion;
     
     private Integer numNotif;
     private String origen_seleccionado;
@@ -107,9 +103,9 @@ public class NotificacionVerDetalles implements Serializable {
             InputStream datosImagenStream = new ByteArrayInputStream(resultado);
             imagen = new DefaultStreamedContent(datosImagenStream, this.tipo_imagen);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(NotificacionVerDetalles.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MantenedorNotificacionVerDetallesMB.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(NotificacionVerDetalles.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MantenedorNotificacionVerDetallesMB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -126,7 +122,7 @@ public class NotificacionVerDetalles implements Serializable {
     /**
      * Creates a new instance of NotificacionesVerListado
      */
-    public NotificacionVerDetalles() {
+    public MantenedorNotificacionVerDetallesMB() {
     }
 
     public String getOrigen_seleccionado() {

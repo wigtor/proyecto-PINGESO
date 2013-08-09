@@ -12,9 +12,9 @@ import javax.enterprise.context.SessionScoped;
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorAdministrador")
+@Named(value = "mantenedorAdministradorConversation")
 @SessionScoped
-public class MantenedorAdministrador implements Serializable{
+public class MantenedorAdministradorConversation implements Serializable{
 
     private String username;
     private String password;
@@ -25,7 +25,7 @@ public class MantenedorAdministrador implements Serializable{
     private String mail;
     private Integer telefono;
     
-    public MantenedorAdministrador() {
+    public MantenedorAdministradorConversation() {
     }
 
     public String getUsername() {

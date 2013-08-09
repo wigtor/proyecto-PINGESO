@@ -28,14 +28,14 @@ import sessionBeans.CrudPuntoLimpioLocal;
  * @author victor
  */
 @ManagedBean
-@Named(value = "MantenedorPuntoLimpioVerListado")
+@Named(value = "mantenedorPuntoLimpioVerListadoMB")
 @RequestScoped
-public class MantenedorPuntoLimpioVerListado {
+public class MantenedorPuntoLimpioVerListadoMB {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
     @Inject
-    private MantenedorPuntoLimpio mantPtoLimpio;
+    private MantenedorPuntoLimpioConversation mantPtoLimpio;
     
     private List<PuntoLimpioPojo> lista;
     
@@ -91,15 +91,15 @@ public class MantenedorPuntoLimpioVerListado {
     
     
     /**
-     * Creates a new instance of MantenedorPuntoLimpioVerListado
+     * Creates a new instance of MantenedorPuntoLimpioVerListadoMB
      */
-    public MantenedorPuntoLimpioVerListado() {
+    public MantenedorPuntoLimpioVerListadoMB() {
     }
     
     public void agregar() {
        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
        try {
-           externalContext.redirect(externalContext.getRequestContextPath() + "/faces/admin/agregarPuntoLimpio.xhtml");
+           externalContext.redirect(externalContext.getRequestContextPath() + "/faces/users/admin/agregarPuntoLimpio.xhtml");
        }
        catch (IOException e) {
            System.out.println(e.getMessage());
@@ -126,7 +126,7 @@ public class MantenedorPuntoLimpioVerListado {
         PuntoLimpio ptoEdit = crudPuntoLimpio.getPuntoLimpioByNum(numPto);
         if (ptoEdit != null) {
             this.mantPtoLimpio.setIdPuntoLimpioDetalles(numPto);
-            CommonFunctions.goToPage("/faces/admin/editarPuntoLimpio.xhtml");
+            CommonFunctions.goToPage("/faces/users/admin/editarPuntoLimpio.xhtml");
         }
         else {
             //MOSTRAR ERROR

@@ -4,7 +4,6 @@
  */
 package managedBeans.mantenedores.puntoLimpio;
 
-import ObjectsForManagedBeans.PuntoLimpioPojo;
 import entities.Contenedor;
 import entities.PuntoLimpio;
 import entities.RevisionPuntoLimpio;
@@ -24,14 +23,14 @@ import sessionBeans.CrudPuntoLimpioLocal;
  *
  * @author victor
  */
-@Named(value = "MantenedorPuntoLimpioVerDetalles")
+@Named(value = "mantenedorPuntoLimpioVerDetallesMB")
 @RequestScoped
-public class MantenedorPuntoLimpioVerDetalles {
+public class MantenedorPuntoLimpioVerDetallesMB {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
     @Inject
-    private MantenedorPuntoLimpio mantPtoLimpio;
+    private MantenedorPuntoLimpioConversation mantPtoLimpio;
     
     private Integer num;
     private String nombre;
@@ -49,7 +48,7 @@ public class MantenedorPuntoLimpioVerDetalles {
     /**
      * Creates a new instance of MantenedorPuntoLimpioAgregar
      */
-    public MantenedorPuntoLimpioVerDetalles() {
+    public MantenedorPuntoLimpioVerDetallesMB() {
         System.out.println("Se ha instanciado un MantenedorPuntoLimpioVerDetalles");
     }
     
@@ -72,7 +71,7 @@ public class MantenedorPuntoLimpioVerDetalles {
         PuntoLimpio ptoEdit = crudPuntoLimpio.getPuntoLimpioByNum(numPtoLimpio);
         
         if (ptoEdit != null) {
-            CommonFunctions.goToPage("/faces/admin/editarPuntoLimpio.xhtml");
+            CommonFunctions.goToPage("/faces/users/admin/editarPuntoLimpio.xhtml");
             
         }
         else {

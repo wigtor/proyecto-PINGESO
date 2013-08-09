@@ -14,9 +14,9 @@ import sessionBeans.CrudAdministradorLocal;
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorAdministradorAgregar")
+@Named(value = "mantenedorAdministradorAgregarMB")
 @RequestScoped
-public class MantenedorAdministradorAgregar {
+public class MantenedorAdministradorAgregarMB {
 
     @EJB
     private CrudAdministradorLocal crudAdministrador;
@@ -30,16 +30,16 @@ public class MantenedorAdministradorAgregar {
     private String mail;
     private Integer telefono;   
     
-    public MantenedorAdministradorAgregar() {
+    public MantenedorAdministradorAgregarMB() {
     }
     
     public void agregarAdministrador() {
         crudAdministrador.agregarAdministrador( username, password, rut, nombre, apellido1, apellido2, mail, telefono);
-        CommonFunctions.goToPage("/faces/admin/verAdministradores.xhtml");
+        CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
     }
     
     public void volver() {
-        CommonFunctions.goToPage("/faces/admin/verAdministradores.xhtml");
+        CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
        
     }
 

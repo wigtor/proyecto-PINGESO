@@ -12,9 +12,9 @@ import java.io.Serializable;
  *
  * @author victor
  */
-@Named(value = "MantenedorRevision")
+@Named(value = "mantenedorRevisionConversation")
 @SessionScoped
-public class MantenedorRevision implements Serializable {
+public class MantenedorRevisionConversation implements Serializable {
 
     private Integer idRevisionDetalles;
     
@@ -24,9 +24,9 @@ public class MantenedorRevision implements Serializable {
     }
     
     /**
-     * Creates a new instance of MantenedorRevision
+     * Creates a new instance of MantenedorRevisionConversation
      */
-    public MantenedorRevision() {
+    public MantenedorRevisionConversation() {
     }
 
     public Integer getIdRevisionDetalles() {

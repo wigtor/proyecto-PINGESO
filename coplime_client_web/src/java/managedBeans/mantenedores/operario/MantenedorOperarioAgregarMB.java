@@ -14,9 +14,9 @@ import sessionBeans.CrudOperarioLocal;
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorOperarioAgregar")
+@Named(value = "mantenedorOperarioAgregarMB")
 @RequestScoped
-public class MantenedorOperarioAgregar {
+public class MantenedorOperarioAgregarMB {
 
     @EJB
     private CrudOperarioLocal crudOperario;
@@ -30,7 +30,7 @@ public class MantenedorOperarioAgregar {
     private String mail;
     private Integer telefono;
     
-    public MantenedorOperarioAgregar() {
+    public MantenedorOperarioAgregarMB() {
     }
     
     public void agregarOperario() {

@@ -15,7 +15,7 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import managedBeans.cambioEstadoPuntoLimpio.CambioEstadoPuntoLimpio_session;
+import managedBeans.cambioEstadoPuntoLimpio.CambioEstadoPuntoLimpioConversation;
 import otros.CommonFunctions;
 import sessionBeans.CrudMantencionPuntoLimpioLocal;
 import sessionBeans.CrudPuntoLimpioLocal;
@@ -24,9 +24,9 @@ import sessionBeans.CrudPuntoLimpioLocal;
  *
  * @author victor
  */
-@Named(value = "AgregarMantencion")
+@Named(value = "solicitarMantencionMB")
 @RequestScoped
-public class AgregarMantencion {
+public class SolicitarMantencionMB {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
@@ -34,16 +34,16 @@ public class AgregarMantencion {
     private CrudMantencionPuntoLimpioLocal crudMantencion;
     
     @Inject
-    private CambioEstadoPuntoLimpio_session cambioEstadoSessionBean;
+    private CambioEstadoPuntoLimpioConversation cambioEstadoSessionBean;
     
     private Integer numPtoLimpio;
     private List<SelectElemPojo> listaPuntosLimpios;
     private String detalle;
     
     /**
-     * Creates a new instance of AgregarRevision
+     * Creates a new instance of SolicitarMantencionMB
      */
-    public AgregarMantencion() {
+    public SolicitarMantencionMB() {
     }
     
     @PostConstruct

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans.mantencionesPuntoLimpio;
+package managedBeans.solicitudesPuntoLimpio;
 
 import entities.MantencionPuntoLimpio;
 import java.util.Calendar;
@@ -19,14 +19,14 @@ import sessionBeans.CrudMantencionPuntoLimpioLocal;
  *
  * @author victor
  */
-@Named(value = "MantenedorMantencionVerDetalles")
+@Named(value = "mantenedorSolicitudVerDetallesMB")
 @RequestScoped
-public class MantenedorMantencionVerDetalles {
+public class MantenedorSolicitudVerDetallesMB {
     @EJB
     CrudMantencionPuntoLimpioLocal crudMantencion;
     
     @Inject
-    private MantenedorMantencion mantMantenciones;
+    private MantenedorSolicitudConversation mantSolicitudes;
     
     private Integer num;
     
@@ -41,7 +41,7 @@ public class MantenedorMantencionVerDetalles {
     
     @PostConstruct
     public void init() {
-        this.num = this.mantMantenciones.getIdMantencionDetalles();
+        this.num = this.mantSolicitudes.getIdSolicitudDetalles();
         
         cargarDatosMantencion();
     }
@@ -73,7 +73,7 @@ public class MantenedorMantencionVerDetalles {
     /**
      * Creates a new instance of MantenedorRevisionVerListado
      */
-    public MantenedorMantencionVerDetalles() {
+    public MantenedorSolicitudVerDetallesMB() {
     }
 
     public Integer getNum() {

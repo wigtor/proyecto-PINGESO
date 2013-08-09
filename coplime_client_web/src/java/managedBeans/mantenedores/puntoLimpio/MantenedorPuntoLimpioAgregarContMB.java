@@ -24,14 +24,14 @@ import sessionBeans.CrudPuntoLimpioLocal;
  *
  * @author victor
  */
-@Named(value = "MantenedorPuntoLimpioAgregarCont")
+@Named(value = "mantenedorPuntoLimpioAgregarContMB")
 @RequestScoped
-public class MantenedorPuntoLimpioAgregarCont {
+public class MantenedorPuntoLimpioAgregarContMB {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
     @Inject
-    private MantenedorPuntoLimpio mantPtoLimpio;
+    private MantenedorPuntoLimpioConversation mantPtoLimpio;
     
     private Integer numPtoLimpio;
     private Integer material;
@@ -46,7 +46,7 @@ public class MantenedorPuntoLimpioAgregarCont {
     /**
      * Creates a new instance of MantenedorPuntoLimpioAgregar
      */
-    public MantenedorPuntoLimpioAgregarCont() {
+    public MantenedorPuntoLimpioAgregarContMB() {
         System.out.println("Se ha instanciado un MantenedorPuntoLimpioAgregar");
         this.llenadoContenedor = 0;
     }
@@ -62,7 +62,7 @@ public class MantenedorPuntoLimpioAgregarCont {
         else {
             //MOSTRAR ERROR
             
-            CommonFunctions.goToPage("/faces/admin/agregarPuntoLimpio.xhtml");
+            CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml");
         }
     }
     
@@ -132,19 +132,19 @@ public class MantenedorPuntoLimpioAgregarCont {
         System.out.println("Se hizo click en 'guardarNvoContenedor_y_otro()'");
         mantPtoLimpio.getContenedores_creando().add(crearContenedorTemporal());
         
-        CommonFunctions.goToPage("/faces/admin/agregarContenedor.xhtml");
+        CommonFunctions.goToPage("/faces/users/admin/agregarContenedor.xhtml");
     }
     
     public void guardarNvoContenedor() {
         System.out.println("Se hizo click en 'guardarNvoContenedor()'");
         mantPtoLimpio.getContenedores_creando().add(crearContenedorTemporal());
         
-        CommonFunctions.goToPage("/faces/admin/agregarPuntoLimpio.xhtml");
+        CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml");
     }
     
     public void volverToPuntoLimpio() {
         System.out.println("Se hizo click en 'volverToPuntoLimpio()'");
-        CommonFunctions.goToPage("/faces/admin/agregarPuntoLimpio.xhtml");
+        CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml");
     }
     
     public Integer getNumPtoLimpio() {

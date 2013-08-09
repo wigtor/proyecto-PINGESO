@@ -23,14 +23,14 @@ import sessionBeans.CrudMantencionPuntoLimpioLocal;
  *
  * @author victor
  */
-@Named(value = "MantenedorMantencionVerListado")
+@Named(value = "mantenedorMantencionVerListadoMB")
 @RequestScoped
-public class MantenedorMantencionVerListado {
+public class MantenedorMantencionVerListadoMB {
     @EJB
     CrudMantencionPuntoLimpioLocal crudMantencion;
     
     @Inject
-    private MantenedorMantencion mantMantenciones;
+    private MantenedorMantencionConversation mantMantenciones;
     
     private List<RevisionPojo> lista;
     
@@ -98,9 +98,9 @@ public class MantenedorMantencionVerListado {
     
     
     /**
-     * Creates a new instance of MantenedorMantencionVerListado
+     * Creates a new instance of MantenedorMantencionVerListadoMB
      */
-    public MantenedorMantencionVerListado() {
+    public MantenedorMantencionVerListadoMB() {
     }
 
     public List<RevisionPojo> getLista() {

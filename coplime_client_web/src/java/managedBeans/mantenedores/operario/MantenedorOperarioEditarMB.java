@@ -16,15 +16,15 @@ import sessionBeans.CrudOperarioLocal;
  *
  * @author Carlos Barrera
  */
-@Named(value = "MantenedorOperarioEditar")
+@Named(value = "mantenedorOperarioEditarMB")
 @RequestScoped
-public class MantenedorOperarioEditar {
+public class MantenedorOperarioEditarMB {
 
     @EJB
     private CrudOperarioLocal crudOperario;
     
     @Inject 
-    private MantenedorOperario mantOp;
+    private MantenedorOperarioConversation mantOp;
     
     private String nombre;
     private String apellido1;
@@ -36,7 +36,7 @@ public class MantenedorOperarioEditar {
     private Integer telefono;
     private boolean checkContraseña;
     
-    public MantenedorOperarioEditar() {
+    public MantenedorOperarioEditarMB() {
     }
     
     @PostConstruct
@@ -62,11 +62,11 @@ public class MantenedorOperarioEditar {
        
     }
 
-    public MantenedorOperario getMantOp() {
+    public MantenedorOperarioConversation getMantOp() {
         return mantOp;
     }
 
-    public void setMantOp(MantenedorOperario mantOp) {
+    public void setMantOp(MantenedorOperarioConversation mantOp) {
         this.mantOp = mantOp;
     }
 

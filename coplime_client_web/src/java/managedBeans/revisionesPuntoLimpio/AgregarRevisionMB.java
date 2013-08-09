@@ -17,7 +17,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import managedBeans.cambioEstadoPuntoLimpio.CambioEstadoPuntoLimpio_session;
+import managedBeans.cambioEstadoPuntoLimpio.CambioEstadoPuntoLimpioConversation;
 import otros.CommonFunctions;
 import sessionBeans.CrudPuntoLimpioLocal;
 import sessionBeans.CrudRevisionPuntoLimpioLocal;
@@ -26,9 +26,9 @@ import sessionBeans.CrudRevisionPuntoLimpioLocal;
  *
  * @author victor
  */
-@Named(value = "AgregarRevision")
+@Named(value = "agregarRevisionMB")
 @RequestScoped
-public class AgregarRevision {
+public class AgregarRevisionMB {
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
@@ -36,16 +36,16 @@ public class AgregarRevision {
     private CrudRevisionPuntoLimpioLocal crudRevision;
     
     @Inject
-    private CambioEstadoPuntoLimpio_session cambioEstadoSessionBean;
+    private CambioEstadoPuntoLimpioConversation cambioEstadoSessionBean;
     
     private Integer numPtoLimpio;
     private List<SelectElemPojo> listaPuntosLimpios;
     private String detalle;
     
     /**
-     * Creates a new instance of AgregarRevision
+     * Creates a new instance of AgregarRevisionMB
      */
-    public AgregarRevision() {
+    public AgregarRevisionMB() {
     }
     
     @PostConstruct

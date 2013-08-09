@@ -11,24 +11,22 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 
 /**
  *
  * @author victor
  */
-@Named(value = "MantenedorPuntoLimpio")
+@Named(value = "mantenedorPuntoLimpioConversation")
 @SessionScoped
-public class MantenedorPuntoLimpio implements Serializable {
+public class MantenedorPuntoLimpioConversation implements Serializable {
     private PuntoLimpioPojo pto_creando;
     private List<ContenedorPojo> contenedores_creando;
     private Integer idPuntoLimpioDetalles;
     
     /**
-     * Creates a new instance of MantenedorPuntoLimpio
+     * Creates a new instance of MantenedorPuntoLimpioConversation
      */
-    public MantenedorPuntoLimpio() {
+    public MantenedorPuntoLimpioConversation() {
         contenedores_creando = new LinkedList();
     }
     

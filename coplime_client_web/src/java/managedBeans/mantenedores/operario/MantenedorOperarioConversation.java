@@ -5,22 +5,17 @@
 package managedBeans.mantenedores.operario;
 
 import ObjectsForManagedBeans.UsuarioPojo;
-import entities.Inspector;
 import entities.OperarioMantencion;
 import entities.Usuario;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import otros.CommonFunctions;
 import sessionBeans.CrudOperarioLocal;
@@ -29,9 +24,9 @@ import sessionBeans.CrudOperarioLocal;
  *
  * @author victor
  */
-@Named(value = "MantenedorOperario")
+@Named(value = "mantenedorOperarioConversation")
 @SessionScoped
-public class MantenedorOperario implements Serializable{
+public class MantenedorOperarioConversation implements Serializable{
     @EJB
     private CrudOperarioLocal crudOperario;
 
@@ -56,7 +51,7 @@ public class MantenedorOperario implements Serializable{
     /**
      * Creates a new instance of mantenedorInspector
      */
-    public MantenedorOperario() {
+    public MantenedorOperarioConversation() {
     }
     
     @PostConstruct
@@ -128,7 +123,7 @@ public class MantenedorOperario implements Serializable{
        FacesContext context = FacesContext.getCurrentInstance();
        Map<String,Object> variableSession = context.getExternalContext().getSessionMap();
        variableSession.put("idUserToEdit", new Integer(numOperario));      
-       CommonFunctions.goToPage("/faces/admin/editarOperarioMantencion.xhtml");
+       CommonFunctions.goToPage("/faces/users/admin/editarOperarioMantencion.xhtml");
        
     }
     
@@ -138,7 +133,7 @@ public class MantenedorOperario implements Serializable{
     }
     
     public void agregar() {
-        CommonFunctions.goToPage("/faces/admin/agregarOperarioMantencion.xhtml");
+        CommonFunctions.goToPage("/faces/users/admin/agregarOperarioMantencion.xhtml");
        
     }
     public String ObtineUserName(int rut){
