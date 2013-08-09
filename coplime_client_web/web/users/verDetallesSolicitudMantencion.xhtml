@@ -14,31 +14,31 @@
             
             <ui:define name="centro">
                  <h:form>
-                     <p:panelGrid columns="6" styleClass="centrar">
+                     <p:panelGrid columns="2" styleClass="centrar">
                          <f:facet name="header">Datos de solicitud</f:facet>
                          
                          
                          <p:outputLabel value="N°"/>
-                         <p:inputText value="#{mantenedorRevisionVerDetallesMB.num}" disabled="true" readonly="true" />
+                         <p:inputText value="#{mantenedorSolicitudVerDetallesMB.num}" disabled="true" readonly="true" />
                          
                          <p:outputLabel value="Operario asignado"/>
-                         <p:inputText value="#{mantenedorRevisionVerDetallesMB.operario}" disabled="true" readonly="true" />
+                         <p:inputText value="#{mantenedorSolicitudVerDetallesMB.operario}" disabled="true" readonly="true" />
                          
                          <p:outputLabel value="Punto limpio"/>
-                         <p:inputText value="#{mantenedorRevisionVerDetallesMB.puntoLimpio}" disabled="true" readonly="true" />
+                         <p:inputText value="#{mantenedorSolicitudVerDetallesMB.puntoLimpio}" disabled="true" readonly="true" />
                          
                          <p:outputLabel value="Fecha"/>
-                         <p:inputText value="#{mantenedorRevisionVerDetallesMB.fecha}" disabled="true" readonly="true" />
+                         <p:inputText value="#{mantenedorSolicitudVerDetallesMB.fecha}" disabled="true" readonly="true" />
                          
                          <p:outputLabel value="Inspector solicitante"/>
-                         <p:inputText value="#{mantenedorRevisionVerDetallesMB.inspector}" disabled="true" readonly="true" />
+                         <p:inputText value="#{mantenedorSolicitudVerDetallesMB.inspector}" disabled="true" readonly="true" />
                          
                          <p:outputLabel value="Detalle"/>
-                         <p:inputTextarea value="#{mantenedorRevisionVerDetallesMB.detalles}" disabled="true" readonly="true" />
+                         <p:inputTextarea value="#{mantenedorSolicitudVerDetallesMB.detalles}" disabled="true" readonly="true" />
                          
                          
                          <f:facet name="footer">
-                            <p:commandButton value="Volver" action="#{mantenedorRevisionVerDetallesMB.volverToLista()}"/>                         
+                            <p:commandButton value="Volver" action="#{mantenedorSolicitudVerDetallesMB.volverToLista()}"/>                         
                          </f:facet>
                      </p:panelGrid>                
                 </h:form>

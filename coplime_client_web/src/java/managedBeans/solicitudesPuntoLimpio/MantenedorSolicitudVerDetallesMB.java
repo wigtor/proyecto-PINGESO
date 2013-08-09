@@ -5,6 +5,7 @@
 package managedBeans.solicitudesPuntoLimpio;
 
 import entities.MantencionPuntoLimpio;
+import entities.SolicitudMantencion;
 import java.util.Calendar;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
@@ -13,7 +14,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import otros.CommonFunctions;
-import sessionBeans.CrudMantencionPuntoLimpioLocal;
+import sessionBeans.CrudSolicitudMantencionLocal;
 
 /**
  *
@@ -23,7 +24,7 @@ import sessionBeans.CrudMantencionPuntoLimpioLocal;
 @RequestScoped
 public class MantenedorSolicitudVerDetallesMB {
     @EJB
-    CrudMantencionPuntoLimpioLocal crudMantencion;
+    CrudSolicitudMantencionLocal crudSolicitud;
     
     @Inject
     private MantenedorSolicitudConversation mantSolicitudes;
@@ -36,6 +37,8 @@ public class MantenedorSolicitudVerDetallesMB {
     
     private String operario;
     
+    private String inspector;
+    
     private String detalles;
     
     
@@ -47,20 +50,26 @@ public class MantenedorSolicitudVerDetallesMB {
     }
     
     private void cargarDatosSolicitud(){
-        MantencionPuntoLimpio rev = this.crudMantencion.getMantencionById(num);
+        SolicitudMantencion rev = this.crudSolicitud.getSolicitudById(num);
         if (rev == null) {
              volverToLista();
              return;
         }
         this.puntoLimpio = Integer.toString(rev.getPuntoLimpio().getId()).concat(" - ").concat(rev.getPuntoLimpio().getNombre());
-        this.detalles = rev.getComentarios();
+        this.detalles = rev.getDetalles();
         Calendar f = rev.getFecha();
         this.fecha = Integer.toString(f.get(Calendar.DAY_OF_MONTH)).concat("-").concat(
                     f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)).concat(
                 "-").concat(Integer.toString(f.get(Calendar.YEAR)));
-        String rut = Integer.toString(rev.getOperarioMantencion().getUsuario().getRut());
-        String nombre = rev.getOperarioMantencion().getUsuario().getNombre();
-        String apellido1 = rev.getOperarioMantencion().getUsuario().getApellido1();
+        String rut = Integer.toString(rev.getInspectorSolicitante().getUsuario().getRut());
+        String nombre = rev.getInspectorSolicitante().getUsuario().getNombre();
+        String apellido1 = rev.getInspectorSolicitante().getUsuario().getApellido1();
+        //String apellido2 = rev.getOperarioMantencion().getUsuario().getApellido2();
+        this.inspector = rut.concat(" - ").concat(nombre).concat(" ").concat(apellido1);
+        
+        rut = Integer.toString(rev.getOperarioAsignado().getUsuario().getRut());
+        nombre = rev.getOperarioAsignado().getUsuario().getNombre();
+        apellido1 = rev.getOperarioAsignado().getUsuario().getApellido1();
         //String apellido2 = rev.getOperarioMantencion().getUsuario().getApellido2();
         this.operario = rut.concat(" - ").concat(nombre).concat(" ").concat(apellido1);
     }
@@ -103,6 +112,14 @@ public class MantenedorSolicitudVerDetallesMB {
 
     public void setOperario(String operario) {
         this.operario = operario;
+    }
+    
+    public String getInspector() {
+        return inspector;
+    }
+
+    public void setInspector(String inspector) {
+        this.inspector = inspector;
     }
     
     public String getDetalles() {

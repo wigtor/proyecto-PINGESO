@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans.mantencionesPuntoLimpio;
+package managedBeans.solicitudesPuntoLimpio;
 
-import ObjectsForManagedBeans.ContenedorPojo;
 import ObjectsForManagedBeans.SelectElemPojo;
+import entities.OperarioMantencion;
 import entities.PuntoLimpio;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,11 +14,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import managedBeans.cambioEstadoPuntoLimpio.CambioEstadoPuntoLimpioConversation;
 import otros.CommonFunctions;
-import sessionBeans.CrudMantencionPuntoLimpioLocal;
+import sessionBeans.CrudOperarioLocal;
 import sessionBeans.CrudPuntoLimpioLocal;
+import sessionBeans.CrudSolicitudMantencionLocal;
 
 /**
  *
@@ -28,16 +27,18 @@ import sessionBeans.CrudPuntoLimpioLocal;
 @RequestScoped
 public class AgregarSolicitudMB {
     @EJB
+    private CrudSolicitudMantencionLocal crudSolicitud;
+    
+    @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
     @EJB
-    private CrudMantencionPuntoLimpioLocal crudMantencion;
-    
-    @Inject
-    private CambioEstadoPuntoLimpioConversation cambioEstadoSessionBean;
+    private CrudOperarioLocal crudOperario;
     
     private Integer numPtoLimpio;
+    private Integer numOperario;
     private List<SelectElemPojo> listaPuntosLimpios;
+    private List<SelectElemPojo> listaOperarios;
     private String detalle;
     
     /**
@@ -48,23 +49,11 @@ public class AgregarSolicitudMB {
     
     @PostConstruct
     public void init() {
-        this.listaPuntosLimpios = cargarPuntosLimpios();
-        if (detalle == null) {
-            detalle = cambioEstadoSessionBean.getDetalle();
-        }
-        else if (detalle.trim().isEmpty()) {
-            detalle = cambioEstadoSessionBean.getDetalle();
-        }
-        
-        if (this.cambioEstadoSessionBean.getIdPuntoLimpioToChange()!= null) {
-            this.numPtoLimpio = this.cambioEstadoSessionBean.getIdPuntoLimpioToChange();
-        }
-        else {
-            this.cambioEstadoSessionBean.setIdPuntoLimpioToChange(this.numPtoLimpio);
-        }
+        cargarPuntosLimpios();
+        cargarOperarios();
     }
     
-    private List<SelectElemPojo> cargarPuntosLimpios(){
+    private void cargarPuntosLimpios(){
         Collection<PuntoLimpio> listaTemp = crudPuntoLimpio.getAllPuntosLimpios();
         SelectElemPojo ptoTemporal;
         List<SelectElemPojo> listaResult = new ArrayList();
@@ -75,33 +64,36 @@ public class AgregarSolicitudMB {
             ptoTemporal.setLabel(pto_iter.getNombre());
             listaResult.add(ptoTemporal);
         }
-        return listaResult;
+        this.listaPuntosLimpios = listaResult;
     }
     
-    public void cambiarEstadoPtoLimpio() {
-        //Almaceno en el managed bean session el punto limpio que se está editando
-        cambioEstadoSessionBean.setDetalle(detalle);
-        cambioEstadoSessionBean.setIdPuntoLimpioToChange(numPtoLimpio);
-        
-        CommonFunctions.goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml");
+    private void cargarOperarios(){
+        Collection<OperarioMantencion> listaTemp = crudOperario.getAllOperarios();
+        SelectElemPojo ptoTemporal;
+        List<SelectElemPojo> listaResult = new ArrayList();
+        for(OperarioMantencion elem_iter : listaTemp) {
+            ptoTemporal = new SelectElemPojo();
+            
+            ptoTemporal.setId(elem_iter.getUsuario().getRut().toString());
+            ptoTemporal.setLabel(elem_iter.getUsuario().getNombre().concat(" ")
+                    .concat(elem_iter.getUsuario().getApellido1()));
+            listaResult.add(ptoTemporal);
+        }
+        this.listaOperarios = listaResult;
     }
     
-    public void guardarMantencion() {
-         System.out.println("Se hizo click en 'guardarRevision()'");
+    public void guardarSolicitud() {
+         System.out.println("Se hizo click en 'guardarSolicitud()'");
          
          String usernameLogueado = CommonFunctions.getUsuarioLogueado();
          
          //Envío al session bean los cambios para que se persistan a nivel de DB
-         crudMantencion.agregarMantencion(numPtoLimpio, usernameLogueado, detalle, cambioEstadoSessionBean.getIdEstadoToChange());
-         for(ContenedorPojo c : cambioEstadoSessionBean.getListaContenedoresModificados()) {
-             crudPuntoLimpio.cambiarEstadoContenedor(c.getId(), c.getIdEstadoContenedor(), c.getLlenadoContenedor());
-         }
+         crudSolicitud.agregarSolicitudMantencion(numPtoLimpio, usernameLogueado, numOperario, detalle);
          
          volverToLista();
     }
     
     public void volverToLista() {
-        cambioEstadoSessionBean.limpiarCampos();
         CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
 
@@ -127,6 +119,22 @@ public class AgregarSolicitudMB {
 
     public void setDetalle(String detalle) {
         this.detalle = detalle;
+    }
+
+    public Integer getNumOperario() {
+        return numOperario;
+    }
+
+    public void setNumOperario(Integer numOperario) {
+        this.numOperario = numOperario;
+    }
+
+    public List<SelectElemPojo> getListaOperarios() {
+        return listaOperarios;
+    }
+
+    public void setListaOperarios(List<SelectElemPojo> listaOperarios) {
+        this.listaOperarios = listaOperarios;
     }
     
 }

@@ -5,19 +5,36 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author victor
  */
 @Entity
+@NamedQueries( {
+    @NamedQuery(name="SolicitudMantencion.findByInspector", query="SELECT u FROM SolicitudMantencion u WHERE u.inspectorSolicitante.usuario.id = :idUsuario"), 
+    @NamedQuery(name="SolicitudMantencion.findByOperario", query="SELECT u FROM SolicitudMantencion u WHERE u.operarioAsignado.usuario.id = :idUsuario")
+})
 public class SolicitudMantencion implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer num;
+
+    @ManyToOne
+    private OperarioMantencion operarioAsignado;
+    
     @ManyToOne
     private RevisionPuntoLimpio revisionOriginadora;
     
@@ -27,6 +44,24 @@ public class SolicitudMantencion implements Serializable {
     
     @ManyToOne
     private PuntoLimpio puntoLimpio;
+    
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private Calendar fecha;
+    
+    private String detalles;
+
+    
+    public SolicitudMantencion() {
+        
+    }
+    
+    public SolicitudMantencion(PuntoLimpio p, Inspector ins, OperarioMantencion opAsign, String detalle) {
+        this.puntoLimpio = p;
+        this.inspectorSolicitante = ins;
+        this.operarioAsignado = opAsign;
+        this.detalles = detalle;
+    }
 
     public RevisionPuntoLimpio getRevisionOriginadora() {
         return revisionOriginadora;
@@ -68,20 +103,28 @@ public class SolicitudMantencion implements Serializable {
         this.num = num;
     }
     
-    @ManyToOne
-    private OperarioMantencion operarioAsignado;
-    
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer num;
-
     public Integer getId() {
         return num;
     }
 
     public void setId(Integer id) {
         this.num = id;
+    }
+    
+    public Calendar getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Calendar fecha) {
+        this.fecha = fecha;
+    }
+    
+    public String getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(String detalles) {
+        this.detalles = detalles;
     }
 
     @Override

@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans.mantencionesPuntoLimpio;
+package managedBeans.solicitudesPuntoLimpio;
 
-import ObjectsForManagedBeans.RevisionPojo;
-import entities.MantencionPuntoLimpio;
+import ObjectsForManagedBeans.SolicitudPojo;
+import entities.SolicitudMantencion;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -17,7 +17,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import otros.CommonFunctions;
-import sessionBeans.CrudMantencionPuntoLimpioLocal;
+import sessionBeans.CrudSolicitudMantencionLocal;
 
 /**
  *
@@ -27,16 +27,16 @@ import sessionBeans.CrudMantencionPuntoLimpioLocal;
 @RequestScoped
 public class MantenedorSolicitudVerListadoMB {
     @EJB
-    CrudMantencionPuntoLimpioLocal crudMantencion;
+    CrudSolicitudMantencionLocal crudSolicitud;
     
     @Inject
-    private MantenedorMantencionConversation mantSolicitudes;
+    private MantenedorSolicitudConversation mantSolicitudes;
     
-    private List<RevisionPojo> lista;
+    private List<SolicitudPojo> lista;
     
-    private List<RevisionPojo> listaBusqueda;
+    private List<SolicitudPojo> listaBusqueda;
     
-    private RevisionPojo elementoSelecionado;
+    private SolicitudPojo elementoSelecionado;
     
     
     @PostConstruct
@@ -45,42 +45,48 @@ public class MantenedorSolicitudVerListadoMB {
     }
     
     private void cargarSolicitudes(){
-        Collection<MantencionPuntoLimpio> listaTemp = crudMantencion.getAllMantenciones(CommonFunctions.getUsuarioLogueado());
+        Collection<SolicitudMantencion> listaTemp = crudSolicitud.getAllSolicitudes(CommonFunctions.getUsuarioLogueado());
         if (listaTemp == null)
             return;
-        RevisionPojo revTemporal;
+        SolicitudPojo revTemporal;
         Calendar f;
         String str_temp, rut, nombre, apellido1;
-        List<RevisionPojo> listaResult = new ArrayList();
-        for(MantencionPuntoLimpio rev_iter : listaTemp) {
-            revTemporal = new RevisionPojo();
+        List<SolicitudPojo> listaResult = new ArrayList();
+        for(SolicitudMantencion rev_iter : listaTemp) {
+            revTemporal = new SolicitudPojo();
             
             revTemporal.setNum(rev_iter.getId());
+            
             f = rev_iter.getFecha();
             revTemporal.setFecha(Integer.toString(f.get(Calendar.DAY_OF_MONTH))
                     .concat("-")
                     .concat(f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)));
-            
-            str_temp = rev_iter.getComentarios();
+            str_temp = rev_iter.getDetalles();
             if (str_temp.length() > 21) {
                 str_temp = str_temp.substring(0, 25).concat("...");
             }
             revTemporal.setDetalleCortado(str_temp);
             
-            rut = Integer.toString(rev_iter.getOperarioMantencion().getUsuario().getRut());
-            nombre = rev_iter.getOperarioMantencion().getUsuario().getNombre();
-            apellido1 = rev_iter.getOperarioMantencion().getUsuario().getApellido1();
-            revTemporal.setUsuario(rut.concat(" - ").concat(nombre).concat(apellido1));
+            
+            rut = Integer.toString(rev_iter.getInspectorSolicitante().getUsuario().getRut());
+            nombre = rev_iter.getInspectorSolicitante().getUsuario().getNombre();
+            apellido1 = rev_iter.getInspectorSolicitante().getUsuario().getApellido1();
+            revTemporal.setUsuarioEmisor(rut.concat(" - ").concat(nombre).concat(" ").concat(apellido1));
+            
+            rut = Integer.toString(rev_iter.getOperarioAsignado().getUsuario().getRut());
+            nombre = rev_iter.getOperarioAsignado().getUsuario().getNombre();
+            apellido1 = rev_iter.getOperarioAsignado().getUsuario().getApellido1();
+            revTemporal.setUsuarioReceptor(rut.concat(" - ").concat(nombre).concat(" ").concat(apellido1));
             listaResult.add(revTemporal);
         }
         this.lista = listaResult;
     }
     
     public void verDetalles(Integer numSolicitud) {
-        MantencionPuntoLimpio revisionSelec = crudMantencion.getMantencionById(numSolicitud);
+        SolicitudMantencion solicitudSelect = crudSolicitud.getSolicitudById(numSolicitud);
         
-        if (revisionSelec != null) { //Verifico que exista
-            this.mantSolicitudes.setIdMantencionDetalles(numSolicitud);
+        if (solicitudSelect != null) { //Verifico que exista
+            this.mantSolicitudes.setIdSolicitudDetalles(numSolicitud);
         }
         else {
             //MOSTRAR ERROR
@@ -99,27 +105,27 @@ public class MantenedorSolicitudVerListadoMB {
     public MantenedorSolicitudVerListadoMB() {
     }
 
-    public List<RevisionPojo> getLista() {
+    public List<SolicitudPojo> getLista() {
         return lista;
     }
 
-    public void setLista(List<RevisionPojo> lista) {
+    public void setLista(List<SolicitudPojo> lista) {
         this.lista = lista;
     }
 
-    public List<RevisionPojo> getListaBusqueda() {
+    public List<SolicitudPojo> getListaBusqueda() {
         return listaBusqueda;
     }
 
-    public void setListaBusqueda(List<RevisionPojo> listaBusqueda) {
+    public void setListaBusqueda(List<SolicitudPojo> listaBusqueda) {
         this.listaBusqueda = listaBusqueda;
     }
 
-    public RevisionPojo getElementoSelecionado() {
+    public SolicitudPojo getElementoSelecionado() {
         return elementoSelecionado;
     }
 
-    public void setElementoSelecionado(RevisionPojo elementoSelecionado) {
+    public void setElementoSelecionado(SolicitudPojo elementoSelecionado) {
         this.elementoSelecionado = elementoSelecionado;
     }
     

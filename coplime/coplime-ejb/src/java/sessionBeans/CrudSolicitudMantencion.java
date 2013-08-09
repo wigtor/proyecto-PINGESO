@@ -5,15 +5,15 @@
 package sessionBeans;
 
 import DAO.DAOFactory;
-import DAO.interfaces.EstadoDAO;
 import DAO.interfaces.InspectorDAO;
+import DAO.interfaces.OperarioDAO;
 import DAO.interfaces.PuntoLimpioDAO;
-import DAO.interfaces.RevisionDAO;
+import DAO.interfaces.SolicitudMantencionDAO;
 import DAO.interfaces.UsuarioDAO;
-import entities.Estado;
 import entities.Inspector;
+import entities.OperarioMantencion;
 import entities.PuntoLimpio;
-import entities.RevisionPuntoLimpio;
+import entities.SolicitudMantencion;
 import entities.Usuario;
 import java.util.Calendar;
 import java.util.Collection;
@@ -26,58 +26,63 @@ import javax.persistence.PersistenceContext;
  * @author victor
  */
 @Stateless
-public class CrudRevisionPuntoLimpio implements CrudRevisionPuntoLimpioLocal {
+public class CrudSolicitudMantencion implements CrudSolicitudMantencionLocal {
     @PersistenceContext(unitName = "coplime-ejbPU")
     private EntityManager em;
-    
+
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     @Override
-    public boolean agregarRevision(Integer numPtoLimpio, String usernameLogueado, String detalle, Integer nvoEstado) {
+    public boolean agregarSolicitudMantencion(Integer numPtoLimpio, String usernameLogueado, Integer numOperario, String detalle) {
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        
         PuntoLimpioDAO puntDAO = factoryDeDAOs.getPuntoLimpioDAO();
-        EstadoDAO estDAO = factoryDeDAOs.getEstadoDAO();
         InspectorDAO inspDAO = factoryDeDAOs.getInspectorDAO();
-        RevisionDAO revDAO = factoryDeDAOs.getRevisionDAO();
+        OperarioDAO operDAO = factoryDeDAOs.getOperarioDAO();
+        SolicitudMantencionDAO solicDAO = factoryDeDAOs.getSolicitudMantencionDAO();
         
         Inspector ins = inspDAO.findByUsername(usernameLogueado);
-        Estado e = estDAO.find(nvoEstado);
+        OperarioMantencion opAsign = operDAO.findByRut(numOperario);
         PuntoLimpio p = puntDAO.find(numPtoLimpio.intValue());
-        p.setEstadoGlobal(e);
-        puntDAO.update(p);
         
-        entities.RevisionPuntoLimpio nvaRev = new entities.RevisionPuntoLimpio(p, ins, detalle);
-        nvaRev.setFecha(Calendar.getInstance());
-        revDAO.insert(nvaRev);
-        
+        SolicitudMantencion nvaSolic = new SolicitudMantencion(p, ins, opAsign, detalle);
+        nvaSolic.setFecha(Calendar.getInstance());
+        solicDAO.insert(nvaSolic);
         return true;
     }
 
     @Override
-    public RevisionPuntoLimpio getRevisionById(Integer idRevision) {
+    public SolicitudMantencion getSolicitudById(Integer idRevision) {
         if (idRevision == null)
             return null;
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-        RevisionDAO revDAO = factoryDeDAOs.getRevisionDAO();
-        return revDAO.find(idRevision.intValue());
+        SolicitudMantencionDAO solicDAO = factoryDeDAOs.getSolicitudMantencionDAO();
+        return solicDAO.find(idRevision.intValue());
         
     }
-
+    
     @Override
-    public Collection<RevisionPuntoLimpio> getAllRevisiones(String usernameQuienPregunta) {
+    public Collection<SolicitudMantencion> getAllSolicitudes(String usernameQuienPregunta) {
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-        RevisionDAO revDAO = factoryDeDAOs.getRevisionDAO();
+        SolicitudMantencionDAO solicDAO = factoryDeDAOs.getSolicitudMantencionDAO();
         UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
         Usuario userPreguntante = userDAO.find(usernameQuienPregunta);
         if (userPreguntante == null) {
             return null;
         }
         if (userPreguntante.getRol().getNombreRol().equals("Administrador")) {
-            return revDAO.findAll();
+            return solicDAO.findAll();
         }
         if (userPreguntante.getRol().getNombreRol().equals("Inspector")) {
-            return revDAO.findAllFromInspector(userPreguntante.getId());
+            return solicDAO.findAllFromInspector(userPreguntante.getId());
         }
-        return null; //El operario no tiene permiso para ver las revisiones
+        if (userPreguntante.getRol().getNombreRol().equals("Operario")) {
+            return solicDAO.findAllFromOperario(userPreguntante.getId());
+        }
+        return null;
+    }
+
+    public void persist(Object object) {
+        em.persist(object);
     }
 }

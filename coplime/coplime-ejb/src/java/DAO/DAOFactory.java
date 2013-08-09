@@ -16,6 +16,7 @@ import DAO.interfaces.MantencionDAO;
 import DAO.interfaces.MaterialDAO;
 import DAO.interfaces.NotificacionDAO;
 import DAO.interfaces.RevisionDAO;
+import DAO.interfaces.SolicitudMantencionDAO;
 import DAO.interfaces.TipoIncidenciaDAO;
 import DAO.interfaces.UnidadMedidaDAO;
 import DAO.interfaces.UsuarioDAO;
@@ -51,6 +52,7 @@ public abstract class DAOFactory {
     public abstract UnidadMedidaDAO getUnidadMedidaDAO();
     public abstract RevisionDAO getRevisionDAO();
     public abstract MantencionDAO getMantencionDAO();
+    public abstract SolicitudMantencionDAO getSolicitudMantencionDAO();
     
     public abstract void close();
 
