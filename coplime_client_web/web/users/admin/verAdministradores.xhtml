@@ -12,16 +12,15 @@
                Ver administradores           
            </ui:define>
            
-          
            
            <ui:define name="centro">
                <h:form>
                   <p:panelGrid columns="5" styleClass="centrar" >
                        <f:facet name="header">Listado de administradores</f:facet>
                        
-                       <p:dataTable id="administradores" value="#{MantenedorAdministradorVerListado.lista}" var="adm" widgetVar="administradorTable"  
+                       <p:dataTable id="administradores" value="#{mantenedorAdministradorVerListadoMB.lista}" var="adm" widgetVar="administradorTable"  
                                       emptyMessage="No hay administradores registrados en el sistema" 
-                                      filteredValue="#{MantenedorAdministradorVerListado.listaBusqueda}" >
+                                      filteredValue="#{mantenedorAdministradorVerListadoMB.listaBusqueda}" >
                                                      
                            <p:column id="rutColumn"  sortBy="#{adm.num}" headerText="Rut" filterMatchMode="contains" filterBy="#{adm.num}"  >
                                 <h:outputText value="#{adm.num}" /> 
@@ -32,11 +31,11 @@
                             </p:column>
                             
                             <p:column headerText="" >
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorAdministradorVerListado.verDetalles(adm.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{mantenedorAdministradorVerListadoMB.verDetalles(adm.num)}">
                                 </p:commandLink>
                             </p:column>                            
                             <p:column headerText=""  rendered="#{request.isUserInRole('Administrador')}">
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{MantenedorAdministradorVerListado.editar(adm.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{mantenedorAdministradorVerListadoMB.editar(adm.num)}">
                                 </p:commandLink>
                             </p:column>
                             <p:column headerText=""  rendered="#{request.isUserInRole('Administrador')}">
@@ -45,7 +44,7 @@
                                 <p:confirmDialog message="¿Está seguro que desea eliminar el administrador?"
                                                  header="Confirmación de eliminación de administrador" severity="alert"
                                                  widgetVar="cd_#{adm.num}" closeOnEscape="true">
-                                    <p:commandButton value="Si" actionListener="#{MantenedorAdministradorVerListado.eliminar(adm.num)}"
+                                    <p:commandButton value="Si" actionListener="#{mantenedorAdministradorVerListadoMB.eliminar(adm.num)}"
                                                      oncomplete="cd_#{adm.num}.hide();"/>
                                     <p:commandButton value="No" onclick="cd_#{adm.num}.hide();" type="button" />
                                 </p:confirmDialog>
@@ -54,8 +53,8 @@
                         </p:dataTable>
                        
                        <f:facet name="footer">
-                           <p:commandButton value="Agregar" action="#{MantenedorAdministradorVerListado.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
-                           <p:commandButton value="Volver" action="#{MantenedorAdministradorVerListado.volver()}"/>
+                           <p:commandButton value="Agregar" action="#{mantenedorAdministradorVerListadoMB.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
+                           <p:commandButton value="Volver" action="#{mantenedorAdministradorVerListadoMB.volver()}"/>
                            
                        </f:facet>
                             

@@ -17,7 +17,7 @@
             </ui:define>
             
             <ui:define name="botonesBarra">
-                <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{Autenticador.indexLoggued()}" />
+                <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{autenticadorMB.indexLoggued()}" />
             </ui:define>
             
             <ui:define name="centro">
@@ -26,19 +26,19 @@
                             <f:facet name="header">Datos del usuario</f:facet>
 
                             <p:outputLabel value="Nombre"/>
-                            <p:outputLabel value="#{infoUsuarioManagedBeans.nombres}" />
+                            <p:outputLabel value="#{infoUsuarioMB.nombres}" />
                             
                             <p:outputLabel value="Apellidos"/>
-                            <p:outputLabel value="#{infoUsuarioManagedBeans.apellidos}" />
+                            <p:outputLabel value="#{infoUsuarioMB.apellidos}" />
                             
                             <p:outputLabel value="Rut"/>
-                            <p:outputLabel value="#{infoUsuarioManagedBeans.rut}" />
+                            <p:outputLabel value="#{infoUsuarioMB.rut}" />
                             
                             <p:outputLabel value="Nombre de usuario"/>
-                            <p:outputLabel value="#{infoUsuarioManagedBeans.idUsuario}" />
+                            <p:outputLabel value="#{infoUsuarioMB.idUsuario}" />
                             
                             <p:outputLabel value="Rol de usuario"/>
-                            <p:outputLabel value="#{infoUsuarioManagedBeans.rol}" />
+                            <p:outputLabel value="#{infoUsuarioMB.rol}" />
                             
                         </p:panelGrid>
                 </h:form>
@@ -48,17 +48,17 @@
                             <f:facet name="header">Datos de contacto</f:facet>
 
                             <p:outputLabel value="Teléfono"/>
-                            <p:inputText value="#{infoUsuarioManagedBeans.telefono}"/>
+                            <p:inputText value="#{infoUsuarioMB.telefono}"/>
                             
                             <p:outputLabel value="E-mail"/>
-                            <p:inputText value="#{infoUsuarioManagedBeans.email}" required="true"/>
+                            <p:inputText value="#{infoUsuarioMB.email}" required="true"/>
                             
                                
                             <f:facet name="footer">
-                                <p:commandButton value="Cambiar contraseña" action="#{infoUsuarioManagedBeans.goToCambiarContrasegna()}"/>
+                                <p:commandButton value="Cambiar contraseña" action="#{infoUsuarioMB.goToCambiarContrasegna()}"/>
                              
-                                <p:commandButton value="Guardar cambios" action="#{infoUsuarioManagedBeans.guardarCambios()}"/>
-                                <p:commandButton value="Cancelar" action="#{infoUsuarioManagedBeans.goToPuntosLimpios()}"/>
+                                <p:commandButton value="Guardar cambios" action="#{infoUsuarioMB.guardarCambios()}"/>
+                                <p:commandButton value="Cancelar" action="#{infoUsuarioMB.goToPuntosLimpios()}"/>
                             </f:facet>
 
                         </p:panelGrid>

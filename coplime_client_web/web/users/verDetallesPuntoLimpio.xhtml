@@ -18,38 +18,38 @@
                          <f:facet name="header">Datos del punto limpio</f:facet>
                          
                          <p:outputLabel value="N°"/>
-                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.num}" />
+                         <p:outputLabel value="#{mantenedorPuntoLimpioVerDetallesMB.num}" />
                          
                          <p:outputLabel value="Nombre"/>
-                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.nombre}" />
+                         <p:outputLabel value="#{mantenedorPuntoLimpioVerDetallesMB.nombre}" />
                          
                          <p:outputLabel value="Comuna"/>
-                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.comuna}" />
+                         <p:outputLabel value="#{mantenedorPuntoLimpioVerDetallesMB.comuna}" />
                          
                          <p:outputLabel value="Dirección"/>
-                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.direccion}" />
+                         <p:outputLabel value="#{mantenedorPuntoLimpioVerDetallesMB.direccion}" />
                         
                          <p:outputLabel value="Fecha de última revisión"/>
-                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.fechaUltimaRevision}" />
+                         <p:outputLabel value="#{mantenedorPuntoLimpioVerDetallesMB.fechaUltimaRevision}" />
                          
                          <p:outputLabel value="Fecha de próxima revisión"/>
-                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.fechaProximaRevision}" />
+                         <p:outputLabel value="#{mantenedorPuntoLimpioVerDetallesMB.fechaProximaRevision}" />
                          
                          <p:outputLabel value="Estado actual"/>
-                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.estado}" />
+                         <p:outputLabel value="#{mantenedorPuntoLimpioVerDetallesMB.estado}" />
                          
                          <p:outputLabel value="Inspector encargado"/>
-                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.inspectorEncargado}" />
+                         <p:outputLabel value="#{mantenedorPuntoLimpioVerDetallesMB.inspectorEncargado}" />
                          
                          <p:outputLabel value="Nº de revisiones realizadas"/>
-                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.numRevisionesRealizadas}" />
+                         <p:outputLabel value="#{mantenedorPuntoLimpioVerDetallesMB.numRevisionesRealizadas}" />
                          
                          <p:outputLabel value="Nº de mantenciones realizadas"/>
-                         <p:outputLabel value="#{MantenedorPuntoLimpioVerDetalles.numMantencionesRealizadas}" />
+                         <p:outputLabel value="#{mantenedorPuntoLimpioVerDetallesMB.numMantencionesRealizadas}" />
                          
                          <f:facet name="footer">
-                            <p:commandButton value="Editar" action="#{MantenedorPuntoLimpioVerDetalles.goToEditar()}" rendered="#{request.isUserInRole('Administrador')}" />
-                            <p:commandButton value="Volver" action="#{MantenedorPuntoLimpioVerDetalles.volverToLista()}"/>                         
+                            <p:commandButton value="Editar" action="#{mantenedorPuntoLimpioVerDetallesMB.goToEditar()}" rendered="#{request.isUserInRole('Administrador')}" />
+                            <p:commandButton value="Volver" action="#{mantenedorPuntoLimpioVerDetallesMB.volverToLista()}"/>                         
                          </f:facet>
                      </p:panelGrid>                
                 </h:form>               

@@ -19,9 +19,9 @@
                     <p:panelGrid columns="5" styleClass="centrar" >
                         <f:facet name="header">Listado de puntos limpios</f:facet>
 
-                        <p:dataTable value="#{MantenedorPuntoLimpioVerListado.lista}" var="puntoLimpio" 
+                        <p:dataTable value="#{mantenedorPuntoLimpioVerListadoMB.lista}" var="puntoLimpio" 
                                      widgetVar="inspectorTable" emptyMessage="No hay puntos limpios registrados en el sistema" 
-                                     filteredValue="#{MantenedorPuntoLimpioVerListado.listaBusqueda}">
+                                     filteredValue="#{mantenedorPuntoLimpioVerListadoMB.listaBusqueda}">
                             <p:column headerText="N°" sortBy="#{puntoLimpio.num}" filterMatchMode="contains" filterBy="#{puntoLimpio.num}">
                                 <h:outputText value="#{puntoLimpio.num}"/>
                             </p:column>
@@ -35,11 +35,11 @@
                                 <h:outputText value="#{puntoLimpio.fechaProximaRevStr}"/>
                             </p:column>
                             <p:column headerText="" >
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorPuntoLimpioVerListado.verDetalles(puntoLimpio.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{mantenedorPuntoLimpioVerListadoMB.verDetalles(puntoLimpio.num)}">
                                 </p:commandLink>
                             </p:column>                            
                             <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{MantenedorPuntoLimpioVerListado.editar(puntoLimpio.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{mantenedorPuntoLimpioVerListadoMB.editar(puntoLimpio.num)}">
                                 </p:commandLink>
                             </p:column>
                             <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
@@ -48,7 +48,7 @@
                                 <p:confirmDialog message="¿Está seguro que desea eliminar el punto limpio?"
                                                  header="Confirmación de eliminación de punto limpio" severity="alert"
                                                  widgetVar="cd_#{puntoLimpio.num}" closeOnEscape="true">
-                                    <p:commandButton value="Si" actionListener="#{MantenedorPuntoLimpioVerListado.eliminar(puntoLimpio.num)}"
+                                    <p:commandButton value="Si" actionListener="#{mantenedorPuntoLimpioVerListadoMB.eliminar(puntoLimpio.num)}"
                                                      oncomplete="cd_#{puntoLimpio.num}.hide();"/>
                                     <p:commandButton value="No" onclick="cd_#{puntoLimpio.num}.hide();" type="button" />
                                 </p:confirmDialog>
@@ -59,7 +59,7 @@
                             <p:button value="Agregar revisión" href="/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Inspector')}"/>
                             <p:button value="Solicitar mantención" href="/faces/users/inspector/solicitarMantencionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Inspector')}"/>
                             <p:button value="Agregar mantención" href="/faces/users/operario/agregarMantencionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Operario')}"/>
-                            <p:commandButton value="Agregar" action="#{MantenedorPuntoLimpioVerListado.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
+                            <p:commandButton value="Agregar" action="#{mantenedorPuntoLimpioVerListadoMB.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
                         </f:facet>
 
 

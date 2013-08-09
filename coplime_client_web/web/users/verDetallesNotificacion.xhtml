@@ -24,31 +24,31 @@
                         <f:facet name="header">Datos de notificación</f:facet>
                         
                         <p:outputLabel value="N° de notificación" />
-                        <p:inputText value="#{NotificacionVerDetalles.numNotif}" disabled="true"/>
+                        <p:inputText value="#{mantenedorNotificacionVerDetallesMB.numNotif}" disabled="true"/>
                         
                         <p:outputLabel value="Origen de notificación" />
-                        <p:inputText value="#{NotificacionVerDetalles.origen_seleccionado}" disabled="true"/>
+                        <p:inputText value="#{mantenedorNotificacionVerDetallesMB.origen_seleccionado}" disabled="true"/>
                         
                         <p:outputLabel value="Tipo de notificación"/>
-                        <p:inputText value="#{NotificacionVerDetalles.tipo_seleccionado}" disabled="true"/>
+                        <p:inputText value="#{mantenedorNotificacionVerDetallesMB.tipo_seleccionado}" disabled="true"/>
                         
                         <p:outputLabel value="Fecha - hora"/>
-                        <p:inputText value="#{NotificacionVerDetalles.fecha_seleccionado}" disabled="true"/>
+                        <p:inputText value="#{mantenedorNotificacionVerDetallesMB.fecha_seleccionado}" disabled="true"/>
                         
                         <p:outputLabel value="Detalle"/>
-                        <p:inputTextarea value="#{NotificacionVerDetalles.detalleCompleto_seleccionado}" disabled="true"/>
+                        <p:inputTextarea value="#{mantenedorNotificacionVerDetallesMB.detalleCompleto_seleccionado}" disabled="true"/>
                         
                         <p:outputLabel value="Revisada"/>
-                        <p:selectBooleanCheckbox value="#{NotificacionVerDetalles.revisada_seleccionado}"/>
+                        <p:selectBooleanCheckbox value="#{mantenedorNotificacionVerDetallesMB.revisada_seleccionado}"/>
                         
                         <p:outputLabel value="Resuelta"/>
-                        <p:selectBooleanCheckbox value="#{NotificacionVerDetalles.resuelta_seleccionado}"/>
+                        <p:selectBooleanCheckbox value="#{mantenedorNotificacionVerDetallesMB.resuelta_seleccionado}"/>
                         
                         <p:outputLabel value="Imagen adjunta"/>
-                        <p:graphicImage value="#{NotificacionVerDetalles.imagen}" cache="true" width="80px" alt="No hay imagen adjunta"/>
+                        <p:graphicImage value="#{mantenedorNotificacionVerDetallesMB.imagen}" cache="true" width="80px" alt="No hay imagen adjunta"/>
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Volver" action="#{NotificacionVerDetalles.volverToLista()}"/>
+                            <p:commandButton value="Volver" action="#{mantenedorNotificacionVerDetallesMB.volverToLista()}"/>
                         </f:facet>
                     </p:panelGrid>
                 </h:form>

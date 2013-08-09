@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui"
       contentType="text/html">
     <body>
-       <ui:composition template="../mainTemplate.xhtml">
+       <ui:composition template="/mainTemplate.xhtml">
            <ui:define name="titulo" >Agregar contenedores</ui:define>
            
            
@@ -17,40 +17,40 @@
                         <f:facet name="header">Ingrese los datos del contenedor</f:facet>
                         
                         <p:outputLabel value="N° de punto limpio"/>
-                        <p:inputText value="#{MantenedorPuntoLimpioAgregarCont.numPtoLimpio}" disabled="true"/>
+                        <p:inputText value="#{mantenedorPuntoLimpioAgregarContMB.numPtoLimpio}" disabled="true"/>
                         
                         <p:outputLabel value="Material que almacena"/>
-                        <p:selectOneMenu value="#{MantenedorPuntoLimpioAgregarCont.material}">
-                            <f:selectItems value="#{MantenedorPuntoLimpioAgregarCont.listaMateriales}"  
+                        <p:selectOneMenu value="#{mantenedorPuntoLimpioAgregarContMB.material}">
+                            <f:selectItems value="#{mantenedorPuntoLimpioAgregarContMB.listaMateriales}"  
                                 var="mat" itemLabel="#{mat.label}" itemValue="#{mat.id}" />
                         </p:selectOneMenu>
                         
                         <p:outputLabel value="Capacidad del contenedor"/>
                         <h:panelGroup >
-                            <p:inputText value="#{MantenedorPuntoLimpioAgregarCont.capacidad}"/>
-                            <p:selectOneMenu value="#{MantenedorPuntoLimpioAgregarCont.idUnidadMedida}" styleClass="span3">
-                                <f:selectItems value="#{MantenedorPuntoLimpioAgregarCont.listaUnidadesMedida}"  
+                            <p:inputText value="#{mantenedorPuntoLimpioAgregarContMB.capacidad}"/>
+                            <p:selectOneMenu value="#{mantenedorPuntoLimpioAgregarContMB.idUnidadMedida}" styleClass="span3">
+                                <f:selectItems value="#{mantenedorPuntoLimpioAgregarContMB.listaUnidadesMedida}"  
                                     var="unidad" itemLabel="#{unidad.label}" itemValue="#{unidad.id}" />
                             </p:selectOneMenu>
                         </h:panelGroup>
                         
                         <p:outputLabel value="Llenado inicial"/>
                         <h:panelGroup >
-                            <p:inputText id="llenadoInicialContenedor" value="#{MantenedorPuntoLimpioAgregarCont.llenadoContenedor}"/>%
+                            <p:inputText id="llenadoInicialContenedor" value="#{mantenedorPuntoLimpioAgregarContMB.llenadoContenedor}"/>%
                             <p:slider step="5" for="llenadoInicialContenedor"/>
                         </h:panelGroup>
                         
                         <p:outputLabel value="Estado inicial"/>
-                        <p:selectOneMenu value="#{MantenedorPuntoLimpioAgregarCont.estadoContenedor}">
-                            <f:selectItems value="#{MantenedorPuntoLimpioAgregarCont.listaEstadosContenedores}"  
+                        <p:selectOneMenu value="#{mantenedorPuntoLimpioAgregarContMB.estadoContenedor}">
+                            <f:selectItems value="#{mantenedorPuntoLimpioAgregarContMB.listaEstadosContenedores}"  
                                 var="estadoCont" itemLabel="#{estadoCont.label}" itemValue="#{estadoCont.id}" />
                         </p:selectOneMenu>
                         
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Guardar y agregar otro" action="#{MantenedorPuntoLimpioAgregarCont.guardarNvoContenedor_y_otro()}"/>
-                            <p:commandButton value="Guardar" action="#{MantenedorPuntoLimpioAgregarCont.guardarNvoContenedor()}"/>
-                            <p:commandButton value="Volver" immediate="true" action="#{MantenedorPuntoLimpioAgregarCont.volverToPuntoLimpio()}"/>
+                            <p:commandButton value="Guardar y agregar otro" action="#{mantenedorPuntoLimpioAgregarContMB.guardarNvoContenedor_y_otro()}"/>
+                            <p:commandButton value="Guardar" action="#{mantenedorPuntoLimpioAgregarContMB.guardarNvoContenedor()}"/>
+                            <p:commandButton value="Volver" immediate="true" action="#{mantenedorPuntoLimpioAgregarContMB.volverToPuntoLimpio()}"/>
                         </f:facet>
                    </p:panelGrid>
                </h:form>

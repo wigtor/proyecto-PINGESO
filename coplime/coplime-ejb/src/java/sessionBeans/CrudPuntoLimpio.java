@@ -39,7 +39,6 @@ import javax.persistence.PersistenceContext;
 public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
     @PersistenceContext(unitName = "coplime-ejbPU")
     private EntityManager em;
-    private Usuario usertemp;
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
@@ -215,14 +214,6 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
             return ptoDAO.delete(id);
         }
         return false;
-    }
-
-    public Usuario getUsertemp() {
-        return usertemp;
-    }
-
-    public void setUsertemp(Usuario usertemp) {
-        this.usertemp = usertemp;
     }
 
     @Override

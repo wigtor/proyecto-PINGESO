@@ -9,7 +9,7 @@
     
     
     <body>
-        <ui:composition template="../mainTemplate.xhtml">
+        <ui:composition template="/mainTemplate.xhtml">
             <ui:define name="titulo">
                 Editar operario de mantención
             </ui:define>
@@ -20,35 +20,35 @@
                          <f:facet name="header">Edición de datos del operario</f:facet>
                          
                          <h:outputLabel value=""/>
-                         <h:inputHidden value="#{MantenedorOperarioEditar.rut}"/>
+                         <h:inputHidden value="#{mantenedorOperarioEditarMB.rut}"/>
                                                   
                          <p:outputLabel value="Rut"/>
-                         <p:inputText value="#{MantenedorOperarioEditar.rut}" disabled="true" readonly="true" />
+                         <p:inputText value="#{mantenedorOperarioEditarMB.rut}" disabled="true" readonly="true" />
                          
                          <p:outputLabel value="Nombre"/>
-                         <p:inputText value="#{MantenedorOperarioEditar.nombre}"/>
+                         <p:inputText value="#{mantenedorOperarioEditarMB.nombre}"/>
                          
                          <p:outputLabel value="Apellido paterno"/>
-                         <p:inputText value="#{MantenedorOperarioEditar.apellido1}"/>
+                         <p:inputText value="#{mantenedorOperarioEditarMB.apellido1}"/>
                          
                          <p:outputLabel value="Apellido materno"/>
-                         <p:inputText value="#{MantenedorOperarioEditar.apellido2}"/>
+                         <p:inputText value="#{mantenedorOperarioEditarMB.apellido2}"/>
                          
                          <p:outputLabel value="Nombre de usuario"/>
-                         <p:inputText value="#{MantenedorOperarioEditar.username}"/>
+                         <p:inputText value="#{mantenedorOperarioEditarMB.username}"/>
                          
                          <p:outputLabel value="Reiniciar contraseña"/>
-                         <p:selectBooleanCheckbox label="Reiniciar contraseña" value="#{MantenedorOperarioEditar.checkContraseña}"></p:selectBooleanCheckbox>
+                         <p:selectBooleanCheckbox label="Reiniciar contraseña" value="#{mantenedorOperarioEditarMB.checkContraseña}"></p:selectBooleanCheckbox>
                          
                          <p:outputLabel value="Teléfono"/>
-                         <p:inputText value="#{MantenedorOperarioEditar.telefono}"/>
+                         <p:inputText value="#{mantenedorOperarioEditarMB.telefono}"/>
                          
                          <p:outputLabel value="E-mail"/>
-                         <p:inputText value="#{MantenedorOperarioEditar.mail}"/>
+                         <p:inputText value="#{mantenedorOperarioEditarMB.mail}"/>
                          
                          <f:facet name="footer">
-                            <p:commandButton value="Guardar" action="#{MantenedorOperarioEditar.guardarCambiosOperario()}"/>
-                            <p:commandButton value="Volver" action="#{MantenedorOperarioEditar.volver()}"/>                            
+                            <p:commandButton value="Guardar" action="#{mantenedorOperarioEditarMB.guardarCambiosOperario()}"/>
+                            <p:commandButton value="Volver" action="#{mantenedorOperarioEditarMB.volver()}"/>                            
                          </f:facet>
                      </p:panelGrid>                
                 </h:form>               

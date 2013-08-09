@@ -20,29 +20,13 @@ import otros.CommonFunctions;
  *
  * @author victor
  */
-@Named(value = "Autenticador")
+@Named(value = "autenticadorMB")
 @SessionScoped
-public class Autenticador implements Serializable {
+public class AutenticadorMB implements Serializable {
 
     private String username;
     private String password;
     private String originalURL;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
     
 
     @PostConstruct
@@ -95,6 +79,29 @@ public class Autenticador implements Serializable {
     public void indexLoggued() {
         CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
+    
+    public void goToIndex() {
+        CommonFunctions.goToIndex();
+    }
 
-    // Getters/setters for username and password.
+    
+    public AutenticadorMB() {
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
 }

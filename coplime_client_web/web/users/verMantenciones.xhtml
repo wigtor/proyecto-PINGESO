@@ -16,9 +16,9 @@
                     <p:panelGrid columns="5" styleClass="centrar" >
                         <f:facet name="header">Listado de mantenciones</f:facet>
 
-                        <p:dataTable value="#{MantenedorMantencionVerListado.lista}" var="rev" 
+                        <p:dataTable value="#{mantenedorMantencionVerListadoMB.lista}" var="rev" 
                                      widgetVar="inspectorTable" emptyMessage="No hay mantenciones registradas en el sistema" 
-                                     filteredValue="#{MantenedorMantencionVerListado.listaBusqueda}">
+                                     filteredValue="#{mantenedorMantencionVerListadoMB.listaBusqueda}">
                             <p:column headerText="N°" sortBy="#{rev.num}" filterMatchMode="contains" filterBy="#{rev.num}">
                                 <h:outputText value="#{rev.num}"/>
                             </p:column>
@@ -32,14 +32,14 @@
                                 <h:outputText value="#{rev.usuario}"/>
                             </p:column>
                             <p:column headerText="" >
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorMantencionVerListado.verDetalles(rev.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{mantenedorMantencionVerListadoMB.verDetalles(rev.num)}">
                                 </p:commandLink>
                             </p:column>
                         </p:dataTable>
 
                         <f:facet name="footer">
                             <p:button value="Agregar mantención" href="/faces/users/operario/agregarMantencionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Operario')}"/>
-                            <p:commandButton value="Volver" action="#{MantenedorMantencionVerListado.volver()}"/>
+                            <p:commandButton value="Volver" action="#{mantenedorMantencionVerListadoMB.volver()}"/>
                         </f:facet>
 
 

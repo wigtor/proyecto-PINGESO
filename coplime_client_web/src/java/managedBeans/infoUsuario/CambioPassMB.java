@@ -17,9 +17,9 @@ import sessionBeans.UserServiceLocal;
  *
  * @author victor
  */
-@Named(value = "cambioPassManagedBeans")
+@Named(value = "cambioPassMB")
 @RequestScoped
-public class cambioPassManagedBeans {
+public class CambioPassMB {
     @EJB
     private UserServiceLocal userService;
     String username;

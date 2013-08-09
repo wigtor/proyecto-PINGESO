@@ -19,9 +19,9 @@
                   <p:panelGrid columns="5" styleClass="centrar" >
                        <f:facet name="header">Listado de inspectores</f:facet>
                        
-                       <p:dataTable id="inspectores" value="#{MantenedorInspectorVerListado.lista}" var="insp" widgetVar="inspectorTable"  
+                       <p:dataTable id="inspectores" value="#{mantenedorInspectorVerListadoMB.lista}" var="insp" widgetVar="inspectorTable"  
                                       emptyMessage="No hay inspectores registrados en el sistema" 
-                                      filteredValue="#{MantenedorInspectorVerListado.listaBusqueda}" >
+                                      filteredValue="#{mantenedorInspectorVerListadoMB.listaBusqueda}" >
                                                      
                            <p:column id="rutColumn" sortBy="#{insp.num}" headerText="Rut" filterMatchMode="contains" filterBy="#{insp.num}"  >
                                 <h:outputText value="#{insp.num}" /> 
@@ -32,11 +32,11 @@
                             </p:column>
                             
                             <p:column headerText="" >
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorInspectorVerListado.verDetalles(insp.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{mantenedorInspectorVerListadoMB.verDetalles(insp.num)}">
                                 </p:commandLink>
                             </p:column>                            
                             <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{MantenedorInspectorVerListado.editar(insp.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{mantenedorInspectorVerListadoMB.editar(insp.num)}">
                                 </p:commandLink>
                             </p:column>
                             <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
@@ -45,7 +45,7 @@
                                 <p:confirmDialog message="¿Está seguro que desea eliminar el inspector?"
                                                  header="Confirmación de eliminación de inspector" severity="alert"
                                                  widgetVar="cd_#{insp.num}" closeOnEscape="true">
-                                    <p:commandButton value="Si" actionListener="#{MantenedorInspectorVerListado.eliminar(insp.num)}"
+                                    <p:commandButton value="Si" actionListener="#{mantenedorInspectorVerListadoMB.eliminar(insp.num)}"
                                                      oncomplete="cd_#{insp.num}.hide();"/>
                                     <p:commandButton value="No" onclick="cd_#{insp.num}.hide();" type="button" />
                                 </p:confirmDialog>
@@ -54,8 +54,8 @@
                         </p:dataTable>
                        
                        <f:facet name="footer">
-                           <p:commandButton value="Agregar" action="#{MantenedorInspectorVerListado.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
-                           <p:commandButton value="Volver" action="#{MantenedorInspectorVerListado.volver()}"/>
+                           <p:commandButton value="Agregar" action="#{mantenedorInspectorVerListadoMB.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
+                           <p:commandButton value="Volver" action="#{mantenedorInspectorVerListadoMB.volver()}"/>
                            
                        </f:facet>
                             

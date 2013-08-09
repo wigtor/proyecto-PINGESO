@@ -9,7 +9,7 @@
     
     
     <body>
-        <ui:composition template="../mainTemplate.xhtml">
+        <ui:composition template="/mainTemplate.xhtml">
             <ui:define name="titulo">
                 Agregar administrador
             </ui:define>
@@ -22,32 +22,32 @@
                         
                          
                          <p:outputLabel value="Nombre"/>
-                         <p:inputText value="#{MantenedorAdministradorAgregar.nombre}" required="true"/>
+                         <p:inputText value="#{mantenedorAdministradorAgregarMB.nombre}" required="true"/>
                          
                          <p:outputLabel value="Apellido paterno"/>
-                         <p:inputText value="#{MantenedorAdministradorAgregar.apellido1}" required="true"/>
+                         <p:inputText value="#{mantenedorAdministradorAgregarMB.apellido1}" required="true"/>
                          
                          <p:outputLabel value="Apellido materno"/>
-                         <p:inputText value="#{MantenedorAdministradorAgregar.apellido2}" required="true"/>
+                         <p:inputText value="#{mantenedorAdministradorAgregarMB.apellido2}" required="true"/>
                          
                          <p:outputLabel value="Rut"/>
-                         <p:inputText value="#{MantenedorAdministradorAgregar.rut}" required="true"/>
+                         <p:inputText value="#{mantenedorAdministradorAgregarMB.rut}" required="true"/>
                         
                          <p:outputLabel value="Teléfono"/>
-                         <p:inputText value="#{MantenedorAdministradorAgregar.telefono}" required="true"/>
+                         <p:inputText value="#{mantenedorAdministradorAgregarMB.telefono}" required="true"/>
                          
                          <p:outputLabel value="E-mail"/>
-                         <p:inputText value="#{MantenedorAdministradorAgregar.mail}" required="true"/>
+                         <p:inputText value="#{mantenedorAdministradorAgregarMB.mail}" required="true"/>
                          
                          <p:outputLabel value="Nombre de usuario"/>
-                         <p:inputText value="#{MantenedorAdministradorAgregar.username}" required="true"/>
+                         <p:inputText value="#{mantenedorAdministradorAgregarMB.username}" required="true"/>
                          
                          <p:outputLabel value="Contraseña"/>
-                         <p:inputText value="#{MantenedorAdministradorAgregar.password}" required="true" type="password"/>
+                         <p:inputText value="#{mantenedorAdministradorAgregarMB.password}" required="true" type="password"/>
                          
                          <f:facet name="footer">
-                            <p:commandButton value="Guardar" action="#{MantenedorAdministradorAgregar.agregarAdministrador()}"/>
-                            <p:commandButton immediate="true" value="Volver" action="#{MantenedorAdministradorAgregar.volver()}"/>                         
+                            <p:commandButton value="Guardar" action="#{mantenedorAdministradorAgregarMB.agregarAdministrador()}"/>
+                            <p:commandButton immediate="true" value="Volver" action="#{mantenedorAdministradorAgregarMB.volver()}"/>                         
                          </f:facet>
                      </p:panelGrid>                
                 </h:form>               

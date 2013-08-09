@@ -17,7 +17,7 @@
             </ui:define>
             
             <ui:define name="botonesBarra">
-                <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{Autenticador.indexLoggued()}" />
+                <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{autenticadorMB.indexLoggued()}" />
             </ui:define>
             
             <ui:define name="centro">
@@ -26,20 +26,20 @@
                         <f:facet name="header">Datos del usuario</f:facet>
                         
                         <p:outputLabel value="Nombre de usuario"/>
-                        <p:outputLabel value="#{cambioPassManagedBeans.username}"/>
+                        <p:outputLabel value="#{cambioPassMB.username}"/>
                         
                         <p:outputLabel value="Contraseña actual"/>
-                        <p:inputText value="#{cambioPassManagedBeans.passActual}" type="password"/>
+                        <p:inputText value="#{cambioPassMB.passActual}" type="password"/>
                         
                         <p:outputLabel value="Contraseña nueva"/>
-                        <p:inputText value="#{cambioPassManagedBeans.nvaPass}" type="password"/>
+                        <p:inputText value="#{cambioPassMB.nvaPass}" type="password"/>
                         
                         <p:outputLabel value="Repetir contraseña nueva"/>
-                        <p:inputText value="#{cambioPassManagedBeans.nvaPassRep}" type="password"/>
+                        <p:inputText value="#{cambioPassMB.nvaPassRep}" type="password"/>
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Guardar cambios" action="#{cambioPassManagedBeans.guardarPass()}" update="msj_error_cambioContrasegna"/>
-                            <p:commandButton value="Cancelar" action="#{cambioPassManagedBeans.goToInfoUsuario()}"/>
+                            <p:commandButton value="Guardar cambios" action="#{cambioPassMB.guardarPass()}" update="msj_error_cambioContrasegna"/>
+                            <p:commandButton value="Cancelar" action="#{cambioPassMB.goToInfoUsuario()}"/>
                         </f:facet>
                     </p:panelGrid>
                     <p:growl id="msj_error_cambioContrasegna"/>

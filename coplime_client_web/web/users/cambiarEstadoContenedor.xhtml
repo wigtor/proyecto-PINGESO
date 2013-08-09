@@ -18,27 +18,27 @@
 
                         
                         <p:outputLabel value="Punto limpio"/>
-                        <p:outputLabel value="#{CambioEstadoContenedor.nombrePtoLimpio}"/>
+                        <p:outputLabel value="#{cambioEstadoContenedorMB.nombrePtoLimpio}"/>
                         
                         <p:outputLabel value="Material del contenedor"/>
-                        <p:outputLabel value="#{CambioEstadoContenedor.material}"/>
+                        <p:outputLabel value="#{cambioEstadoContenedorMB.material}"/>
                         
                         <p:outputLabel value="Estado"/>
-                        <h:selectOneMenu value="#{CambioEstadoContenedor.idEstado}">
-                            <f:selectItems value="#{CambioEstadoContenedor.listaEstados}" 
+                        <h:selectOneMenu value="#{cambioEstadoContenedorMB.idEstado}">
+                            <f:selectItems value="#{cambioEstadoContenedorMB.listaEstados}" 
                                 var="mat" itemLabel="#{mat.label}" itemValue="#{mat.id}" />
                         </h:selectOneMenu>
                         
                         <p:outputLabel value="Porcentaje de llenado"/>
                         <h:panelGroup >
-                            <p:inputText id="llenadoContenedor" value="#{CambioEstadoContenedor.llenado}"/>%
+                            <p:inputText id="llenadoContenedor" value="#{cambioEstadoContenedorMB.llenado}"/>%
                             <p:slider step="5" for="llenadoContenedor"/>
                         </h:panelGroup>
                         
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Aceptar" action="#{CambioEstadoContenedor.guardarCambios()}"/>
-                            <p:commandButton value="Volver" action="#{CambioEstadoContenedor.volver()}"/>
+                            <p:commandButton value="Aceptar" action="#{cambioEstadoContenedorMB.guardarCambios()}"/>
+                            <p:commandButton value="Volver" action="#{cambioEstadoContenedorMB.volver()}"/>
                         </f:facet>
                     </p:panelGrid>
 

@@ -17,26 +17,26 @@
                         <f:facet name="header">Ingrese los datos del estado del punto limpio</f:facet>
 
                         <p:outputLabel value="Punto limpio"/>
-                        <p:outputLabel value="#{CambioEstadoPuntoLimpio.nombrePtoLimpio}"/>
+                        <p:outputLabel value="#{cambioEstadoPuntoLimpioMB.nombrePtoLimpio}"/>
                         
                         <p:outputLabel value="Estado global"/>
-                        <h:selectOneMenu value="#{CambioEstadoPuntoLimpio.estadoPuntoLimpio}">
-                            <f:selectItems value="#{CambioEstadoPuntoLimpio.listaEstadosPtoLimpio}" 
+                        <h:selectOneMenu value="#{cambioEstadoPuntoLimpioMB.estadoPuntoLimpio}">
+                            <f:selectItems value="#{cambioEstadoPuntoLimpioMB.listaEstadosPtoLimpio}" 
                                 var="mat" itemLabel="#{mat.label}" itemValue="#{mat.id}" />
                         </h:selectOneMenu>
                         
                         <p:outputLabel value="Cambiar estado de los contenedores" />
                         <h:panelGroup >
-                            <h:selectOneMenu value="#{CambioEstadoPuntoLimpio.idContenedorSeleccionado}">
-                                <f:selectItems value="#{CambioEstadoPuntoLimpio.listaContenedores}" 
+                            <h:selectOneMenu value="#{cambioEstadoPuntoLimpioMB.idContenedorSeleccionado}">
+                                <f:selectItems value="#{cambioEstadoPuntoLimpioMB.listaContenedores}" 
                                     var="cont" itemLabel="#{cont.label}" itemValue="#{cont.id}" />
                             </h:selectOneMenu>
-                            <p:commandButton value="Actualizar contenedores" action="#{CambioEstadoPuntoLimpio.cambiarEstadoContenedor()}"/>
+                            <p:commandButton value="Actualizar contenedores" action="#{cambioEstadoPuntoLimpioMB.cambiarEstadoContenedor()}"/>
                         </h:panelGroup >
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Aceptar" action="#{CambioEstadoPuntoLimpio.guardarCambios()}"/>
-                            <p:commandButton value="Volver" action="#{CambioEstadoPuntoLimpio.volver()}"/>
+                            <p:commandButton value="Aceptar" action="#{cambioEstadoPuntoLimpioMB.guardarCambios()}"/>
+                            <p:commandButton value="Volver" action="#{cambioEstadoPuntoLimpioMB.volver()}"/>
                         </f:facet>
                     </p:panelGrid>
 

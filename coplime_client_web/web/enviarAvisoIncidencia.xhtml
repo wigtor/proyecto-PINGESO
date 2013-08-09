@@ -17,36 +17,36 @@
             </ui:define>
             
             <ui:define name="botonesBarra">
-                <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{Autenticador.goToIndex()}" />
+                <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{autenticadorMB.goToIndex()}" />
                 <ezcomp:boton_barra_superior classIcon="ui-icon-back" title="Seleccionar punto limpio" action="#{Autenticador.goToEnviarAvisoIncidencia()}" />
             </ui:define>
             
             <ui:define name="centro">
                 <h:form  enctype="multipart/form-data">
-                    <h:inputHidden value="#{enviarAvisoIncidenciaManagedBeans.numPuntoLimpio}"/>
+                    <h:inputHidden value="#{enviarAvisoIncidenciaMB.numPuntoLimpio}"/>
                     
                     <p:panelGrid columns="2" styleClass="centrar">
                         <f:facet name="header">Ingresar datos del aviso de incidencia</f:facet>
                         
                         <p:outputLabel value="Punto limpio" for="nombre_ptoLimpio"/>
-                        <p:inputText id="nombre_ptoLimpio" value="#{enviarAvisoIncidenciaManagedBeans.nombre_presentacion_ptoLimpio}" disabled="true"/>
+                        <p:inputText id="nombre_ptoLimpio" value="#{enviarAvisoIncidenciaMB.nombre_presentacion_ptoLimpio}" disabled="true"/>
                         
                         <p:outputLabel for="selectOneMenu" value="Seleccione tipo de incidencia"/>
-                        <h:selectOneMenu id="selectOneMenu" value="#{enviarAvisoIncidenciaManagedBeans.tipoIncidenciaSeleccionada}" >
-                            <f:selectItems value="#{enviarAvisoIncidenciaManagedBeans.listaTiposIncidencias}" var="t_incid" itemValue="#{t_incid.id}" itemLabel="#{t_incid.label}"/>
+                        <h:selectOneMenu id="selectOneMenu" value="#{enviarAvisoIncidenciaMB.tipoIncidenciaSeleccionada}" >
+                            <f:selectItems value="#{enviarAvisoIncidenciaMB.listaTiposIncidencias}" var="t_incid" itemValue="#{t_incid.id}" itemLabel="#{t_incid.label}"/>
                         </h:selectOneMenu>
                         
                         <p:outputLabel value="Escribir detalles" for="detalles"/>
-                        <p:inputTextarea id="detalles" value="#{enviarAvisoIncidenciaManagedBeans.detalles}" required="true"/>
+                        <p:inputTextarea id="detalles" value="#{enviarAvisoIncidenciaMB.detalles}" required="true"/>
                         
                         <p:outputLabel value="E-mail de contacto" for="email"/>
-                        <p:inputText id="email" value="#{enviarAvisoIncidenciaManagedBeans.emailContacto}" />
+                        <p:inputText id="email" value="#{enviarAvisoIncidenciaMB.emailContacto}" />
                         
                         
                         <p:outputLabel for="subidaArchivos" value="Subir imagen"/>
                         
                         <p:outputPanel><!-- Máximo de 16Mb y sólo imágenes -->
-                            <p:fileUpload id="subidaArchivos" value="#{enviarAvisoIncidenciaManagedBeans.file}" 
+                            <p:fileUpload id="subidaArchivos" value="#{enviarAvisoIncidenciaMB.file}" 
                                     mode="simple" sizeLimit="16777216" 
                                     allowTypes="/(\.|\/)(gif|jpg|jpeg|gif|png|PNG|GIF|JPG|JPEG)$/"
                                     required="false" label="Subir imagen"/> 
@@ -56,8 +56,8 @@
                         <p:captcha id="captcha" theme="white" language="es"/>
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Enviar" ajax="false" action="#{enviarAvisoIncidenciaManagedBeans.enviarAviso()}"/>
-                            <p:commandButton immediate="true" value="Cancelar" action="#{Autenticador.goToIndex()}"/>
+                            <p:commandButton value="Enviar" ajax="false" action="#{enviarAvisoIncidenciaMB.enviarAviso()}"/>
+                            <p:commandButton immediate="true" value="Cancelar" action="#{autenticadorMB.goToIndex()}"/>
                         </f:facet>
                     </p:panelGrid>
                 </h:form>

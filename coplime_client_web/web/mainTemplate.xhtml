@@ -26,10 +26,10 @@
             <h:form>
                 <p:panelGrid columns="1"> 
                     <f:facet name="header">Menu para Administrador
-                        <h:outputLabel value="#{Autenticador.username}"/>
+                        <h:outputLabel value="#{autenticadorMB.username}"/>
                     </f:facet>
                     <h:outputLink value="#{request.contextPath}/faces/users/infoUsuario.xhtml">Información del usuario</h:outputLink>
-                    <h:outputLink value="#{request.contextPath}/faces/admin/verAdministradores.xhtml">Ver administradores</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/admin/verAdministradores.xhtml">Ver administradores</h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verNotificaciones.xhtml">Ver notificaciones
                         <h:outputText id="txt_num_notif" styleClass="ui-li-count" value="#{notificacionesManagedBeans.cantidadNotificaciones}"/>
@@ -42,7 +42,7 @@
                     <h:outputLink value="#{request.contextPath}/faces/users/verInspectores.xhtml">Ver inspectores</h:outputLink>
                     <h:outputLink >Generar reportes</h:outputLink>
                     <h:outputLink >Ayuda</h:outputLink>
-                    <h:commandLink action="#{Autenticador.logout()}">Cerrar sesión</h:commandLink>
+                    <h:commandLink action="#{autenticadorMB.logout()}">Cerrar sesión</h:commandLink>
                 </p:panelGrid>
             </h:form>
         </p:overlayPanel>
@@ -51,7 +51,7 @@
             <h:form>
                 <p:panelGrid columns="1"> 
                     <f:facet name="header">Menu para Inspector
-                        <h:outputLabel value="#{Autenticador.username}"/>
+                        <h:outputLabel value="#{autenticadorMB.username}"/>
                     </f:facet>
                     <h:outputLink value="#{request.contextPath}/faces/users/infoUsuario.xhtml">Información del usuario</h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
@@ -67,7 +67,7 @@
                     <h:outputLink value="#{request.contextPath}/faces/users/inspector/solicitarMantencionPuntoLimpio.xhtml">Agregar revisión de punto limpio</h:outputLink>
                     <h:outputLink >Generar reportes</h:outputLink>
                     <h:outputLink >Ayuda</h:outputLink>
-                    <h:commandLink action="#{Autenticador.logout()}">Cerrar sesión</h:commandLink>
+                    <h:commandLink action="#{autenticadorMB.logout()}">Cerrar sesión</h:commandLink>
                 </p:panelGrid>
             </h:form>
         </p:overlayPanel>
@@ -76,7 +76,7 @@
             <h:form>
                 <p:panelGrid columns="1"> 
                     <f:facet name="header">Menu para Operario
-                        <h:outputLabel value="#{Autenticador.username}"/>
+                        <h:outputLabel value="#{autenticadorMB.username}"/>
                     </f:facet>
                     <h:outputLink value="#{request.contextPath}/faces/users/infoUsuario.xhtml">Información del usuario</h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
@@ -91,7 +91,7 @@
                     <h:outputLink value="#{request.contextPath}/faces/users/operario/agregarMantencionPuntoLimpio.xhtml">Agregar mantención de punto limpio</h:outputLink>
                     <h:outputLink >Generar reportes</h:outputLink>
                     <h:outputLink >Ayuda</h:outputLink>
-                    <h:commandLink action="#{Autenticador.logout()}">Cerrar sesión</h:commandLink>
+                    <h:commandLink action="#{autenticadorMB.logout()}">Cerrar sesión</h:commandLink>
                 </p:panelGrid>
             </h:form>
         </p:overlayPanel>

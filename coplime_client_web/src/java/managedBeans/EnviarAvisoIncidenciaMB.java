@@ -26,9 +26,9 @@ import sessionBeans.AvisosIncidenciaLocal;
  *
  * @author victor
  */
-@Named(value = "enviarAvisoIncidenciaManagedBeans")
+@Named(value = "EnviarAvisoIncidenciaMB")
 @RequestScoped
-public class enviarAvisoIncidenciaManagedBeans {
+public class EnviarAvisoIncidenciaMB {
     @EJB
     private AvisosIncidenciaLocal avisosIncidencia;
     
@@ -55,9 +55,9 @@ public class enviarAvisoIncidenciaManagedBeans {
     }
     
     private boolean seIntentaSeleccionarPuntoLimpio() {
-        HttpServletRequest wea = ((HttpServletRequest)FacesContext.getCurrentInstance().
+        HttpServletRequest request = ((HttpServletRequest)FacesContext.getCurrentInstance().
                 getExternalContext().getRequest());
-        String view = wea.getPathInfo();
+        String view = request.getPathInfo();
         if (view.contains("selectPtoLimpioAviso.xhtml")) {
             return true;
         }
@@ -89,7 +89,7 @@ public class enviarAvisoIncidenciaManagedBeans {
             }
             String nombre_ptoLimpio = avisosIncidencia.getNombrePtoLimpio(this.numPuntoLimpio);
             if (nombre_ptoLimpio != null) {
-                this.nombre_presentacion_ptoLimpio = this.numPuntoLimpio + " - "+nombre_ptoLimpio;
+                this.nombre_presentacion_ptoLimpio = Integer.toString(this.numPuntoLimpio).concat(" - ").concat(nombre_ptoLimpio);
                 return true;
             }
             return false;
@@ -117,23 +117,18 @@ public class enviarAvisoIncidenciaManagedBeans {
             elemTemp = new SelectElemPojo();
             
             elemTemp.setId(temp.getId().toString());
-            elemTemp.setLabel("N°"+temp.getId()+ " - " + temp.getUbicacion());
+            elemTemp.setLabel("N°".concat(temp.getId().toString()).concat(" - ").concat(temp.getUbicacion()));
             this.listaPuntosLimpios.add(elemTemp);
-        
         }
     }
     
     public void enviarAviso() {
-        
-        System.out.println("N° " + numPuntoLimpio + " email: "+ emailContacto + " detalles: " + detalles + " tipo: " + tipoIncidenciaSeleccionada);
         byte[] datosImagen = null;
         String tipoArchivo = null;
         if(file != null) {
             datosImagen = file.getContents();
-            //String nombreArchivo = file.getFileName();
             tipoArchivo = file.getContentType();
         }
-        //System.out.println("Nombre archivo: " + nombreArchivo + " tipo: " + tipoArchivo);
         if (numPuntoLimpio != null) {
             if (tipoIncidenciaSeleccionada != null)
             avisosIncidencia.guardarAvisoIncidencia(numPuntoLimpio.intValue(), emailContacto, detalles, tipoIncidenciaSeleccionada.intValue(), datosImagen, tipoArchivo);
@@ -145,6 +140,10 @@ public class enviarAvisoIncidenciaManagedBeans {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Correcto");  
           
         FacesContext.getCurrentInstance().addMessage(null, msg);  
+    }
+    
+    
+    public EnviarAvisoIncidenciaMB() {
     }
 
     public Integer getNumPuntoLimpio() {
@@ -222,9 +221,5 @@ public class enviarAvisoIncidenciaManagedBeans {
     public void goToSeleccionarPuntoLimpio() {
         CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml");
     }
-    /**
-     * Creates a new instance of enviarAvisoIncidenciaManagedBeans
-     */
-    public enviarAvisoIncidenciaManagedBeans() {
-    }
+    
 }

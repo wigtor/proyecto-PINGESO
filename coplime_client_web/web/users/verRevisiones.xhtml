@@ -16,9 +16,9 @@
                     <p:panelGrid columns="5" styleClass="centrar" >
                         <f:facet name="header">Listado de revisiones</f:facet>
 
-                        <p:dataTable value="#{MantenedorRevisionVerListado.lista}" var="rev" 
+                        <p:dataTable value="#{mantenedorRevisionVerListadoMB.lista}" var="rev" 
                                      widgetVar="inspectorTable" emptyMessage="No hay revisiones registradas en el sistema" 
-                                     filteredValue="#{MantenedorRevisionVerListado.listaBusqueda}">
+                                     filteredValue="#{mantenedorRevisionVerListadoMB.listaBusqueda}">
                             <p:column headerText="N°" sortBy="#{rev.num}" filterMatchMode="contains" filterBy="#{rev.num}">
                                 <h:outputText value="#{rev.num}"/>
                             </p:column>
@@ -32,14 +32,14 @@
                                 <h:outputText value="#{rev.usuario}"/>
                             </p:column>
                             <p:column headerText="" >
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorRevisionVerListado.verDetalles(rev.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{mantenedorRevisionVerListadoMB.verDetalles(rev.num)}">
                                 </p:commandLink>
                             </p:column>
                         </p:dataTable>
 
                         <f:facet name="footer">
                             <p:button value="Agregar revisión" href="/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Inspector')}"/>
-                            <p:commandButton value="Volver" action="#{MantenedorRevisionVerListado.volver()}"/>
+                            <p:commandButton value="Volver" action="#{mantenedorRevisionVerListadoMB.volver()}"/>
                         </f:facet>
 
 

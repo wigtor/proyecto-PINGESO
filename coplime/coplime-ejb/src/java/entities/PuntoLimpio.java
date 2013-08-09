@@ -35,7 +35,7 @@ public class PuntoLimpio implements Serializable {
     //@GeneratedValue(strategy = GenerationType.IDENTITY) //El usuario le da la llave primaria
     private Integer id;
     
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String nombre;
     
     @ManyToOne

@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui"
       contentType="text/html">
     <body>
-       <ui:composition template="../mainTemplate.xhtml">
+       <ui:composition template="/mainTemplate.xhtml">
            <ui:define name="titulo" >Agregar punto limpio</ui:define>
            
            
@@ -17,32 +17,32 @@
                         <f:facet name="header">Ingrese los datos del punto limpio</f:facet>
                         
                         <p:outputLabel value="N° de punto limpio"/>
-                        <p:inputText value="#{MantenedorPuntoLimpioAgregar.num}" required="true"/>
+                        <p:inputText value="#{mantenedorPuntoLimpioAgregarMB.num}" required="true"/>
                         
                         <p:outputLabel value="Nombre del punto limpio"/>
-                        <p:inputText value="#{MantenedorPuntoLimpioAgregar.nombre}"/>
+                        <p:inputText value="#{mantenedorPuntoLimpioAgregarMB.nombre}"/>
                         
                         <p:outputLabel value="Seleccione comuna"/>
-                        <p:selectOneMenu label="Seleccione comuna" value="#{MantenedorPuntoLimpioAgregar.comuna_seleccionada}">
-                            <f:selectItems value="#{MantenedorPuntoLimpioAgregar.listaComunas}"  
+                        <p:selectOneMenu label="Seleccione comuna" value="#{mantenedorPuntoLimpioAgregarMB.comuna_seleccionada}">
+                            <f:selectItems value="#{mantenedorPuntoLimpioAgregarMB.listaComunas}"  
                                 var="comuna" itemLabel="#{comuna.label}" itemValue="#{comuna.id}" />
                         </p:selectOneMenu>
                         
                         <p:outputLabel value="Dirección"/>
-                        <p:inputText value="#{MantenedorPuntoLimpioAgregar.direccion}"/>
+                        <p:inputText value="#{mantenedorPuntoLimpioAgregarMB.direccion}"/>
                         
                         <p:outputLabel value="Fecha primera revisión"/>
-                        <p:calendar value="#{MantenedorPuntoLimpioAgregar.fechaRevision}"/>
+                        <p:calendar value="#{mantenedorPuntoLimpioAgregarMB.fechaRevision}"/>
                         
                         <p:outputLabel value="Estado global inicial"/>
-                        <p:selectOneMenu value="#{MantenedorPuntoLimpioAgregar.estado_seleccionado}">
-                            <f:selectItems value="#{MantenedorPuntoLimpioAgregar.listaEstadosPtoLimpio}"  
+                        <p:selectOneMenu value="#{mantenedorPuntoLimpioAgregarMB.estado_seleccionado}">
+                            <f:selectItems value="#{mantenedorPuntoLimpioAgregarMB.listaEstadosPtoLimpio}"  
                                 var="estado" itemLabel="#{estado.label}" itemValue="#{estado.id}" />
                         </p:selectOneMenu>
                         
                         <p:outputLabel value="Inspector encargado"/>
-                        <p:selectOneMenu value="#{MantenedorPuntoLimpioAgregar.inspectorEncargado_seleccionado}">
-                            <f:selectItems value="#{MantenedorPuntoLimpioAgregar.listaInspectores}"  
+                        <p:selectOneMenu value="#{mantenedorPuntoLimpioAgregarMB.inspectorEncargado_seleccionado}">
+                            <f:selectItems value="#{mantenedorPuntoLimpioAgregarMB.listaInspectores}"  
                                            var="InspEncargado" itemLabel="#{InspEncargado.label}" itemValue="#{InspEncargado.id}" />
                         </p:selectOneMenu>
                         
@@ -56,10 +56,10 @@
                         </p:dataTable>
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Agregar contenedores" action="#{MantenedorPuntoLimpioAgregar.agregarContenedores()}"/>
+                            <p:commandButton value="Agregar contenedores" action="#{mantenedorPuntoLimpioAgregarMB.agregarContenedores()}"/>
 
-                            <p:commandButton value="Aceptar" action="#{MantenedorPuntoLimpioAgregar.agregarPuntoLimpio()}"/>
-                            <p:commandButton value="Volver" immediate="true" action="#{MantenedorPuntoLimpioAgregar.volverToLista()}"/>
+                            <p:commandButton value="Aceptar" action="#{mantenedorPuntoLimpioAgregarMB.agregarPuntoLimpio()}"/>
+                            <p:commandButton value="Volver" immediate="true" action="#{mantenedorPuntoLimpioAgregarMB.volverToLista()}"/>
                         </f:facet>
                    </p:panelGrid>
                </h:form>

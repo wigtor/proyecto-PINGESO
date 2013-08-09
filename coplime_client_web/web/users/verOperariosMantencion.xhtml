@@ -19,9 +19,9 @@
                   <p:panelGrid columns="5" styleClass="centrar" >
                        <f:facet name="header">Listado de operarios de mantención</f:facet>
                        
-                       <p:dataTable id="operarios" value="#{MantenedorOperarioVerListado.lista}" var="op" widgetVar="operariorTable"  
+                       <p:dataTable id="operarios" value="#{mantenedorOperarioVerListadoMB.lista}" var="op" widgetVar="operariorTable"  
                                       emptyMessage="No hay operarios registrados en el sistema" 
-                                     filteredValue="#{MantenedorOperarioVerListado.listaBusqueda}">
+                                     filteredValue="#{mantenedorOperarioVerListadoMB.listaBusqueda}">
                           
                            <p:column id="rutColumn" sortBy="#{op.num}" headerText="Rut" filterMatchMode="contains" filterBy="#{op.num}"  >
                                 <h:outputText value="#{op.num}" /> 
@@ -32,11 +32,11 @@
                             </p:column>
                             
                             <p:column headerText="" >
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{MantenedorOperarioVerListado.verDetalles(op.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{mantenedorOperarioVerListadoMB.verDetalles(op.num)}">
                                 </p:commandLink>
                             </p:column>                            
                             <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{MantenedorOperarioVerListado.editar(op.num)}">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{mantenedorOperarioVerListadoMB.editar(op.num)}">
                                 </p:commandLink>
                             </p:column>
                             <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
@@ -45,7 +45,7 @@
                                 <p:confirmDialog message="¿Está seguro que desea eliminar el operario de mantención?"
                                                  header="Confirmación de eliminación de operario de mantención" severity="alert"
                                                  widgetVar="cd_#{op.num}" closeOnEscape="true">
-                                    <p:commandButton value="Si" actionListener="#{MantenedorOperarioVerListado.eliminar(op.num)}"
+                                    <p:commandButton value="Si" actionListener="#{mantenedorOperarioVerListadoMB.eliminar(op.num)}"
                                                      oncomplete="cd_#{op.num}.hide();"/>
                                     <p:commandButton value="No" onclick="cd_#{op.num}.hide();" type="button" />
                                 </p:confirmDialog>
@@ -54,8 +54,8 @@
                         </p:dataTable>
                        
                        <f:facet name="footer">
-                           <p:commandButton value="Agregar" action="#{MantenedorOperarioVerListado.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
-                           <p:commandButton value="Volver" action="#{MantenedorOperarioVerListado.volver()}"/>
+                           <p:commandButton value="Agregar" action="#{mantenedorOperarioVerListadoMB.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
+                           <p:commandButton value="Volver" action="#{mantenedorOperarioVerListadoMB.volver()}"/>
                            
                        </f:facet>
                             

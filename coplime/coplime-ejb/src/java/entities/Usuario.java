@@ -36,10 +36,10 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
     
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Integer rut;
     
     @Column(nullable = false)

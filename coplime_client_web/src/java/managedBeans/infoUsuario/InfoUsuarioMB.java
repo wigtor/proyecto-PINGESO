@@ -23,14 +23,13 @@ import sessionBeans.UserServiceLocal;
  *
  * @author victor
  */
-@Named(value = "infoUsuarioManagedBeans")
+@Named(value = "infoUsuarioMB")
 @RequestScoped
-public class infoUsuarioManagedBeans {
+public class InfoUsuarioMB {
     @EJB
     private UserServiceLocal userService;
     
     
-
     String nombres;
     String apellidos;
     String rol;
@@ -63,7 +62,7 @@ public class infoUsuarioManagedBeans {
         try {
             userService.cambiarDatosContacto(CommonFunctions.getUsuarioLogueado(), telefono, email);
         } catch (Exception ex) {
-            Logger.getLogger(infoUsuarioManagedBeans.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoUsuarioMB.class.getName()).log(Level.SEVERE, null, ex);
         }
         CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
@@ -76,7 +75,10 @@ public class infoUsuarioManagedBeans {
         System.out.println("Se va a cambiar la contraseña");
         CommonFunctions.goToPage("/faces/users/cambiarContrasegna.xhtml");
     }
+
     
+    public InfoUsuarioMB() {
+    }
     
     public void setTelefono(int telefono) {
         this.telefono = telefono;
