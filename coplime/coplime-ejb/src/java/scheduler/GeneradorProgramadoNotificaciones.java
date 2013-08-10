@@ -4,9 +4,24 @@
  */
 package scheduler;
 
+import DAO.DAOFactory;
+import DAO.interfaces.NotificacionDAO;
+import DAO.interfaces.PuntoLimpioDAO;
+import entities.Contenedor;
+import entities.HistoricoContenedor;
+import entities.Notificacion;
+import entities.PuntoLimpio;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.logging.Level;
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
+import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import scheduler.algoritmosCalculo.AlgoritmoCalculo;
+import scheduler.algoritmosCalculo.FactoryAlgoritmosCalculo;
 
 /**
  *
@@ -14,14 +29,131 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNotificacionesLocal {
+    @PersistenceContext(unitName = "coplime-ejbPU")
+    private EntityManager em;
 
     @Schedule(minute = "0", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "01")
     @Override
     //NOTA: Los parámetros de periodicidad de la tarea programada deben ser configurables externamente
     //a través de la aplicación.
     public void myTimer() {
-        System.out.println("Timer event: " + new Date());
+        //Inicialización de las variables
+        //@TODO hacer variables privadas
+        LinkedList<PuntoLimpio> listaPuntosLimpios;
+        boolean resultadoOperacion;
+        // TODO: Borrar esta línea
+        System.out.println("Timer event: " + new Date() + ": Generando notificaciones automáticas.");
+        
+        //Le pedimos al sistema que nos entregue los puntos limpios existentes
+        listaPuntosLimpios = obtenerTodosPuntosLimpios();
+        /* Con la lista de puntos limpios pedimos la aplicación del algoritmo
+         * y si es necesario la generación de notificaciones automáticas.
+         */
+        resultadoOperacion = evaluar(listaPuntosLimpios);
+        if (resultadoOperacion == true){
+            Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.FINER, "Generación de notificaciones automáticas finalizada exitosamente.");
+        } else {
+            Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.WARNING, "Error en generación de notificaciones automáticas.");
+        }
     }
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    
+    /*
+     * Función obtenerTodosPuntosLimpios: utilizando la interfaz DAO obtiene una lista de
+     * todos los puntos limpios existentes en el sistema cuando se ejecuta la tarea.
+     */
+    private LinkedList<PuntoLimpio> obtenerTodosPuntosLimpios(){
+        LinkedList<PuntoLimpio> puntosLimpios;
+        DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        PuntoLimpioDAO ptosLimpiosDAO = fabricaDAO.getPuntoLimpioDAO();
+        //Se cuenta la cantidad de puntos limpios existentes en el sistema
+        int nroPuntosLimpios = ptosLimpiosDAO.count();
+        puntosLimpios = (LinkedList)ptosLimpiosDAO.findRange(0, nroPuntosLimpios-1);
+        return puntosLimpios;
+    }
+    
+    /*
+     * Función evaluar: dado una lista de puntos limpios procede a aplicar un algoritmo
+     * de estimación de fecha de llenado de cada contenedor para cada punto limpio en la
+     * lista, refrescando las fechas de próxima revisión del punto limpio en la base
+     * de datos a través de la interfaz DAO correspondiente. Además, si la fecha de
+     * próxima revisión corresponde al día de mañana, genera la notificación asociada.
+     */
+    private boolean evaluar(LinkedList<PuntoLimpio> puntosLimpiosEvaluar){
+        PuntoLimpio puntoLimpioActual;
+        LinkedList<Boolean> resultados = new LinkedList();
+        LinkedList<HistoricoContenedor> historialContenedor;
+        AlgoritmoCalculo ac = FactoryAlgoritmosCalculo.getAlgoritmoCalculo(FactoryAlgoritmosCalculo.REGRESION_LINEAL);
+        Date fechaRevision,menorFechaRevision=null;
+        Boolean debeRevisarsePL = false;
+        for (PuntoLimpio p:puntosLimpiosEvaluar){
+            for (Contenedor c: p.getContenedores()){
+                //Se busca la fecha en la cual el contenedor deberá ser revisado
+                fechaRevision = ac.estimar((LinkedList)c.getHistorialContenedor(), 100);
+                /* Se establece la fecha más próxima para tener que revisar el punto limpio
+                 * Si no hay fechas, se escoge la primera.
+                 * Si hay fechas, se compara con la menor actual.
+                 */
+                if (menorFechaRevision==null){
+                    menorFechaRevision = fechaRevision;
+                } else {
+                    /*
+                     * fechaRevision.before: devuelve TRUE si 
+                     */
+                    if(fechaRevision.before(menorFechaRevision)){
+                        menorFechaRevision = fechaRevision;
+                    }
+                }
+            }
+            actualizarFechaRevisionPL(p, menorFechaRevision);
+            
+            Calendar magnana = Calendar.getInstance();
+            magnana.add(Calendar.DATE, 2);
+            Calendar menorFechaRevisionCalendar = Calendar.getInstance();
+            menorFechaRevisionCalendar.setTime(menorFechaRevision);
+            if(menorFechaRevision.before(magnana.getTime())){
+                generarNotificacion(menorFechaRevisionCalendar, p);
+            }
+            
+        }
+        
+        //@TODO cazar excepciones para retornar false en casos de fallo.
+        return true;
+    }
+    
+    private void actualizarFechaRevisionPL(PuntoLimpio p,Date nuevaFecha){
+        DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        PuntoLimpioDAO ptosLimpiosDAO = fabricaDAO.getPuntoLimpioDAO();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(nuevaFecha);
+        p.setFechaProxRevision(cal);
+        ptosLimpiosDAO.update(p);
+    }
+    
+    
+   
+    
+    
+    
+    /*
+     * Función generarNotificaciones: dada la lista de Puntos Limpios y dada la lista de resultados
+     * asociados a cada Punto Limpio, le indica al sistema generar las Notificaciones correspondientes
+     * según corresponda.
+     */
+    
+    private void generarNotificacion(Calendar fechaRevision, PuntoLimpio pl){
+        DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        NotificacionDAO notifDAO = fabricaDAO.getNotificacionDAO();
+        Notificacion nuevaNotificacion = new Notificacion();
+        nuevaNotificacion.setPuntoLimpio(pl);
+        nuevaNotificacion.setFechaHora(Calendar.getInstance());
+        nuevaNotificacion.setComentario("El punto limpio número ".concat(pl.getId().toString()).concat(" de nombre ").concat(pl.getNombre()).concat(" necesita ser revisado. Causa: probable llenado de uno de los contenedores el día ").concat(fechaRevision.toString()).concat("."));
+        // TODO: Revisar tema tipos incidencia.
+        //nuevaNotificacion.setTipoIncidencia(null);
+        notifDAO.insert(nuevaNotificacion);
+        
+        }
+
+    public void persist(Object object) {
+        em.persist(object);
+    }
 }

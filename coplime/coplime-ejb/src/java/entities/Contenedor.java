@@ -5,6 +5,8 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -54,7 +57,26 @@ public class Contenedor implements Serializable {
     @ManyToOne
     @JoinColumn(nullable = false)
     private PuntoLimpio puntoLimpio;
+    
+    
+    @OneToMany(mappedBy = "contenedor")
+    private List<HistoricoContenedor> historialContenedor;
 
+    public Contenedor() {
+        this.historialContenedor = new LinkedList();
+    }
+
+    
+    
+    public List<HistoricoContenedor> getHistorialContenedor() {
+        return historialContenedor;
+    }
+
+    public void setHistorialContenedor(List<HistoricoContenedor> historialContenedor) {
+        this.historialContenedor = historialContenedor;
+    }
+
+    
     
     public PuntoLimpio getPuntoLimpio() {
         return puntoLimpio;
