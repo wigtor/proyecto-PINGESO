@@ -12,16 +12,19 @@ import entities.HistoricoContenedor;
 import entities.Notificacion;
 import entities.PuntoLimpio;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import scheduler.algoritmosCalculo.AlgoritmoCalculo;
 import scheduler.algoritmosCalculo.FactoryAlgoritmosCalculo;
+import sessionBeans.CrudPuntoLimpioLocal;
 
 /**
  *
@@ -29,8 +32,13 @@ import scheduler.algoritmosCalculo.FactoryAlgoritmosCalculo;
  */
 @Stateless
 public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNotificacionesLocal {
+    @EJB
+    private CrudPuntoLimpioLocal crudPuntoLimpio;
+    
     @PersistenceContext(unitName = "coplime-ejbPU")
     private EntityManager em;
+    
+    
 
     @Schedule(minute = "0", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "01")
     @Override
@@ -39,7 +47,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
     public void myTimer() {
         //Inicialización de las variables
         //@TODO hacer variables privadas
-        LinkedList<PuntoLimpio> listaPuntosLimpios;
+        Collection<PuntoLimpio> listaPuntosLimpios;
         boolean resultadoOperacion;
         // TODO: Borrar esta línea
         System.out.println("Timer event: " + new Date() + ": Generando notificaciones automáticas.");
@@ -61,14 +69,8 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
      * Función obtenerTodosPuntosLimpios: utilizando la interfaz DAO obtiene una lista de
      * todos los puntos limpios existentes en el sistema cuando se ejecuta la tarea.
      */
-    private LinkedList<PuntoLimpio> obtenerTodosPuntosLimpios(){
-        LinkedList<PuntoLimpio> puntosLimpios;
-        DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-        PuntoLimpioDAO ptosLimpiosDAO = fabricaDAO.getPuntoLimpioDAO();
-        //Se cuenta la cantidad de puntos limpios existentes en el sistema
-        int nroPuntosLimpios = ptosLimpiosDAO.count();
-        puntosLimpios = (LinkedList)ptosLimpiosDAO.findRange(0, nroPuntosLimpios-1);
-        return puntosLimpios;
+    private Collection<PuntoLimpio> obtenerTodosPuntosLimpios(){
+        return crudPuntoLimpio.getAllPuntosLimpios();
     }
     
     /*
@@ -78,7 +80,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
      * de datos a través de la interfaz DAO correspondiente. Además, si la fecha de
      * próxima revisión corresponde al día de mañana, genera la notificación asociada.
      */
-    private boolean evaluar(LinkedList<PuntoLimpio> puntosLimpiosEvaluar){
+    private boolean evaluar(Collection<PuntoLimpio> puntosLimpiosEvaluar){
         PuntoLimpio puntoLimpioActual;
         LinkedList<Boolean> resultados = new LinkedList();
         LinkedList<HistoricoContenedor> historialContenedor;

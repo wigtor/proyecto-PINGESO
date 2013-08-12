@@ -36,7 +36,6 @@ public class Notificador implements NotificadorLocal {
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         NotificacionDAO notifDAO = factoryDeDAOs.getNotificacionDAO();
         return notifDAO.findAllOfUser(username);
-        
     }
     
     @Override

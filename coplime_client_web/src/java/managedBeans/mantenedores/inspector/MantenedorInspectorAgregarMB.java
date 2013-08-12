@@ -21,8 +21,6 @@ public class MantenedorInspectorAgregarMB {
 
     @EJB
     private CrudInspectorLocal crudInspector;
-    @Inject 
-    private MantenedorInspectorEditarMB mantInsp;
            
     private String nombre;
     private String apellido1;
