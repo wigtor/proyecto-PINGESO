@@ -22,7 +22,6 @@ public class MantenedorAdministradorAgregarMB {
     private CrudAdministradorLocal crudAdministrador;
     
     private String username;
-    private String password;
     private String nombre;
     private String apellido1;
     private String apellido2;
@@ -34,7 +33,7 @@ public class MantenedorAdministradorAgregarMB {
     }
     
     public void agregarAdministrador() {
-        crudAdministrador.agregarAdministrador( username, password, rut, nombre, apellido1, apellido2, mail, telefono);
+        crudAdministrador.agregarAdministrador( username, rut, nombre, apellido1, apellido2, mail, telefono);
         CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
     }
     
@@ -50,15 +49,7 @@ public class MantenedorAdministradorAgregarMB {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+    
     public String getNombre() {
         return nombre;
     }

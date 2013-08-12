@@ -16,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface CrudOperarioLocal {
 
-    public void agregarOperario(String username, String password, int rut, String nombre, String apellido1, String apellido2, String mail, int telefono);
+    public void agregarOperario(String username, int rut, String nombre, String apellido1, String apellido2, String mail, int telefono);
 
     public Collection<OperarioMantencion> getAllOperarios();
     

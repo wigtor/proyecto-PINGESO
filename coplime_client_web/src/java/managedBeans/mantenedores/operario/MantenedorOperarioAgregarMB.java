@@ -25,7 +25,6 @@ public class MantenedorOperarioAgregarMB {
     private String apellido1;
     private String apellido2;
     private String username;
-    private String password;
     private Integer rut;
     private String mail;
     private Integer telefono;
@@ -34,7 +33,7 @@ public class MantenedorOperarioAgregarMB {
     }
     
     public void agregarOperario() {
-        crudOperario.agregarOperario( username, password, rut, nombre, apellido1, apellido2, mail, telefono);
+        crudOperario.agregarOperario( username, rut, nombre, apellido1, apellido2, mail, telefono);
         CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
         
     }
@@ -74,14 +73,6 @@ public class MantenedorOperarioAgregarMB {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Integer getRut() {

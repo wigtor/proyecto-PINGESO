@@ -30,26 +30,10 @@ public class CrudAdministrador implements CrudAdministradorLocal {
     @PersistenceContext(unitName = "coplime-ejbPU")
     private EntityManager em;
     
-    private Usuario usertemp;
     
-    @TransactionAttribute (TransactionAttributeType.REQUIRED)
     @Override
-    public void agregarAdministrador(String username, String password, int rut, String nombre, String apellido1, String apellido2, String mail, int telefono){
-        
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(password.getBytes("UTF-8"));
-
-            byte[] digest = md.digest();
-            BigInteger bigInt = new BigInteger(1, digest);
-            password = bigInt.toString(16);
-        }
-        catch (Exception e) {
-            System.out.println("No se pudo convertir a MD5 la password");
-        }
-
-        System.out.println("Password Md5: "+password);
-       
+    public void agregarAdministrador(String username, int rut, String nombre, String apellido1, String apellido2, String mail, int telefono){
+        String password = convertToMD5(Integer.toString(rut));
         Administrador nvoAdmin;
         Usuario nvoUsuario = new Usuario();
         nvoAdmin = new Administrador();
@@ -57,13 +41,13 @@ public class CrudAdministrador implements CrudAdministradorLocal {
         nvoUsuario.setApellido1(apellido1);
         nvoUsuario.setEmail(mail);
         nvoUsuario.setApellido2(apellido2);
-         nvoUsuario.setRut(rut);
+        nvoUsuario.setRut(rut);
         nvoUsuario.setUsername(username);
         nvoUsuario.setPassword(password);
         nvoUsuario.setTelefono(telefono);
         nvoAdmin.setUsuario(nvoUsuario);
-        
-        
+
+
         //Hago los DAO
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         AdministradorDAO adminDAO = factoryDeDAOs.getAdministradorDAO();
@@ -140,23 +124,24 @@ public class CrudAdministrador implements CrudAdministradorLocal {
         
         
         if(resetContraseña == true){
-            String password = Integer.toString(editInspector.getRut());
-            try {
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                md.update(password.getBytes("UTF-8"));
-
-                byte[] digest = md.digest();
-                BigInteger bigInt = new BigInteger(1, digest);
-                password = bigInt.toString(16);
-            }
-            catch (Exception e) {
-                System.out.println("No se pudo convertir a MD5 la password");
-            }
+            String password = convertToMD5(Integer.toString(editInspector.getRut()));
             editInspector.setPassword(password);        
         }
         
-        this.usertemp = editInspector;
-        this.usertemp = userDAO.update(editInspector);
+        userDAO.update(editInspector);
     }
 
+    public String convertToMD5(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes("UTF-8"));
+
+            byte[] digest = md.digest();
+            BigInteger bigInt = new BigInteger(1, digest);
+            password = bigInt.toString(16);
+        } catch (Exception e) {
+            System.out.println("No se pudo convertir a MD5 la password");
+        }
+        return password;
+    }
 }

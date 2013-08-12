@@ -14,6 +14,7 @@ import entities.Usuario;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Collection;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -26,29 +27,18 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class CrudOperario implements CrudOperarioLocal {
+    @EJB
+    private CrudAdministradorLocal crudAdministrador;
     @PersistenceContext(unitName = "coplime-ejbPU")
     private EntityManager em;
-    private Usuario usertemp;
+    
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
     @TransactionAttribute (TransactionAttributeType.REQUIRED)
     @Override
-    public void agregarOperario(String username, String password, int rut, String nombre, String apellido1, String apellido2, String mail, int telefono){
-        
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(password.getBytes("UTF-8"));
-
-            byte[] digest = md.digest();
-            BigInteger bigInt = new BigInteger(1, digest);
-            password = bigInt.toString(16);
-        }
-        catch (Exception e) {
-            System.out.println("No se pudo convertir a MD5 la password");
-        }
-
-        System.out.println("Password Md5: "+password);
+    public void agregarOperario(String username, int rut, String nombre, String apellido1, String apellido2, String mail, int telefono){
+        String password = crudAdministrador.convertToMD5(Integer.toString(rut));
        
         OperarioMantencion nvoInspect;
         Usuario nvoUsuario = new Usuario();
@@ -144,23 +134,11 @@ public class CrudOperario implements CrudOperarioLocal {
         
         
         if(resetContraseña == true){
-            String password = Integer.toString(editInspector.getRut());
-            try {
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                md.update(password.getBytes("UTF-8"));
-
-                byte[] digest = md.digest();
-                BigInteger bigInt = new BigInteger(1, digest);
-                password = bigInt.toString(16);
-            }
-            catch (Exception e) {
-                System.out.println("No se pudo convertir a MD5 la password");
-            }
+            String password = crudAdministrador.convertToMD5(Integer.toString(editInspector.getRut()));
             editInspector.setPassword(password);        
         }
         
-        this.usertemp = editInspector;
-        this.usertemp = userDAO.update(editInspector);
+        userDAO.update(editInspector);
     }
     
     @Override
@@ -172,13 +150,4 @@ public class CrudOperario implements CrudOperarioLocal {
         }
         return false;
     }
-
-    public Usuario getUsertemp() {
-        return usertemp;
-    }
-
-    public void setUsertemp(Usuario usertemp) {
-        this.usertemp = usertemp;
-    }
-    
 }

@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.primefaces.model.UploadedFile;
 import otros.CommonFunctions;
 import sessionBeans.AvisosIncidenciaLocal;
+import sessionBeans.CrudPuntoLimpioLocal;
 
 /**
  *
@@ -30,7 +31,10 @@ import sessionBeans.AvisosIncidenciaLocal;
 @RequestScoped
 public class EnviarAvisoIncidenciaMB {
     @EJB
+    private CrudPuntoLimpioLocal crudPuntoLimpio;
+    @EJB
     private AvisosIncidenciaLocal avisosIncidencia;
+    
     
     private Integer numPuntoLimpio;
     private String nombre_presentacion_ptoLimpio;
@@ -75,7 +79,6 @@ public class EnviarAvisoIncidenciaMB {
         String paramNumPtoLimpio = FacesContext.getCurrentInstance().
                 getExternalContext().getRequestParameterMap().
                 get("id");
-        System.out.println("param: ".concat(paramNumPtoLimpio));
         if (paramNumPtoLimpio == null ){ //No se ha seleccionado aún, redirecciono
             return false;
         }
@@ -87,8 +90,10 @@ public class EnviarAvisoIncidenciaMB {
             catch (NumberFormatException nfe) {
                 return false;
             }
-            String nombre_ptoLimpio = avisosIncidencia.getNombrePtoLimpio(this.numPuntoLimpio);
-            if (nombre_ptoLimpio != null) {
+            PuntoLimpio p = crudPuntoLimpio.getPuntoLimpioByNum(this.numPuntoLimpio);
+            String nombre_ptoLimpio;
+            if (p != null) {
+                nombre_ptoLimpio = p.getNombre();
                 this.nombre_presentacion_ptoLimpio = Integer.toString(this.numPuntoLimpio).concat(" - ").concat(nombre_ptoLimpio);
                 return true;
             }
@@ -110,7 +115,7 @@ public class EnviarAvisoIncidenciaMB {
     }
     
     private void cargarPuntosLimpios() {
-        Collection<PuntoLimpio> listaTemp = avisosIncidencia.getPuntosLimpios();
+        Collection<PuntoLimpio> listaTemp = crudPuntoLimpio.getAllPuntosLimpios();
         this.listaPuntosLimpios = new LinkedList();
         SelectElemPojo elemTemp;
         for(PuntoLimpio temp : listaTemp) {

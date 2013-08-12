@@ -7,7 +7,6 @@ package managedBeans.mantenedores.inspector;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudInspectorLocal;
 
@@ -26,7 +25,6 @@ public class MantenedorInspectorAgregarMB {
     private String apellido1;
     private String apellido2;
     private String username;
-    private String password;
     private Integer rut;
     private String mail;
     private Integer telefono;
@@ -35,7 +33,7 @@ public class MantenedorInspectorAgregarMB {
     }
     
     public void agregarInspector() {
-        crudInspector.agregarInspector(username, password, rut, nombre, apellido1, apellido2, mail, telefono);
+        crudInspector.agregarInspector(username, rut, nombre, apellido1, apellido2, mail, telefono);
         CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");       
         
     }
@@ -103,14 +101,5 @@ public class MantenedorInspectorAgregarMB {
     public void setTelefono(Integer telefono) {
         this.telefono = telefono;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
     
 }
