@@ -30,7 +30,7 @@
                             <p:column id="numColumn" sortBy="#{notif.num}" headerText="N°" filterBy="#{notif.num}" filterMatchMode="contains">
                                 <h:outputText value="#{notif.num}"/>
                             </p:column>
-                            <p:column id="detColumn" sortBy="#{notif.detallesCortado}" headerText="Detalle" filterBy="#{notif.detallesCortado}" filterMatchMode="contains">
+                            <p:column id="detColumn" sortBy="#{notif.detallesCortado}" headerText="Detalle" filterBy="#{notif.detallesCompleto}" filterMatchMode="contains">
                                 <h:outputText value="#{notif.detallesCortado}"/>
                             </p:column>
                             <p:column id="fechaColumn" sortBy="#{notif.fecha}" headerText="Fecha" filterBy="#{notif.fecha}" filterMatchMode="contains">
@@ -50,7 +50,7 @@
                         </p:dataTable>
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Volver" action="#{mantenedorNotificacionVerListadoMB.volver()}"/>
+                            <p:commandButton value="Volver" action="#{mantenedorNotificacionVerListadoMB.volverToListado()}"/>
                         </f:facet>
                     </p:panelGrid>
                 </h:form>

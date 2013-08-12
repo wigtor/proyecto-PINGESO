@@ -22,6 +22,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import otros.CommonFunctions;
+import sessionBeans.CrudInspectorLocal;
 import sessionBeans.CrudPuntoLimpioLocal;
 
 /**
@@ -32,7 +33,10 @@ import sessionBeans.CrudPuntoLimpioLocal;
 @RequestScoped
 public class MantenedorPuntoLimpioAgregarMB {
     @EJB
+    private CrudInspectorLocal crudInspector;
+    @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
+    
     
     @Inject
     private MantenedorPuntoLimpioConversation mantPtoLimpio;
@@ -77,7 +81,7 @@ public class MantenedorPuntoLimpioAgregarMB {
     }
     
     private void cargarInspectores() {
-        Collection<Inspector> listaTemp = crudPuntoLimpio.getAllInspectores();
+        Collection<Inspector> listaTemp = crudInspector.getAllInspectores();
         SelectElemPojo elemTemp;
         this.listaInspectores = new ArrayList();
         for(Inspector insp_iter : listaTemp) {

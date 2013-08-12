@@ -153,14 +153,6 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
     }
     
     @Override
-    public Collection<Inspector> getAllInspectores() {
-        //Hago los DAO
-        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-        InspectorDAO inspDAO = factoryDeDAOs.getInspectorDAO();
-        return inspDAO.findAll();
-    }
-    
-    @Override
     public Collection<Estado> getAllEstadosPuntoLimpio() {
         //Hago los DAO
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);

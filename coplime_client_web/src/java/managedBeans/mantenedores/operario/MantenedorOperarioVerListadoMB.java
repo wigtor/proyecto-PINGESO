@@ -17,6 +17,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudOperarioLocal;
+import sessionBeans.CrudUsuariosComunLocal;
 
 /**
  *
@@ -25,6 +26,8 @@ import sessionBeans.CrudOperarioLocal;
 @Named(value = "mantenedorOperarioVerListadoMB")
 @RequestScoped
 public class MantenedorOperarioVerListadoMB {
+    @EJB
+    private CrudUsuariosComunLocal crudUsuariosComun;
 
     @EJB
     private CrudOperarioLocal crudOperario;
@@ -68,7 +71,7 @@ public class MantenedorOperarioVerListadoMB {
     }
     
     public void verDetalles(int numOperario) {
-        Usuario usuarioVerDetalle = crudOperario.getUsuarioByRut(numOperario);
+        Usuario usuarioVerDetalle = crudUsuariosComun.getUsuarioByRut(numOperario);
         if (usuarioVerDetalle != null) {
             this.mantOp.setIdUsuarioDetalles(numOperario);
             CommonFunctions.goToPage("/faces/users/verDetallesOperarioMantencion.xhtml");
@@ -80,7 +83,7 @@ public class MantenedorOperarioVerListadoMB {
     }
     
     public void editar(int numOperario) {
-        Usuario usuarioEdit = crudOperario.getUsuarioByRut(numOperario);
+        Usuario usuarioEdit = crudUsuariosComun.getUsuarioByRut(numOperario);
         if (usuarioEdit != null) {
             this.mantOp.setIdUsuarioDetalles(numOperario);
             CommonFunctions.goToPage("/faces/users/admin/editarOperarioMantencion.xhtml");

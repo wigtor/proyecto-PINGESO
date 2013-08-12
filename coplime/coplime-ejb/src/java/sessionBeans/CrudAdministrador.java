@@ -11,12 +11,9 @@ import DAO.interfaces.UsuarioDAO;
 import entities.Administrador;
 import entities.Rol;
 import entities.Usuario;
-import java.math.BigInteger;
-import java.security.MessageDigest;
 import java.util.Collection;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -26,6 +23,8 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class CrudAdministrador implements CrudAdministradorLocal {
+    @EJB
+    private CrudUsuariosComunLocal crudUsuariosComun;
     //Se inyecta el entity manager, no se crea en los DAO, pero si se le pasa a los DAO
     @PersistenceContext(unitName = "coplime-ejbPU")
     private EntityManager em;
@@ -33,7 +32,7 @@ public class CrudAdministrador implements CrudAdministradorLocal {
     
     @Override
     public void agregarAdministrador(String username, int rut, String nombre, String apellido1, String apellido2, String mail, int telefono){
-        String password = convertToMD5(Integer.toString(rut));
+        String password = crudUsuariosComun.convertToMD5(Integer.toString(rut));
         Administrador nvoAdmin;
         Usuario nvoUsuario = new Usuario();
         nvoAdmin = new Administrador();
@@ -124,24 +123,11 @@ public class CrudAdministrador implements CrudAdministradorLocal {
         
         
         if(resetContraseña == true){
-            String password = convertToMD5(Integer.toString(editInspector.getRut()));
+            String password = crudUsuariosComun.convertToMD5(Integer.toString(editInspector.getRut()));
             editInspector.setPassword(password);        
         }
         
         userDAO.update(editInspector);
     }
-
-    public String convertToMD5(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(password.getBytes("UTF-8"));
-
-            byte[] digest = md.digest();
-            BigInteger bigInt = new BigInteger(1, digest);
-            password = bigInt.toString(16);
-        } catch (Exception e) {
-            System.out.println("No se pudo convertir a MD5 la password");
-        }
-        return password;
-    }
+    
 }

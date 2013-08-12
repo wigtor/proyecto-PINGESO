@@ -11,13 +11,9 @@ import DAO.interfaces.UsuarioDAO;
 import entities.OperarioMantencion;
 import entities.Rol;
 import entities.Usuario;
-import java.math.BigInteger;
-import java.security.MessageDigest;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -28,17 +24,16 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class CrudOperario implements CrudOperarioLocal {
     @EJB
-    private CrudAdministradorLocal crudAdministrador;
+    private CrudUsuariosComunLocal crudUsuariosComun;
     @PersistenceContext(unitName = "coplime-ejbPU")
     private EntityManager em;
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
-    @TransactionAttribute (TransactionAttributeType.REQUIRED)
     @Override
     public void agregarOperario(String username, int rut, String nombre, String apellido1, String apellido2, String mail, int telefono){
-        String password = crudAdministrador.convertToMD5(Integer.toString(rut));
+        String password = crudUsuariosComun.convertToMD5(Integer.toString(rut));
        
         OperarioMantencion nvoInspect;
         Usuario nvoUsuario = new Usuario();
@@ -82,15 +77,6 @@ public class CrudOperario implements CrudOperarioLocal {
     }
     
     @Override
-    public Usuario getOperario(String userName) {
-        //Hago los DAO
-        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-        UsuarioDAO usuarioDAO = factoryDeDAOs.getUsuarioDAO();
-        return usuarioDAO.find(userName);
-        
-    }
-    
-    @Override
     public OperarioMantencion getOperarioByRut(Integer rutUser) {
         //Hago los DAO
         if (rutUser == null) {
@@ -100,18 +86,7 @@ public class CrudOperario implements CrudOperarioLocal {
         OperarioDAO operarioDAO = factoryDeDAOs.getOperarioDAO();
         return operarioDAO.findByRut(rutUser.intValue());
     }
-    
-    @Override
-    public Usuario getUsuarioByRut(Integer rutUser) {
-        //Hago los DAO
-        if (rutUser == null) {
-            return null;
-        }
-        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-        UsuarioDAO usuarioDAO = factoryDeDAOs.getUsuarioDAO();
-        return usuarioDAO.findByRut(rutUser.intValue());
-    }
-    
+      
     @Override
     public void editarOperario(Integer rutUser, String userName,String nombre, String apellido1, String apellido2, String mail, boolean resetContraseña,int telefono) {
         if (rutUser == null) {
@@ -134,7 +109,7 @@ public class CrudOperario implements CrudOperarioLocal {
         
         
         if(resetContraseña == true){
-            String password = crudAdministrador.convertToMD5(Integer.toString(editInspector.getRut()));
+            String password = crudUsuariosComun.convertToMD5(Integer.toString(editInspector.getRut()));
             editInspector.setPassword(password);        
         }
         

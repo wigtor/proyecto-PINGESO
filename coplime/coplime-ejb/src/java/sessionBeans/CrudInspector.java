@@ -11,8 +11,6 @@ import DAO.interfaces.UsuarioDAO;
 import entities.Inspector;
 import entities.Rol;
 import entities.Usuario;
-import java.math.BigInteger;
-import java.security.MessageDigest;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -26,7 +24,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class CrudInspector implements CrudInspectorLocal {
     @EJB
-    private CrudAdministradorLocal crudAdministrador;
+    private CrudUsuariosComunLocal crudUsuariosComun;
     
     @PersistenceContext(unitName = "coplime-ejbPU")
     private EntityManager em;
@@ -38,7 +36,7 @@ public class CrudInspector implements CrudInspectorLocal {
 
     @Override
     public void agregarInspector(String username, int rut, String nombre, String apellido1, String apellido2, String mail, int telefono){
-        String password = crudAdministrador.convertToMD5(Integer.toString(rut));
+        String password = crudUsuariosComun.convertToMD5(Integer.toString(rut));
         
         Inspector nvoInspect;
         Usuario nvoUsuario = new Usuario();
@@ -102,17 +100,6 @@ public class CrudInspector implements CrudInspectorLocal {
     }
     
     @Override
-    public Usuario getUsuarioByRut(Integer rutUser) {
-        //Hago los DAO
-        if (rutUser == null) {
-            return null;
-        }
-        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-        UsuarioDAO usuarioDAO = factoryDeDAOs.getUsuarioDAO();
-        return usuarioDAO.findByRut(rutUser.intValue());
-    }
-    
-    @Override
     public void editarInspector(Integer rutUser, String userName,String nombre, String apellido1, String apellido2, String mail, boolean resetContraseña,int telefono) {
         if (rutUser == null) {
             return;
@@ -134,7 +121,7 @@ public class CrudInspector implements CrudInspectorLocal {
         
         
         if(resetContraseña == true){
-            String password = crudAdministrador.convertToMD5(Integer.toString(editInspector.getRut()));
+            String password = crudUsuariosComun.convertToMD5(Integer.toString(editInspector.getRut()));
             editInspector.setPassword(password);        
         }
         

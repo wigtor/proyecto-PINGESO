@@ -14,8 +14,6 @@ import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import otros.CommonFunctions;
@@ -59,6 +57,7 @@ public class MantenedorNotificacionVerListadoMB implements Serializable {
             notifTemp = new NotificacionPojo();
 
             notifTemp.setNum(notif_iter.getId());
+            notifTemp.setDetallesCompleto(notif_iter.getComentario());
             str_temp = notif_iter.getComentario();
             if (str_temp.length() > 21) {
                 str_temp = str_temp.substring(0, 25).concat("...");

@@ -11,6 +11,7 @@ package ObjectsForManagedBeans;
 public class NotificacionPojo {
     private int num;
     private String detallesCortado;
+    private String detallesCompleto;
     private String fecha;
     private String revisado;
 
@@ -28,6 +29,14 @@ public class NotificacionPojo {
 
     public void setDetallesCortado(String detallesCortado) {
         this.detallesCortado = detallesCortado;
+    }
+    
+    public String getDetallesCompleto() {
+        return detallesCompleto;
+    }
+
+    public void setDetallesCompleto(String detallesCompleto) {
+        this.detallesCompleto = detallesCompleto;
     }
 
     public String getFecha() {
