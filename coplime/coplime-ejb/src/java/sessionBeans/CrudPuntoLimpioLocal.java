@@ -75,9 +75,26 @@ public interface CrudPuntoLimpioLocal {
      */
     public Collection<UnidadMedida> getAllUnidadesMedida();
 
+    /**
+     * Busca un contenedor por su identificador.
+     * @param id El identificador primario del contenedor a buscar
+     * @return Un objeto "Contenedor", null si no se encuentra
+     */
     public Contenedor getContenedor(Integer id);
 
-    public List<Contenedor> getContenedoresByPuntoLimpio(Integer idPtoLimpio);
+    /**
+     * Busca todos los contenedores de un punto limpio
+     * @param idPtoLimpio El identificador del punto limpio del que se quieren buscar sus contenedores
+     * @return Una 
+     */
+    public Collection<Contenedor> getContenedoresByPuntoLimpio(Integer idPtoLimpio);
 
+    /**
+     * Cambia el estado y el porcentaje de llenado de un contenedor, además genera un nuevo historico de contenedor.
+     * @param idContenedor El id del contenedor que se desea editar
+     * @param idEstadoContenedor El id del nuevo estado del contenedor
+     * @param llenadoContenedor El nuevo porcentaje de llenado que tendrá el contenedor
+     * @return true si pudo realizarse la actualización, false si hubo un error
+     */
     public boolean cambiarEstadoContenedor(Integer idContenedor, Integer idEstadoContenedor, int llenadoContenedor);
 }

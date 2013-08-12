@@ -11,7 +11,6 @@ import DAO.interfaces.EstadoDAO;
 import DAO.interfaces.InspectorDAO;
 import DAO.interfaces.MaterialDAO;
 import DAO.interfaces.PuntoLimpioDAO;
-import DAO.interfaces.RevisionDAO;
 import DAO.interfaces.UnidadMedidaDAO;
 import entities.Comuna;
 import entities.Contenedor;
@@ -19,9 +18,7 @@ import entities.Estado;
 import entities.Inspector;
 import entities.Material;
 import entities.PuntoLimpio;
-import entities.RevisionPuntoLimpio;
 import entities.UnidadMedida;
-import entities.Usuario;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
@@ -218,7 +215,7 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
     }
     
     @Override
-    public List<Contenedor> getContenedoresByPuntoLimpio(Integer idPtoLimpio) {
+    public Collection<Contenedor> getContenedoresByPuntoLimpio(Integer idPtoLimpio) {
         if (idPtoLimpio == null)
             return null;
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);

@@ -77,7 +77,7 @@ public class CambioEstadoPuntoLimpioMB {
     }
     
     private void cargarContenedoresPuntoLimpio() {
-        List<Contenedor> listaTemp = crudPuntoLimpio.getContenedoresByPuntoLimpio(this.idPtoLimpio);
+        Collection<Contenedor> listaTemp = crudPuntoLimpio.getContenedoresByPuntoLimpio(this.idPtoLimpio);
         SelectElemPojo elemTemp;
         this.listaContenedores = new ArrayList();
         for(Contenedor cont : listaTemp) {
@@ -96,15 +96,12 @@ public class CambioEstadoPuntoLimpioMB {
     }
     
     public void cambiarEstadoContenedor() {
-        System.out.println("Se hizo click en 'cambiarEstadoContenedor()'");
-        
         cambioEstadoSessionBean.setIdEstadoToChange(this.estadoPuntoLimpio);
         cambioEstadoSessionBean.setIdContenedorToChange(idContenedorSeleccionado);
         CommonFunctions.goToPage("/faces/users/cambiarEstadoContenedor.xhtml");
     }
     
     public void guardarCambios() {
-        System.out.println("Se hizo click en 'guardarCambios()'");
         cambioEstadoSessionBean.setIdEstadoToChange(this.estadoPuntoLimpio);
         
         //cambioEstadoSessionBean.setIdPuntoLimpioToChange(null);

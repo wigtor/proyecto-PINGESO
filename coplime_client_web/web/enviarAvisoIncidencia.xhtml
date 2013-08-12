@@ -18,7 +18,7 @@
             
             <ui:define name="botonesBarra">
                 <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{autenticadorMB.goToIndex()}" />
-                <ezcomp:boton_barra_superior classIcon="ui-icon-back" title="Seleccionar punto limpio" action="#{Autenticador.goToEnviarAvisoIncidencia()}" />
+                <ezcomp:boton_barra_superior classIcon="ui-icon-back" title="Seleccionar punto limpio" action="#{autenticadorMB.goToEnviarAvisoIncidencia()}" />
             </ui:define>
             
             <ui:define name="centro">
@@ -40,7 +40,9 @@
                         <p:inputTextarea id="detalles" value="#{enviarAvisoIncidenciaMB.detalles}" required="true"/>
                         
                         <p:outputLabel value="E-mail de contacto" for="email"/>
-                        <p:inputText id="email" value="#{enviarAvisoIncidenciaMB.emailContacto}" />
+                        <p:inputText id="email" value="#{enviarAvisoIncidenciaMB.emailContacto}" >
+                            <f:validator validatorId="EmailValidator"/>
+                        </p:inputText>
                         
                         
                         <p:outputLabel for="subidaArchivos" value="Subir imagen"/>

@@ -72,7 +72,7 @@
             </h:form>
         </p:overlayPanel>
             
-        <p:overlayPanel id="menu_operario" for=":form_botones_barra:btnPanelContext" rendered="#{request.isUserInRole('Operario')}">
+        <p:overlayPanel id="menu_operario" for=":form_botones_barra:btnPanelContext" rendered="#{request.isUserInRole('Operario')}" >
             <h:form>
                 <p:panelGrid columns="1"> 
                     <f:facet name="header">Menu para Operario
@@ -98,7 +98,7 @@
         
         
         
-        <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar navbar-inverse navbar-fixed-top" style="z-index: 1000 !important;">
         	<div class="navbar-inner">
                     <div class="row-fluid special">
                     	<div class="span2">
@@ -148,6 +148,8 @@
                 <footer class="footer span12"> Grupo N°3 - PINGESO 2013-1 - U de Santiago</footer>
             </div>
         </div>
-        <p:growl id="growl_msj_accion"/>
+        <div class="sobreBarra">
+            <p:growl id="growl_msj_accion" />
+        </div>
     </body>
 </html>

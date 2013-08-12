@@ -135,3 +135,7 @@ root {
     background-image: url("../img/glyphicons-halflings-white.png");
     
 }
+
+.sobreBarra {
+    z-index: 1040;
+}
