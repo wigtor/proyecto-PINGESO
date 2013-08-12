@@ -17,5 +17,5 @@ public interface GeneradorProgramadoNotificacionesLocal {
      * Método que es ejecutado periodicamente para realizar las estimaciones de 
      * fecha de revisión de los puntos limpios.
      */
-    public void myTimer();
+    public void calculoLlenadoAutomatico();
 }

@@ -44,7 +44,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
     @Override
     //NOTA: Los parámetros de periodicidad de la tarea programada deben ser configurables externamente
     //a través de la aplicación.
-    public void myTimer() {
+    public void calculoLlenadoAutomatico() {
         //Inicialización de las variables
         //@TODO hacer variables privadas
         Collection<PuntoLimpio> listaPuntosLimpios;
@@ -53,7 +53,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
         System.out.println("Timer event: " + new Date() + ": Generando notificaciones automáticas.");
         
         //Le pedimos al sistema que nos entregue los puntos limpios existentes
-        listaPuntosLimpios = obtenerTodosPuntosLimpios();
+        listaPuntosLimpios = crudPuntoLimpio.getAllPuntosLimpios();
         /* Con la lista de puntos limpios pedimos la aplicación del algoritmo
          * y si es necesario la generación de notificaciones automáticas.
          */
@@ -64,32 +64,24 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
             Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.WARNING, "Error en generación de notificaciones automáticas.");
         }
     }
-    
-    /*
-     * Función obtenerTodosPuntosLimpios: utilizando la interfaz DAO obtiene una lista de
-     * todos los puntos limpios existentes en el sistema cuando se ejecuta la tarea.
-     */
-    private Collection<PuntoLimpio> obtenerTodosPuntosLimpios(){
-        return crudPuntoLimpio.getAllPuntosLimpios();
-    }
-    
-    /*
+        
+     /**
      * Función evaluar: dado una lista de puntos limpios procede a aplicar un algoritmo
      * de estimación de fecha de llenado de cada contenedor para cada punto limpio en la
      * lista, refrescando las fechas de próxima revisión del punto limpio en la base
      * de datos a través de la interfaz DAO correspondiente. Además, si la fecha de
      * próxima revisión corresponde al día de mañana, genera la notificación asociada.
+     * @param puntosLimpiosEvaluar: listado con los puntos limpios a los cuales se le estimará la fecha de próxima revisión.
+     * @return True cuando la operación es exitosa, False si existieron errores.
      */
     private boolean evaluar(Collection<PuntoLimpio> puntosLimpiosEvaluar){
-        PuntoLimpio puntoLimpioActual;
-        LinkedList<Boolean> resultados = new LinkedList();
-        LinkedList<HistoricoContenedor> historialContenedor;
         AlgoritmoCalculo ac = FactoryAlgoritmosCalculo.getAlgoritmoCalculo(FactoryAlgoritmosCalculo.REGRESION_LINEAL);
         Date fechaRevision,menorFechaRevision=null;
-        Boolean debeRevisarsePL = false;
         for (PuntoLimpio p:puntosLimpiosEvaluar){
             for (Contenedor c: p.getContenedores()){
-                //Se busca la fecha en la cual el contenedor deberá ser revisado
+                /*
+                 * Se pide 
+                 */
                 fechaRevision = ac.estimar((LinkedList)c.getHistorialContenedor(), 100);
                 /* Se establece la fecha más próxima para tener que revisar el punto limpio
                  * Si no hay fechas, se escoge la primera.
