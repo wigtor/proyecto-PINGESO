@@ -11,8 +11,12 @@ import java.util.Collection;
  *
  * @author victor
  */
-public interface RevisionDAO extends genericDAO<RevisionPuntoLimpio>{
-    // Interface that all AdministradorDAOs must support
-
+public interface RevisionDAO extends genericDAO<RevisionPuntoLimpio> {
+    
+    /**
+     * Busca todas las revisiones de punto limpio realizadas por cierto inspector
+     * @param idUsuario
+     * @return 
+     */
     public Collection<RevisionPuntoLimpio> findAllFromInspector(Integer idUsuario);
 }

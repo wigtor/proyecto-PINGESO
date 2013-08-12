@@ -27,48 +27,68 @@ import javax.persistence.EntityManager;
  * @author victor
  */
 public abstract class DAOFactory {
-    
-    
+
+    /**
+     * Indica que se va a utilizar JPA como proveedor de datos para los DAO
+     */
     public static final int JPA = 1;
-    public static final int MYSQL = 2; //No implementada
-    public static final int SYBASE = 3; //No implementada
-    
-    
-    // There will be a method for each DAO that can be 
-    // created. The concrete factories will have to 
-    // implement these methods.
+    //Poner acá otros int indicando otra implementaciones de DAO que se puedan hacer
+
+    // Estos serán los métodos para cada DAO que puede ser creado.
+    // Las factory en concreto deben implementar estos métodos.
     public abstract AdministradorDAO getAdministradorDAO();
+
     public abstract PuntoLimpioDAO getPuntoLimpioDAO();
+
     public abstract ContenedorDAO getContenedorDAO();
+
     public abstract UsuarioDAO getUsuarioDAO();
+
     public abstract RolDAO getRolDAO();
+
     public abstract InspectorDAO getInspectorDAO();
+
     public abstract OperarioDAO getOperarioDAO();
+
     public abstract EstadoDAO getEstadoDAO();
+
     public abstract TipoIncidenciaDAO getTipoIncidenciaDAO();
+
     public abstract MaterialDAO getMaterialDAO();
+
     public abstract NotificacionDAO getNotificacionDAO();
+
     public abstract ComunaDAO getComunaDAO();
+
     public abstract UnidadMedidaDAO getUnidadMedidaDAO();
+
     public abstract RevisionDAO getRevisionDAO();
+
     public abstract MantencionDAO getMantencionDAO();
+
     public abstract SolicitudMantencionDAO getSolicitudMantencionDAO();
-    
+
     public abstract void close();
 
-  public static DAOFactory getDAOFactory(int whichFactory, EntityManager em) {
-  
-    switch (whichFactory) {
-      case JPA: 
-          return new JPADAOFactory(em);
-      /*
-      case ORACLE    : 
-          return new OracleDAOFactory();      
-      case SYBASE    : 
-          return new SybaseDAOFactory();
-      */
-      default           : 
-          return null;
+    /**
+     * Obtiene una factory en concreto según la implementación que se pida.
+     * @param whichFactory Identificador de la implementación de DAO que se desea utilizar
+     * @param em EntityManager para los DAO
+     * @return La factory en concreto que se va a utilizar que implemente la interface "DAOFactory"
+     */
+    public static DAOFactory getDAOFactory(int whichFactory, EntityManager em) {
+
+        switch (whichFactory) {
+            case JPA:
+                return new JPADAOFactory(em);
+            /*
+             case ORACLE    : 
+             return new OracleDAOFactory();      
+             case SYBASE    : 
+             return new SybaseDAOFactory();
+             */
+            default:
+                return null;
+        }
     }
-  }
 }

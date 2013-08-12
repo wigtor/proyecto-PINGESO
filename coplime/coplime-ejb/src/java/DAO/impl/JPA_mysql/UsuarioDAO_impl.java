@@ -26,20 +26,6 @@ public class UsuarioDAO_impl extends genericDAO_impl<Usuario> implements Usuario
     //Poner otras funciones extra que sólo haga este DAO
     
     @Override
-    public Usuario find(String username, String password) {
-        Query q = this.em.createNamedQuery("Usuario.findByUsernameAndPassword");
-        q.setParameter("username", username);
-        q.setParameter("password", password);
-        List<Usuario> res = q.getResultList();
-        if (res.isEmpty()) {
-            return null;
-        }
-        else {
-            return res.get(0);
-        }
-    }
-    
-    @Override
     public Usuario find(String username) {
         Query q = this.em.createNamedQuery("Usuario.findByUsername");
         q.setParameter("username", username);

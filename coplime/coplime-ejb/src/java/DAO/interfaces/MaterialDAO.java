@@ -11,7 +11,11 @@ import entities.Material;
  * @author victor
  */
 public interface MaterialDAO extends genericDAO<Material>{
-    // Interface that all AdministradorDAOs must support
-
+    
+    /**
+     * Busca un material a través de su nombre en lugar de su id
+     * @param tipoName El nombre del material que se está buscando
+     * @return Un objeto "Material" si pudo encontrarse, null si no se encuentra
+     */
     public Material find(String tipoName);
 }

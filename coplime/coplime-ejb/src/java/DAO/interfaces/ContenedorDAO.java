@@ -12,5 +12,11 @@ import java.util.List;
  * @author victor
  */
 public interface ContenedorDAO  extends genericDAO<Contenedor>{
+    
+    /**
+     * Busca los contenedores pertenecientes a un punto limpio con cierto identificador.
+     * @param idPtoLimpio El identificador primario del punto limpio al cual pertenecen los contenedores
+     * @return Se devuelve una lista de contenedores pertenecientes al punto limpio
+     */
     public List<Contenedor> findByPuntoLimpio(int idPtoLimpio);
 }

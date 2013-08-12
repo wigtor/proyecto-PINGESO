@@ -12,6 +12,11 @@ import java.util.Collection;
  * @author victor
  */
 public interface MantencionDAO extends genericDAO<MantencionPuntoLimpio>{
-    // Interface that all AdministradorDAOs must support
+    
+    /**
+     * Busca todas las mantenciones que ha realizado un operario.
+     * @param idUsuario El identificador primario del usuario de ese operario
+     * @return Devuelve una colección de objetos MantencionPuntoLimpio que ha realizado el operario
+     */
     public Collection<MantencionPuntoLimpio> findAllFromOperario(Integer idUsuario);
 }

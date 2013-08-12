@@ -14,8 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 /**
  *
@@ -23,7 +21,6 @@ import javax.persistence.OneToOne;
  */
 @Entity
 @NamedQueries( {
-    @NamedQuery(name="Usuario.findByUsernameAndPassword", query="SELECT u FROM Usuario u WHERE u.username = :username AND u.password = :password"), 
     @NamedQuery(name="Usuario.findByUsername", query="SELECT u FROM Usuario u WHERE u.username = :username"),
     @NamedQuery(name="Usuario.findByRut", query="SELECT u FROM Usuario u WHERE u.rut = :rut"),
     @NamedQuery(name="Usuario.deleteInspectorByRut", query="DELETE FROM Inspector u WHERE u.usuario.rut = :rut"),

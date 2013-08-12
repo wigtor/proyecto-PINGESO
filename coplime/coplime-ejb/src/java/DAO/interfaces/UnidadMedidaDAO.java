@@ -11,7 +11,11 @@ import entities.UnidadMedida;
  * @author victor
  */
 public interface UnidadMedidaDAO extends genericDAO<UnidadMedida>{
-    // Interface that all AdministradorDAOs must support
-
+    
+    /**
+     * Busca una unidad de medida a través de su nombre.
+     * @param rolName El nombre de la unidad de medida que se está buscando
+     * @return Un objeto "UnidadMedida" si pudo encontrarse, null si no se encuentra
+     */
     public UnidadMedida find(String nombreUnidad);
 }

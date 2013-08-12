@@ -6,6 +6,7 @@ package scheduler.algoritmosCalculo.implementaciones;
 
 import entities.HistoricoContenedor;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -16,8 +17,18 @@ import scheduler.algoritmosCalculo.AlgoritmoCalculo;
  * @author Armando
  */
 public class AlgoritmoCalculoLineal implements AlgoritmoCalculo {
+    
     @Override
-    public Date estimar(LinkedList<HistoricoContenedor> historialContenedor, Integer porcentajeBuscado) {
+    public Date estimar(Collection<HistoricoContenedor> historialContenedorOri, Integer porcentajeBuscado) {
+        LinkedList<HistoricoContenedor> historialContenedor;
+        if (historialContenedorOri.getClass().isAssignableFrom(LinkedList.class)) {
+            System.out.println("Era una LinkedList, casteando...");
+            historialContenedor = (LinkedList<HistoricoContenedor>)historialContenedorOri;
+        }
+        else {
+            historialContenedor = new LinkedList(historialContenedorOri);
+        }
+        
         Double pendiente = obtenerPendiente(historialContenedor);
         Calendar fechaEstimada;
         double diasEstimados;
