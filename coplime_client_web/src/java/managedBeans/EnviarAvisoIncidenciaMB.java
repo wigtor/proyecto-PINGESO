@@ -135,16 +135,38 @@ public class EnviarAvisoIncidenciaMB {
             tipoArchivo = file.getContentType();
         }
         if (numPuntoLimpio != null) {
-            if (tipoIncidenciaSeleccionada != null)
-            avisosIncidencia.guardarAvisoIncidencia(numPuntoLimpio.intValue(), emailContacto, detalles, tipoIncidenciaSeleccionada.intValue(), datosImagen, tipoArchivo);
+            if (tipoIncidenciaSeleccionada != null) {
+                try {
+                    avisosIncidencia.guardarAvisoIncidencia(numPuntoLimpio.intValue(), 
+                            emailContacto, detalles, tipoIncidenciaSeleccionada.intValue(), 
+                            datosImagen, tipoArchivo);
+                    FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                            "Se ha enviado su aviso de incidencia", 
+                            "Se ha enviado su aviso de incidencia, le avisaremos cuando sea atendida su sugerencia o problema");
+                    FacesContext.getCurrentInstance().addMessage(null, msg);
+                    FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+                }
+                catch (Exception e) {
+                    FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                            e.getMessage(), e.getMessage());
+                    FacesContext.getCurrentInstance().addMessage(null, msg);
+                }
+            }
+            else {
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error, no ha seleccionado un tipo de incidencia");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+            }
         }
-        CommonFunctions.goToPage("/faces/index.xhtml?success=1");
+        else {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error, no ha seleccionado un punto limpio");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+        CommonFunctions.goToPage("/faces/index.xhtml?faces-redirect=true");
     }
     
     public void submitCaptcha(ActionEvent event) {  
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Correcto");  
-          
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Correcto");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
     
