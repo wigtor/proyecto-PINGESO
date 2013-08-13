@@ -27,12 +27,12 @@
                         
                         
                         <p:outputLabel value="Seleccione el punto limpio" for="listaPtosLimpios"/>
-                        <p:selectOneListbox id="listaPtosLimpios" value="#{enviarAvisoIncidenciaMB.numPuntoLimpio}" style="width: 100%;" >
-                            <f:selectItems value="#{enviarAvisoIncidenciaMB.listaPuntosLimpios}" var="t_ptoLimpio" itemValue="#{t_ptoLimpio.id}" itemLabel="#{t_ptoLimpio.label}"/>
+                        <p:selectOneListbox id="listaPtosLimpios" value="#{selectPuntoLimpioParaAvisoIncidenciaMB.numPuntoLimpio}" style="width: 100%;" >
+                            <f:selectItems value="#{selectPuntoLimpioParaAvisoIncidenciaMB.listaPuntosLimpios}" var="t_ptoLimpio" itemValue="#{t_ptoLimpio.id}" itemLabel="#{t_ptoLimpio.label}"/>
                         </p:selectOneListbox>
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Siguiente" action="#{enviarAvisoIncidenciaMB.goToEnviarAviso()}"></p:commandButton>
+                            <p:commandButton value="Siguiente" action="#{selectPuntoLimpioParaAvisoIncidenciaMB.goToEnviarAviso()}"></p:commandButton>
                         </f:facet>
                     </p:panelGrid>
                 </h:form>

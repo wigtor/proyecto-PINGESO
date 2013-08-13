@@ -42,34 +42,20 @@ public class EnviarAvisoIncidenciaMB {
     private String detalles;
     private Integer tipoIncidenciaSeleccionada;
     private Collection<SelectElemPojo> listaTiposIncidencias;
-    private Collection<SelectElemPojo> listaPuntosLimpios;
     private UploadedFile file;
     
     @PostConstruct
     public void init() {
         //System.out.println("Ejecutando init enviarAvisoIncidencia");
-        if (!seIntentaSeleccionarPuntoLimpio()) {
-            if (!puntoLimpioIsSelected()) {
-                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                    "No ha seleccionado un punto limpio", 
+        if (!puntoLimpioIsSelected()) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "No ha seleccionado un punto limpio",
                     "No ha seleccionado un punto limpio para enviar el aviso de incidencia");
-                FacesContext.getCurrentInstance().addMessage(null, msg);
-                FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-                CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml?faces-redirect=true");
-            }
-            cargarTiposIncidencia();
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml?faces-redirect=true");
         }
-        cargarPuntosLimpios();
-    }
-    
-    private boolean seIntentaSeleccionarPuntoLimpio() {
-        HttpServletRequest request = ((HttpServletRequest)FacesContext.getCurrentInstance().
-                getExternalContext().getRequest());
-        String view = request.getPathInfo();
-        if (view.contains("selectPtoLimpioAviso.xhtml")) {
-            return true;
-        }
-        return false;
+        cargarTiposIncidencia();
     }
     
     private boolean puntoLimpioIsSelected() {
@@ -117,19 +103,6 @@ public class EnviarAvisoIncidenciaMB {
         }
     }
     
-    private void cargarPuntosLimpios() {
-        Collection<PuntoLimpio> listaTemp = crudPuntoLimpio.getAllPuntosLimpios();
-        this.listaPuntosLimpios = new LinkedList();
-        SelectElemPojo elemTemp;
-        for(PuntoLimpio temp : listaTemp) {
-            elemTemp = new SelectElemPojo();
-            
-            elemTemp.setId(temp.getId().toString());
-            elemTemp.setLabel("N°".concat(temp.getId().toString()).concat(" - ").concat(temp.getUbicacion()));
-            this.listaPuntosLimpios.add(elemTemp);
-        }
-    }
-    
     public void enviarAviso() {
         byte[] datosImagen = null;
         String tipoArchivo = null;
@@ -170,6 +143,24 @@ public class EnviarAvisoIncidenciaMB {
     public void submitCaptcha(ActionEvent event) {  
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Correcto");
         FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    public void goToEnviarAviso() {
+        System.out.println("idPuntoLimpio: "+numPuntoLimpio);
+        if (numPuntoLimpio == null) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                    "No ha seleccionado un punto limpio", 
+                    "No ha seleccionado un punto limpio para enviar el aviso de incidencia");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml?faces-redirect=true");
+        }
+        else
+            CommonFunctions.goToPage("/faces/enviarAvisoIncidencia.xhtml"+"?id="+numPuntoLimpio);
+    }
+    
+    public void goToSeleccionarPuntoLimpio() {
+        CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml");
     }
     
     
@@ -215,14 +206,7 @@ public class EnviarAvisoIncidenciaMB {
     public void setDetalles(String detalles) {
         this.detalles = detalles;
     }
-
-    public Collection<SelectElemPojo> getListaPuntosLimpios() {
-        return listaPuntosLimpios;
-    }
-
-    public void setListaPuntosLimpios(Collection<SelectElemPojo> listaPuntosLimpios) {
-        this.listaPuntosLimpios = listaPuntosLimpios;
-    }
+    
     public AvisosIncidenciaLocal getAvisosIncidencia() {
         return avisosIncidencia;
     }
@@ -241,24 +225,6 @@ public class EnviarAvisoIncidenciaMB {
     
     public String getNombre_presentacion_ptoLimpio() {
         return nombre_presentacion_ptoLimpio;
-    }
-    
-    public void goToEnviarAviso() {
-        System.out.println("idPuntoLimpio: "+numPuntoLimpio);
-        if (numPuntoLimpio == null) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                    "No ha seleccionado un punto limpio", 
-                    "No ha seleccionado un punto limpio para enviar el aviso de incidencia");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-            CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml?faces-redirect=true");
-        }
-        else
-            CommonFunctions.goToPage("/faces/enviarAvisoIncidencia.xhtml"+"?id="+numPuntoLimpio);
-    }
-    
-    public void goToSeleccionarPuntoLimpio() {
-        CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml");
     }
     
 }
