@@ -13,9 +13,9 @@ import scheduler.algoritmosCalculo.implementaciones.AlgoritmoCalculoLineal;
 public class FactoryAlgoritmosCalculo {
     
     /**
-     * Indica que se va a utilizar un método de regresión lineal para realizar las estimaciones
+     * Indica que se va a utilizar un método de promedio de pendientes para realizar las estimaciones
      */
-    public static final int REGRESION_LINEAL = 1;
+    public static final int PROMEDIO_PENDIENTES = 1;
     
     /**
      * Indica que se va a utilizar un método bayesiano para realizar las estimaciones
@@ -29,7 +29,7 @@ public class FactoryAlgoritmosCalculo {
      */
     public static AlgoritmoCalculo getAlgoritmoCalculo(int tipoAlgoritmo){
         switch (tipoAlgoritmo){
-            case REGRESION_LINEAL:
+            case PROMEDIO_PENDIENTES:
                 return new AlgoritmoCalculoLineal();
             case METODO_BAYESIANO:
                 return new AlgoritmoCalculoLineal(); //Por ahora que use el mismo

@@ -7,7 +7,6 @@ package DAO.impl.JPA_mysql;
 import DAO.interfaces.NotificacionDAO;
 import entities.Notificacion;
 import java.util.Collection;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 

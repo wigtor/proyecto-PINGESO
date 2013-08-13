@@ -75,7 +75,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
      * @return True cuando la operación es exitosa, False si existieron errores.
      */
     private boolean evaluar(Collection<PuntoLimpio> puntosLimpiosEvaluar){
-        AlgoritmoCalculo ac = FactoryAlgoritmosCalculo.getAlgoritmoCalculo(FactoryAlgoritmosCalculo.REGRESION_LINEAL);
+        AlgoritmoCalculo ac = FactoryAlgoritmosCalculo.getAlgoritmoCalculo(FactoryAlgoritmosCalculo.PROMEDIO_PENDIENTES);
         Date fechaRevision,menorFechaRevision=null;
         for (PuntoLimpio p:puntosLimpiosEvaluar){
             for (Contenedor c: p.getContenedores()){

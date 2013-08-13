@@ -30,9 +30,6 @@ public abstract class genericDAO_impl<T> implements genericDAO<T>{
     
     @Override
     public boolean insert(T nvaEntity) {
-        System.out.println("Estado EM: "+em.isOpen());
-        //System.out.println(nvaEntity.toString());
-        
         getEntityManager().persist(nvaEntity);
         return true;
     }
