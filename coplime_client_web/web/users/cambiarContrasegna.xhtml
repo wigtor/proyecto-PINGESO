@@ -29,13 +29,13 @@
                         <p:outputLabel value="#{cambioPassMB.username}"/>
                         
                         <p:outputLabel value="Contraseña actual"/>
-                        <p:inputText value="#{cambioPassMB.passActual}" type="password"/>
+                        <p:inputText value="#{cambioPassMB.passActual}" autocomplete="off" type="password"/>
                         
                         <p:outputLabel value="Contraseña nueva"/>
-                        <p:inputText value="#{cambioPassMB.nvaPass}" type="password"/>
+                        <p:inputText value="#{cambioPassMB.nvaPass}" autocomplete="off" type="password"/>
                         
                         <p:outputLabel value="Repetir contraseña nueva"/>
-                        <p:inputText value="#{cambioPassMB.nvaPassRep}" type="password"/>
+                        <p:inputText value="#{cambioPassMB.nvaPassRep}" autocomplete="off" type="password"/>
                         
                         <f:facet name="footer">
                             <p:commandButton value="Guardar cambios" action="#{cambioPassMB.guardarPass()}" update="msj_error_cambioContrasegna"/>

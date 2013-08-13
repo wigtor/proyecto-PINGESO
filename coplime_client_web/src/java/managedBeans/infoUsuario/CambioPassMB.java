@@ -41,7 +41,13 @@ public class CambioPassMB {
         else {
             try {
                 userService.cambiarPass(CommonFunctions.getUsuarioLogueado(), passActual, nvaPass);
-                CommonFunctions.goToPage("/faces/users/infoUsuario.xhtml");
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Se ha cambiado correctamente la contraseña",
+                    "Se ha actualizado su nueva contraseña en el sistema");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            
+                CommonFunctions.goToPage("/faces/users/infoUsuario.xhtml?faces-redirect=true");
             }
             catch (Exception e) {
                 //Muestro el mensaje de error

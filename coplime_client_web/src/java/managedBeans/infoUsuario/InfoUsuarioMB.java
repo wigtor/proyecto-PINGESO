@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -33,6 +34,7 @@ public class InfoUsuarioMB {
     String rol;
     int rut;
     String idUsuario;
+    String username;
     int telefono;
     String email;
 
@@ -50,7 +52,8 @@ public class InfoUsuarioMB {
         apellidos = user.getApellido1().concat(" ").concat(user.getApellido2());
         rol = user.getRol().getNombreRol();
         rut = user.getRut();
-        idUsuario = Integer.toString(user.getId());
+        username = user.getUsername();
+        //idUsuario = Integer.toString(user.getId());
         email = user.getEmail();
         telefono = user.getTelefono();
     }
@@ -58,10 +61,16 @@ public class InfoUsuarioMB {
     public void guardarCambios() {
         try {
             userService.cambiarDatosContacto(CommonFunctions.getUsuarioLogueado(), telefono, email);
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Se han actualizados sus datos.",
+                    "Se ha actualizado su teléfono y mail de contactor");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            
         } catch (Exception ex) {
             Logger.getLogger(InfoUsuarioMB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
+        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml?faces-redirect=true");
     }
     
     public void goToPuntosLimpios() {
@@ -111,6 +120,14 @@ public class InfoUsuarioMB {
     
     public int getRut() {
         return rut;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
     
 }
