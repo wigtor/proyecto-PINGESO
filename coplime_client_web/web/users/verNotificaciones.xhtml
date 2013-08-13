@@ -36,7 +36,7 @@
                                 <h:outputText value="#{notif.fecha}"/>
                             </p:column>
                             <p:column headerText="Revisado">
-                                <p:selectBooleanCheckbox value="#{notif.revisado}"/>
+                                <p:selectBooleanCheckbox value="#{notif.revisado}" disabled="true"/>
                             </p:column>
                             <p:column headerText="  " >
                                 <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{mantenedorNotificacionVerListadoMB.verDetalles(notif.num)}">

@@ -47,12 +47,15 @@ public class EnviarAvisoIncidenciaMB {
     
     @PostConstruct
     public void init() {
-        
-        System.out.println("Ejecutando init enviarAvisoIncidencia");
-        System.out.println(numPuntoLimpio + " caca: "+detalles);
+        //System.out.println("Ejecutando init enviarAvisoIncidencia");
         if (!seIntentaSeleccionarPuntoLimpio()) {
             if (!puntoLimpioIsSelected()) {
-                CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml");
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                    "No ha seleccionado un punto limpio", 
+                    "No ha seleccionado un punto limpio para enviar el aviso de incidencia");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+                CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml?faces-redirect=true");
             }
             cargarTiposIncidencia();
         }
@@ -240,9 +243,18 @@ public class EnviarAvisoIncidenciaMB {
         return nombre_presentacion_ptoLimpio;
     }
     
-    public void goToEnviarAviso(int idSeleccionado) {
-        System.out.println("idPtoLimpio=".concat(Integer.toString(idSeleccionado)));
-        CommonFunctions.goToPage("/faces/enviarAvisoIncidencia.xhtml"+"?id="+idSeleccionado);
+    public void goToEnviarAviso() {
+        System.out.println("idPuntoLimpio: "+numPuntoLimpio);
+        if (numPuntoLimpio == null) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                    "No ha seleccionado un punto limpio", 
+                    "No ha seleccionado un punto limpio para enviar el aviso de incidencia");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml?faces-redirect=true");
+        }
+        else
+            CommonFunctions.goToPage("/faces/enviarAvisoIncidencia.xhtml"+"?id="+numPuntoLimpio);
     }
     
     public void goToSeleccionarPuntoLimpio() {
