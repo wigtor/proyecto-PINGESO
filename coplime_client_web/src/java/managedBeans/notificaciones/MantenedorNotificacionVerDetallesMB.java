@@ -81,6 +81,8 @@ public class MantenedorNotificacionVerDetallesMB implements Serializable {
                     Integer.toString(notifTemp.getFechaHora().get(Calendar.MINUTE)));
         this.tipo_seleccionado = notifTemp.getTipoIncidencia().getNombreIncidencia();
         this.origen_seleccionado = notificador.getOrigenIncidencia(notifTemp);
+        this.resuelta_seleccionado = notifTemp.isResuelto();
+        this.revisada_seleccionado = true; //Por defecto se revisa al abrir esta ventana
 
         if (notificador.isNotificacionUsuario(notifTemp)) {
             NotificacionDeUsuario notifUsuarioTemp = (NotificacionDeUsuario)notifTemp;
@@ -107,6 +109,13 @@ public class MantenedorNotificacionVerDetallesMB implements Serializable {
         } catch (IOException ex) {
             Logger.getLogger(MantenedorNotificacionVerDetallesMB.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    
+    public void volverToListaAndSave() {
+        notificador.checkRevisada(mantNotificacion.getIdNotificacionSeleccionada(), revisada_seleccionado);
+        notificador.checkResuelta(mantNotificacion.getIdNotificacionSeleccionada(), resuelta_seleccionado);
+        volverToLista();
     }
     
     public void volverToLista() {

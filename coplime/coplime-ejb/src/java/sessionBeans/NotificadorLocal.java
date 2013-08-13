@@ -16,12 +16,20 @@ import javax.ejb.Local;
 @Local
 public interface NotificadorLocal {
 
-    Integer obtenerCantidadNotificaciones(String username);
-    Collection<Notificacion> getAllNotificaciones(String username);
+    public Integer obtenerCantidadNotificaciones(String username);
+    
+    public Collection<Notificacion> getAllNotificaciones(String username);
+    
     public Notificacion getNotificacion(Integer id);
 
     public String getOrigenIncidencia(Notificacion notif);
 
     public boolean isNotificacionUsuario(Notificacion notif);
+
+    public boolean checkResuelta(Integer idNotif, boolean check);
+    
+    public boolean checkRevisada(Integer idNotif, boolean check);
+
+    public boolean eliminarNotificacion(Integer idNotif);
 
 }

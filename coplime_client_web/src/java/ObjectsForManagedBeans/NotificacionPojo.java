@@ -13,7 +13,7 @@ public class NotificacionPojo {
     private String detallesCortado;
     private String detallesCompleto;
     private String fecha;
-    private String revisado;
+    private boolean revisado;
 
     public int getNum() {
         return num;
@@ -47,11 +47,11 @@ public class NotificacionPojo {
         this.fecha = fecha;
     }
 
-    public String getRevisado() {
+    public boolean getRevisado() {
         return revisado;
     }
 
-    public void setRevisado(String revisado) {
+    public void setRevisado(boolean revisado) {
         this.revisado = revisado;
     }
     

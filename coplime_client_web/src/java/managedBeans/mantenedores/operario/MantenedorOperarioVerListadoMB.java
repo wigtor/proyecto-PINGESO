@@ -14,6 +14,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudOperarioLocal;
@@ -95,12 +97,17 @@ public class MantenedorOperarioVerListadoMB {
     }
     
     public void eliminar(int numOperario) {
-       System.out.println("NÚMERO DE INSPECTOR: "+numOperario);
-       //crudInspector.eliminarInspector(new Integer(numOperario));
-       crudOperario.eliminarOperario(numOperario);
-       //init();
-        CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
-       
+        boolean resultado = crudOperario.eliminarOperario(numOperario);
+        FacesMessage msg;
+        if (resultado) {
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Notificación eliminada", "Se ha eliminado correctamente el operario de mantención.");
+        }
+        else {
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error, no se ha podido eliminar el operario de mantención seleccionada.");
+        }
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml?faces-redirect=true");
     }
     
     

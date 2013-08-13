@@ -6,7 +6,6 @@ package managedBeans.mantenedores.inspector;
 
 import ObjectsForManagedBeans.UsuarioPojo;
 import entities.Inspector;
-import entities.Usuario;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -14,6 +13,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudInspectorLocal;
@@ -93,9 +94,17 @@ public class MantenedorInspectorVerListadoMB {
     }
     
     public void eliminar(int numInspector) {
-        System.out.println("NÚMERO DE INSPECTOR: "+numInspector);
-        crudInspector.eliminarInspector(numInspector);
-        CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");
+        boolean resultado = crudInspector.eliminarInspector(numInspector);
+        FacesMessage msg;
+        if (resultado) {
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Notificación eliminada", "Se ha eliminado correctamente el inspector.");
+        }
+        else {
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error, no se ha podido eliminar el inspector seleccionado.");
+        }
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        CommonFunctions.goToPage("/faces/users/verInspectores.xhtml?faces-redirect=true");
     }
     
     public void volver() {

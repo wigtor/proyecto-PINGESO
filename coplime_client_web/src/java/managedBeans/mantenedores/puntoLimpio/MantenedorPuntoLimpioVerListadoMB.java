@@ -16,6 +16,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudPuntoLimpioLocal;
@@ -122,11 +124,17 @@ public class MantenedorPuntoLimpioVerListadoMB {
     }
     
     public void eliminar(int numPto) {
-       System.out.println("NÚMERO DE PUNTO LIMPIO: "+numPto);
-       crudPuntoLimpio.eliminarPuntoLimpio(numPto);
-       this.mantPtoLimpio.limpiarDatos();
-       CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
-       
-       //MOSTRAR MENSAJE DE ACCION REALIZADA SATISFACTORIAMENTE
+       boolean resultado = crudPuntoLimpio.eliminarPuntoLimpio(numPto);
+       FacesMessage msg;
+        if (resultado) {
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Punto limpio eliminado", "Se ha eliminado correctamente el punto limpio.");
+        }
+        else {
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error, no se ha podido eliminar el punto limpio seleccionado.");
+        }
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        this.mantPtoLimpio.limpiarDatos();
+        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
 }

@@ -43,7 +43,7 @@
                                 </p:commandLink>
                             </p:column>
                             <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
-                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{insp.num}.show()" />
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{insp.num}.show();" />
                                 
                                 <p:confirmDialog message="¿Está seguro que desea eliminar el inspector?"
                                                  header="Confirmación de eliminación de inspector" severity="alert"

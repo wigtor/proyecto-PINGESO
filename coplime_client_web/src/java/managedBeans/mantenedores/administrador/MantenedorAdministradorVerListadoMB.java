@@ -14,6 +14,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudAdministradorLocal;
@@ -89,9 +91,17 @@ public class MantenedorAdministradorVerListadoMB {
     }
     
     public void eliminar(int numAdministrador) {
-       crudAdministrador.eliminarAdministrador(numAdministrador);
-       CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
-       
+       boolean resultado = crudAdministrador.eliminarAdministrador(numAdministrador);
+        FacesMessage msg;
+        if (resultado) {
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Administrador eliminado", "Se ha eliminado correctamente el administrador.");
+        }
+        else {
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error, no se ha podido eliminar el administrador seleccionado.");
+        }
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        CommonFunctions.goToPage("/faces/users/verAdministradores.xhtml?faces-redirect=true");
     }
     
     public void volver() {
