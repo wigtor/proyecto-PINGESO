@@ -25,6 +25,7 @@
                     <p:panelGrid columns="2" styleClass="centrar">
                         <f:facet name="header">Seleccionar un punto limpio para generar el aviso</f:facet>
                         
+                        
                         <p:outputLabel value="Seleccione el punto limpio" for="listaPtosLimpios"/>
                         <p:selectOneListbox id="listaPtosLimpios" value="#{enviarAvisoIncidenciaMB.numPuntoLimpio}" style="width: 100%;" >
                             <f:selectItems value="#{enviarAvisoIncidenciaMB.listaPuntosLimpios}" var="t_ptoLimpio" itemValue="#{t_ptoLimpio.id}" itemLabel="#{t_ptoLimpio.label}"/>

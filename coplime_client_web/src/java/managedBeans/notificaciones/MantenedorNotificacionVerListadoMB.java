@@ -80,7 +80,7 @@ public class MantenedorNotificacionVerListadoMB implements Serializable {
     
     public void volverToListado() {
         mantNotificaciones.limpiarDatos();
-        CommonFunctions.goToPage("/faces/users/verNotificaciones.xhtml");
+        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }
     
     public void eliminar(Integer num) {

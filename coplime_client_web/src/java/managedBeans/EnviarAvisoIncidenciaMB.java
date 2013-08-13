@@ -49,6 +49,7 @@ public class EnviarAvisoIncidenciaMB {
     public void init() {
         
         System.out.println("Ejecutando init enviarAvisoIncidencia");
+        System.out.println(numPuntoLimpio + " caca: "+detalles);
         if (!seIntentaSeleccionarPuntoLimpio()) {
             if (!puntoLimpioIsSelected()) {
                 CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml");
@@ -69,7 +70,6 @@ public class EnviarAvisoIncidenciaMB {
     }
     
     private boolean puntoLimpioIsSelected() {
-        
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletRequest obj = (HttpServletRequest)externalContext.getRequest();
         if (!obj.getMethod().equals("GET")) {

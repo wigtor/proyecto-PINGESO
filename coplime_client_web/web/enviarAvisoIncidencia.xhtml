@@ -22,11 +22,22 @@
             </ui:define>
             
             <ui:define name="centro">
-                <h:form  enctype="multipart/form-data">
-                    <h:inputHidden value="#{enviarAvisoIncidenciaMB.numPuntoLimpio}"/>
+                
+                <h:form enctype="multipart/form-data" id="formulario" onsubmit="conservaQueryString()">
+                    <h:inputHidden id="numeroPuntoLimpio" value="#{enviarAvisoIncidenciaMB.numPuntoLimpio}"/>
                     
+                    <script>
+                        function conservaQueryString() {
+                            var formulario = document.getElementById("formulario");
+                            var inputNumFormulario = document.getElementById("formulario:numeroPuntoLimpio");
+                            var nvoAction = formulario.action + "?id="+inputNumFormulario.value;
+                            formulario.action = nvoAction;
+                            return true;
+                        }
+                    </script>
                     <p:panelGrid columns="2" styleClass="centrar">
                         <f:facet name="header">Ingresar datos del aviso de incidencia</f:facet>
+                        
                         
                         <p:outputLabel value="Punto limpio" for="nombre_ptoLimpio"/>
                         <p:inputText id="nombre_ptoLimpio" value="#{enviarAvisoIncidenciaMB.nombre_presentacion_ptoLimpio}" disabled="true"/>
@@ -50,7 +61,7 @@
                         <p:outputPanel><!-- Máximo de 16Mb y sólo imágenes -->
                             <p:fileUpload id="subidaArchivos" value="#{enviarAvisoIncidenciaMB.file}" 
                                     mode="simple" sizeLimit="16777216" 
-                                    allowTypes="/(\.|\/)(gif|jpg|jpeg|gif|png|PNG|GIF|JPG|JPEG)$/"
+                                    allowTypes="*.jpeg"
                                     required="false" label="Subir imagen"/> 
                         </p:outputPanel>
                         
@@ -58,7 +69,9 @@
                         <p:captcha id="captcha" theme="white" language="es"/>
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Enviar" ajax="false" action="#{enviarAvisoIncidenciaMB.enviarAviso()}"/>
+                            <p:commandButton value="Enviar" ajax="false" action="#{enviarAvisoIncidenciaMB.enviarAviso()}">
+                                <f:param name="id" value="#{enviarAvisoIncidenciaMB.numPuntoLimpio}"/>
+                            </p:commandButton>
                             <p:commandButton immediate="true" value="Cancelar" action="#{autenticadorMB.goToIndex()}"/>
                         </f:facet>
                     </p:panelGrid>
