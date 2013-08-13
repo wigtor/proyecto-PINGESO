@@ -107,6 +107,8 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
             if(menorFechaRevision.before(magnana.getTime())){
                 generarNotificacion(menorFechaRevisionCalendar, p);
             }
+            //Es necesario resetear la menor fecha de revisión para un nuevo punto limpio
+            menorFechaRevision = null;
             
         }
         
