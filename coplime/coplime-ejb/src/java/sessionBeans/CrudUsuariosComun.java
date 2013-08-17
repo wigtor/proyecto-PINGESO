@@ -56,4 +56,18 @@ public class CrudUsuariosComun implements CrudUsuariosComunLocal {
         }
         return password;
     }
+    
+    @Override
+    public boolean existeRut(Integer rut) {
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
+        return userDAO.rutExist(rut);
+    }
+    
+    @Override
+    public boolean existeUsername(String username) {
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
+        return userDAO.usernameExist(username);
+    }
 }

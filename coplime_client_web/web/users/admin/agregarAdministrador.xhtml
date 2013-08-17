@@ -23,34 +23,39 @@
                      <p:panelGrid columns="2" styleClass="centrar">
                          <f:facet name="header">Ingrese datos del administrador</f:facet>
                          
+                         
+                         <p:outputLabel value="Nombre" for="nombre"/>
+                         <p:inputText id="nombre" value="#{mantenedorAdministradorAgregarMB.nombre}" required="true"/>
+                         
+                         <p:outputLabel value="Apellido paterno" for="apellido1"/>
+                         <p:inputText id="apellido1" value="#{mantenedorAdministradorAgregarMB.apellido1}" required="true"/>
+                         
+                         <p:outputLabel value="Apellido materno" for="apellido2"/>
+                         <p:inputText id="apellido2" value="#{mantenedorAdministradorAgregarMB.apellido2}" required="true"/>
+                         
+                         <p:outputLabel value="Rut" for="rut"/>
+                         <p:inputText id="rut" value="#{mantenedorAdministradorAgregarMB.rut}" required="true" maxlength="9">
+                             <f:validator validatorId="RutValidator"/>
+                         </p:inputText>
                         
+                         <p:outputLabel value="Teléfono" for="telefono"/>
+                         <p:inputText id="telefono" value="#{mantenedorAdministradorAgregarMB.telefono}" required="true" maxlength="9"/>
                          
-                         <p:outputLabel value="Nombre"/>
-                         <p:inputText value="#{mantenedorAdministradorAgregarMB.nombre}" required="true"/>
+                         <p:outputLabel value="E-mail" for="email"/>
+                         <p:inputText id="email" value="#{mantenedorAdministradorAgregarMB.mail}" required="true">
+                             <f:validator validatorId="EmailValidator"/>
+                         </p:inputText>
                          
-                         <p:outputLabel value="Apellido paterno"/>
-                         <p:inputText value="#{mantenedorAdministradorAgregarMB.apellido1}" required="true"/>
-                         
-                         <p:outputLabel value="Apellido materno"/>
-                         <p:inputText value="#{mantenedorAdministradorAgregarMB.apellido2}" required="true"/>
-                         
-                         <p:outputLabel value="Rut"/>
-                         <p:inputText value="#{mantenedorAdministradorAgregarMB.rut}" required="true"/>
-                        
-                         <p:outputLabel value="Teléfono"/>
-                         <p:inputText value="#{mantenedorAdministradorAgregarMB.telefono}" required="true"/>
-                         
-                         <p:outputLabel value="E-mail"/>
-                         <p:inputText value="#{mantenedorAdministradorAgregarMB.mail}" required="true"/>
-                         
-                         <p:outputLabel value="Nombre de usuario"/>
-                         <p:inputText value="#{mantenedorAdministradorAgregarMB.username}" required="true"/>
+                         <p:outputLabel value="Nombre de usuario" for="username"/>
+                         <p:inputText id="username" value="#{mantenedorAdministradorAgregarMB.username}" required="true">
+                             <f:validator validatorId="UsernameValidator"/>
+                         </p:inputText>
                          
                          <p:outputLabel value="Contraseña"/>
                          <p:outputLabel value="Será la misma que su rut"/>
                          
                          <f:facet name="footer">
-                            <p:commandButton value="Guardar" action="#{mantenedorAdministradorAgregarMB.agregarAdministrador()}"/>
+                            <p:commandButton value="Guardar" ajax="false" action="#{mantenedorAdministradorAgregarMB.agregarAdministrador()}"/>
                             <p:commandButton immediate="true" value="Volver" action="#{mantenedorAdministradorAgregarMB.volver()}"/>                         
                          </f:facet>
                      </p:panelGrid>                

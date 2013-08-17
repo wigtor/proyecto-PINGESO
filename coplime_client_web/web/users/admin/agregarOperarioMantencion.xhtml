@@ -7,52 +7,57 @@
       xmlns:p="http://primefaces.org/ui"
       contentType="text/html"
       xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
-    
-    
+
+
     <body>
         <ui:composition template="/mainTemplate.xhtml">
             <ui:define name="titulo">
-               Agregar operario de mantención
+                Agregar operario de mantención
             </ui:define>
             <ui:define name="botonesBarra">
                 <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{autenticadorMB.indexLoggued()}" />
             </ui:define>
             <ui:define name="centro">
-                 <h:form>
-                     <p:panelGrid columns="2" styleClass="centrar">
-                         <f:facet name="header">Ingrese datos del operario</f:facet>
-                         
-                        
-                         
-                         <p:outputLabel value="Nombre"/>
-                         <p:inputText value="#{mantenedorOperarioAgregarMB.nombre}" required="true"/>
-                         
-                         <p:outputLabel value="Apellido paterno"/>
-                         <p:inputText value="#{mantenedorOperarioAgregarMB.apellido1}" required="true"/>
-                         
-                         <p:outputLabel value="Apellido materno"/>
-                         <p:inputText value="#{mantenedorOperarioAgregarMB.apellido2}" required="true"/>
-                         
-                         <p:outputLabel value="Rut"/>
-                         <p:inputText value="#{mantenedorOperarioAgregarMB.rut}" required="true"/>
-                        
-                         <p:outputLabel value="Teléfono"/>
-                         <p:inputText value="#{mantenedorOperarioAgregarMB.telefono}" required="true"/>
-                         
-                         <p:outputLabel value="E-mail"/>
-                         <p:inputText value="#{mantenedorOperarioAgregarMB.mail}" required="true"/>
-                         
-                         <p:outputLabel value="Nombre de usuario"/>
-                         <p:inputText value="#{mantenedorOperarioAgregarMB.username}" required="true"/>
-                         
-                         <p:outputLabel value="Contraseña"/>
-                         <p:outputLabel value="Será la misma que su rut"/>
-                         
-                         <f:facet name="footer">
-                             <p:commandButton value="Guardar" action="#{mantenedorOperarioAgregarMB.agregarOperario()}"/>
+                <h:form>
+                    <p:panelGrid columns="2" styleClass="centrar">
+                        <f:facet name="header">Ingrese datos del operario</f:facet>
+
+
+                        <p:outputLabel value="Nombre" for="nombre"/>
+                        <p:inputText id="nombre" value="#{mantenedorOperarioAgregarMB.nombre}" required="true"/>
+
+                        <p:outputLabel value="Apellido paterno" for="apellido1"/>
+                        <p:inputText id="apellido1" value="#{mantenedorOperarioAgregarMB.apellido1}" required="true"/>
+
+                        <p:outputLabel value="Apellido materno" for="apellido2"/>
+                        <p:inputText id="apellido2" value="#{mantenedorOperarioAgregarMB.apellido2}" required="true"/>
+
+                        <p:outputLabel value="Rut" for="rut"/>
+                        <p:inputText id="rut" value="#{mantenedorOperarioAgregarMB.rut}" required="true" maxlength="9">
+                            <f:validator validatorId="RutValidator"/>
+                        </p:inputText>
+
+                        <p:outputLabel value="Teléfono" for="telefono"/>
+                        <p:inputText id="telefono" value="#{mantenedorOperarioAgregarMB.telefono}" required="true" maxlength="9"/>
+
+                        <p:outputLabel value="E-mail" for="email"/>
+                        <p:inputText id="email" value="#{mantenedorOperarioAgregarMB.mail}" required="true">
+                            <f:validator validatorId="EmailValidator"/>
+                        </p:inputText>
+
+                        <p:outputLabel value="Nombre de usuario" for="username"/>
+                        <p:inputText id="username" value="#{mantenedorOperarioAgregarMB.username}" required="true">
+                            <f:validator validatorId="UsernameValidator"/>
+                        </p:inputText>
+
+                        <p:outputLabel value="Contraseña"/>
+                        <p:outputLabel value="Será la misma que su rut"/>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Guardar" ajax="false" action="#{mantenedorOperarioAgregarMB.agregarOperario()}"/>
                             <p:commandButton immediate="true" value="Volver" action="#{mantenedorOperarioAgregarMB.volver()}"/>                       
-                         </f:facet>
-                     </p:panelGrid>                
+                        </f:facet>
+                    </p:panelGrid>                
                 </h:form>               
             </ui:define>
         </ui:composition>       

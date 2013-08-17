@@ -7,6 +7,7 @@ package managedBeans.mantenedores.inspector;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import otros.CommonFunctions;
 import sessionBeans.CrudInspectorLocal;
 
@@ -33,9 +34,19 @@ public class MantenedorInspectorAgregarMB {
     }
     
     public void agregarInspector() {
-        crudInspector.agregarInspector(username, rut, nombre, apellido1, apellido2, mail, telefono);
-        CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");       
-        
+        try {
+            crudInspector.agregarInspector(username, rut, nombre, apellido1, apellido2, mail, telefono);
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                    "Se ha creado un nuevo inspector",
+                    "Se ha creado el inspector \"".concat(username).concat("\""));
+            CommonFunctions.goToPage("/faces/users/verInspectores.xhtml?faces-redirect=true");
+        }
+        catch (Exception e) {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
+                    e.getMessage(), 
+                    e.getMessage());
+            CommonFunctions.goToPage("/faces/users/admin/agregarInspector.xhtml?faces-redirect=true");
+        }
     }
     
     public void volver() {

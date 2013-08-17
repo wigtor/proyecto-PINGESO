@@ -26,7 +26,7 @@ public interface CrudAdministradorLocal {
      * @param mail El correo electrónico del nuevo administrador
      * @param telefono El teléfono de contacto del nuevo administrador
      */
-    void agregarAdministrador(String username, int rut, String nombre, String apellido1, String apellido2, String mail, int telefono);
+    void agregarAdministrador(String username, Integer rut, String nombre, String apellido1, String apellido2, String mail, Integer telefono) throws Exception;
 
     /**
      * Elimina un administrador y su usuario relacionado de la fuente de datos según el rut ingresado.

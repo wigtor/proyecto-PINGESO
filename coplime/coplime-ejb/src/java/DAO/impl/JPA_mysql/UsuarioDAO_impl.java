@@ -72,4 +72,31 @@ public class UsuarioDAO_impl extends genericDAO_impl<Usuario> implements Usuario
         
         return resultado;
     }
+    
+    @Override
+    public boolean rutExist(Integer rut) {
+        Query q1 = this.em.createNamedQuery("Usuario.checkByRut");
+        q1.setParameter("rut", rut);
+        Long res = (Long)q1.getSingleResult();
+        if (res == null) {
+            return false;
+        }
+        if (res.intValue() > 0) {
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean usernameExist(String username) {
+        Query q1 = this.em.createNamedQuery("Usuario.checkByUsername");
+        q1.setParameter("username", username);
+        Long res = (Long)q1.getSingleResult();
+        if (res == null) {
+            return false;
+        }
+        if (res.intValue() > 0) {
+            return true;
+        }
+        return false;
+    }
 }

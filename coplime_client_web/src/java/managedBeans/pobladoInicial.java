@@ -8,8 +8,10 @@ import java.io.IOException;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import otros.CommonFunctions;
 import sessionBeans.configuracionInicialLocal;
 
 /**
@@ -31,14 +33,9 @@ public class pobladoInicial {
     public void poblar() {
         
         configuracionInicial.primeraEjecicion();
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
-        try {
-            String pre = externalContext.getRequestContextPath();
-            externalContext.redirect(pre.concat("/faces/index.xhtml"));
-        }
-        catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
-        }
+        CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                    "Se ha poblado la base de datos",
+                    "Se ha poblado la base de datos y está todo listo para poder ejecutar COPLIME");
+            CommonFunctions.goToPage("/faces/index.xhtml?faces-redirect=true");
     }
 }

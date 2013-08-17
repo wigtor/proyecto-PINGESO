@@ -2,6 +2,7 @@
 package otros;
 
 import java.io.IOException;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -53,5 +54,11 @@ public class CommonFunctions {
             return true;
         }
         return false;
+    }
+    
+    public static void viewMessage(FacesMessage.Severity sev, String titMsg, String msj) {
+        FacesMessage msg = new FacesMessage(sev, titMsg, msj);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
     }
 }

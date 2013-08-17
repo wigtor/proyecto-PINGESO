@@ -34,5 +34,8 @@ public interface CrudUsuariosComunLocal {
      * @return 
      */
     public String convertToMD5(String password);
+    
+    public boolean existeRut(Integer rut);
 
+    public boolean existeUsername(String username);
 }

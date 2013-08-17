@@ -40,9 +40,6 @@ public class InfoUsuarioMB {
 
     @PostConstruct
     public void init() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         Usuario user = userService.buscarUsuario(CommonFunctions.getUsuarioLogueado());
         if (user == null) {
             CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
@@ -61,11 +58,9 @@ public class InfoUsuarioMB {
     public void guardarCambios() {
         try {
             userService.cambiarDatosContacto(CommonFunctions.getUsuarioLogueado(), telefono, email);
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "Se han actualizados sus datos.",
-                    "Se ha actualizado su teléfono y mail de contactor");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                    "Se han actualizados sus datos",
+                    "Se ha actualizado su teléfono y mail de contacto");
             
         } catch (Exception ex) {
             Logger.getLogger(InfoUsuarioMB.class.getName()).log(Level.SEVERE, null, ex);

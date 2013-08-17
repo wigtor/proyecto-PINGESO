@@ -7,6 +7,7 @@ package managedBeans.mantenedores.operario;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import otros.CommonFunctions;
 import sessionBeans.CrudOperarioLocal;
 
@@ -33,8 +34,19 @@ public class MantenedorOperarioAgregarMB {
     }
     
     public void agregarOperario() {
-        crudOperario.agregarOperario( username, rut, nombre, apellido1, apellido2, mail, telefono);
-        CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
+        try {
+            crudOperario.agregarOperario( username, rut, nombre, apellido1, apellido2, mail, telefono);
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                    "Se ha creado un nuevo operario de mantención",
+                    "Se ha creado el operario de mantención \"".concat(username).concat("\""));
+            CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml?faces-redirect=true");
+        }
+        catch (Exception e) {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
+                    e.getMessage(), 
+                    e.getMessage());
+            CommonFunctions.goToPage("/faces/users/admin/agregarOperarioMantencion.xhtml?faces-redirect=true");
+        }
         
     }
     

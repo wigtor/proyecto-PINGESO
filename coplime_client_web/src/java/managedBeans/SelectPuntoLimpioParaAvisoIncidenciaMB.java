@@ -49,10 +49,6 @@ public class SelectPuntoLimpioParaAvisoIncidenciaMB {
         }
     }
     
-    public void submitCaptcha(ActionEvent event) {  
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Correcto");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
     
     public SelectPuntoLimpioParaAvisoIncidenciaMB() {
     }
@@ -73,14 +69,12 @@ public class SelectPuntoLimpioParaAvisoIncidenciaMB {
         this.listaPuntosLimpios = listaPuntosLimpios;
     }
     
+    
     public void goToEnviarAviso() {
-        System.out.println("idPuntoLimpio: "+numPuntoLimpio);
         if (numPuntoLimpio == null) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                    "No ha seleccionado un punto limpio", 
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                    "No ha seleccionado un punto limpio",
                     "No ha seleccionado un punto limpio para enviar el aviso de incidencia");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
             CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml?faces-redirect=true");
         }
         else

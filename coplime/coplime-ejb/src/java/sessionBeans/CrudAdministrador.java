@@ -31,7 +31,18 @@ public class CrudAdministrador implements CrudAdministradorLocal {
     
     
     @Override
-    public void agregarAdministrador(String username, int rut, String nombre, String apellido1, String apellido2, String mail, int telefono){
+    public void agregarAdministrador(String username, Integer rut, String nombre, String apellido1, String apellido2, String mail, Integer telefono) throws Exception{
+        if (rut == null) {
+            throw new Exception("El rut no puede ser nulo");
+        }
+        if (crudUsuariosComun.existeUsername(username)) {
+            throw new Exception("El nombre de usuario \"".concat(username).concat("\" ya existe"));
+        }
+        if (crudUsuariosComun.existeRut(rut)) {
+            throw new Exception("El rut del usuario \"".concat(rut.toString()).concat("\" ya existe"));
+        }
+        
+        
         String password = crudUsuariosComun.convertToMD5(Integer.toString(rut));
         Administrador nvoAdmin;
         Usuario nvoUsuario = new Usuario();

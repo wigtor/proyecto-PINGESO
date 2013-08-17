@@ -7,6 +7,7 @@ package managedBeans.mantenedores.administrador;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import otros.CommonFunctions;
 import sessionBeans.CrudAdministradorLocal;
 
@@ -33,8 +34,20 @@ public class MantenedorAdministradorAgregarMB {
     }
     
     public void agregarAdministrador() {
-        crudAdministrador.agregarAdministrador( username, rut, nombre, apellido1, apellido2, mail, telefono);
-        CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
+        try {
+            crudAdministrador.agregarAdministrador(username, rut, nombre, apellido1, apellido2, mail, telefono);
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                    "Se ha creado un nuevo administrador",
+                    "Se ha creado el administrador \"".concat(username).concat("\""));
+            CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml?faces-redirect=true");
+        }
+        catch (Exception e) {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
+                    e.getMessage(), 
+                    e.getMessage());
+            CommonFunctions.goToPage("/faces/users/admin/agregarAdministrador.xhtml?faces-redirect=true");
+        }
+        
     }
     
     public void volver() {

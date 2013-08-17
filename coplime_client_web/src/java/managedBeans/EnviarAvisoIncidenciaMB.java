@@ -48,11 +48,9 @@ public class EnviarAvisoIncidenciaMB {
     public void init() {
         //System.out.println("Ejecutando init enviarAvisoIncidencia");
         if (!puntoLimpioIsSelected()) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "No ha seleccionado un punto limpio",
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
+                    "No ha seleccionado un punto limpio", 
                     "No ha seleccionado un punto limpio para enviar el aviso de incidencia");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
             CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml?faces-redirect=true");
         }
         cargarTiposIncidencia();
@@ -113,29 +111,28 @@ public class EnviarAvisoIncidenciaMB {
         if (numPuntoLimpio != null) {
             if (tipoIncidenciaSeleccionada != null) {
                 try {
-                    avisosIncidencia.guardarAvisoIncidencia(numPuntoLimpio.intValue(), 
-                            emailContacto, detalles, tipoIncidenciaSeleccionada.intValue(), 
+                    avisosIncidencia.guardarAvisoIncidencia(numPuntoLimpio.intValue(),
+                            emailContacto, detalles, tipoIncidenciaSeleccionada.intValue(),
                             datosImagen, tipoArchivo);
-                    FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, 
-                            "Se ha enviado su aviso de incidencia", 
+                    CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                            "Se ha enviado su aviso de incidencia",
                             "Se ha enviado su aviso de incidencia, le avisaremos cuando sea atendida su sugerencia o problema");
-                    FacesContext.getCurrentInstance().addMessage(null, msg);
-                    FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
                 }
-                catch (Exception e) {
-                    FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                            e.getMessage(), e.getMessage());
-                    FacesContext.getCurrentInstance().addMessage(null, msg);
+            catch (Exception e) {
+                    CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                            e.getMessage(),
+                            e.getMessage());
                 }
-            }
-            else {
-                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error, no ha seleccionado un tipo de incidencia");
-                FacesContext.getCurrentInstance().addMessage(null, msg);
+            } else {
+                CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                        "Error",
+                        "Error, no ha seleccionado un tipo de incidencia");
             }
         }
         else {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error, no ha seleccionado un punto limpio");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error",
+                    "Error, no ha seleccionado un punto limpio");
         }
         CommonFunctions.goToPage("/faces/index.xhtml?faces-redirect=true");
     }
@@ -143,20 +140,6 @@ public class EnviarAvisoIncidenciaMB {
     public void submitCaptcha(ActionEvent event) {  
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Correcto");
         FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-    
-    public void goToEnviarAviso() {
-        System.out.println("idPuntoLimpio: "+numPuntoLimpio);
-        if (numPuntoLimpio == null) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                    "No ha seleccionado un punto limpio", 
-                    "No ha seleccionado un punto limpio para enviar el aviso de incidencia");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-            CommonFunctions.goToPage("/faces/selectPtoLimpioAviso.xhtml?faces-redirect=true");
-        }
-        else
-            CommonFunctions.goToPage("/faces/enviarAvisoIncidencia.xhtml"+"?id="+numPuntoLimpio);
     }
     
     public void goToSeleccionarPuntoLimpio() {

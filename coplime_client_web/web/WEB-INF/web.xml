@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-     <error-page>
+    <error-page>
         <error-code>403</error-code>
         <location>/faces/errors/403.xhtml</location>
     </error-page>
@@ -127,4 +127,16 @@
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <servlet-name>Faces Servlet</servlet-name>
     </filter-mapping>
+    <ejb-local-ref>
+        <ejb-ref-name>CrudUsuariosComun</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>sessionBeans.CrudUsuariosComunLocal</local>
+        <ejb-link>coplime-ejb.jar#CrudUsuariosComun</ejb-link>
+    </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>CrudUsuariosComun1</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>sessionBeans.CrudUsuariosComunLocal</local>
+        <ejb-link>coplime-ejb.jar#CrudUsuariosComun</ejb-link>
+    </ejb-local-ref>
 </web-app>

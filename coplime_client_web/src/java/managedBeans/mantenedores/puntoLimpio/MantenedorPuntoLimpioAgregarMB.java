@@ -20,6 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudInspectorLocal;
@@ -138,8 +139,8 @@ public class MantenedorPuntoLimpioAgregarMB {
     }
     
     public void agregarPuntoLimpio() {
-        System.out.println("Se hizo click en 'agregarPuntoLimpio()'");
-        System.out.println("Cantidad de contenedores: " + mantPtoLimpio.getContenedores_creando().size());
+        //System.out.println("Se hizo click en 'agregarPuntoLimpio()'");
+        //System.out.println("Cantidad de contenedores: " + mantPtoLimpio.getContenedores_creando().size());
         Calendar fechaComoCalendar = new GregorianCalendar();
         fechaComoCalendar.setTime(fechaRevision);
         Integer numPuntoLimpio = crudPuntoLimpio.agregarPuntoLimpio(nombre, num, comuna_seleccionada, direccion, fechaComoCalendar, estado_seleccionado, inspectorEncargado_seleccionado);
@@ -162,11 +163,16 @@ public class MantenedorPuntoLimpioAgregarMB {
                 }
             }
             //Avisar que se agregó correctamente el punto limpio
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                    "Se ha creado un nuevo punto limpio",
+                    "Se ha creado el punto limpio \"".concat(nombre).concat("\""));
             
         }
         else {
             //Avisar que ocurrió un error al agregar el punto limpio
-            
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                    "Ha ocurrido un error al crear el punto limpio",
+                    "No ha sido posible crear el punto limpio, intente más tarde");
         }
         volverToLista();
     }
@@ -175,7 +181,7 @@ public class MantenedorPuntoLimpioAgregarMB {
         System.out.println("Se hizo click en 'volverToLista()'");
         mantPtoLimpio.setPto_creando(null);
         mantPtoLimpio.getContenedores_creando().clear();
-        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
+        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml?faces-redirect=true");
     }
 
     public String getNombre() {

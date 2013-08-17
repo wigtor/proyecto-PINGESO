@@ -24,8 +24,10 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name="Usuario.findByUsername", query="SELECT u FROM Usuario u WHERE u.username = :username"),
     @NamedQuery(name="Usuario.findByRut", query="SELECT u FROM Usuario u WHERE u.rut = :rut"),
     @NamedQuery(name="Usuario.deleteInspectorByRut", query="DELETE FROM Inspector u WHERE u.usuario.rut = :rut"),
-    @NamedQuery(name="Usuario.deleteOperarioByRut", query="DELETE FROM OperarioMantencion u WHERE u.usuario.rut = :rut"),
-    @NamedQuery(name="Usuario.deleteAdministradorByRut", query="DELETE FROM Administrador u WHERE u.usuario.rut = :rut")
+    @NamedQuery(name = "Usuario.deleteOperarioByRut", query = "DELETE FROM OperarioMantencion u WHERE u.usuario.rut = :rut"),
+    @NamedQuery(name = "Usuario.deleteAdministradorByRut", query = "DELETE FROM Administrador u WHERE u.usuario.rut = :rut"),
+    @NamedQuery(name = "Usuario.checkByRut", query = "SELECT COUNT(U) FROM Usuario u WHERE u.rut = :rut"),
+    @NamedQuery(name = "Usuario.checkByUsername", query = "SELECT COUNT(U) FROM Usuario u WHERE u.username = :username")
 })
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;

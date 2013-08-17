@@ -32,4 +32,18 @@ public interface UsuarioDAO extends genericDAO<Usuario>{
      * @return true si el usuario fue borrado correctamente, false si hubo un error
      */
     public boolean deleteByRut(int rut);
+    
+    /**
+     * Comprueba si existe un usuario con cierto rut ya registrado en el sistema.
+     * @param rut El rut que se desea verificar si existe
+     * @return true si el rut existe, false si no
+     */
+    public boolean rutExist(Integer rut);
+    
+    /**
+     * Comprueba si existe un usuario con cierto username ya registrado en el sistema.
+     * @param username El username que se desea verificar si existe
+     * @return true si el username existe, false si no
+     */
+    public boolean usernameExist(String username);
 }
