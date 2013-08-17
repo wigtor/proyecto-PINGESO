@@ -50,7 +50,7 @@ public class MantenedorAdministradorAgregarMB {
         
     }
     
-    public void volver() {
+    public void volverToLista() {
         CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
        
     }

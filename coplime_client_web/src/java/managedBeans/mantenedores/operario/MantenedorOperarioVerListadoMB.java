@@ -72,7 +72,7 @@ public class MantenedorOperarioVerListadoMB {
         
     }
     
-    public void verDetalles(int numOperario) {
+    public void verDetalles(Integer numOperario) {
         Usuario usuarioVerDetalle = crudUsuariosComun.getUsuarioByRut(numOperario);
         if (usuarioVerDetalle != null) {
             this.mantOp.setIdUsuarioDetalles(numOperario);
@@ -84,7 +84,7 @@ public class MantenedorOperarioVerListadoMB {
         }
     }
     
-    public void editar(int numOperario) {
+    public void editar(Integer numOperario) {
         Usuario usuarioEdit = crudUsuariosComun.getUsuarioByRut(numOperario);
         if (usuarioEdit != null) {
             this.mantOp.setIdUsuarioDetalles(numOperario);
@@ -96,20 +96,19 @@ public class MantenedorOperarioVerListadoMB {
         }
     }
     
-    public void eliminar(int numOperario) {
+    public void eliminar(Integer numOperario) {
         boolean resultado = crudOperario.eliminarOperario(numOperario);
-        FacesMessage msg;
         if (resultado) {
-            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Notificación eliminada", "Se ha eliminado correctamente el operario de mantención.");
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                    "Se ha eliminado el operario de mantención",
+                    "Se ha eliminado correctamente el operario de mantención ");
+        } else {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error al eliminar el operario de mantención",
+                    "Error, no se ha podido eliminar el operario de mantención seleccionado");
         }
-        else {
-            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error, no se ha podido eliminar el operario de mantención seleccionada.");
-        }
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml?faces-redirect=true");
     }
-    
     
 
     public List<UsuarioPojo> getListaBusqueda() {

@@ -27,7 +27,9 @@ import javax.persistence.Temporal;
  */
 @Entity
 @NamedQueries( {
-    @NamedQuery(name="PuntoLimpio.findByName", query="SELECT u FROM PuntoLimpio u WHERE u.nombre = :nombre")
+    @NamedQuery(name="PuntoLimpio.findByName", query="SELECT u FROM PuntoLimpio u WHERE u.nombre = :nombre"),
+    @NamedQuery(name = "PuntoLimpio.checkByNum", query = "SELECT COUNT(U) FROM PuntoLimpio u WHERE u.id = :num"),
+    @NamedQuery(name = "PuntoLimpio.checkByNombre", query = "SELECT COUNT(U) FROM PuntoLimpio u WHERE u.nombre = :nombre")
 })
 public class PuntoLimpio implements Serializable {
     private static final long serialVersionUID = 1L;

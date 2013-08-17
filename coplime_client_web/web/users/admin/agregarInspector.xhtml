@@ -21,39 +21,38 @@
                  <h:form>
                      <p:panelGrid columns="2" styleClass="centrar">
                          <f:facet name="header">Ingrese datos del inspector</f:facet>
-                         
-                        
-                         
-                         <p:outputLabel value="Nombre" for="nombre"/>
-                         <p:inputText id="nombre" value="#{mantenedorInspectorAgregarMB.nombre}" required="true"/>
-                         
-                         <p:outputLabel value="Apellido paterno" for="apellido1"/>
-                         <p:inputText id="apellido1" value="#{mantenedorInspectorAgregarMB.apellido1}" required="true"/>
-                         
-                         <p:outputLabel value="Apellido materno" for="apellido2"/>
-                         <p:inputText id="apellido2" value="#{mantenedorInspectorAgregarMB.apellido2}" required="true"/>
-                         
+
+
                          <p:outputLabel value="Rut" for="rut"/>
                          <p:inputText id="rut" value="#{mantenedorInspectorAgregarMB.rut}" required="true" maxlength="9">
                              <f:validator validatorId="RutValidator"/>
                          </p:inputText>
-                        
+
+                         <p:outputLabel value="Nombre" for="nombre"/>
+                         <p:inputText id="nombre" value="#{mantenedorInspectorAgregarMB.nombre}" required="true"/>
+
+                         <p:outputLabel value="Apellido paterno" for="apellido1"/>
+                         <p:inputText id="apellido1" value="#{mantenedorInspectorAgregarMB.apellido1}" required="true"/>
+
+                         <p:outputLabel value="Apellido materno" for="apellido2"/>
+                         <p:inputText id="apellido2" value="#{mantenedorInspectorAgregarMB.apellido2}" required="true"/>
+
                          <p:outputLabel value="Teléfono" for="telefono"/>
                          <p:inputText id="telefono" value="#{mantenedorInspectorAgregarMB.telefono}" required="true" maxlength="9"/>
-                         
+
                          <p:outputLabel value="E-mail" for="email"/>
                          <p:inputText id="email" value="#{mantenedorInspectorAgregarMB.mail}" required="true">
                              <f:validator validatorId="EmailValidator"/>
                          </p:inputText>
-                         
+
                          <p:outputLabel value="Nombre de usuario" for="username"/>
                          <p:inputText id="username" value="#{mantenedorInspectorAgregarMB.username}" required="true">
                              <f:validator validatorId="UsernameValidator"/>
                          </p:inputText>
-                         
+
                          <p:outputLabel value="Contraseña"/>
                          <p:outputLabel value="Será la misma que su rut"/>
-                         
+
                          <f:facet name="footer">
                             <p:commandButton value="Guardar" ajax="false" action="#{mantenedorInspectorAgregarMB.agregarInspector()}"/>
                             <p:commandButton immediate="true" value="Volver" action="#{mantenedorInspectorAgregarMB.volver()}"/>                         

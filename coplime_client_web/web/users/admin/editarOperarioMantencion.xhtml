@@ -19,42 +19,44 @@
             </ui:define>
             <ui:define name="centro">
                  <h:form>
+                     <h:inputHidden value="#{mantenedorOperarioEditarMB.rut}"/>
+                     
                      <p:panelGrid columns="2" styleClass="centrar">
                          <f:facet name="header">Edición de datos del operario</f:facet>
                          
                          
                          <p:outputLabel value="N° de operario"/>
                          <p:inputText value="#{mantenedorOperarioEditarMB.numeroOperario}" disabled="true" readonly="true" />
-                         
-                         <h:outputLabel value=""/>
-                         <h:inputHidden value="#{mantenedorOperarioEditarMB.rut}"/>
-                                                  
+                                             
                          <p:outputLabel value="Rut"/>
                          <p:inputText value="#{mantenedorOperarioEditarMB.rut}" disabled="true" readonly="true" />
                          
-                         <p:outputLabel value="Nombre"/>
-                         <p:inputText value="#{mantenedorOperarioEditarMB.nombre}"/>
+                         <p:outputLabel value="Nombre" for="nombre"/>
+                         <p:inputText id="nombre" value="#{mantenedorOperarioEditarMB.nombre}" required="true"/>
                          
-                         <p:outputLabel value="Apellido paterno"/>
-                         <p:inputText value="#{mantenedorOperarioEditarMB.apellido1}"/>
+                         <p:outputLabel value="Apellido paterno" for="apellido1"/>
+                         <p:inputText id="apellido1" value="#{mantenedorOperarioEditarMB.apellido1}" required="true"/>
                          
-                         <p:outputLabel value="Apellido materno"/>
-                         <p:inputText value="#{mantenedorOperarioEditarMB.apellido2}"/>
+                         <p:outputLabel value="Apellido materno" for="apellido2"/>
+                         <p:inputText id="apellido2" value="#{mantenedorOperarioEditarMB.apellido2}" required="true"/>
                          
-                         <p:outputLabel value="Nombre de usuario"/>
-                         <p:inputText value="#{mantenedorOperarioEditarMB.username}"/>
+                         <p:outputLabel value="Teléfono" for="telefono"/>
+                         <p:inputText id="telefono" value="#{mantenedorOperarioEditarMB.telefono}" required="true" maxlength="9"/>
+
+                         <p:outputLabel value="E-mail" for="email"/>
+                         <p:inputText id="email" value="#{mantenedorOperarioEditarMB.mail}" required="true">
+                             <f:validator validatorId="EmailValidator"/>
+                         </p:inputText>
+                         
+                         <p:outputLabel value="Nombre de usuario" for="username"/>
+                         <p:inputText id="username" value="#{mantenedorOperarioEditarMB.username}" required="true">
+                         </p:inputText>
                          
                          <p:outputLabel value="Reiniciar contraseña"/>
                          <p:selectBooleanCheckbox label="Reiniciar contraseña" value="#{mantenedorOperarioEditarMB.checkContraseña}"></p:selectBooleanCheckbox>
                          
-                         <p:outputLabel value="Teléfono"/>
-                         <p:inputText value="#{mantenedorOperarioEditarMB.telefono}"/>
-                         
-                         <p:outputLabel value="E-mail"/>
-                         <p:inputText value="#{mantenedorOperarioEditarMB.mail}"/>
-                         
                          <f:facet name="footer">
-                            <p:commandButton value="Guardar" action="#{mantenedorOperarioEditarMB.guardarCambiosOperario()}"/>
+                            <p:commandButton value="Guardar" ajax="false" action="#{mantenedorOperarioEditarMB.guardarCambiosOperario()}"/>
                             <p:commandButton value="Volver" action="#{mantenedorOperarioEditarMB.volverToLista()}"/>                            
                          </f:facet>
                      </p:panelGrid>                

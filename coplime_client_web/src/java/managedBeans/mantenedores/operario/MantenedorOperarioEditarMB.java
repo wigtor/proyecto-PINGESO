@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudOperarioLocal;
@@ -71,8 +72,19 @@ public class MantenedorOperarioEditarMB {
     }
     
     public void guardarCambiosOperario(){
-        crudOperario.editarOperario(rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
-        CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
+        try {
+            crudOperario.editarOperario(rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                    "Se han guardado los datos del operario de mantención",
+                    "Se han guardado los datos del operario de mantención \"".concat(username).concat("\""));
+            CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml?faces-redirect=true");
+        }
+        catch (Exception e) {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
+                    e.getMessage(), 
+                    e.getMessage());
+            CommonFunctions.goToPage("/faces/users/admin/editarOperarioMantencion.xhtml?faces-redirect=true");
+        }
     }
     
     public void volverToLista() {

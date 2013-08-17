@@ -35,7 +35,17 @@ public interface CrudUsuariosComunLocal {
      */
     public String convertToMD5(String password);
     
+    /**
+     * Indica si ya existe un usuario con cierto rut registrado en el sistema.
+     * @param rut El rut del usuario que se desea comprobar
+     * @return Devuelve true si el usuario ya existe, falso en caso contrario
+     */
     public boolean existeRut(Integer rut);
 
+    /**
+     * Indica si ya existe un usuario con cierto username registrado en el sistema.
+     * @param username El username del usuario que se desea comprobar
+     * @return Devuelve true si el usuario ya existe, falso en caso contrario
+     */
     public boolean existeUsername(String username);
 }

@@ -65,7 +65,7 @@ public class MantenedorAdministradorVerListadoMB {
        CommonFunctions.goToPage("/faces/users/admin/agregarAdministrador.xhtml");
     }
     
-    public void editar(int numAdministrador) {
+    public void editar(Integer numAdministrador) {
         Usuario usuarioEdit = crudAdministrador.getAdministradorByRut(numAdministrador);
         if (usuarioEdit != null) {
             this.mantAdm.setIdUsuarioDetalles(numAdministrador);
@@ -78,7 +78,7 @@ public class MantenedorAdministradorVerListadoMB {
         }
     }
     
-    public void verDetalles(int numAdministrador) {
+    public void verDetalles(Integer numAdministrador) {
         Usuario usuarioVerDetalle = crudAdministrador.getAdministradorByRut(numAdministrador);
         if (usuarioVerDetalle != null) { //Verifico que exista
             this.mantAdm.setIdUsuarioDetalles(numAdministrador);
@@ -90,17 +90,17 @@ public class MantenedorAdministradorVerListadoMB {
         }
     }
     
-    public void eliminar(int numAdministrador) {
-       boolean resultado = crudAdministrador.eliminarAdministrador(numAdministrador);
-        FacesMessage msg;
+    public void eliminar(Integer numAdministrador) {
+        boolean resultado = crudAdministrador.eliminarAdministrador(numAdministrador, CommonFunctions.getUsuarioLogueado());
         if (resultado) {
-            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Administrador eliminado", "Se ha eliminado correctamente el administrador.");
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                    "Se ha eliminado el administrador",
+                    "Se ha eliminado correctamente el administrador ");
+        } else {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error al eliminar el administrador",
+                    "Error, no se ha podido eliminar el administrador seleccionado");
         }
-        else {
-            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error, no se ha podido eliminar el administrador seleccionado.");
-        }
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         CommonFunctions.goToPage("/faces/users/verAdministradores.xhtml?faces-redirect=true");
     }
     

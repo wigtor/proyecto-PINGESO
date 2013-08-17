@@ -7,13 +7,11 @@ package sessionBeans;
 import entities.Comuna;
 import entities.Contenedor;
 import entities.Estado;
-import entities.Inspector;
 import entities.Material;
 import entities.PuntoLimpio;
 import entities.UnidadMedida;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -43,7 +41,7 @@ public interface CrudPuntoLimpioLocal {
      */
     public Collection<PuntoLimpio> getAllPuntosLimpios();
 
-    public Integer agregarPuntoLimpio(String nombre, Integer numeroDadoPorCliente, Integer idComuna, String direccion, Calendar fechaProxRev, Integer idEstadoIni, Integer numInspEnc);
+    public Integer agregarPuntoLimpio(String nombre, Integer numeroDadoPorCliente, Integer idComuna, String direccion, Calendar fechaProxRev, Integer idEstadoIni, Integer numInspEnc) throws Exception;
     
     public boolean agregarContenedor( Integer numPuntoLimpio, Integer idMaterial, Integer idEstadoIni, int llenadoIni, int capacidad, Integer idUnidadMedida);
     
@@ -97,4 +95,18 @@ public interface CrudPuntoLimpioLocal {
      * @return true si pudo realizarse la actualización, false si hubo un error
      */
     public boolean cambiarEstadoContenedor(Integer idContenedor, Integer idEstadoContenedor, int llenadoContenedor);
+
+    /**
+     * Indica si ya existe un punto limpio con cierto número registrado en el sistema.
+     * @param numero El número del punto limpio que se desea comprobar
+     * @return Devuelve true si el punto limpio ya existe, falso en caso contrario
+     */
+    public boolean existeNumPuntoLimpio(Integer numero);
+
+    /**
+     * Indica si ya existe un punto limpio con cierto nombre registrado en el sistema.
+     * @param nombre El nombre del punto limpio que se desea comprobar
+     * @return Devuelve true si el punto limpio ya existe, falso en caso contrario
+     */
+    public boolean existeNombrePuntoLimpio(String nombre);
 }

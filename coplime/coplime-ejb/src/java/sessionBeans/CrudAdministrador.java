@@ -87,14 +87,22 @@ public class CrudAdministrador implements CrudAdministradorLocal {
     }
     
     @Override
-    public boolean eliminarAdministrador(Integer rutUser){
+    public boolean eliminarAdministrador(Integer rutUser, String usernameEjecutor){
+        
         if (rutUser != null) {
             DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             AdministradorDAO adminDAO = factoryDeDAOs.getAdministradorDAO();
-            try {
-                return adminDAO.deleteByRut(rutUser);
-            }
-            catch (Exception e) {
+            if (usernameEjecutor != null) {
+                Administrador adminEjecutor = adminDAO.findByUsername(usernameEjecutor);
+                if (adminEjecutor.getUsuario().getRut().intValue() == rutUser.intValue()) {
+                    return false; //Se está eliminando a si mismo
+                }
+                try {
+                    return adminDAO.deleteByRut(rutUser);
+                } catch (Exception e) {
+                    return false;
+                }
+            } else {
                 return false;
             }
         }

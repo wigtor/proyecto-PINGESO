@@ -48,7 +48,7 @@
                                                  header="Confirmación de eliminación de administrador" severity="alert"
                                                  widgetVar="cd_#{adm.num}" closeOnEscape="true">
                                     <p:commandButton value="Si" actionListener="#{mantenedorAdministradorVerListadoMB.eliminar(adm.num)}"
-                                                     oncomplete="cd_#{adm.num}.hide();"/>
+                                                     oncomplete="cd_#{adm.num}.hide();" ajax="false"/>
                                     <p:commandButton value="No" onclick="cd_#{adm.num}.hide();" type="button" />
                                 </p:confirmDialog>
                                

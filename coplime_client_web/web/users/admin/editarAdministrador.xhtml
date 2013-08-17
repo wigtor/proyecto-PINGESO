@@ -19,38 +19,40 @@
             </ui:define>
             <ui:define name="centro">
                  <h:form>
+                     <h:inputHidden value="#{mantenedorAdministradorEditarMB.rut}"/>
+                     
                      <p:panelGrid columns="2" styleClass="centrar">
                          <f:facet name="header">Edición de datos del administrador</f:facet>
-                         
-                         <h:outputLabel value=""/>
-                         <h:inputHidden value="#{mantenedorAdministradorEditarMB.rut}"/>
-                                                  
+                                        
                          <p:outputLabel value="Rut"/>
                          <p:inputText value="#{mantenedorAdministradorEditarMB.rut}" disabled="true" readonly="true" />
                          
-                         <p:outputLabel value="Nombre"/>
-                         <p:inputText value="#{mantenedorAdministradorEditarMB.nombre}"/>
+                         <p:outputLabel value="Nombre" for="nombre"/>
+                         <p:inputText id="nombre" value="#{mantenedorAdministradorEditarMB.nombre}" required="true"/>
                          
-                         <p:outputLabel value="Apellido paterno"/>
-                         <p:inputText value="#{mantenedorAdministradorEditarMB.apellido1}"/>
+                         <p:outputLabel value="Apellido paterno" for="apellido1"/>
+                         <p:inputText id="apellido1" value="#{mantenedorAdministradorEditarMB.apellido1}" required="true"/>
                          
-                         <p:outputLabel value="Apellido materno"/>
-                         <p:inputText value="#{mantenedorAdministradorEditarMB.apellido2}"/>
+                         <p:outputLabel value="Apellido materno" for="apellido2"/>
+                         <p:inputText id="apellido2" value="#{mantenedorAdministradorEditarMB.apellido2}" required="true"/>
                          
-                         <p:outputLabel value="Nombre de usuario"/>
-                         <p:inputText value="#{mantenedorAdministradorEditarMB.username}"/>
+                         <p:outputLabel value="Teléfono" for="telefono"/>
+                         <p:inputText id="telefono" value="#{mantenedorAdministradorEditarMB.telefono}" required="true" maxlength="9"/>
+
+                         <p:outputLabel value="E-mail" for="email"/>
+                         <p:inputText id="email" value="#{mantenedorAdministradorEditarMB.mail}" required="true">
+                             <f:validator validatorId="EmailValidator"/>
+                         </p:inputText>
+                         
+                         <p:outputLabel value="Nombre de usuario" for="username"/>
+                         <p:inputText id="username" value="#{mantenedorAdministradorEditarMB.username}" required="true">
+                         </p:inputText>
                          
                          <p:outputLabel value="Reiniciar contraseña"/>
                          <p:selectBooleanCheckbox label="Reiniciar contraseña" value="#{mantenedorAdministradorEditarMB.checkContraseña}"></p:selectBooleanCheckbox>
                          
-                         <p:outputLabel value="Teléfono"/>
-                         <p:inputText value="#{mantenedorAdministradorEditarMB.telefono}"/>
-                         
-                         <p:outputLabel value="E-mail"/>
-                         <p:inputText value="#{mantenedorAdministradorEditarMB.mail}"/>
-                         
                          <f:facet name="footer">
-                            <p:commandButton value="Guardar" action="#{mantenedorAdministradorEditarMB.guardarCambiosAdministrador()}"/>
+                            <p:commandButton value="Guardar" ajax="false" action="#{mantenedorAdministradorEditarMB.guardarCambiosAdministrador()}"/>
                             <p:commandButton value="Volver" action="#{mantenedorAdministradorEditarMB.volverToLista()}"/>                            
                          </f:facet>
                      </p:panelGrid>                

@@ -21,10 +21,7 @@ import entities.PuntoLimpio;
 import entities.UnidadMedida;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.List;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -39,16 +36,22 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
-    @TransactionAttribute (TransactionAttributeType.REQUIRED)
     @Override
     public Integer agregarPuntoLimpio(String nombre, Integer numeroDadoPorCliente, Integer idComuna, String direccion,
-                    Calendar fechaProxRev, Integer idEstadoIni, Integer numInspEnc){
+                    Calendar fechaProxRev, Integer idEstadoIni, Integer numInspEnc) throws Exception {
         
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
         ComunaDAO comDAO = factoryDeDAOs.getComunaDAO();
         EstadoDAO estDAO = factoryDeDAOs.getEstadoDAO();
         InspectorDAO inspDAO = factoryDeDAOs.getInspectorDAO();
+        
+        if (existeNumPuntoLimpio(numeroDadoPorCliente)) {
+            throw new Exception("El número del punto limpio \"".concat(numeroDadoPorCliente.toString()).concat("\" ya existe"));
+        }
+        if (existeNombrePuntoLimpio(nombre)) {
+            throw new Exception("El nombre del punto limpio \"".concat(nombre).concat("\" ya existe"));
+        }
         try {
             PuntoLimpio p = new PuntoLimpio(nombre, direccion, numeroDadoPorCliente);
             p.setFechaProxRevision(fechaProxRev);
@@ -245,5 +248,19 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
             return false;
         }
         return true;
+    }
+    
+    @Override
+    public boolean existeNumPuntoLimpio(Integer numero) {
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
+        return ptoDAO.numExist(numero);
+    }
+    
+    @Override
+    public boolean existeNombrePuntoLimpio(String nombre) {
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
+        return ptoDAO.nombreExist(nombre);
     }
 }

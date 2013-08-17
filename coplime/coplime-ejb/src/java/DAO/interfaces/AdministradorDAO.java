@@ -25,4 +25,6 @@ public interface AdministradorDAO extends genericDAO<Administrador>{
      * @return true si pudo ser borrado exitosamente, false si hubo algún problema o no existía el rut
      */
     public boolean deleteByRut(int rut);
+    
+    public Administrador findByUsername(String username);
 }

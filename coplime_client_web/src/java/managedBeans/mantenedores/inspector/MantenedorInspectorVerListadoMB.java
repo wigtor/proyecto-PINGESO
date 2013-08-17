@@ -14,7 +14,6 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudInspectorLocal;
@@ -67,7 +66,7 @@ public class MantenedorInspectorVerListadoMB {
        CommonFunctions.goToPage("/faces/users/admin/agregarInspector.xhtml");
         
     }
-    public void editar(int numInspector) {
+    public void editar(Integer numInspector) {
         Inspector usuarioEdit = crudInspector.getInspectorByRut(numInspector);
         if (usuarioEdit != null) {
             this.mantInsp.setIdUsuarioDetalles(numInspector);
@@ -80,7 +79,7 @@ public class MantenedorInspectorVerListadoMB {
         }
     }
     
-    public void verDetalles(int numInspector) {
+    public void verDetalles(Integer numInspector) {
         Inspector usuarioVerDetalle = crudInspector.getInspectorByRut(numInspector);
         if (usuarioVerDetalle != null) {
             this.mantInsp.setIdUsuarioDetalles(numInspector);
@@ -93,17 +92,17 @@ public class MantenedorInspectorVerListadoMB {
         }
     }
     
-    public void eliminar(int numInspector) {
+    public void eliminar(Integer numInspector) {
         boolean resultado = crudInspector.eliminarInspector(numInspector);
-        FacesMessage msg;
         if (resultado) {
-            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Notificación eliminada", "Se ha eliminado correctamente el inspector.");
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                    "Se ha eliminado el inspector",
+                    "Se ha eliminado correctamente el inspector ");
+        } else {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error al eliminar el inspector",
+                    "Error, no se ha podido eliminar el inspector seleccionado");
         }
-        else {
-            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error, no se ha podido eliminar el inspector seleccionado.");
-        }
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         CommonFunctions.goToPage("/faces/users/verInspectores.xhtml?faces-redirect=true");
     }
     

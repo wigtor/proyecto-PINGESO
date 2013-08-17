@@ -34,6 +34,19 @@ public class AdministradorDAO_impl extends genericDAO_impl<Administrador> implem
         }
     }
     
+    @Override
+    public Administrador findByUsername(String username) {
+        Query q = this.em.createNamedQuery("Administrador.findByUsername");
+        q.setParameter("username", username);
+        List<Administrador> res = q.getResultList();
+        if (res.isEmpty()) {
+            return null;
+        }
+        else {
+            return res.get(0);
+        }
+    }
+    
     //Poner otras funciones extra que sólo haga este DAO
     @Override
     public boolean deleteByRut(int rut) {

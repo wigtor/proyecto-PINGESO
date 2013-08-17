@@ -49,7 +49,7 @@
                                                  header="Confirmación de eliminación de operario de mantención" severity="alert"
                                                  widgetVar="cd_#{op.num}" closeOnEscape="true">
                                     <p:commandButton value="Si" actionListener="#{mantenedorOperarioVerListadoMB.eliminar(op.num)}"
-                                                     oncomplete="cd_#{op.num}.hide();"/>
+                                                     oncomplete="cd_#{op.num}.hide();" ajax="false"/>
                                     <p:commandButton value="No" onclick="cd_#{op.num}.hide();" type="button" />
                                 </p:confirmDialog>
                                 

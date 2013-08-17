@@ -35,4 +35,31 @@ public class PuntoLimpioDAO_impl extends genericDAO_impl<PuntoLimpio> implements
         }
     }
     
+    @Override
+    public boolean numExist(Integer num) {
+        Query q1 = this.em.createNamedQuery("PuntoLimpio.checkByNum");
+        q1.setParameter("num", num);
+        Long res = (Long)q1.getSingleResult();
+        if (res == null) {
+            return false;
+        }
+        if (res.intValue() > 0) {
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean nombreExist(String nombre) {
+        Query q1 = this.em.createNamedQuery("PuntoLimpio.checkByNombre");
+        q1.setParameter("nombre", nombre);
+        Long res = (Long)q1.getSingleResult();
+        if (res == null) {
+            return false;
+        }
+        if (res.intValue() > 0) {
+            return true;
+        }
+        return false;
+    }
+    
 }

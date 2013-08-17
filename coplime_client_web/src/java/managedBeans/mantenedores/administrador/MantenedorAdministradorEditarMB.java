@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudAdministradorLocal;
@@ -66,11 +67,19 @@ public class MantenedorAdministradorEditarMB {
     }
     
     public void guardarCambiosAdministrador(){
-        System.out.println("this.rut: "+this.rut);
-        System.out.println("Se va a guardar los cambios de un inspector");
-        System.out.println("idUser="+rut+" username:"+username+" nombre:"+nombre+" ap1:"+apellido1+" ap2:"+apellido2);
-        crudAdministrador.editarAdministrador(rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
-        CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
+        try {
+            crudAdministrador.editarAdministrador(rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                    "Se han guardado los datos del administrador",
+                    "Se han guardado los datos del administrador \"".concat(username).concat("\""));
+            CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml?faces-redirect=true");
+        }
+        catch (Exception e) {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
+                    e.getMessage(), 
+                    e.getMessage());
+            CommonFunctions.goToPage("/faces/users/admin/editarAdministrador.xhtml?faces-redirect=true");
+        }
     }
     
     public void volverToLista() {

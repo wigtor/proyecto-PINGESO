@@ -16,6 +16,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -143,7 +145,14 @@ public class MantenedorPuntoLimpioAgregarMB {
         //System.out.println("Cantidad de contenedores: " + mantPtoLimpio.getContenedores_creando().size());
         Calendar fechaComoCalendar = new GregorianCalendar();
         fechaComoCalendar.setTime(fechaRevision);
-        Integer numPuntoLimpio = crudPuntoLimpio.agregarPuntoLimpio(nombre, num, comuna_seleccionada, direccion, fechaComoCalendar, estado_seleccionado, inspectorEncargado_seleccionado);
+        Integer numPuntoLimpio;
+        try {
+            numPuntoLimpio = crudPuntoLimpio.agregarPuntoLimpio(nombre, num, comuna_seleccionada, direccion, fechaComoCalendar, estado_seleccionado, inspectorEncargado_seleccionado);
+        } catch (Exception ex) {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), ex.getMessage());
+            CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?faces-redirect=true");
+            return;
+        }
         if (numPuntoLimpio != null) {
             //Agrego los contenedores ahora
             boolean resultadoAgregarCont;

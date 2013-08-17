@@ -5,11 +5,11 @@
 package managedBeans.mantenedores.inspector;
 
 import entities.Inspector;
-import entities.Usuario;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudInspectorLocal;
@@ -69,11 +69,19 @@ public class MantenedorInspectorEditarMB {
     
     
     public void guardarCambiosInspector(){
-        System.out.println("this.rut: "+this.rut);
-        System.out.println("Se va a guardar los cambios de un inspector");
-        System.out.println("idUser="+rut+" username:"+username+" nombre:"+nombre+" ap1:"+apellido1+" ap2:"+apellido2);
-        crudInspector.editarInspector( rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
-        CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");
+        try {
+            crudInspector.editarInspector( rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                    "Se han guardado los datos del inspector",
+                    "Se han guardado los datos del inspector \"".concat(username).concat("\""));
+            CommonFunctions.goToPage("/faces/users/verInspectores.xhtml?faces-redirect=true");
+        }
+        catch (Exception e) {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
+                    e.getMessage(), 
+                    e.getMessage());
+            CommonFunctions.goToPage("/faces/users/admin/editarInspector.xhtml?faces-redirect=true");
+        }
     }
     
     public void volverToLista() {
