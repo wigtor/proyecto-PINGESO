@@ -26,15 +26,6 @@
                 <h:form enctype="multipart/form-data" id="formulario" onsubmit="conservaQueryString()">
                     <h:inputHidden id="numeroPuntoLimpio" value="#{enviarAvisoIncidenciaMB.numPuntoLimpio}"/>
                     
-                    <script>
-                        function conservaQueryString() {
-                            var formulario = document.getElementById("formulario");
-                            var inputNumFormulario = document.getElementById("formulario:numeroPuntoLimpio");
-                            var nvoAction = formulario.action + "?id="+inputNumFormulario.value;
-                            formulario.action = nvoAction;
-                            return true;
-                        }
-                    </script>
                     <p:panelGrid columns="2" styleClass="centrar">
                         <f:facet name="header">Ingresar datos del aviso de incidencia</f:facet>
                         
@@ -61,7 +52,7 @@
                         <p:outputPanel><!-- Máximo de 16Mb y sólo imágenes -->
                             <p:fileUpload id="subidaArchivos" value="#{enviarAvisoIncidenciaMB.file}" 
                                           sizeLimit="16777216" showButtons="false" mode="simple"
-                                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
                                           required="false" label="Subir imagen"
                                           multiple="false" uploadLabel="Subir" cancelLabel="Calcelar"
                                           invalidFileMessage="Archivo inválido, sólo están permitidas imágenes"
@@ -80,6 +71,20 @@
                             <p:commandButton immediate="true" value="Cancelar" action="#{autenticadorMB.goToIndex()}"/>
                         </f:facet>
                     </p:panelGrid>
+                    
+                    <script>
+                        function conservaQueryString() {
+                            var formulario = document.getElementById("formulario");
+                            var inputNumFormulario = document.getElementById("formulario:numeroPuntoLimpio");
+                            var nvoAction = formulario.action + "?id="+inputNumFormulario.value;
+                            formulario.action = nvoAction;
+                            return true;
+                        }
+                        $(document).ready( function(){
+                            var inputSubidaArchivos = document.getElementById("formulario:subidaArchivos");
+                            inputSubidaArchivos.accept = "image/*";
+                        });
+                    </script>
                 </h:form>
                 
             </ui:define>
