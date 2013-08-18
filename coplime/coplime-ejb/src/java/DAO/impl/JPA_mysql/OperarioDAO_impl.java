@@ -5,13 +5,12 @@
 package DAO.impl.JPA_mysql;
 
 import DAO.interfaces.OperarioDAO;
-import entities.Inspector;
 import entities.MantencionPuntoLimpio;
 import entities.OperarioMantencion;
-import entities.PuntoLimpio;
 import entities.SolicitudMantencion;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -29,7 +28,7 @@ public class OperarioDAO_impl extends genericDAO_impl<OperarioMantencion> implem
         //Obtengo el inspector
         Query q = this.em.createNamedQuery("OperarioMantencion.findByRut");
         q.setParameter("rut", rut);
-        List<OperarioMantencion> res = q.getResultList();
+        List<OperarioMantencion> res = (List<OperarioMantencion>)q.getResultList();
         if (res.isEmpty()) {
             return false;
         }
@@ -58,25 +57,27 @@ public class OperarioDAO_impl extends genericDAO_impl<OperarioMantencion> implem
     public OperarioMantencion findByUsername(String username) {
         Query q = this.em.createNamedQuery("OperarioMantencion.findByUsername");
         q.setParameter("username", username);
-        List<OperarioMantencion> res = q.getResultList();
-        if (res.isEmpty()) {
+        OperarioMantencion res;
+        try {
+            res = (OperarioMantencion)q.getSingleResult();
+        }
+        catch (NoResultException nre) {
             return null;
         }
-        else {
-            return res.get(0);
-        }
+        return res;
     }
 
     @Override
     public OperarioMantencion findByRut(int rut) {
         Query q = this.em.createNamedQuery("OperarioMantencion.findByRut");
         q.setParameter("rut", rut);
-        List<OperarioMantencion> res = q.getResultList();
-        if (res.isEmpty()) {
+        OperarioMantencion res;
+        try {
+            res = (OperarioMantencion)q.getSingleResult();
+        }
+        catch (NoResultException nre) {
             return null;
         }
-        else {
-            return res.get(0);
-        }
+        return res;
     }
 }

@@ -27,7 +27,7 @@ public class MantenedorPuntoLimpioConversation implements Serializable {
      * Creates a new instance of MantenedorPuntoLimpioConversation
      */
     public MantenedorPuntoLimpioConversation() {
-        contenedores_creando = new LinkedList();
+        contenedores_creando = new LinkedList<>();
     }
     
     public void limpiarDatos() {

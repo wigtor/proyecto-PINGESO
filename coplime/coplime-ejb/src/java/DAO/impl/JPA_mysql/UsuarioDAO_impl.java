@@ -6,8 +6,8 @@ package DAO.impl.JPA_mysql;
 
 import DAO.interfaces.UsuarioDAO;
 import entities.Usuario;
-import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -29,26 +29,28 @@ public class UsuarioDAO_impl extends genericDAO_impl<Usuario> implements Usuario
     public Usuario find(String username) {
         Query q = this.em.createNamedQuery("Usuario.findByUsername");
         q.setParameter("username", username);
-        List<Usuario> res = q.getResultList();
-        if (res.isEmpty()) {
+        Usuario res;
+        try {
+            res = (Usuario)q.getSingleResult();
+        }
+        catch (NoResultException nre) {
             return null;
         }
-        else {
-            return res.get(0);
-        }
+        return res;
     }
     
     @Override
     public Usuario findByRut(int rut) {
         Query q = this.em.createNamedQuery("Usuario.findByRut");
         q.setParameter("rut", rut);
-        List<Usuario> res = q.getResultList();
-        if (res.isEmpty()) {
+        Usuario res;
+        try {
+            res = (Usuario)q.getSingleResult();
+        }
+        catch (NoResultException nre) {
             return null;
         }
-        else {
-            return res.get(0);
-        }
+        return res;
     }
     
     @Override

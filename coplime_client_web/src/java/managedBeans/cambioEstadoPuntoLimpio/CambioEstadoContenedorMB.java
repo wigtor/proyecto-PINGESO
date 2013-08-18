@@ -56,7 +56,7 @@ public class CambioEstadoContenedorMB {
     private void cargarEstadosPuntoLimpio() {
         Collection<Estado> listaTemp = crudPuntoLimpio.getAllEstadosPuntoLimpio();
         SelectElemPojo elemTemp;
-        this.listaEstados = new ArrayList();
+        this.listaEstados = new ArrayList<>();
         for(Estado estado_iter : listaTemp) {
             elemTemp = new SelectElemPojo();
             elemTemp.setId(Integer.toString(estado_iter.getId()));

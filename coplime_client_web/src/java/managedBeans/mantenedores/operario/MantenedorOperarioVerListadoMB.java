@@ -48,7 +48,7 @@ public class MantenedorOperarioVerListadoMB {
         ///////////////VER/////////////////////
         Collection<OperarioMantencion> listaTemp = crudOperario.getAllOperarios();
         UsuarioPojo operarioTemporal;
-        this.lista = new ArrayList();
+        this.lista = new ArrayList<>();
         for(OperarioMantencion op_iter : listaTemp) {
             operarioTemporal = new UsuarioPojo();
             

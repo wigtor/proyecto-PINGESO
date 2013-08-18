@@ -8,9 +8,11 @@ import DAO.interfaces.InspectorDAO;
 import entities.Inspector;
 import entities.PuntoLimpio;
 import entities.RevisionPuntoLimpio;
+import entities.Rol;
 import entities.SolicitudMantencion;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -27,13 +29,14 @@ public class InspectorDAO_impl extends genericDAO_impl<Inspector> implements Ins
     public Inspector findByRut(int rut) {
         Query q = this.em.createNamedQuery("Inspector.findByRut");
         q.setParameter("rut", rut);
-        List<Inspector> res = q.getResultList();
-        if (res.isEmpty()) {
+        Inspector res;
+        try {
+            res = (Inspector)q.getSingleResult();
+        }
+        catch (NoResultException nre) {
             return null;
         }
-        else {
-            return res.get(0);
-        }
+        return res;
     }
     
     @Override
@@ -41,11 +44,14 @@ public class InspectorDAO_impl extends genericDAO_impl<Inspector> implements Ins
         //Obtengo el inspector
         Query q = this.em.createNamedQuery("Inspector.findByRut");
         q.setParameter("rut", rut);
-        List<Inspector> res = q.getResultList();
-        if (res.isEmpty()) {
+        
+        Inspector inspToDelete;
+        try {
+            inspToDelete = (Inspector)q.getSingleResult();
+        }
+        catch (NoResultException nre) {
             return false;
         }
-        Inspector inspToDelete = res.get(0);
         
         //Actualizo los puntos limpios para desligarlos del inspector
         List<PuntoLimpio> listaPtos = inspToDelete.getPuntosLimpios();
@@ -77,12 +83,13 @@ public class InspectorDAO_impl extends genericDAO_impl<Inspector> implements Ins
     public Inspector findByUsername(String username) {
         Query q = this.em.createNamedQuery("Inspector.findByUsername");
         q.setParameter("username", username);
-        List<Inspector> res = q.getResultList();
-        if (res.isEmpty()) {
+        Inspector res;
+        try {
+            res = (Inspector)q.getSingleResult();
+        }
+        catch (NoResultException nre) {
             return null;
         }
-        else {
-            return res.get(0);
-        }
+        return res;
     }
 }

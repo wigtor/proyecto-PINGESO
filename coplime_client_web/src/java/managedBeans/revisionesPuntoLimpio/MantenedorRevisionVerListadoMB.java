@@ -51,7 +51,7 @@ public class MantenedorRevisionVerListadoMB {
         RevisionPojo revTemporal;
         Calendar f;
         String str_temp, rut, nombre, apellido1;
-        List<RevisionPojo> listaResult = new ArrayList();
+        List<RevisionPojo> listaResult = new ArrayList<>();
         for(RevisionPuntoLimpio rev_iter : listaTemp) {
             revTemporal = new RevisionPojo();
             

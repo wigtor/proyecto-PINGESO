@@ -6,8 +6,8 @@ package DAO.impl.JPA_mysql;
 
 import DAO.interfaces.RolDAO;
 import entities.Rol;
-import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -26,12 +26,13 @@ public class RolDAO_impl extends genericDAO_impl<Rol> implements RolDAO{
     public Rol find(String rolName) {
         Query q = this.em.createNamedQuery("Rol.findByName");
         q.setParameter("nombre", rolName);
-        List<Rol> res = q.getResultList();
-        if (res.isEmpty()) {
+        Rol res;
+        try {
+            res = (Rol)q.getSingleResult();
+        }
+        catch (NoResultException nre) {
             return null;
         }
-        else {
-            return res.get(0);
-        }
+        return res;
     }
 }

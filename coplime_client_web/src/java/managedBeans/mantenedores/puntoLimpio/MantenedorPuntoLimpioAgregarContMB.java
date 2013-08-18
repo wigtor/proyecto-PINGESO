@@ -70,7 +70,7 @@ public class MantenedorPuntoLimpioAgregarContMB {
     private void cargarEstadosPuntoLimpio() {
         Collection<Estado> listaTemp = crudPuntoLimpio.getAllEstadosPuntoLimpio();
         SelectElemPojo elemTemp;
-        this.listaEstadosContenedores = new ArrayList();
+        this.listaEstadosContenedores = new ArrayList<>();
         for(Estado estado_iter : listaTemp) {
             elemTemp = new SelectElemPojo();
             elemTemp.setId(Integer.toString(estado_iter.getId()));
@@ -82,7 +82,7 @@ public class MantenedorPuntoLimpioAgregarContMB {
     private void cargarMateriales() {
         Collection<Material> listaTemp = crudPuntoLimpio.getAllMateriales();
         SelectElemPojo elemTemp;
-        this.listaMateriales = new ArrayList();
+        this.listaMateriales = new ArrayList<>();
         for(Material mat_iter : listaTemp) {
             elemTemp = new SelectElemPojo();
             elemTemp.setId(Integer.toString(mat_iter.getId()));
@@ -94,7 +94,7 @@ public class MantenedorPuntoLimpioAgregarContMB {
     private void cargarUnidadesMedida() {
         Collection<UnidadMedida> listaTemp = crudPuntoLimpio.getAllUnidadesMedida();
         SelectElemPojo elemTemp;
-        this.listaUnidadesMedida = new ArrayList();
+        this.listaUnidadesMedida = new ArrayList<>();
         for(UnidadMedida unidad_iter : listaTemp) {
             elemTemp = new SelectElemPojo();
             elemTemp.setId(Integer.toString(unidad_iter.getId()));

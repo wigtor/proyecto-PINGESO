@@ -52,7 +52,7 @@ public class MantenedorPuntoLimpioVerListadoMB {
         Collection<PuntoLimpio> listaTemp = crudPuntoLimpio.getAllPuntosLimpios();
         PuntoLimpioPojo ptoTemporal;
         Calendar f;
-        List<PuntoLimpioPojo> listaResult = new ArrayList();
+        List<PuntoLimpioPojo> listaResult = new ArrayList<>();
         for(PuntoLimpio pto_iter : listaTemp) {
             ptoTemporal = new PuntoLimpioPojo();
             

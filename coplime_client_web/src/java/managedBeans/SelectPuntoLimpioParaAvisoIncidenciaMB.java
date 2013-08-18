@@ -38,7 +38,7 @@ public class SelectPuntoLimpioParaAvisoIncidenciaMB {
     
     private void cargarPuntosLimpios() {
         Collection<PuntoLimpio> listaTemp = crudPuntoLimpio.getAllPuntosLimpios();
-        this.listaPuntosLimpios = new LinkedList();
+        this.listaPuntosLimpios = new LinkedList<>();
         SelectElemPojo elemTemp;
         for(PuntoLimpio temp : listaTemp) {
             elemTemp = new SelectElemPojo();

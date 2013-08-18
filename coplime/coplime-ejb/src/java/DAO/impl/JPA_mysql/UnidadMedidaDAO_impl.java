@@ -6,8 +6,8 @@ package DAO.impl.JPA_mysql;
 
 import DAO.interfaces.UnidadMedidaDAO;
 import entities.UnidadMedida;
-import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -26,12 +26,13 @@ public class UnidadMedidaDAO_impl extends genericDAO_impl<UnidadMedida> implemen
     public UnidadMedida find(String unidadName) {
         Query q = this.em.createNamedQuery("UnidadMedida.findByName");
         q.setParameter("nombre", unidadName);
-        List<UnidadMedida> res = q.getResultList();
-        if (res.isEmpty()) {
+        UnidadMedida res;
+        try {
+            res = (UnidadMedida)q.getSingleResult();
+        }
+        catch (NoResultException nre) {
             return null;
         }
-        else {
-            return res.get(0);
-        }
+        return res;
     }
 }

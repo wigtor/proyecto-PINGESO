@@ -77,22 +77,22 @@ public class PuntoLimpio implements Serializable {
     private List<Notificacion> notificaciones;
     
     public PuntoLimpio() {
-        this.contenedores = new LinkedList();
-        this.mantenciones = new LinkedList();
-        this.solicitudesMantencion =  new LinkedList();
-        this.notificaciones =  new LinkedList();
-        this.revisiones =  new LinkedList();
+        this.contenedores = new LinkedList<>();
+        this.mantenciones = new LinkedList<>();
+        this.solicitudesMantencion =  new LinkedList<>();
+        this.notificaciones =  new LinkedList<>();
+        this.revisiones =  new LinkedList<>();
     }
     
     public PuntoLimpio(String nombre, String ubicacion, int numero) {
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.id = numero;
-        this.contenedores = new LinkedList();
-        this.mantenciones = new LinkedList();
-        this.solicitudesMantencion =  new LinkedList();
-        this.notificaciones =  new LinkedList();
-        this.revisiones =  new LinkedList();
+        this.contenedores = new LinkedList<>();
+        this.mantenciones = new LinkedList<>();
+        this.solicitudesMantencion =  new LinkedList<>();
+        this.notificaciones =  new LinkedList<>();
+        this.revisiones =  new LinkedList<>();
     }
     
     public Estado getEstadoGlobal() {

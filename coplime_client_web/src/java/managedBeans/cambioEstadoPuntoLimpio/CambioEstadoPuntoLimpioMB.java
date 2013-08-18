@@ -67,7 +67,7 @@ public class CambioEstadoPuntoLimpioMB {
     private void cargarEstadosPuntoLimpio() {
         Collection<Estado> listaTemp = crudPuntoLimpio.getAllEstadosPuntoLimpio();
         SelectElemPojo elemTemp;
-        this.listaEstadosPtoLimpio = new ArrayList();
+        this.listaEstadosPtoLimpio = new ArrayList<>();
         for(Estado estado_iter : listaTemp) {
             elemTemp = new SelectElemPojo();
             elemTemp.setId(Integer.toString(estado_iter.getId()));
@@ -79,7 +79,7 @@ public class CambioEstadoPuntoLimpioMB {
     private void cargarContenedoresPuntoLimpio() {
         Collection<Contenedor> listaTemp = crudPuntoLimpio.getContenedoresByPuntoLimpio(this.idPtoLimpio);
         SelectElemPojo elemTemp;
-        this.listaContenedores = new ArrayList();
+        this.listaContenedores = new ArrayList<>();
         for(Contenedor cont : listaTemp) {
             elemTemp = new SelectElemPojo();
             elemTemp.setId(Integer.toString(cont.getId()));

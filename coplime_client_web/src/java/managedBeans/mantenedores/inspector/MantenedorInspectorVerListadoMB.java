@@ -48,7 +48,7 @@ public class MantenedorInspectorVerListadoMB {
         Collection<Inspector> listaTemp = crudInspector.getAllInspectores();
         UsuarioPojo inspectorTemporal;
         
-        this.lista = new ArrayList();
+        this.lista = new ArrayList<>();
         for(Inspector insp_iter : listaTemp) {
             inspectorTemporal = new UsuarioPojo();
             

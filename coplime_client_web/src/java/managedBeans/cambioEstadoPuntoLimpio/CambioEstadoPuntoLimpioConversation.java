@@ -29,7 +29,7 @@ public class CambioEstadoPuntoLimpioConversation implements Serializable {
      * Creates a new instance of CambioEstadoPuntoLimpioConversation
      */
     public CambioEstadoPuntoLimpioConversation() {
-        this.listaContenedoresModificados = new ArrayList();
+        this.listaContenedoresModificados = new ArrayList<>();
     }
     
     public void limpiarCampos() {

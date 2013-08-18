@@ -15,9 +15,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 import org.primefaces.model.UploadedFile;
 import otros.CommonFunctions;
 import sessionBeans.AvisosIncidenciaLocal;
@@ -35,7 +33,6 @@ public class EnviarAvisoIncidenciaMB {
     @EJB
     private AvisosIncidenciaLocal avisosIncidencia;
     
-    
     private Integer numPuntoLimpio;
     private String nombre_presentacion_ptoLimpio;
     private String emailContacto;
@@ -46,7 +43,7 @@ public class EnviarAvisoIncidenciaMB {
     
     @PostConstruct
     public void init() {
-        //System.out.println("Ejecutando init enviarAvisoIncidencia");
+        System.out.println("Ejecutando init enviarAvisoIncidencia");
         if (!puntoLimpioIsSelected()) {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
                     "No ha seleccionado un punto limpio", 
@@ -57,11 +54,13 @@ public class EnviarAvisoIncidenciaMB {
     }
     
     private boolean puntoLimpioIsSelected() {
+        /*
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletRequest obj = (HttpServletRequest)externalContext.getRequest();
         if (!obj.getMethod().equals("GET")) {
             return true;
         }
+        */
         
         String paramNumPtoLimpio = FacesContext.getCurrentInstance().
                 getExternalContext().getRequestParameterMap().
@@ -90,7 +89,7 @@ public class EnviarAvisoIncidenciaMB {
     
     private void cargarTiposIncidencia() {
         Collection<TipoIncidencia> listaTemp = avisosIncidencia.getTiposAvisos();
-        this.listaTiposIncidencias = new LinkedList();
+        this.listaTiposIncidencias = new LinkedList<>();
         SelectElemPojo elemTemp;
         for(TipoIncidencia temp : listaTemp) {
             elemTemp = new SelectElemPojo();
@@ -114,7 +113,7 @@ public class EnviarAvisoIncidenciaMB {
                     avisosIncidencia.guardarAvisoIncidencia(numPuntoLimpio.intValue(),
                             emailContacto, detalles, tipoIncidenciaSeleccionada.intValue(),
                             datosImagen, tipoArchivo);
-                    CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                    CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
                             "Se ha enviado su aviso de incidencia",
                             "Se ha enviado su aviso de incidencia, le avisaremos cuando sea atendida su sugerencia o problema");
                 }

@@ -51,7 +51,7 @@ public class MantenedorSolicitudVerListadoMB {
         SolicitudPojo revTemporal;
         Calendar f;
         String str_temp, rut, nombre, apellido1;
-        List<SolicitudPojo> listaResult = new ArrayList();
+        List<SolicitudPojo> listaResult = new ArrayList<>();
         for(SolicitudMantencion rev_iter : listaTemp) {
             revTemporal = new SolicitudPojo();
             

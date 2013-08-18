@@ -56,7 +56,7 @@ public class AgregarSolicitudMB {
     private void cargarPuntosLimpios(){
         Collection<PuntoLimpio> listaTemp = crudPuntoLimpio.getAllPuntosLimpios();
         SelectElemPojo ptoTemporal;
-        List<SelectElemPojo> listaResult = new ArrayList();
+        List<SelectElemPojo> listaResult = new ArrayList<>();
         for(PuntoLimpio pto_iter : listaTemp) {
             ptoTemporal = new SelectElemPojo();
             
@@ -70,7 +70,7 @@ public class AgregarSolicitudMB {
     private void cargarOperarios(){
         Collection<OperarioMantencion> listaTemp = crudOperario.getAllOperarios();
         SelectElemPojo ptoTemporal;
-        List<SelectElemPojo> listaResult = new ArrayList();
+        List<SelectElemPojo> listaResult = new ArrayList<>();
         for(OperarioMantencion elem_iter : listaTemp) {
             ptoTemporal = new SelectElemPojo();
             

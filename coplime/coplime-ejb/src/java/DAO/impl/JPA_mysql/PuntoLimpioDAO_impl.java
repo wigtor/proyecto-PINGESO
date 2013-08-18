@@ -6,8 +6,8 @@ package DAO.impl.JPA_mysql;
 
 import DAO.interfaces.PuntoLimpioDAO;
 import entities.PuntoLimpio;
-import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -24,15 +24,18 @@ public class PuntoLimpioDAO_impl extends genericDAO_impl<PuntoLimpio> implements
     //Poner otras funciones extra que sólo haga este DAO
     @Override
     public PuntoLimpio find(String puntoLimpioName) {
+        if (puntoLimpioName == null)
+            return null;
         Query q = this.em.createNamedQuery("PuntoLimpio.findByName");
         q.setParameter("nombre", puntoLimpioName);
-        List<PuntoLimpio> res = q.getResultList();
-        if (res.isEmpty()) {
+        PuntoLimpio res;
+        try {
+            res = (PuntoLimpio)q.getSingleResult();
+        }
+        catch (NoResultException nre) {
             return null;
         }
-        else {
-            return res.get(0);
-        }
+        return res;
     }
     
     @Override

@@ -67,7 +67,7 @@ public class AgregarMantencionMB {
     private List<SelectElemPojo> cargarPuntosLimpios(){
         Collection<PuntoLimpio> listaTemp = crudPuntoLimpio.getAllPuntosLimpios();
         SelectElemPojo ptoTemporal;
-        List<SelectElemPojo> listaResult = new ArrayList();
+        List<SelectElemPojo> listaResult = new ArrayList<>();
         for(PuntoLimpio pto_iter : listaTemp) {
             ptoTemporal = new SelectElemPojo();
             

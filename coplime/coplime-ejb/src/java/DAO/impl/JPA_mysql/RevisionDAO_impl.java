@@ -7,7 +7,7 @@ package DAO.impl.JPA_mysql;
 import DAO.interfaces.RevisionDAO;
 import entities.RevisionPuntoLimpio;
 import java.util.Collection;
-import java.util.List;
+import java.util.LinkedList;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -24,9 +24,11 @@ public class RevisionDAO_impl extends genericDAO_impl<RevisionPuntoLimpio> imple
 
     @Override
     public Collection<RevisionPuntoLimpio> findAllFromInspector(Integer idUsuario) {
+        if (idUsuario == null) 
+            return new LinkedList<>();
         Query q = this.em.createNamedQuery("RevisionPuntoLimpio.findByInspector");
         q.setParameter("idUsuario", idUsuario);
-        List<RevisionPuntoLimpio> res = q.getResultList();
+        Collection<RevisionPuntoLimpio> res = (Collection<RevisionPuntoLimpio>)q.getResultList();
         return res;
     }
     

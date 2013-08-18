@@ -38,7 +38,7 @@ public class AvisosIncidencia implements AvisosIncidenciaLocal {
         Collection<TipoIncidencia> resultado;
         resultado = tiDAO.findAllVisibles();
         if (resultado == null) {
-            resultado = new LinkedList();
+            resultado = new LinkedList<>();
         }
         return resultado;
     }

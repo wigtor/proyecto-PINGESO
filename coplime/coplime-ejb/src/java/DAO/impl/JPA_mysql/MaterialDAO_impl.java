@@ -6,8 +6,8 @@ package DAO.impl.JPA_mysql;
 
 import DAO.interfaces.MaterialDAO;
 import entities.Material;
-import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -26,12 +26,13 @@ public class MaterialDAO_impl extends genericDAO_impl<Material> implements Mater
     public Material find(String nombre) {
         Query q = this.em.createNamedQuery("Material.findByName");
         q.setParameter("nombre", nombre);
-        List<Material> res = q.getResultList();
-        if (res.isEmpty()) {
+        Material res;
+        try {
+            res = (Material)q.getSingleResult();
+        }
+        catch (NoResultException nre) {
             return null;
         }
-        else {
-            return res.get(0);
-        }
+        return res;
     }
 }

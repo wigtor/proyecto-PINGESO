@@ -60,9 +60,14 @@
                         
                         <p:outputPanel><!-- Máximo de 16Mb y sólo imágenes -->
                             <p:fileUpload id="subidaArchivos" value="#{enviarAvisoIncidenciaMB.file}" 
-                                    mode="simple" sizeLimit="16777216" 
-                                    allowTypes="*.jpeg"
-                                    required="false" label="Subir imagen"/> 
+                                          sizeLimit="16777216" showButtons="false" mode="simple"
+                                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                          required="false" label="Subir imagen"
+                                          multiple="false" uploadLabel="Subir" cancelLabel="Calcelar"
+                                          invalidFileMessage="Archivo inválido, sólo están permitidas imágenes"
+                                          invalidSizeMessage="Imagen muy grande, máximo 16Mb, intente bajando la resolución">
+                                <f:validator validatorId="ImageFileValidator"/>
+                            </p:fileUpload> 
                         </p:outputPanel>
                         
                         <p:outputLabel for="captcha" value="Escriba las dos palabras"/>

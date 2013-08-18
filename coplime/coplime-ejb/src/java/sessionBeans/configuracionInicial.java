@@ -88,7 +88,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         estadoDAO.insert(e3);
         estadoDAO.insert(e4);
         
-        this.estadosPuntosLimpios = new LinkedList();
+        this.estadosPuntosLimpios = new LinkedList<>();
         estadosPuntosLimpios.add(e1);
         estadosPuntosLimpios.add(e2);
         estadosPuntosLimpios.add(e3);
@@ -106,7 +106,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         tiDAO.insert(t3);
         tiDAO.insert(t4);
         
-        this.tiposIncidencias = new LinkedList();
+        this.tiposIncidencias = new LinkedList<>();
         tiposIncidencias.add(t1);
         tiposIncidencias.add(t2);
         tiposIncidencias.add(t3);
@@ -115,7 +115,7 @@ public class configuracionInicial implements configuracionInicialLocal {
     
     private void cargarComunas() {
         ComunaDAO comDAO = factoryDeDAOs.getComunaDAO();
-        this.listaComunas = new LinkedList();
+        this.listaComunas = new LinkedList<>();
         Comuna temp;
         String[] comunas = {"San Bernardo", "Santiago", "San Miguel", "La Cisterna", 
         "Puente Alto", "La Pintana", "El Bosque", "Maipú", "Pedro Aguirre Cerda",
@@ -132,7 +132,7 @@ public class configuracionInicial implements configuracionInicialLocal {
     
     private void cargarUnidadesMedida() {
         UnidadMedidaDAO uniDAO = factoryDeDAOs.getUnidadMedidaDAO();
-        this.listaUnidadesMedida = new LinkedList();
+        this.listaUnidadesMedida = new LinkedList<>();
         UnidadMedida temp;
         String[] unidades = {"M^3", "Kg", "Lts"};
         
@@ -158,7 +158,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         matDAO.insert(m4);
         matDAO.insert(m5);
         
-        this.materialesPuntosLimpios = new LinkedList();
+        this.materialesPuntosLimpios = new LinkedList<>();
         materialesPuntosLimpios.add(m1);
         materialesPuntosLimpios.add(m2);
         materialesPuntosLimpios.add(m3);
@@ -230,7 +230,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         histDAO.insert(hist2);
         histDAO.insert(hist3);
         
-        this.puntosLimpios = new LinkedList();
+        this.puntosLimpios = new LinkedList<>();
         this.puntosLimpios.add(p1);
         
         
@@ -376,7 +376,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         userDAO.insert(nvoUsuario2);
         inspectDAO.insert(nvoInspect);
         
-        this.inspectores = new LinkedList();
+        this.inspectores = new LinkedList<>();
         this.inspectores.add(nvoInspect);
         
         OperarioMantencion nvoOperario;

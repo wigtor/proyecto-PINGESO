@@ -63,7 +63,7 @@ public class Contenedor implements Serializable {
     private List<HistoricoContenedor> historialContenedor;
 
     public Contenedor() {
-        this.historialContenedor = new LinkedList();
+        this.historialContenedor = new LinkedList<>();
     }
 
     

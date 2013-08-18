@@ -86,7 +86,7 @@ public class MantenedorPuntoLimpioAgregarMB {
     private void cargarInspectores() {
         Collection<Inspector> listaTemp = crudInspector.getAllInspectores();
         SelectElemPojo elemTemp;
-        this.listaInspectores = new ArrayList();
+        this.listaInspectores = new ArrayList<>();
         for(Inspector insp_iter : listaTemp) {
             elemTemp = new SelectElemPojo();
             elemTemp.setId(Integer.toString(insp_iter.getId()));
@@ -101,7 +101,7 @@ public class MantenedorPuntoLimpioAgregarMB {
     private void cargarEstadosPuntoLimpio() {
         Collection<Estado> listaTemp = crudPuntoLimpio.getAllEstadosPuntoLimpio();
         SelectElemPojo elemTemp;
-        this.listaEstadosPtoLimpio = new ArrayList();
+        this.listaEstadosPtoLimpio = new ArrayList<>();
         for(Estado estado_iter : listaTemp) {
             elemTemp = new SelectElemPojo();
             elemTemp.setId(Integer.toString(estado_iter.getId()));
@@ -113,7 +113,7 @@ public class MantenedorPuntoLimpioAgregarMB {
     private void cargarComunas() {
         Collection<Comuna> listaTemp = crudPuntoLimpio.getAllComunas();
         SelectElemPojo elemTemp;
-        this.listaComunas = new ArrayList();
+        this.listaComunas = new ArrayList<>();
         for(Comuna comuna_iter : listaTemp) {
             elemTemp = new SelectElemPojo();
             elemTemp.setId(Integer.toString(comuna_iter.getId()));

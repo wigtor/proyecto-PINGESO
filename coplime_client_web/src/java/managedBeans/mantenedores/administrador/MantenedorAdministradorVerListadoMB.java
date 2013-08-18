@@ -48,7 +48,7 @@ public class MantenedorAdministradorVerListadoMB {
         Collection<Administrador> listaTemp = crudAdministrador.getAllAdministradores();
         UsuarioPojo administradorTemporal;
         
-        this.lista = new ArrayList();
+        this.lista = new ArrayList<>();
         for(Administrador adm_iter : listaTemp) {
             administradorTemporal = new UsuarioPojo();
             

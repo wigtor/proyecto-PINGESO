@@ -71,7 +71,7 @@ public abstract class genericDAO_impl<T> implements genericDAO<T>{
     public Collection<T> findAll() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        return getEntityManager().createQuery(cq).getResultList();
+        return (Collection<T>)getEntityManager().createQuery(cq).getResultList();
     }
     
     @Override
@@ -81,7 +81,7 @@ public abstract class genericDAO_impl<T> implements genericDAO<T>{
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         q.setMaxResults(fin - inicio);
         q.setFirstResult(inicio);
-        return q.getResultList();
+        return (Collection<T>)q.getResultList();
     }
     
     @Override

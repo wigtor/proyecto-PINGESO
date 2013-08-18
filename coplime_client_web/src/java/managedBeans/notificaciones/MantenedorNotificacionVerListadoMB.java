@@ -56,7 +56,7 @@ public class MantenedorNotificacionVerListadoMB implements Serializable {
         NotificacionPojo notifTemp;
         Calendar f;
         String str_temp;
-        Collection<NotificacionPojo> listaResult = new ArrayList();
+        Collection<NotificacionPojo> listaResult = new ArrayList<>();
         for(Notificacion notif_iter : listaTemp) {
             notifTemp = new NotificacionPojo();
 

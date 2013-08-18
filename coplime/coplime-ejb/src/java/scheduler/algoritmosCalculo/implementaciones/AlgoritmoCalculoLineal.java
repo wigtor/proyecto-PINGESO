@@ -26,7 +26,7 @@ public class AlgoritmoCalculoLineal implements AlgoritmoCalculo {
             historialContenedor = (LinkedList<HistoricoContenedor>)historialContenedorOri;
         }
         else {
-            historialContenedor = new LinkedList(historialContenedorOri);
+            historialContenedor = new LinkedList<>(historialContenedorOri);
         }
         
         Double pendiente = obtenerPendiente(historialContenedor);
@@ -47,8 +47,8 @@ public class AlgoritmoCalculoLineal implements AlgoritmoCalculo {
      */
     
      private double obtenerPendiente(LinkedList<HistoricoContenedor> historialContenedor){
-        LinkedList<Double> pendientesIndividuales = new LinkedList();
-        LinkedList<Integer> puntosPendiente = new LinkedList();
+        LinkedList<Double> pendientesIndividuales = new LinkedList<>();
+        LinkedList<Integer> puntosPendiente = new LinkedList<>();
         double pendienteFinal=0.0;
         int cantidadPendientes = 0;
         //Se procede a construir las pendientes, hasta un máximo de cinco pendientes
