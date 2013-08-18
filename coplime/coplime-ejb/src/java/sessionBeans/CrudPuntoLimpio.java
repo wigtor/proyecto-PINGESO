@@ -8,6 +8,7 @@ import DAO.DAOFactory;
 import DAO.interfaces.ComunaDAO;
 import DAO.interfaces.ContenedorDAO;
 import DAO.interfaces.EstadoDAO;
+import DAO.interfaces.HistoricoContenedorDAO;
 import DAO.interfaces.InspectorDAO;
 import DAO.interfaces.MaterialDAO;
 import DAO.interfaces.PuntoLimpioDAO;
@@ -15,6 +16,7 @@ import DAO.interfaces.UnidadMedidaDAO;
 import entities.Comuna;
 import entities.Contenedor;
 import entities.Estado;
+import entities.HistoricoContenedor;
 import entities.Inspector;
 import entities.Material;
 import entities.PuntoLimpio;
@@ -83,27 +85,28 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         UnidadMedidaDAO uniMedDAO = factoryDeDAOs.getUnidadMedidaDAO();
         MaterialDAO matDAO = factoryDeDAOs.getMaterialDAO();
         EstadoDAO estDAO = factoryDeDAOs.getEstadoDAO();
+        HistoricoContenedorDAO histDAO = factoryDeDAOs.getHistoricoContenedorDAO();
         
         PuntoLimpio p = ptoDAO.find(numPuntoLimpio.intValue());
         if (p == null) {
-            System.out.println("No se encontró el id del puntolimpio al agregar el contenedor");
+            //System.out.println("No se encontró el id del puntolimpio al agregar el contenedor");
             return false;
         }
         Estado estTemp = estDAO.find(idEstadoIni.intValue());
         if (estTemp == null) {
-            System.out.println("No se encontró el id del estado al agregar el contenedor");
+            //System.out.println("No se encontró el id del estado al agregar el contenedor");
             return false;
         }
         
         Material matTemp = matDAO.find(idMaterial.intValue());
         if (matTemp == null) {
-            System.out.println("No se encontró el id del material al agregar el contenedor");
+            //System.out.println("No se encontró el id del material al agregar el contenedor");
             return false;
         }
         
         UnidadMedida uniTemp = uniMedDAO.find(idUnidadMedida.intValue());
         if (uniTemp == null) {
-            System.out.println("No se encontró el id de la unidad de medida al agregar el contenedor");
+            //System.out.println("No se encontró el id de la unidad de medida al agregar el contenedor");
             return false;
         }
         
@@ -117,10 +120,18 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         nvoCont.setMaterialDeAcopio(matTemp);
         nvoCont.setUnidadMedida(uniTemp);
         
+        HistoricoContenedor primerHistorico = new HistoricoContenedor();
+        primerHistorico.setPorcentajeLlenado(llenadoIni);
+        primerHistorico.setFechaHora(Calendar.getInstance());
+        primerHistorico.setContenedor(nvoCont);
+        nvoCont.getHistorialContenedor().add(primerHistorico);
+        
         
         p.getContenedores().add(nvoCont);
         try {
+            histDAO.insert(primerHistorico);
             contDAO.insert(nvoCont);
+            ptoDAO.update(p);
         }
         catch (Exception e) {
             return false;
@@ -231,6 +242,8 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         ContenedorDAO contDAO = factoryDeDAOs.getContenedorDAO();
         EstadoDAO estDAO = factoryDeDAOs.getEstadoDAO();
+        HistoricoContenedorDAO histDAO = factoryDeDAOs.getHistoricoContenedorDAO();
+        
         try {
             if (idEstadoContenedor == null)
                 return false;
@@ -242,6 +255,16 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
                 return false;
             cont.setEstadoContenedor(e);
             cont.setProcentajeUso(llenadoContenedor);
+            
+            //Agrego un nuevo histórico
+            HistoricoContenedor primerHistorico = new HistoricoContenedor();
+            primerHistorico.setPorcentajeLlenado(llenadoContenedor);
+            primerHistorico.setFechaHora(Calendar.getInstance());
+            primerHistorico.setContenedor(cont);
+            cont.getHistorialContenedor().add(primerHistorico);
+            
+            histDAO.insert(primerHistorico);
+            contDAO.update(cont);
         }
         catch (Exception e) {
             System.out.print("Error: "+e.getMessage());

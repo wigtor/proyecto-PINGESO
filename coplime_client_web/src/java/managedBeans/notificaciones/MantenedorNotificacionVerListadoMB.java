@@ -89,15 +89,12 @@ public class MantenedorNotificacionVerListadoMB implements Serializable {
     
     public void eliminar(Integer num) {
         boolean resultado = notificador.eliminarNotificacion(num);
-        FacesMessage msg;
         if (resultado) {
-            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Notificación eliminada", "Se ha eliminado correctamente la notificación.");
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO, "Notificación eliminada correctamente", "Se ha eliminado correctamente la notificación");
         }
         else {
-            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error, no se ha podido eliminar la notificación seleccionada.");
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, "Error al eliminar la notificación", "Error, no se ha podido eliminar la notificación seleccionada");
         }
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         CommonFunctions.goToPage("/faces/users/verNotificaciones.xhtml?faces-redirect=true");
     }
     

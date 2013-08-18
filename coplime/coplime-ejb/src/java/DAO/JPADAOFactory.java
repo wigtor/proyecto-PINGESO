@@ -13,6 +13,7 @@ import DAO.impl.JPA_mysql.RolDAO_impl;
 import DAO.impl.JPA_mysql.UsuarioDAO_impl;
 import DAO.impl.JPA_mysql.TipoIncidenciaDAO_impl;
 import DAO.impl.JPA_mysql.EstadoDAO_impl;
+import DAO.impl.JPA_mysql.HistoricoContenedorDAO_impl;
 import DAO.impl.JPA_mysql.MantencionDAO_impl;
 import DAO.impl.JPA_mysql.MaterialDAO_impl;
 import DAO.impl.JPA_mysql.NotificacionDAO_impl;
@@ -29,6 +30,7 @@ import DAO.interfaces.PuntoLimpioDAO;
 import DAO.interfaces.RolDAO;
 import DAO.interfaces.UsuarioDAO;
 import DAO.interfaces.EstadoDAO;
+import DAO.interfaces.HistoricoContenedorDAO;
 import DAO.interfaces.MantencionDAO;
 import DAO.interfaces.MaterialDAO;
 import DAO.interfaces.NotificacionDAO;
@@ -140,5 +142,10 @@ public class JPADAOFactory extends DAOFactory{
     @Override
     public SolicitudMantencionDAO getSolicitudMantencionDAO() {
         return new SolicitudMantencionDAO_impl(em);
+    }
+    
+    @Override
+    public HistoricoContenedorDAO getHistoricoContenedorDAO() {
+        return new HistoricoContenedorDAO_impl(em);
     }
 }

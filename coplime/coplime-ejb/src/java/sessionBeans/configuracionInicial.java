@@ -9,6 +9,7 @@ import DAO.interfaces.AdministradorDAO;
 import DAO.interfaces.ComunaDAO;
 import DAO.interfaces.ContenedorDAO;
 import DAO.interfaces.EstadoDAO;
+import DAO.interfaces.HistoricoContenedorDAO;
 import DAO.interfaces.InspectorDAO;
 import DAO.interfaces.MaterialDAO;
 import DAO.interfaces.NotificacionDAO;
@@ -22,6 +23,7 @@ import entities.Administrador;
 import entities.Comuna;
 import entities.Contenedor;
 import entities.Estado;
+import entities.HistoricoContenedor;
 import entities.Inspector;
 import entities.Material;
 import entities.NotificacionDeUsuario;
@@ -173,6 +175,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         
         PuntoLimpioDAO plDAO = factoryDeDAOs.getPuntoLimpioDAO();
         ContenedorDAO contDAO = factoryDeDAOs.getContenedorDAO();
+        HistoricoContenedorDAO histDAO = factoryDeDAOs.getHistoricoContenedorDAO();
         plDAO.insert(p1);
         
         Contenedor c1 = new Contenedor();
@@ -183,6 +186,11 @@ public class configuracionInicial implements configuracionInicialLocal {
         c1.setPorcentajeUsoEstimado(0);
         c1.setProcentajeUso(0);
         c1.setMaterialDeAcopio(this.materialesPuntosLimpios.get(0));
+        HistoricoContenedor hist1 = new HistoricoContenedor();
+        hist1.setPorcentajeLlenado(0);
+        hist1.setFechaHora(Calendar.getInstance());
+        hist1.setContenedor(c1);
+        c1.getHistorialContenedor().add(hist1);
         
         Contenedor c2 = new Contenedor();
         c2.setEstadoContenedor(this.estadosPuntosLimpios.get(0));
@@ -192,6 +200,11 @@ public class configuracionInicial implements configuracionInicialLocal {
         c2.setPorcentajeUsoEstimado(0);
         c2.setProcentajeUso(0);
         c2.setMaterialDeAcopio(this.materialesPuntosLimpios.get(1));
+        HistoricoContenedor hist2 = new HistoricoContenedor();
+        hist2.setPorcentajeLlenado(0);
+        hist2.setFechaHora(Calendar.getInstance());
+        hist2.setContenedor(c2);
+        c2.getHistorialContenedor().add(hist2);
         
         Contenedor c3 = new Contenedor();
         c3.setEstadoContenedor(this.estadosPuntosLimpios.get(0));
@@ -201,10 +214,21 @@ public class configuracionInicial implements configuracionInicialLocal {
         c3.setPorcentajeUsoEstimado(0);
         c3.setProcentajeUso(0);
         c3.setMaterialDeAcopio(this.materialesPuntosLimpios.get(2));
+        HistoricoContenedor hist3 = new HistoricoContenedor();
+        hist3.setPorcentajeLlenado(0);
+        hist3.setFechaHora(Calendar.getInstance());
+        hist3.setContenedor(c3);
+        c3.getHistorialContenedor().add(hist3);
         
+        p1.getContenedores().add(c1);
+        p1.getContenedores().add(c2);
+        p1.getContenedores().add(c3);
         contDAO.insert(c1);
         contDAO.insert(c2);
         contDAO.insert(c3);
+        histDAO.insert(hist1);
+        histDAO.insert(hist2);
+        histDAO.insert(hist3);
         
         this.puntosLimpios = new LinkedList();
         this.puntosLimpios.add(p1);
@@ -228,6 +252,11 @@ public class configuracionInicial implements configuracionInicialLocal {
         c1.setPorcentajeUsoEstimado(0);
         c1.setProcentajeUso(0);
         c1.setMaterialDeAcopio(this.materialesPuntosLimpios.get(3));
+        hist1 = new HistoricoContenedor();
+        hist1.setPorcentajeLlenado(0);
+        hist1.setFechaHora(Calendar.getInstance());
+        hist1.setContenedor(c1);
+        c1.getHistorialContenedor().add(hist1);
         
         c2 = new Contenedor();
         c2.setEstadoContenedor(this.estadosPuntosLimpios.get(0));
@@ -237,10 +266,18 @@ public class configuracionInicial implements configuracionInicialLocal {
         c2.setPorcentajeUsoEstimado(0);
         c2.setProcentajeUso(0);
         c2.setMaterialDeAcopio(this.materialesPuntosLimpios.get(4));
+        hist2 = new HistoricoContenedor();
+        hist2.setPorcentajeLlenado(0);
+        hist2.setFechaHora(Calendar.getInstance());
+        hist2.setContenedor(c2);
+        c2.getHistorialContenedor().add(hist2);
         
-        
+        p1.getContenedores().add(c1);
+        p1.getContenedores().add(c2);
         contDAO.insert(c1);
         contDAO.insert(c2);
+        histDAO.insert(hist1);
+        histDAO.insert(hist2);
         
         this.puntosLimpios.add(p1);
     }

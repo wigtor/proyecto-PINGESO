@@ -48,6 +48,7 @@
                         
                         
                         <f:facet name="footer">
+                            <p:button value="Solicitar mantención" href="/faces/users/inspector/solicitarMantencionPuntoLimpio.xhtml" rendered="#{request.isUserInRole('Inspector')}"/>
                             <p:commandButton value="Volver" action="#{mantenedorSolicitudVerListadoMB.volver()}"/>
                         </f:facet>
                     </p:panelGrid>
