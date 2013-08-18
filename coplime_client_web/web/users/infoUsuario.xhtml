@@ -47,18 +47,21 @@
                         <p:panelGrid columns="2" styleClass="centrar">
                             <f:facet name="header">Datos de contacto</f:facet>
 
-                            <p:outputLabel value="Teléfono"/>
-                            <p:inputText value="#{infoUsuarioMB.telefono}"/>
                             
-                            <p:outputLabel value="E-mail"/>
-                            <p:inputText value="#{infoUsuarioMB.email}" required="true"/>
+                            <p:outputLabel value="Teléfono" for="telefono"/>
+                            <p:inputText id="telefono" value="#{infoUsuarioMB.telefono}" maxlength="9"/>
+                            
+                            <p:outputLabel value="E-mail" for="email"/>
+                            <p:inputText id="email" value="#{infoUsuarioMB.email}" required="true">
+                                <f:validator validatorId="EmailValidator"/>
+                            </p:inputText>
                             
                                
                             <f:facet name="footer">
                                 <p:commandButton value="Cambiar contraseña" action="#{infoUsuarioMB.goToCambiarContrasegna()}"/>
                              
-                                <p:commandButton value="Guardar cambios" action="#{infoUsuarioMB.guardarCambios()}"/>
-                                <p:commandButton value="Volver" action="#{infoUsuarioMB.goToPuntosLimpios()}"/>
+                                <p:commandButton value="Guardar cambios" ajax="false" action="#{infoUsuarioMB.guardarCambios()}"/>
+                                <p:commandButton value="Volver" immediate="true" action="#{infoUsuarioMB.goToPuntosLimpios()}"/>
                             </f:facet>
 
                         </p:panelGrid>

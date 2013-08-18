@@ -25,24 +25,25 @@
                     <p:panelGrid columns="2" styleClass="centrar">
                         <f:facet name="header">Datos del usuario</f:facet>
                         
+                        
                         <p:outputLabel value="Nombre de usuario"/>
                         <p:outputLabel value="#{cambioPassMB.username}"/>
                         
-                        <p:outputLabel value="Contraseña actual"/>
-                        <p:inputText value="#{cambioPassMB.passActual}" autocomplete="off" type="password"/>
+                        <p:outputLabel value="Contraseña actual" for="passAct"/>
+                        <p:inputText id="passAct" value="#{cambioPassMB.passActual}" autocomplete="off" type="password"/>
                         
-                        <p:outputLabel value="Contraseña nueva"/>
-                        <p:inputText value="#{cambioPassMB.nvaPass}" autocomplete="off" type="password"/>
+                        <p:outputLabel value="Contraseña nueva" for="newPass"/>
+                        <p:inputText id="newPass" value="#{cambioPassMB.nvaPass}" autocomplete="off" type="password"/>
                         
-                        <p:outputLabel value="Repetir contraseña nueva"/>
-                        <p:inputText value="#{cambioPassMB.nvaPassRep}" autocomplete="off" type="password"/>
+                        <p:outputLabel value="Repetir contraseña nueva" for="newPass"/>
+                        <p:inputText id="newPass2" value="#{cambioPassMB.nvaPassRep}" autocomplete="off" type="password"/>
+                        
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Guardar cambios" action="#{cambioPassMB.guardarPass()}" update="msj_error_cambioContrasegna"/>
-                            <p:commandButton value="Cancelar" action="#{cambioPassMB.goToInfoUsuario()}"/>
+                            <p:commandButton value="Guardar cambios" ajax="false" action="#{cambioPassMB.guardarPass()}" />
+                            <p:commandButton value="Cancelar" immediate="true" action="#{cambioPassMB.goToInfoUsuario()}"/>
                         </f:facet>
                     </p:panelGrid>
-                    <p:growl id="msj_error_cambioContrasegna"/>
                 </h:form>
                 <p:contextMenu beforeShow="pcontext.show()" />
             </ui:define>

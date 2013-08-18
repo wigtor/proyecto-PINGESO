@@ -82,7 +82,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
                 /*
                  * Se pide 
                  */
-                fechaRevision = ac.estimar((LinkedList)c.getHistorialContenedor(), 100);
+                fechaRevision = ac.estimar(c.getHistorialContenedor(), 100);
                 /* Se establece la fecha más próxima para tener que revisar el punto limpio
                  * Si no hay fechas, se escoge la primera.
                  * Si hay fechas, se compara con la menor actual.
