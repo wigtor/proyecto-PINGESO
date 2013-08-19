@@ -50,7 +50,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
         Collection<PuntoLimpio> listaPuntosLimpios;
         boolean resultadoOperacion;
         // TODO: Borrar esta línea
-        System.out.println("Timer event: " + new Date() + ": Generando notificaciones automáticas.");
+        System.out.println("Timer event [" + new Date() + "]: Generando notificaciones automáticas.");
         
         //Le pedimos al sistema que nos entregue los puntos limpios existentes
         listaPuntosLimpios = crudPuntoLimpio.getAllPuntosLimpios();

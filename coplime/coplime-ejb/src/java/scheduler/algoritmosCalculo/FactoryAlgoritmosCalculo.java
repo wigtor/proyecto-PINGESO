@@ -4,7 +4,7 @@
  */
 package scheduler.algoritmosCalculo;
 
-import scheduler.algoritmosCalculo.implementaciones.AlgoritmoCalculoLineal;
+import scheduler.algoritmosCalculo.implementaciones.AlgoritmoPromediosPonderados;
 
 /**
  *
@@ -30,9 +30,9 @@ public class FactoryAlgoritmosCalculo {
     public static AlgoritmoCalculo getAlgoritmoCalculo(int tipoAlgoritmo){
         switch (tipoAlgoritmo){
             case PROMEDIO_PENDIENTES:
-                return new AlgoritmoCalculoLineal();
+                return new AlgoritmoPromediosPonderados();
             case METODO_BAYESIANO:
-                return new AlgoritmoCalculoLineal(); //Por ahora que use el mismo
+                return new AlgoritmoPromediosPonderados(); //Por ahora que use el mismo
             default:
                 return null; //Algoritmo desconocido
         }
