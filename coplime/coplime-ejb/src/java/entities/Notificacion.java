@@ -23,8 +23,8 @@ import javax.persistence.Temporal;
  */
 @Entity
 @NamedQueries( {
-    @NamedQuery(name="Notificacion.findByUsuarioDestinatario", query="SELECT u FROM Notificacion u WHERE u.puntoLimpio.inspectorEncargado.usuario.username = :username"),
-    @NamedQuery(name="Notificacion.countNoRevisadasUsuarioDestinatario", query="SELECT count(u) FROM Notificacion u WHERE (u.puntoLimpio.inspectorEncargado.usuario.username = :username OR u.puntoLimpio.inspectorEncargado IS NULL) AND u.revisado = false")
+    @NamedQuery(name="Notificacion.findByUsuarioDestinatario", query="SELECT u FROM Notificacion u WHERE u.usuarioEncargado.username = :username"),
+    @NamedQuery(name="Notificacion.countNoRevisadasUsuarioDestinatario", query="SELECT count(u) FROM Notificacion u WHERE (u.usuarioEncargado.username = :username) AND (u.revisado = false)")
 })
 public class Notificacion implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -35,6 +35,10 @@ public class Notificacion implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(nullable = false)
     protected Calendar fechaHora;
+    
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    protected Usuario usuarioEncargado;
     
     @Column(nullable = false)
     protected String comentario;
@@ -100,6 +104,14 @@ public class Notificacion implements Serializable {
 
     public void setResuelto(boolean resuelto) {
         this.resuelto = resuelto;
+    }
+
+    public Usuario getUsuarioEncargado() {
+        return usuarioEncargado;
+    }
+
+    public void setUsuarioEncargado(Usuario usuarioEncargado) {
+        this.usuarioEncargado = usuarioEncargado;
     }
 
     public Integer getId() {

@@ -5,12 +5,14 @@
 package sessionBeans;
 
 import DAO.DAOFactory;
+import DAO.interfaces.AdministradorDAO;
 import DAO.interfaces.NotificacionDAO;
 import DAO.interfaces.PuntoLimpioDAO;
 import DAO.interfaces.TipoIncidenciaDAO;
 import entities.NotificacionDeUsuario;
 import entities.PuntoLimpio;
 import entities.TipoIncidencia;
+import entities.Usuario;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Calendar;
@@ -58,6 +60,14 @@ public class AvisosIncidencia implements AvisosIncidenciaLocal {
         //Creo la notificación de incidencia
         NotificacionDeUsuario notif = new NotificacionDeUsuario(detalles, ptoLimpioRelacionado, tipoIncidencia);
         notif.setEmailContacto(emailContacto);
+        Usuario userEncargado;
+        if (ptoLimpioRelacionado.getInspectorEncargado() != null) {
+            userEncargado = ptoLimpioRelacionado.getInspectorEncargado().getUsuario();
+        } else {
+            AdministradorDAO adminDAO = factoryDeDAOs.getAdministradorDAO();
+            userEncargado = adminDAO.findAnyAdministrador().getUsuario();
+        }
+        notif.setUsuarioEncargado(userEncargado);
         if (datosImagen != null) {
             notif.setTipoImagen(tipoImagen);
             String url_completa = guardarArchivo(tipoImagen, datosImagen);

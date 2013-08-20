@@ -294,6 +294,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         notif.setFechaHora(Calendar.getInstance());
         notif.setResuelto(false);
         notif.setRevisado(false);
+        notif.setUsuarioEncargado(inspectores.get(0).getUsuario());
         notif.setTipoImagen("image/jpeg");
         notif.setTipoIncidencia(tiposIncidencias.get(1));
         notif.setPuntoLimpio(puntosLimpios.get(0));

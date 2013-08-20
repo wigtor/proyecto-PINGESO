@@ -27,4 +27,6 @@ public interface AdministradorDAO extends genericDAO<Administrador>{
     public boolean deleteByRut(int rut);
     
     public Administrador findByUsername(String username);
+    
+    public Administrador findAnyAdministrador();
 }

@@ -6,14 +6,18 @@ package sessionBeans;
 
 import DAO.DAOFactory;
 import DAO.interfaces.InspectorDAO;
+import DAO.interfaces.NotificacionDAO;
 import DAO.interfaces.OperarioDAO;
 import DAO.interfaces.PuntoLimpioDAO;
 import DAO.interfaces.SolicitudMantencionDAO;
+import DAO.interfaces.TipoIncidenciaDAO;
 import DAO.interfaces.UsuarioDAO;
 import entities.Inspector;
+import entities.Notificacion;
 import entities.OperarioMantencion;
 import entities.PuntoLimpio;
 import entities.SolicitudMantencion;
+import entities.TipoIncidencia;
 import entities.Usuario;
 import java.util.Calendar;
 import java.util.Collection;
@@ -48,6 +52,27 @@ public class CrudSolicitudMantencion implements CrudSolicitudMantencionLocal {
         SolicitudMantencion nvaSolic = new SolicitudMantencion(p, ins, opAsign, detalle);
         nvaSolic.setFecha(Calendar.getInstance());
         solicDAO.insert(nvaSolic);
+        
+        TipoIncidenciaDAO tpoIncidDAO = factoryDeDAOs.getTipoIncidenciaDAO();
+        TipoIncidencia tpoIncid = tpoIncidDAO.find("Solicitud de mantención pendiente");
+        if (tpoIncid == null) {
+            tpoIncid = new TipoIncidencia("Solicitud de mantención pendiente", false);
+            tpoIncidDAO.insert(tpoIncid);
+        }
+        
+        NotificacionDAO notifDAO = factoryDeDAOs.getNotificacionDAO();
+        Notificacion nvaNotif = new Notificacion();
+        nvaNotif.setComentario("Tiene una nueva solicitud de mantención "
+                .concat("pendiente del punto limpio \"").concat(p.getId().toString())
+                .concat(" - ").concat(p.getNombre()).concat("\""));
+        nvaNotif.setFechaHora(Calendar.getInstance());
+        nvaNotif.setPuntoLimpio(p);
+        nvaNotif.setResuelto(false);
+        nvaNotif.setRevisado(false);
+        nvaNotif.setUsuarioEncargado(opAsign.getUsuario());
+        nvaNotif.setTipoIncidencia(tpoIncid);
+        notifDAO.insert(nvaNotif);
+        
         return true;
     }
 

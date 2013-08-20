@@ -63,4 +63,21 @@ public class AdministradorDAO_impl extends genericDAO_impl<Administrador> implem
         getEntityManager().remove(adminToDelete);
         return true;
     }
+    
+    @Override
+    public Administrador findAnyAdministrador() {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Administrador.class));
+        Query q = getEntityManager().createQuery(cq);
+        q.setMaxResults(1);
+        q.setFirstResult(0);
+        
+        List<Administrador> res = q.getResultList();
+        if (res.isEmpty()) {
+            return null;
+        }
+        else {
+            return res.get(0);
+        }
+    }
 }
