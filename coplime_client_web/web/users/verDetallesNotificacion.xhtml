@@ -45,8 +45,12 @@
                         <p:selectBooleanCheckbox value="#{mantenedorNotificacionVerDetallesMB.resuelta_seleccionado}"/>
                         
                         <p:outputLabel value="Imagen adjunta"/>
-                        <p:graphicImage value="#{mantenedorNotificacionVerDetallesMB.imagen}" cache="true" width="80px" alt="No hay imagen adjunta"/>
-                        
+                        <p:graphicImage value="#{mantenedorNotificacionVerDetallesMB.imagen}" 
+                                        id="img" cache="true" width="80px" alt="No hay imagen adjunta"/>
+                        <p:tooltip for="img" showEvent="click">  
+                            <p:graphicImage value="#{mantenedorNotificacionVerDetallesMB.imagen}" 
+                                            cache="true" alt="No hay imagen adjunta" width="400px"/>  
+                        </p:tooltip>
                         <f:facet name="footer">
                             <p:commandButton value="Volver" action="#{mantenedorNotificacionVerDetallesMB.volverToListaAndSave()}"/>
                         </f:facet>
