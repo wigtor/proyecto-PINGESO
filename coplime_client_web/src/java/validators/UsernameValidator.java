@@ -24,7 +24,7 @@ import sessionBeans.CrudUsuariosComunLocal;
  * @author Carlos
  */
 @FacesValidator("UsernameValidator")
-public class UsernameValidator implements Validator{
+public class UsernameValidator implements Validator {
     CrudUsuariosComunLocal crudUsuariosComun = lookupCrudUsuariosComunLocal();
     private static final String USERNAME_PATTERN = "^[_A-Za-z0-9-]+$";
  

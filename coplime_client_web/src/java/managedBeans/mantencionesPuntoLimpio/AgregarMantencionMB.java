@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import managedBeans.cambioEstadoPuntoLimpio.CambioEstadoPuntoLimpioConversation;
 import otros.CommonFunctions;
@@ -87,7 +88,7 @@ public class AgregarMantencionMB {
     }
     
     public void guardarMantencion() {
-         System.out.println("Se hizo click en 'guardarRevision()'");
+         //System.out.println("Se hizo click en 'guardarRevision()'");
          
          String usernameLogueado = CommonFunctions.getUsuarioLogueado();
          
@@ -96,14 +97,16 @@ public class AgregarMantencionMB {
          for(ContenedorPojo c : cambioEstadoSessionBean.getListaContenedoresModificados()) {
              crudPuntoLimpio.cambiarEstadoContenedor(c.getId(), c.getIdEstadoContenedor(), c.getLlenadoContenedor());
          }
-         
+         CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO, 
+                "Se ha guardado la mantención realizada al punto limpio", 
+                "Se ha guardado la mantención realizada al punto limpio");
          volverToLista();
     }
     
     public void volverToLista() {
-        System.out.println("Se hizo click en 'volverToLista()'");
+        //System.out.println("Se hizo click en 'volverToLista()'");
         cambioEstadoSessionBean.limpiarCampos();
-        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
+        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml?faces-redirect=true");
     }
 
     public Integer getNumPtoLimpio() {

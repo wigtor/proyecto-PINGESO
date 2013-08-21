@@ -17,7 +17,6 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudPuntoLimpioLocal;
@@ -69,13 +68,15 @@ public class MantenedorPuntoLimpioVerListadoMB {
     }
     
     public void agregar() {
-        CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml");
+        this.mantPtoLimpio.beginConversation();
+        CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
     }
     
     public void verDetalles(Integer numPtoLimpio) {
         PuntoLimpio ptoLimpioSelec = crudPuntoLimpio.getPuntoLimpioByNum(numPtoLimpio);
         
         if (ptoLimpioSelec != null) { //Verifico que exista
+            this.mantPtoLimpio.beginConversation();
             this.mantPtoLimpio.setIdPuntoLimpioDetalles(numPtoLimpio);
             CommonFunctions.goToPage("/faces/users/verDetallesPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
         }
@@ -88,6 +89,7 @@ public class MantenedorPuntoLimpioVerListadoMB {
     public void editar(Integer numPto) {
         PuntoLimpio ptoEdit = crudPuntoLimpio.getPuntoLimpioByNum(numPto);
         if (ptoEdit != null) {
+            this.mantPtoLimpio.beginConversation();
             this.mantPtoLimpio.setIdPuntoLimpioDetalles(numPto);
             CommonFunctions.goToPage("/faces/users/admin/editarPuntoLimpio.xhtml");
         }

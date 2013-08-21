@@ -10,12 +10,14 @@ import entities.Estado;
 import entities.Material;
 import entities.UnidadMedida;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudPuntoLimpioLocal;
@@ -47,7 +49,7 @@ public class MantenedorPuntoLimpioAgregarContMB {
      * Creates a new instance of MantenedorPuntoLimpioAgregar
      */
     public MantenedorPuntoLimpioAgregarContMB() {
-        System.out.println("Se ha instanciado un MantenedorPuntoLimpioAgregar");
+        //System.out.println("Se ha instanciado un MantenedorPuntoLimpioAgregar");
         this.llenadoContenedor = 0;
     }
     
@@ -103,14 +105,10 @@ public class MantenedorPuntoLimpioAgregarContMB {
         }
     }
     
-    private void limpiarCampos() {
-        this.material = null;
-        this.estadoContenedor = null;
-        this.llenadoContenedor = null;
-    }
-    
     private ContenedorPojo crearContenedorTemporal() {
         ContenedorPojo res = new ContenedorPojo();
+        //para darle cualquier valor, pero que no se repita
+        res.setId(new Integer(Math.abs((int)(Calendar.getInstance().getTimeInMillis()))));
         res.setIdMaterial(material);
         res.setLlenadoContenedor(llenadoContenedor);
         res.setIdEstadoContenedor(estadoContenedor);
@@ -128,23 +126,32 @@ public class MantenedorPuntoLimpioAgregarContMB {
         return res;
     }
     
+    public void eliminarContenedorAgregado(Integer id) {
+        this.mantPtoLimpio.eliminarContenedor(id);
+        CommonFunctions.goToPage("/faces/users/admin/agregarContenedor.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
+    }
+    
     public void guardarNvoContenedor_y_otro() {
-        System.out.println("Se hizo click en 'guardarNvoContenedor_y_otro()'");
-        mantPtoLimpio.getContenedores_creando().add(crearContenedorTemporal());
-        
-        CommonFunctions.goToPage("/faces/users/admin/agregarContenedor.xhtml");
+        //System.out.println("Se hizo click en 'guardarNvoContenedor_y_otro()'");
+        this.mantPtoLimpio.getContenedores_creando().add(crearContenedorTemporal());
+        CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO, 
+                "Se ha almacenado temporalmente la creación de un contenedor", 
+                "Se ha almacenado temporalmente la creación de un contenedor para el punto limpio que está creando");
+        CommonFunctions.goToPage("/faces/users/admin/agregarContenedor.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
     }
     
     public void guardarNvoContenedor() {
-        System.out.println("Se hizo click en 'guardarNvoContenedor()'");
-        mantPtoLimpio.getContenedores_creando().add(crearContenedorTemporal());
-        
-        CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml");
+        //System.out.println("Se hizo click en 'guardarNvoContenedor()'");
+        this.mantPtoLimpio.getContenedores_creando().add(crearContenedorTemporal());
+        CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO, 
+                "Se ha almacenado temporalmente la creación de un contenedor", 
+                "Se ha almacenado temporalmente la creación de un contenedor para el punto limpio que está creando");
+        CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
     }
     
     public void volverToPuntoLimpio() {
-        System.out.println("Se hizo click en 'volverToPuntoLimpio()'");
-        CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml");
+        //System.out.println("Se hizo click en 'volverToPuntoLimpio()'");
+        CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
     }
     
     public Integer getNumPtoLimpio() {

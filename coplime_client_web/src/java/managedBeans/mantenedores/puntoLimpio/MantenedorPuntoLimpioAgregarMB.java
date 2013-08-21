@@ -33,15 +33,13 @@ import sessionBeans.CrudPuntoLimpioLocal;
 @Named(value = "mantenedorPuntoLimpioAgregarMB")
 @RequestScoped
 public class MantenedorPuntoLimpioAgregarMB {
+
     @EJB
     private CrudInspectorLocal crudInspector;
     @EJB
     private CrudPuntoLimpioLocal crudPuntoLimpio;
-    
-    
     @Inject
     private MantenedorPuntoLimpioConversation mantPtoLimpio;
-    
     private Integer num;
     private String nombre;
     private Integer comuna_seleccionada;
@@ -52,14 +50,13 @@ public class MantenedorPuntoLimpioAgregarMB {
     private List<SelectElemPojo> listaEstadosPtoLimpio;
     private Integer inspectorEncargado_seleccionado;
     private List<SelectElemPojo> listaInspectores;
-    
-    
+
     /**
      * Creates a new instance of MantenedorPuntoLimpioAgregarMB
      */
     public MantenedorPuntoLimpioAgregarMB() {
     }
-    
+
     @PostConstruct
     public void init() {
         cargarEstadosPuntoLimpio();
@@ -67,7 +64,7 @@ public class MantenedorPuntoLimpioAgregarMB {
         cargarComunas();
         cargarDatosPtoLimpioTemporal();
     }
-    
+
     private void cargarDatosPtoLimpioTemporal() {
         if (mantPtoLimpio.getPto_creando() != null) {
             PuntoLimpioPojo p = mantPtoLimpio.getPto_creando();
@@ -80,48 +77,48 @@ public class MantenedorPuntoLimpioAgregarMB {
             this.fechaRevision = p.getFechaProximaRev();
         }
     }
-    
+
     private void cargarInspectores() {
         Collection<Inspector> listaTemp = crudInspector.getAllInspectores();
         SelectElemPojo elemTemp;
         this.listaInspectores = new ArrayList<>();
-        for(Inspector insp_iter : listaTemp) {
+        for (Inspector insp_iter : listaTemp) {
             elemTemp = new SelectElemPojo();
             elemTemp.setId(Integer.toString(insp_iter.getId()));
-            elemTemp.setLabel(insp_iter.getUsuario().getRut() + " - " 
-                    + insp_iter.getUsuario().getNombre() + " " 
+            elemTemp.setLabel(insp_iter.getUsuario().getRut() + " - "
+                    + insp_iter.getUsuario().getNombre() + " "
                     + insp_iter.getUsuario().getApellido1());
             this.listaInspectores.add(elemTemp);
-            
+
         }
     }
-    
+
     private void cargarEstadosPuntoLimpio() {
         Collection<Estado> listaTemp = crudPuntoLimpio.getAllEstadosPuntoLimpio();
         SelectElemPojo elemTemp;
         this.listaEstadosPtoLimpio = new ArrayList<>();
-        for(Estado estado_iter : listaTemp) {
+        for (Estado estado_iter : listaTemp) {
             elemTemp = new SelectElemPojo();
             elemTemp.setId(Integer.toString(estado_iter.getId()));
             elemTemp.setLabel(estado_iter.getNombreEstado());
             this.listaEstadosPtoLimpio.add(elemTemp);
         }
     }
-    
+
     private void cargarComunas() {
         Collection<Comuna> listaTemp = crudPuntoLimpio.getAllComunas();
         SelectElemPojo elemTemp;
         this.listaComunas = new ArrayList<>();
-        for(Comuna comuna_iter : listaTemp) {
+        for (Comuna comuna_iter : listaTemp) {
             elemTemp = new SelectElemPojo();
             elemTemp.setId(Integer.toString(comuna_iter.getId()));
             elemTemp.setLabel(comuna_iter.getNombre());
             this.listaComunas.add(elemTemp);
         }
     }
-    
+
     private PuntoLimpioPojo crearPtoLimpioTemporal() {
-        System.out.println("Creando un pto limpio temporal con nombre: "+nombre + " con num: "+num);
+        //System.out.println("Creando un pto limpio temporal con nombre: "+nombre + " con num: "+num);
         PuntoLimpioPojo res = new PuntoLimpioPojo();
         res.setNum(num);
         res.setNombre(nombre);
@@ -132,12 +129,18 @@ public class MantenedorPuntoLimpioAgregarMB {
         res.setFechaProximaRev(fechaRevision);
         return res;
     }
-    
+
     public void agregarContenedores() {
+        System.out.println("Se hizo click en agregarContenedores");
         mantPtoLimpio.setPto_creando(crearPtoLimpioTemporal());
-        CommonFunctions.goToPage("/faces/users/admin/agregarContenedor.xhtml");
+        CommonFunctions.goToPage("/faces/users/admin/agregarContenedor.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
     }
     
+    public void eliminarContenedorAgregado(Integer id) {
+        this.mantPtoLimpio.eliminarContenedor(id);
+        CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
+    }
+
     public void agregarPuntoLimpio() {
         //System.out.println("Se hizo click en 'agregarPuntoLimpio()'");
         //System.out.println("Cantidad de contenedores: " + mantPtoLimpio.getContenedores_creando().size());
@@ -148,6 +151,7 @@ public class MantenedorPuntoLimpioAgregarMB {
             numPuntoLimpio = crudPuntoLimpio.agregarPuntoLimpio(nombre, num, comuna_seleccionada, direccion, fechaComoCalendar, estado_seleccionado, inspectorEncargado_seleccionado);
         } catch (Exception ex) {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), ex.getMessage());
+            this.mantPtoLimpio.endConversation();
             CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?faces-redirect=true");
             return;
         }
@@ -156,7 +160,7 @@ public class MantenedorPuntoLimpioAgregarMB {
             boolean resultadoAgregarCont;
             Integer idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida;
             List<ContenedorPojo> listaContenedoresTemp = this.mantPtoLimpio.getContenedores_creando();
-            for(ContenedorPojo contTemp : listaContenedoresTemp) {
+            for (ContenedorPojo contTemp : listaContenedoresTemp) {
                 idMaterial = contTemp.getIdMaterial();
                 idEstadoIni = contTemp.getIdEstadoContenedor();
                 llenadoIni = contTemp.getLlenadoContenedor();
@@ -164,7 +168,7 @@ public class MantenedorPuntoLimpioAgregarMB {
                 idUnidadMedida = contTemp.getIdUnidadMedida();
                 System.out.format("%d, %d, %d, %d, %d, %d\n\n", numPuntoLimpio, idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida);
                 resultadoAgregarCont = crudPuntoLimpio.agregarContenedor(
-                    numPuntoLimpio, idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida);
+                        numPuntoLimpio, idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida);
                 if (!resultadoAgregarCont) {
                     //Mostrar error
                 }
@@ -173,19 +177,20 @@ public class MantenedorPuntoLimpioAgregarMB {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
                     "Se ha creado un nuevo punto limpio",
                     "Se ha creado el punto limpio \"".concat(nombre).concat("\""));
-            
-        }
-        else {
+
+        } else {
             //Avisar que ocurrió un error al agregar el punto limpio
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
                     "Ha ocurrido un error al crear el punto limpio",
                     "No ha sido posible crear el punto limpio, intente más tarde");
         }
+        this.mantPtoLimpio.endConversation();
         volverToLista();
     }
-    
+
     public void volverToLista() {
-        System.out.println("Se hizo click en 'volverToLista()'");
+        this.mantPtoLimpio.endConversation();
+        //System.out.println("Se hizo click en 'volverToLista()'");
         mantPtoLimpio.setPto_creando(null);
         mantPtoLimpio.getContenedores_creando().clear();
         CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml?faces-redirect=true");
@@ -258,7 +263,7 @@ public class MantenedorPuntoLimpioAgregarMB {
     public void setListaInspectores(List<SelectElemPojo> listaInspectores) {
         this.listaInspectores = listaInspectores;
     }
-    
+
     public Integer getNum() {
         return num;
     }

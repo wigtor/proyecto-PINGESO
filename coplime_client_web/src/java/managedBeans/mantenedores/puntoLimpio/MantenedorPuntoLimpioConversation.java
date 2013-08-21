@@ -43,6 +43,7 @@ public class MantenedorPuntoLimpioConversation implements Serializable {
      * Creates a new instance of MantenedorPuntoLimpioConversation
      */
     public MantenedorPuntoLimpioConversation() {
+        //System.out.println("Se contruyó un MantenedorPuntoLimpioConversation");
         contenedores_creando = new LinkedList<>();
     }
     
@@ -50,6 +51,15 @@ public class MantenedorPuntoLimpioConversation implements Serializable {
         pto_creando = null;
         contenedores_creando.clear();
         idPuntoLimpioDetalles = null;
+    }
+    
+    public void eliminarContenedor(Integer id) {
+        for(ContenedorPojo temp : contenedores_creando) {
+            if (temp.getId().intValue() == id.intValue()) {
+                contenedores_creando.remove(temp);
+                break;
+            }
+        }
     }
     
     public PuntoLimpioPojo getPto_creando() {

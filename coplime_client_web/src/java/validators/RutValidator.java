@@ -24,7 +24,7 @@ import sessionBeans.CrudUsuariosComunLocal;
  * @author Carlos
  */
 @FacesValidator("RutValidator")
-public class RutValidator implements Validator{
+public class RutValidator implements Validator {
     CrudUsuariosComunLocal crudUsuariosComun = lookupCrudUsuariosComunLocal();
     private static final String RUT_PATTERN = "^[0-9]+$";
  

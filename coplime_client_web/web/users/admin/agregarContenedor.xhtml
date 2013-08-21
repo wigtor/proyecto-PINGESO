@@ -22,37 +22,61 @@
                         <p:outputLabel value="N° de punto limpio"/>
                         <p:inputText value="#{mantenedorPuntoLimpioAgregarContMB.numPtoLimpio}" disabled="true"/>
                         
-                        <p:outputLabel value="Material que almacena"/>
-                        <p:selectOneMenu value="#{mantenedorPuntoLimpioAgregarContMB.material}">
+                        <p:outputLabel value="Material que almacena" for="material"/>
+                        <p:selectOneMenu id="material" value="#{mantenedorPuntoLimpioAgregarContMB.material}">
                             <f:selectItems value="#{mantenedorPuntoLimpioAgregarContMB.listaMateriales}"  
                                 var="mat" itemLabel="#{mat.label}" itemValue="#{mat.id}" />
                         </p:selectOneMenu>
                         
-                        <p:outputLabel value="Capacidad del contenedor"/>
+                        <p:outputLabel value="Capacidad del contenedor" for="capacidad"/>
                         <h:panelGroup >
-                            <p:inputText value="#{mantenedorPuntoLimpioAgregarContMB.capacidad}"/>
-                            <p:selectOneMenu value="#{mantenedorPuntoLimpioAgregarContMB.idUnidadMedida}" styleClass="span3">
+                            <p:inputText id="capacidad" value="#{mantenedorPuntoLimpioAgregarContMB.capacidad}" style="width:120px; margin-top: -12px;">
+                                <f:validator validatorId="NumPositiveValidator" />
+                            </p:inputText>
+                            <p:selectOneMenu id="unidad" value="#{mantenedorPuntoLimpioAgregarContMB.idUnidadMedida}" style="margin-left:5px; width:90px; margin-top: 5px;">
                                 <f:selectItems value="#{mantenedorPuntoLimpioAgregarContMB.listaUnidadesMedida}"  
                                     var="unidad" itemLabel="#{unidad.label}" itemValue="#{unidad.id}" />
                             </p:selectOneMenu>
                         </h:panelGroup>
                         
-                        <p:outputLabel value="Llenado inicial"/>
+                        <p:outputLabel value="Llenado inicial" for="llenadoInicialContenedor"/>
                         <h:panelGroup >
-                            <p:inputText id="llenadoInicialContenedor" value="#{mantenedorPuntoLimpioAgregarContMB.llenadoContenedor}"/>%
+                            <p:inputText id="llenadoInicialContenedor" value="#{mantenedorPuntoLimpioAgregarContMB.llenadoContenedor}">
+                                <f:validator validatorId="PorcentajeLlenadoValidator" />
+                            </p:inputText> %
                             <p:slider step="5" for="llenadoInicialContenedor"/>
                         </h:panelGroup>
                         
-                        <p:outputLabel value="Estado inicial"/>
-                        <p:selectOneMenu value="#{mantenedorPuntoLimpioAgregarContMB.estadoContenedor}">
+                        <p:outputLabel value="Estado inicial" for="estadoIni"/>
+                        <p:selectOneMenu id="estadoIni" value="#{mantenedorPuntoLimpioAgregarContMB.estadoContenedor}">
                             <f:selectItems value="#{mantenedorPuntoLimpioAgregarContMB.listaEstadosContenedores}"  
                                 var="estadoCont" itemLabel="#{estadoCont.label}" itemValue="#{estadoCont.id}" />
                         </p:selectOneMenu>
                         
+                        <p:outputLabel value="Contenedores agregados: #{mantenedorPuntoLimpioConversation.contenedores_creando.size()}"/>
+                        <p:dataTable value="#{mantenedorPuntoLimpioConversation.contenedores_creando}" var="contenedor" 
+                                     emptyMessage="No ha agregado contenedores a este punto limpio">
+
+                            <p:column headerText="Material" >
+                                <h:outputText value="#{contenedor.nombreMaterial}"/>
+                            </p:column>
+                            <p:column headerText="">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{contenedor.id}.show();" />
+
+                                <p:confirmDialog message="¿Está seguro que desea eliminar el contenedor?"
+                                                 header="Confirmación de eliminación de contenedor" severity="alert"
+                                                 widgetVar="cd_#{contenedor.id}" closeOnEscape="true">
+                                    <p:commandButton value="Si" actionListener="#{mantenedorPuntoLimpioAgregarContMB.eliminarContenedorAgregado(contenedor.id)}"
+                                                     oncomplete="cd_#{contenedor.id}.hide();"/>
+                                    <p:commandButton value="No" onclick="cd_#{contenedor.id}.hide();" type="button" />
+                                </p:confirmDialog>
+                            </p:column>
+                        </p:dataTable>
+                        
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Guardar y agregar otro" action="#{mantenedorPuntoLimpioAgregarContMB.guardarNvoContenedor_y_otro()}"/>
-                            <p:commandButton value="Guardar" action="#{mantenedorPuntoLimpioAgregarContMB.guardarNvoContenedor()}"/>
+                            <p:commandButton value="Guardar y agregar otro" ajax="false" action="#{mantenedorPuntoLimpioAgregarContMB.guardarNvoContenedor_y_otro()}"/>
+                            <p:commandButton value="Guardar" ajax="false" action="#{mantenedorPuntoLimpioAgregarContMB.guardarNvoContenedor()}"/>
                             <p:commandButton value="Volver" immediate="true" action="#{mantenedorPuntoLimpioAgregarContMB.volverToPuntoLimpio()}"/>
                         </f:facet>
                    </p:panelGrid>

@@ -4,11 +4,15 @@
  */
 package managedBeans.mantenedores.puntoLimpio;
 
+import ObjectsForManagedBeans.ContenedorPojo;
 import entities.Contenedor;
 import entities.PuntoLimpio;
 import entities.RevisionPuntoLimpio;
 import entities.Usuario;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
@@ -43,13 +47,14 @@ public class MantenedorPuntoLimpioVerDetallesMB {
     private Integer numMantencionesRealizadas;
     private Integer numRevisionesRealizadas;
     private Integer numContenedores;
+    private Collection<ContenedorPojo> listaContenedores;
     
     
     /**
      * Creates a new instance of MantenedorPuntoLimpioAgregar
      */
     public MantenedorPuntoLimpioVerDetallesMB() {
-        System.out.println("Se ha instanciado un MantenedorPuntoLimpioVerDetalles");
+        //System.out.println("Se ha instanciado un MantenedorPuntoLimpioVerDetalles");
     }
     
     @PostConstruct
@@ -112,8 +117,20 @@ public class MantenedorPuntoLimpioVerDetallesMB {
             }
         }
         
-        List<Contenedor> listaContenedores = ptoLimpioSelec.getContenedores();
-        this.numContenedores = listaContenedores.size();
+        List<Contenedor> listaTemp = ptoLimpioSelec.getContenedores();
+        this.listaContenedores = new ArrayList<>();
+        ContenedorPojo contTempPojo;
+        for(Contenedor cont_iter : listaTemp) {
+            contTempPojo = new ContenedorPojo();
+            
+            contTempPojo.setId(cont_iter.getId());
+            contTempPojo.setCapacidad(cont_iter.getCapacidad());
+            contTempPojo.setNombreMaterial(cont_iter.getMaterialDeAcopio().getNombre_material());
+            contTempPojo.setLlenadoContenedor(cont_iter.getProcentajeUso());
+            contTempPojo.setNombreEstadoContenedor(cont_iter.getEstadoContenedor().getNombreEstado());
+            this.listaContenedores.add(contTempPojo);
+        }
+        this.numContenedores = this.listaContenedores.size();
         
         //FALTA CARGAR LA LISTA DE REVISIONES Y LISTA DE CONTENEDORES
         
@@ -212,6 +229,14 @@ public class MantenedorPuntoLimpioVerDetallesMB {
 
     public void setNumContenedores(Integer numContenedores) {
         this.numContenedores = numContenedores;
+    }
+
+    public Collection<ContenedorPojo> getListaContenedores() {
+        return listaContenedores;
+    }
+
+    public void setListaContenedores(Collection<ContenedorPojo> listaContenedores) {
+        this.listaContenedores = listaContenedores;
     }
     
 }

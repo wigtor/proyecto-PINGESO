@@ -19,7 +19,7 @@ import org.primefaces.model.DefaultUploadedFile;
  * @author Carlos
  */
 @FacesValidator("ImageFileValidator")
-public class ImageFileValidator implements Validator{
+public class ImageFileValidator implements Validator {
 	public ImageFileValidator(){
 	}
  

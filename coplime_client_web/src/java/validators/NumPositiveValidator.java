@@ -23,15 +23,15 @@ import sessionBeans.CrudPuntoLimpioLocal;
  *
  * @author Carlos
  */
-@FacesValidator("NumPtoLimpioValidator")
-public class NumPtoLimpioValidator implements Validator {
+@FacesValidator("NumPositiveValidator")
+public class NumPositiveValidator implements Validator {
     CrudPuntoLimpioLocal crudPuntoLimpio = lookupCrudPuntoLimpioLocal();
     private static final String NUM_PATTERN = "^[0-9]+$";
  
 	private Pattern pattern;
 	private Matcher matcher;
  
-	public NumPtoLimpioValidator(){
+	public NumPositiveValidator(){
 		  pattern = Pattern.compile(NUM_PATTERN);
 	}
  
@@ -42,13 +42,14 @@ public class NumPtoLimpioValidator implements Validator {
         if (!matcher.matches()) {
             FacesMessage msg =
                     new FacesMessage("El número ingresado no es válido",
-                    "Deben ser sólo números");
+                    "Debe ser positivo o igual a 0");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(msg);
         }
-        if (crudPuntoLimpio.existeNumPuntoLimpio((Integer) value)) {
-            String mensaje = "El número de punto limpio \"".concat(value.toString()).concat("\" ya existe");
-            FacesMessage msg = new FacesMessage(mensaje, mensaje);
+        Integer valor = (Integer) value;
+        if (valor <= 0) {
+            String mensaje = "Es número ingresado no es válido, debe ser un entero positivo";
+            FacesMessage msg = new FacesMessage(mensaje, "Debe ingresar un entero positivo");
 
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(msg);
