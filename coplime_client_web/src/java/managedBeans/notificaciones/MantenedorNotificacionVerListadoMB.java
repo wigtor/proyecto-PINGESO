@@ -15,8 +15,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import otros.CommonFunctions;
@@ -42,7 +40,7 @@ public class MantenedorNotificacionVerListadoMB implements Serializable {
     
     @PostConstruct
     public void init() {
-        System.out.println("Ejecutando init de NotificacionesVerListado");
+        //System.out.println("Ejecutando init de NotificacionesVerListado");
         cargarListaNotificaciones();
     }
     
@@ -78,8 +76,9 @@ public class MantenedorNotificacionVerListadoMB implements Serializable {
     }
     
     public void verDetalles(Integer idSeleccionado) {
+        mantNotificaciones.beginConversation();
         mantNotificaciones.setIdNotificacionSeleccionada(idSeleccionado);
-        CommonFunctions.goToPage("/faces/users/verDetallesNotificacion.xhtml");
+        CommonFunctions.goToPage("/faces/users/verDetallesNotificacion.xhtml?cid=".concat(this.mantNotificaciones.getConversation().getId()));
     }
     
     public void volverToListado() {
@@ -114,12 +113,10 @@ public class MantenedorNotificacionVerListadoMB implements Serializable {
     }
 
     public Collection<NotificacionPojo> getFilteredNotif() {
-        System.out.println("Se llamó getFilteredNotif");
         return filteredNotif;
     }
 
     public void setFilteredNotif(Collection<NotificacionPojo> filteredNotif) {
-        System.out.println("Se llamó setFilteredNotif");
         this.filteredNotif = filteredNotif;
     }
     

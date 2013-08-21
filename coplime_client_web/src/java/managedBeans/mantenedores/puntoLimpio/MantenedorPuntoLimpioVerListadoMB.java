@@ -77,12 +77,12 @@ public class MantenedorPuntoLimpioVerListadoMB {
         
         if (ptoLimpioSelec != null) { //Verifico que exista
             this.mantPtoLimpio.setIdPuntoLimpioDetalles(numPtoLimpio);
+            CommonFunctions.goToPage("/faces/users/verDetallesPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
         }
         else {
             //MOSTRAR ERROR
             CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
         }
-       CommonFunctions.goToPage("/faces/users/verDetallesPuntoLimpio.xhtml");
     }
     
     public void editar(Integer numPto) {

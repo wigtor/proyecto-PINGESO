@@ -65,6 +65,7 @@ public class MantenedorAdministradorVerDetallesMB {
     }
     
     public void volverToLista() {
+        mantAdm.endConversation();
         CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
     }
     

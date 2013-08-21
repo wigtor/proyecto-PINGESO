@@ -69,8 +69,9 @@ public class MantenedorInspectorVerListadoMB {
     public void editar(Integer numInspector) {
         Inspector usuarioEdit = crudInspector.getInspectorByRut(numInspector);
         if (usuarioEdit != null) {
+            this.mantInsp.beginConversation();
             this.mantInsp.setIdUsuarioDetalles(numInspector);
-            CommonFunctions.goToPage("/faces/users/admin/editarInspector.xhtml");
+            CommonFunctions.goToPage("/faces/users/admin/editarInspector.xhtml?cid=".concat(this.mantInsp.getConversation().getId()));
         }
         else {
             //MOSTRAR ERROR
@@ -82,8 +83,9 @@ public class MantenedorInspectorVerListadoMB {
     public void verDetalles(Integer numInspector) {
         Inspector usuarioVerDetalle = crudInspector.getInspectorByRut(numInspector);
         if (usuarioVerDetalle != null) {
+            this.mantInsp.beginConversation();
             this.mantInsp.setIdUsuarioDetalles(numInspector);
-            CommonFunctions.goToPage("/faces/users/verDetallesInspector.xhtml");
+            CommonFunctions.goToPage("/faces/users/verDetallesInspector.xhtml?cid=".concat(this.mantInsp.getConversation().getId()));
         }
         else {
             //MOSTRAR ERROR

@@ -5,22 +5,38 @@
 package managedBeans.notificaciones;
 
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
 
 /**
  *
  * @author victor
  */
 @Named(value = "mantenedorNotificacionesConversation")
-@SessionScoped
+@ConversationScoped
 public class MantenedorNotificacionesConversation implements Serializable {
+    @Inject Conversation conversation;
+    
     private Integer idNotificacionSeleccionada;
     
+    public void beginConversation() {
+        if (conversation.isTransient()) {
+            conversation.begin();
+        }
+    }
+    
+    public void endConversation() {
+        if (!conversation.isTransient()) {
+            conversation.end();
+        }
+    }
+    
     /**
-     * Creates a new instance of MantenedorPuntoLimpio
+     * Creates a new instance of MantenedorNotificacionesConversation
      */
     public MantenedorNotificacionesConversation() {
     }
@@ -45,6 +61,10 @@ public class MantenedorNotificacionesConversation implements Serializable {
 
     public void setIdNotificacionSeleccionada(Integer idNotificacionSeleccionada) {
         this.idNotificacionSeleccionada = idNotificacionSeleccionada;
+    }
+    
+    public Conversation getConversation() {
+        return conversation;
     }
     
 }

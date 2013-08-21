@@ -15,7 +15,6 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudOperarioLocal;
@@ -75,8 +74,9 @@ public class MantenedorOperarioVerListadoMB {
     public void verDetalles(Integer numOperario) {
         Usuario usuarioVerDetalle = crudUsuariosComun.getUsuarioByRut(numOperario);
         if (usuarioVerDetalle != null) {
+            this.mantOp.beginConversation();
             this.mantOp.setIdUsuarioDetalles(numOperario);
-            CommonFunctions.goToPage("/faces/users/verDetallesOperarioMantencion.xhtml");
+            CommonFunctions.goToPage("/faces/users/verDetallesOperarioMantencion.xhtml?cid=".concat(this.mantOp.getConversation().getId()));
         }
         else {
             //MOSTRAR ERROR
@@ -87,8 +87,9 @@ public class MantenedorOperarioVerListadoMB {
     public void editar(Integer numOperario) {
         Usuario usuarioEdit = crudUsuariosComun.getUsuarioByRut(numOperario);
         if (usuarioEdit != null) {
+            this.mantOp.beginConversation();
             this.mantOp.setIdUsuarioDetalles(numOperario);
-            CommonFunctions.goToPage("/faces/users/admin/editarOperarioMantencion.xhtml");
+            CommonFunctions.goToPage("/faces/users/admin/editarOperarioMantencion.xhtml?cid=".concat(this.mantOp.getConversation().getId()));
         }
         else {
             //MOSTRAR ERROR

@@ -76,6 +76,7 @@ public class MantenedorInspectorVerDetallesMB {
     }
     
     public void volverToLista() {
+        mantInsp.endConversation();
         CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");
     }
 

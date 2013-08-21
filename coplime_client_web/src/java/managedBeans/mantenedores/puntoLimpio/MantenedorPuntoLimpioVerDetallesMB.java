@@ -66,6 +66,7 @@ public class MantenedorPuntoLimpioVerDetallesMB {
     }
     
     public void goToEditar() {
+        //this.mantPtoLimpio.beginConversation();
         Integer numPtoLimpio = this.mantPtoLimpio.getIdPuntoLimpioDetalles();
         System.out.println("NÚMERO DE PUNTO LIMPIO: "+numPtoLimpio);
         PuntoLimpio ptoEdit = crudPuntoLimpio.getPuntoLimpioByNum(numPtoLimpio);
@@ -120,6 +121,7 @@ public class MantenedorPuntoLimpioVerDetallesMB {
     }
     
     public void volverToLista() {
+        mantPtoLimpio.endConversation();
         mantPtoLimpio.limpiarDatos();
         CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
     }

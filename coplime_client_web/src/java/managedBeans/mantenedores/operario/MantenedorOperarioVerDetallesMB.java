@@ -5,8 +5,6 @@
 package managedBeans.mantenedores.operario;
 
 import entities.OperarioMantencion;
-import entities.Usuario;
-import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -73,6 +71,7 @@ public class MantenedorOperarioVerDetallesMB {
     }
     
     public void volverToLista() {
+        mantOp.endConversation();
         CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
        
     }

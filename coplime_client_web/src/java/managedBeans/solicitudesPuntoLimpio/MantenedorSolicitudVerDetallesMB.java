@@ -4,7 +4,6 @@
  */
 package managedBeans.solicitudesPuntoLimpio;
 
-import entities.MantencionPuntoLimpio;
 import entities.SolicitudMantencion;
 import java.util.Calendar;
 import java.util.Locale;
@@ -75,7 +74,8 @@ public class MantenedorSolicitudVerDetallesMB {
     }
     
     public void volverToLista() {
-       CommonFunctions.goToPage("/faces/users/verSolicitudesMantencion.xhtml");
+        mantSolicitudes.endConversation();
+        CommonFunctions.goToPage("/faces/users/verSolicitudesMantencion.xhtml");
     }
     
     

@@ -12,6 +12,10 @@
         <error-code>500</error-code>
         <location>/faces/errors/500.xhtml</location>
     </error-page>
+    <error-page>
+        <exception-type>org.jboss.weld.context.NonexistentConversationException</exception-type>
+        <location>/faces/errors/500.xhtml?nocid=true</location>
+    </error-page>
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>development</param-value>

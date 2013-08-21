@@ -86,14 +86,15 @@ public class MantenedorSolicitudVerListadoMB {
         SolicitudMantencion solicitudSelect = crudSolicitud.getSolicitudById(numSolicitud);
         
         if (solicitudSelect != null) { //Verifico que exista
+            this.mantSolicitudes.beginConversation();
             this.mantSolicitudes.setIdSolicitudDetalles(numSolicitud);
+            CommonFunctions.goToPage("/faces/users/verDetallesSolicitudMantencion.xhtml?cid=".concat(this.mantSolicitudes.getConversation().getId()));
         }
         else {
             //MOSTRAR ERROR
             CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
         }
-        CommonFunctions.goToPage("/faces/users/verDetallesSolicitudMantencion.xhtml");
-       
+        
     }
     
     public void volver() {

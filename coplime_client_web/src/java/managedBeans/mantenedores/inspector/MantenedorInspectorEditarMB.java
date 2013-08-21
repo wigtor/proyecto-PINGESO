@@ -69,6 +69,7 @@ public class MantenedorInspectorEditarMB {
     
     
     public void guardarCambiosInspector(){
+        mantInsp.endConversation();
         try {
             crudInspector.editarInspector( rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
@@ -85,8 +86,8 @@ public class MantenedorInspectorEditarMB {
     }
     
     public void volverToLista() {
-       CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");
-       
+        mantInsp.endConversation();
+        CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");
     }
     
     

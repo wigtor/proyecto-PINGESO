@@ -81,13 +81,15 @@ public class MantenedorMantencionVerListadoMB {
         MantencionPuntoLimpio revisionSelec = crudMantencion.getMantencionById(numRevision);
         
         if (revisionSelec != null) { //Verifico que exista
+            this.mantMantenciones.beginConversation();
             this.mantMantenciones.setIdMantencionDetalles(numRevision);
+            CommonFunctions.goToPage("/faces/users/verDetallesMantencion.xhtml?cid=".concat(this.mantMantenciones.getConversation().getId()));
         }
         else {
             //MOSTRAR ERROR
             CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
         }
-        CommonFunctions.goToPage("/faces/users/verDetallesMantencion.xhtml");
+        
        
     }
     

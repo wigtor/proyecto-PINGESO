@@ -66,7 +66,8 @@ public class MantenedorRevisionVerDetallesMB {
     }
     
     public void volverToLista() {
-       CommonFunctions.goToPage("/faces/users/verRevisiones.xhtml");
+        mantRevisiones.endConversation();
+        CommonFunctions.goToPage("/faces/users/verRevisiones.xhtml");
     }
     
     

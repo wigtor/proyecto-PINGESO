@@ -4,32 +4,35 @@
  */
 package managedBeans.mantenedores.operario;
 
-import ObjectsForManagedBeans.UsuarioPojo;
-import entities.OperarioMantencion;
-import entities.Usuario;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
-import otros.CommonFunctions;
-import sessionBeans.CrudOperarioLocal;
+import javax.inject.Inject;
 
 /**
  *
  * @author victor
  */
 @Named(value = "mantenedorOperarioConversation")
-@SessionScoped
+@ConversationScoped
 public class MantenedorOperarioConversation implements Serializable{
+    
+    @Inject Conversation conversation;
     
     private Integer idUsuarioDetalles;
     
+    public void beginConversation() {
+        if (conversation.isTransient()) {
+            conversation.begin();
+        }
+    }
+    
+    public void endConversation() {
+        if (!conversation.isTransient()) {
+            conversation.end();
+        }
+    }
     
     public MantenedorOperarioConversation() {
     }
@@ -40,6 +43,10 @@ public class MantenedorOperarioConversation implements Serializable{
 
     public void setIdUsuarioDetalles(Integer idUsuarioDetalles) {
         this.idUsuarioDetalles = idUsuarioDetalles;
+    }
+    
+    public Conversation getConversation() {
+        return conversation;
     }
    
 }

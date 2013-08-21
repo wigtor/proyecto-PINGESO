@@ -80,14 +80,14 @@ public class MantenedorRevisionVerListadoMB {
         RevisionPuntoLimpio revisionSelec = crudRevision.getRevisionById(numRevision);
         
         if (revisionSelec != null) { //Verifico que exista
+            this.mantRevisiones.beginConversation();
             this.mantRevisiones.setIdRevisionDetalles(numRevision);
+            CommonFunctions.goToPage("/faces/users/verDetallesRevision.xhtml?cid=".concat(this.mantRevisiones.getConversation().getId()));
         }
         else {
             //MOSTRAR ERROR
             CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
         }
-        CommonFunctions.goToPage("/faces/users/verDetallesRevision.xhtml");
-       
     }
     
     public void volver() {

@@ -72,6 +72,7 @@ public class MantenedorOperarioEditarMB {
     }
     
     public void guardarCambiosOperario(){
+        mantOp.endConversation();
         try {
             crudOperario.editarOperario(rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
@@ -88,8 +89,8 @@ public class MantenedorOperarioEditarMB {
     }
     
     public void volverToLista() {
-       CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
-       
+        mantOp.endConversation();
+        CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
     }
 
     public MantenedorOperarioConversation getMantOp() {

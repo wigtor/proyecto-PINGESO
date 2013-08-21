@@ -67,6 +67,7 @@ public class MantenedorAdministradorEditarMB {
     }
     
     public void guardarCambiosAdministrador(){
+        mantAdm.endConversation();
         try {
             crudAdministrador.editarAdministrador(rut, username, nombre, apellido1, apellido2, mail, checkContraseña, telefono);
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
@@ -83,7 +84,8 @@ public class MantenedorAdministradorEditarMB {
     }
     
     public void volverToLista() {
-       CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
+        mantAdm.endConversation();
+        CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml");
     }
     
     public MantenedorAdministradorEditarMB() {

@@ -41,7 +41,7 @@ public class notificacionesManagedBeans implements Serializable {
     }
     
     public void refresNotificaciones(ActionEvent actionEvent) {
-        System.out.println("Cargando método cargarCantidadNotificaciones");
+        //System.out.println("Cargando método cargarCantidadNotificaciones");
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();

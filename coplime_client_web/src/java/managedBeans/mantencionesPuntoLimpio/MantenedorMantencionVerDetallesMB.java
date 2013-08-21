@@ -66,7 +66,8 @@ public class MantenedorMantencionVerDetallesMB {
     }
     
     public void volver() {
-       CommonFunctions.goToPage("/faces/users/verMantenciones.xhtml");
+        this.mantMantenciones.endConversation();
+        CommonFunctions.goToPage("/faces/users/verMantenciones.xhtml");
     }
     
     

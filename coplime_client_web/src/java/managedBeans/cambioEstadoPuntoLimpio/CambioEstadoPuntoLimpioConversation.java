@@ -6,24 +6,39 @@ package managedBeans.cambioEstadoPuntoLimpio;
 
 import ObjectsForManagedBeans.ContenedorPojo;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
 
 /**
  *
  * @author victor
  */
 @Named(value = "cambioEstadoPuntoLimpioConversation")
-@SessionScoped
+@ConversationScoped
 public class CambioEstadoPuntoLimpioConversation implements Serializable {
-
+    @Inject Conversation conversation;
+    
     private Integer idPuntoLimpioToChange;
     private Integer idContenedorToChange;
     private Integer idEstadoToChange;
     private List<ContenedorPojo> listaContenedoresModificados;
     private String detalle;
+    
+    public void beginConversation() {
+        if (conversation.isTransient()) {
+            conversation.begin();
+        }
+    }
+    
+    public void endConversation() {
+        if (!conversation.isTransient()) {
+            conversation.end();
+        }
+    }
     
     /**
      * Creates a new instance of CambioEstadoPuntoLimpioConversation
