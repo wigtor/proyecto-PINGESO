@@ -30,6 +30,15 @@ public class AlgoritmoPromediosPonderados implements AlgoritmoCalculo {
         }
         
         /*
+         * Si el contenedor YA ESTÁ LLENO (porcentajeLlenado = 100 para el último punto
+         * del historial), setear la fecha de revisión como HOY.
+         */
+        if(historialContenedor.getLast().getPorcentajeLlenado()>=100){
+            Calendar cal = Calendar.getInstance();
+            return cal.getTime();
+        }
+
+        /*
          * Failsafe: Si el contenedor por alguna razón no tuviera ningún punto histórico
          * (algo poco probable pues por defecto se crea uno) la estimación arroja como fecha
          * de revisión el día ANTERIOR A HOY. El generador programado de notificaciones interpreta
@@ -48,13 +57,15 @@ public class AlgoritmoPromediosPonderados implements AlgoritmoCalculo {
         Double pendiente;
         pendiente = obtenerPendiente(historialContenedor);
         Calendar fechaEstimada;
-        double diasEstimados;
-        long diasEstimadosInt;
+        Double diasEstimados;
+        Long diasEstimadosL;
         diasEstimados = (porcentajeBuscado - historialContenedor.getLast().getPorcentajeLlenado())/pendiente;
-        diasEstimados = Math.ceil(diasEstimados);
-        diasEstimadosInt = Math.round(diasEstimados);
+        //Si la estimación da 4.01 días estimados, 
+        diasEstimadosL = Math.round(diasEstimados);
+        //TODO averiguar método intValue() (JavaDoc)
+        //TODO mejorar tipos double, long e int
         fechaEstimada = historialContenedor.getLast().getFechaHora();
-        fechaEstimada.add(Calendar.DATE, (int) diasEstimadosInt);
+        fechaEstimada.add(Calendar.DATE, diasEstimadosL.intValue());
         
         return fechaEstimada.getTime();
     }
