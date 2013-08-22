@@ -49,7 +49,6 @@ public class MantenedorPuntoLimpioAgregarContMB {
      * Creates a new instance of MantenedorPuntoLimpioAgregar
      */
     public MantenedorPuntoLimpioAgregarContMB() {
-        //System.out.println("Se ha instanciado un MantenedorPuntoLimpioAgregar");
         this.llenadoContenedor = 0;
     }
     
@@ -224,6 +223,10 @@ public class MantenedorPuntoLimpioAgregarContMB {
 
     public void setListaUnidadesMedida(List<SelectElemPojo> listaUnidadesMedida) {
         this.listaUnidadesMedida = listaUnidadesMedida;
+    }
+    
+    public List<ContenedorPojo> getListaContenedores() {
+        return this.mantPtoLimpio.getContenedores_creando();
     }
     
 }

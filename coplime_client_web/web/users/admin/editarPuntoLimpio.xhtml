@@ -1,54 +1,89 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<f:view xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pm="http://primefaces.org/mobile"
       contentType="text/html"
-      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp"
-      renderKitId="PRIMEFACES_MOBILE">
-    
-    
-    <pm:page title="Editar punto limpio">
-        <!-- Main View -->
-        <pm:view id="main">
-            <pm:header title="Editar punto limpio" swatch="b"/>
-            <pm:content>
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+    <body>
+        <ui:composition template="/mainTemplate.xhtml">
+            <ui:define name="titulo" >Editar punto limpio</ui:define>
+            <ui:define name="botonesBarra">
+                <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{autenticadorMB.indexLoggued()}" />
+            </ui:define>
+
+            <ui:define name="centro">
                 <h:form>
-                <p:outputPanel>
-                    <p:dataList type="inset" styleClass="ui-li-custom">
-                        <f:facet name="header">Edite los datos del punto limpio</f:facet>
-                        <f:attribute name="icon" value="false" />
-                        <p:inputText label="Nombre del punto limpio" value="#{mantenedorPuntoLimpio.nombre}"/>
-                        <p:selectOneMenu label="Seleccione comuna" value="#{mantenedorPuntoLimpio.comuna_seleccionada}">
-                            <f:selectItems value="#{mantenedorPuntoLimpio.ListaComunas}"  
-                                var="comuna" itemLabel="#{comuna.nombre}" itemValue="#{comuna.nombre}" />
+                    <p:panelGrid columns="2" styleClass="centrar" >
+                        <f:facet name="header">Edición de datos del punto limpio</f:facet>
+
+                        <p:outputLabel value="N° de punto limpio" for="num"/>
+                        <p:inputText id="num" value="#{mantenedorPuntoLimpioEditarMB.num}" disabled="true" readonly="true"/>
+
+                        <p:outputLabel value="Nombre del punto limpio" for="nombre"/>
+                        <p:inputText id="nombre" value="#{mantenedorPuntoLimpioEditarMB.nombre}" required="true">
+                            
+                        </p:inputText>
+
+                        <p:outputLabel value="Seleccione comuna"/>
+                        <p:selectOneMenu label="Seleccione comuna" value="#{mantenedorPuntoLimpioEditarMB.comuna_seleccionada}">
+                            <f:selectItems value="#{mantenedorPuntoLimpioEditarMB.listaComunas}"  
+                                           var="comuna" itemLabel="#{comuna.label}" itemValue="#{comuna.id}" />
                         </p:selectOneMenu>
-                        <p:inputText label="Dirección" value="#{mantenedorPuntoLimpio.direccion}"/>
-                        <p:calendar label="Fecha primera revisión" value="#{mantenedorPuntoLimpio.fechaRevision}"/>
-                        <p:selectOneMenu label="Estado global actual" value="#{mantenedorPuntoLimpio.estado_seleccionado}">
-                            <f:selectItems value="#{mantenedorPuntoLimpio.ListaEstadosPtoLimpio}"  
-                                var="estado" itemLabel="#{estado.nombre}" itemValue="#{estado.num}" />
+
+                        <p:outputLabel value="Dirección" for="direccion"/>
+                        <p:inputText id="direccion" value="#{mantenedorPuntoLimpioEditarMB.direccion}" required="true"/>
+
+                        <p:outputLabel value="Fecha próxima revisión" for="fechaRev"/>
+                        <p:calendar id="fechaRev" value="#{mantenedorPuntoLimpioEditarMB.fechaRevision}" required="true"/>
+
+                        <p:outputLabel value="Estado global inicial"/>
+                        <p:selectOneMenu value="#{mantenedorPuntoLimpioEditarMB.estado_seleccionado}">
+                            <f:selectItems value="#{mantenedorPuntoLimpioEditarMB.listaEstadosPtoLimpio}"  
+                                           var="estado" itemLabel="#{estado.label}" itemValue="#{estado.id}" />
                         </p:selectOneMenu>
-                        <p:selectOneMenu label="Inspector encargado" value="#{mantenedorPuntoLimpio.inspectorEncargado_seleccionado}">
-                            <f:selectItems value="#{mantenedorPuntoLimpio.ListaInspectores}"  
-                                var="InspEncargado" itemLabel="#{InspEncargado.nombre}" itemValue="#{InspEncargado.num}" />
+
+                        <p:outputLabel value="Inspector encargado"/>
+                        <p:selectOneMenu value="#{mantenedorPuntoLimpioEditarMB.inspectorEncargado_seleccionado}">
+                            <f:selectItems value="#{mantenedorPuntoLimpioEditarMB.listaInspectores}"  
+                                           var="InspEncargado" itemLabel="#{InspEncargado.label}" itemValue="#{InspEncargado.id}" />
                         </p:selectOneMenu>
-                        
-                        <p:commandButton value="Agregar contenedores" action="#{mantenedorPuntoLimpio.agregarContenedores()}"/>
-                        <p:commandButton value="Editar contenedores" action="#{mantenedorPuntoLimpio.editarContenedores()}"/>
-                        
-                        <p:commandButton value="Aceptar" action="#{mantenedorPuntoLimpio.guardarCambiosPuntoLimpio()}"/>
-                        <p:commandButton value="Volver" action="#{mantenedorPuntoLimpio.volverToLista()}"/>
-                    </p:dataList>
-                </p:outputPanel>
+
+                        <p:outputLabel value="Contenedores agregados: #{mantenedorPuntoLimpioEditarMB.listaContenedores.size()}"/>
+                        <p:dataTable value="#{mantenedorPuntoLimpioEditarMB.listaContenedores}" var="contenedor" 
+                                     emptyMessage="No ha agregado contenedores a este punto limpio">
+
+                            <p:column headerText="Material" >
+                                <h:outputText value="#{contenedor.nombreMaterial}"/>
+                            </p:column>
+                            
+                            <p:column headerText="">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" onclick="cd_#{contenedor.id}.show();" />
+                            </p:column>
+                            
+                            <p:column headerText="">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{contenedor.id}.show();" />
+
+                                <p:confirmDialog message="¿Está seguro que desea eliminar el contenedor?"
+                                                 header="Confirmación de eliminación de contenedor" severity="alert"
+                                                 widgetVar="cd_#{contenedor.id}" closeOnEscape="true">
+                                    <p:commandButton value="Si" actionListener="#{mantenedorPuntoLimpioEditarMB.eliminarContenedorAgregado(contenedor.id)}"
+                                                     oncomplete="cd_#{contenedor.id}.hide();"/>
+                                    <p:commandButton value="No" onclick="cd_#{contenedor.id}.hide();" type="button" />
+                                </p:confirmDialog>
+                            </p:column>
+                        </p:dataTable>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Agregar contenedores" ajax="false" action="#{mantenedorPuntoLimpioEditarMB.agregarContenedores()}"/>
+                            <p:commandButton value="Guardar cambios" ajax="false" action="#{mantenedorPuntoLimpioEditarMB.guardarCambiosPtoLimpio()}" disabled="#{(mantenedorPuntoLimpioEditarMB.listaContenedores.size() == 0)}"/>
+                            <p:commandButton value="Volver" immediate="true" action="#{mantenedorPuntoLimpioEditarMB.volverToLista()}"/>
+                        </f:facet>
+                    </p:panelGrid>
                 </h:form>
-            </pm:content>
-        </pm:view>
-    </pm:page>
-
-</f:view>
-
-
+            </ui:define>
+        </ui:composition>
+    </body>    
+</html>

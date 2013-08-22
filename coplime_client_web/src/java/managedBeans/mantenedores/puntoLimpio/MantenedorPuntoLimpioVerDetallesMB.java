@@ -76,7 +76,7 @@ public class MantenedorPuntoLimpioVerDetallesMB {
         PuntoLimpio ptoEdit = crudPuntoLimpio.getPuntoLimpioByNum(numPtoLimpio);
         
         if (ptoEdit != null) {
-            CommonFunctions.goToPage("/faces/users/admin/editarPuntoLimpio.xhtml");
+            CommonFunctions.goToPage("/faces/users/admin/editarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
             
         }
         else {

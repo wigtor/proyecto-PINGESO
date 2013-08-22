@@ -8,8 +8,10 @@ import ObjectsForManagedBeans.ContenedorPojo;
 import ObjectsForManagedBeans.PuntoLimpioPojo;
 import ObjectsForManagedBeans.SelectElemPojo;
 import entities.Comuna;
+import entities.Contenedor;
 import entities.Estado;
 import entities.Inspector;
+import entities.PuntoLimpio;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -30,9 +32,9 @@ import sessionBeans.CrudPuntoLimpioLocal;
  *
  * @author victor
  */
-@Named(value = "mantenedorPuntoLimpioAgregarMB")
+@Named(value = "mantenedorPuntoLimpioEditarMB")
 @RequestScoped
-public class MantenedorPuntoLimpioAgregarMB {
+public class MantenedorPuntoLimpioEditarMB {
 
     @EJB
     private CrudInspectorLocal crudInspector;
@@ -40,6 +42,7 @@ public class MantenedorPuntoLimpioAgregarMB {
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     @Inject
     private MantenedorPuntoLimpioConversation mantPtoLimpio;
+    
     private Integer num;
     private String nombre;
     private Integer comuna_seleccionada;
@@ -54,15 +57,54 @@ public class MantenedorPuntoLimpioAgregarMB {
     /**
      * Creates a new instance of MantenedorPuntoLimpioAgregarMB
      */
-    public MantenedorPuntoLimpioAgregarMB() {
+    public MantenedorPuntoLimpioEditarMB() {
     }
 
     @PostConstruct
     public void init() {
-        cargarEstadosPuntoLimpio();
-        cargarInspectores();
-        cargarComunas();
-        cargarDatosPtoLimpioTemporal();
+        if (mantPtoLimpio.getIdPuntoLimpioDetalles()!= null) {
+            num = mantPtoLimpio.getIdPuntoLimpioDetalles();
+            cargarEstadosPuntoLimpio();
+            cargarInspectores();
+            cargarComunas();
+            cargarDatosPtoLimpioOriginal();
+            cargarDatosPtoLimpioTemporal();
+        }
+        else {
+            //MOSTRAR ERROR
+            
+            volverToLista();
+        }
+    }
+    
+    private void cargarDatosPtoLimpioOriginal() {
+        if (this.num != null) {
+            PuntoLimpio p = crudPuntoLimpio.getPuntoLimpioByNum(num);
+            this.comuna_seleccionada = p.getComuna().getId();
+            this.nombre = p.getNombre();
+            this.direccion = p.getUbicacion();
+            this.inspectorEncargado_seleccionado = p.getInspectorEncargado().getId();
+            //this.num = p.getNum();
+            this.estado_seleccionado = p.getEstadoGlobal().getId();
+            this.fechaRevision = p.getFechaProxRevision().getTime();
+            
+            List<Contenedor> listaTemp = p.getContenedores();
+            ArrayList<ContenedorPojo> resultado = new ArrayList<>();
+            ContenedorPojo contTempPojo;
+            for (Contenedor cont_iter : listaTemp) {
+                contTempPojo = new ContenedorPojo();
+
+                contTempPojo.setId(cont_iter.getId());
+                contTempPojo.setCapacidad(cont_iter.getCapacidad());
+                contTempPojo.setNombreMaterial(cont_iter.getMaterialDeAcopio().getNombre_material());
+                contTempPojo.setLlenadoContenedor(cont_iter.getProcentajeUso());
+                contTempPojo.setNombreEstadoContenedor(cont_iter.getEstadoContenedor().getNombreEstado());
+                resultado.add(contTempPojo);
+            }
+            this.mantPtoLimpio.getContenedores_creando().addAll(resultado);
+            
+            
+        }
     }
 
     private void cargarDatosPtoLimpioTemporal() {
@@ -72,7 +114,7 @@ public class MantenedorPuntoLimpioAgregarMB {
             this.nombre = p.getNombre();
             this.direccion = p.getDireccion();
             this.inspectorEncargado_seleccionado = p.getIdInspectorEncargado();
-            this.num = p.getNum();
+            //this.num = p.getNum();
             this.estado_seleccionado = p.getIdEstado();
             this.fechaRevision = p.getFechaProximaRev();
         }
@@ -118,6 +160,7 @@ public class MantenedorPuntoLimpioAgregarMB {
     }
 
     private PuntoLimpioPojo crearPtoLimpioTemporal() {
+        //System.out.println("Creando un pto limpio temporal con nombre: "+nombre + " con num: "+num);
         PuntoLimpioPojo res = new PuntoLimpioPojo();
         res.setNum(num);
         res.setNombre(nombre);
@@ -139,7 +182,10 @@ public class MantenedorPuntoLimpioAgregarMB {
         CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
     }
 
-    public void agregarPuntoLimpio() {
+    public void guardarCambiosPtoLimpio() {
+        
+        //System.out.println("Se hizo click en 'agregarPuntoLimpio()'");
+        //System.out.println("Cantidad de contenedores: " + mantPtoLimpio.getContenedores_creando().size());
         Calendar fechaComoCalendar = new GregorianCalendar();
         fechaComoCalendar.setTime(fechaRevision);
         Integer numPuntoLimpio;
@@ -271,5 +317,4 @@ public class MantenedorPuntoLimpioAgregarMB {
     public List<ContenedorPojo> getListaContenedores() {
         return this.mantPtoLimpio.getContenedores_creando();
     }
-    
 }

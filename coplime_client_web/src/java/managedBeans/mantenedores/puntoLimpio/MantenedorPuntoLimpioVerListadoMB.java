@@ -91,7 +91,7 @@ public class MantenedorPuntoLimpioVerListadoMB {
         if (ptoEdit != null) {
             this.mantPtoLimpio.beginConversation();
             this.mantPtoLimpio.setIdPuntoLimpioDetalles(numPto);
-            CommonFunctions.goToPage("/faces/users/admin/editarPuntoLimpio.xhtml");
+            CommonFunctions.goToPage("/faces/users/admin/editarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
         }
         else {
             //MOSTRAR ERROR
