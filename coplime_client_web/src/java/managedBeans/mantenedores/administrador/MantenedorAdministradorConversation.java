@@ -5,10 +5,9 @@
 package managedBeans.mantenedores.administrador;
 
 import java.io.Serializable;
-import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
-import javax.inject.Inject;
+import managedBeans.AbstractConversation;
 
 /**
  *
@@ -16,27 +15,12 @@ import javax.inject.Inject;
  */
 @Named(value = "mantenedorAdministradorConversation")
 @ConversationScoped
-public class MantenedorAdministradorConversation implements Serializable{
-    //private static final long serialVersionUID = 2346533234L;
-    
-    @Inject Conversation conversation;
+public class MantenedorAdministradorConversation extends AbstractConversation implements Serializable{
     
     private Integer idUsuarioDetalles;
     
     public void limpiarDatos() {
         idUsuarioDetalles = null;
-    }
-    
-    public void beginConversation() {
-        if (conversation.isTransient()) {
-            conversation.begin();
-        }
-    }
-    
-    public void endConversation() {
-        if (!conversation.isTransient()) {
-            conversation.end();
-        }
     }
     
     public MantenedorAdministradorConversation() {
@@ -48,10 +32,6 @@ public class MantenedorAdministradorConversation implements Serializable{
 
     public void setIdUsuarioDetalles(Integer idUsuarioDetalles) {
         this.idUsuarioDetalles = idUsuarioDetalles;
-    }
-
-    public Conversation getConversation() {
-        return conversation;
     }
     
 }

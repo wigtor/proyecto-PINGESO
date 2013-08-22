@@ -19,20 +19,20 @@
                     <p:panelGrid columns="2" styleClass="centrar" >
                         <f:facet name="header">Ingrese datos de la solicitud</f:facet>
 
-                        <p:outputLabel value="Seleccione punto limpio" />
-                        <p:selectOneMenu value="#{agregarSolicitudMB.numPtoLimpio}">
+                        <p:outputLabel for="ptoLimpio" value="Seleccione punto limpio" />
+                        <p:selectOneMenu id="ptoLimpio" value="#{agregarSolicitudMB.numPtoLimpio}">
                             <f:selectItems value="#{agregarSolicitudMB.listaPuntosLimpios}"  
                                 var="ptoLimpio" itemLabel="#{ptoLimpio.label}" itemValue="#{ptoLimpio.id}" />
                         </p:selectOneMenu>
                         
-                        <p:outputLabel value="Seleccione operario encargado" />
-                        <p:selectOneMenu value="#{agregarSolicitudMB.numOperario}">
+                        <p:outputLabel for="operario" value="Seleccione operario encargado" />
+                        <p:selectOneMenu id="operario" value="#{agregarSolicitudMB.numOperario}">
                             <f:selectItems value="#{agregarSolicitudMB.listaOperarios}"  
                                            var="operarioEncargado" itemLabel="#{operarioEncargado.label}" itemValue="#{operarioEncargado.id}" />
                         </p:selectOneMenu>
                         
-                        <p:outputLabel value="Detalle" />
-                        <p:inputTextarea value="#{agregarSolicitudMB.detalle}"/>
+                        <p:outputLabel for="detalle" value="Detalle" />
+                        <p:inputTextarea id="detalle" value="#{agregarSolicitudMB.detalle}" required="true"/>
                         
                         
                         <f:facet name="footer">

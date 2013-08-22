@@ -19,8 +19,8 @@
                     <p:panelGrid columns="2" styleClass="centrar" >
                         <f:facet name="header">Ingrese datos de revisión realizada</f:facet>
 
-                        <p:outputLabel value="Seleccione punto limpio" />
-                        <h:selectOneMenu value="#{agregarRevisionMB.numPtoLimpio}">
+                        <p:outputLabel for="ptoLimpio" value="Seleccione punto limpio" />
+                        <h:selectOneMenu id="ptoLimpio" value="#{agregarRevisionMB.numPtoLimpio}">
                             <f:selectItems value="#{agregarRevisionMB.listaPuntosLimpios}"  
                                 var="ptoLimpio" itemLabel="#{ptoLimpio.label}" itemValue="#{ptoLimpio.id}" />
                         </h:selectOneMenu>
@@ -28,8 +28,8 @@
                         <p:outputLabel value="Cambiar su estado" />
                         <p:commandButton value="Cambiar estado" action="#{agregarRevisionMB.cambiarEstadoPtoLimpio()}"/>
 
-                        <p:outputLabel value="Detalles de la revisión" />
-                        <p:inputTextarea value="#{agregarRevisionMB.detalle}"/>
+                        <p:outputLabel for="detallesRev" value="Detalles de la revisión" />
+                        <p:inputTextarea id="detallesRev" value="#{agregarRevisionMB.detalle}"/>
                         
                         <f:facet name="footer">
                             <p:commandButton value="Guardar revisión" action="#{agregarRevisionMB.guardarRevision()}"/>

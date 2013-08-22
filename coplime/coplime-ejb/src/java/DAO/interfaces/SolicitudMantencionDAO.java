@@ -26,4 +26,11 @@ public interface SolicitudMantencionDAO extends genericDAO<SolicitudMantencion>{
      * @return Una colección de objetos "SolicitudMantencion", puede ser vacia, pero nunca null
      */
     public Collection<SolicitudMantencion> findAllFromOperario(Integer idUsuario);
+    
+    /**
+     * Cuenta cuantas solicitudes de mantención tiene el usuario que no ha revisado.
+     * @param username El nombre de usuario de quien se quiere obtener las solicitudes
+     * @return Devuelve la cantidad de solicitudes sin revisar
+     */
+    public Integer countPorRevisar(String username);
 }

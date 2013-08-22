@@ -30,7 +30,7 @@ public class CambioEstadoPuntoLimpioMB {
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
     @Inject
-    private CambioEstadoPuntoLimpioConversation cambioEstadoSessionBean;
+    private CambioEstadoPuntoLimpioConversation cambioEstadoConvBean;
     
     private Integer idPtoLimpio;
     
@@ -52,16 +52,16 @@ public class CambioEstadoPuntoLimpioMB {
     
     @PostConstruct
     public void init() {
-        this.idPtoLimpio = cambioEstadoSessionBean.getIdPuntoLimpioToChange();
+        this.idPtoLimpio = cambioEstadoConvBean.getIdPuntoLimpioToChange();
         cargarDatosPtoLimpio();
         cargarEstadosPuntoLimpio();
         cargarContenedoresPuntoLimpio();
         //this.estadoPuntoLimpio = 
         //La primera vez que se ejecuta se setea el id del estado global
-        if (this.cambioEstadoSessionBean.getIdEstadoToChange()!= null)
-            this.estadoPuntoLimpio = this.cambioEstadoSessionBean.getIdEstadoToChange();
+        if (this.cambioEstadoConvBean.getIdEstadoToChange()!= null)
+            this.estadoPuntoLimpio = this.cambioEstadoConvBean.getIdEstadoToChange();
         else 
-            this.cambioEstadoSessionBean.setIdEstadoToChange(this.estadoPuntoLimpio);
+            this.cambioEstadoConvBean.setIdEstadoToChange(this.estadoPuntoLimpio);
     }
     
     private void cargarEstadosPuntoLimpio() {
@@ -96,27 +96,27 @@ public class CambioEstadoPuntoLimpioMB {
     }
     
     public void cambiarEstadoContenedor() {
-        cambioEstadoSessionBean.setIdEstadoToChange(this.estadoPuntoLimpio);
-        cambioEstadoSessionBean.setIdContenedorToChange(idContenedorSeleccionado);
-        CommonFunctions.goToPage("/faces/users/cambiarEstadoContenedor.xhtml");
+        cambioEstadoConvBean.setIdEstadoToChange(this.estadoPuntoLimpio);
+        cambioEstadoConvBean.setIdContenedorToChange(idContenedorSeleccionado);
+        CommonFunctions.goToPage("/faces/users/cambiarEstadoContenedor.xhtml?cid=".concat(this.cambioEstadoConvBean.getConversation().getId()));
     }
     
     public void guardarCambios() {
-        cambioEstadoSessionBean.setIdEstadoToChange(this.estadoPuntoLimpio);
+        cambioEstadoConvBean.setIdEstadoToChange(this.estadoPuntoLimpio);
         
-        //cambioEstadoSessionBean.setIdPuntoLimpioToChange(null);
+        //cambioEstadoConvBean.setIdPuntoLimpioToChange(null);
         if (CommonFunctions.isUserInRole("Inspector"))
-            CommonFunctions.goToPage("/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml");
+            CommonFunctions.goToPage("/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml?cid=".concat(this.cambioEstadoConvBean.getConversation().getId()));
         if (CommonFunctions.isUserInRole("Operario"))
-            CommonFunctions.goToPage("/faces/users/operario/agregarMantencionPuntoLimpio.xhtml");
+            CommonFunctions.goToPage("/faces/users/operario/agregarMantencionPuntoLimpio.xhtml?cid=".concat(this.cambioEstadoConvBean.getConversation().getId()));
     }
     
     public void volver() {
-        cambioEstadoSessionBean.limpiarCampos();
+        cambioEstadoConvBean.limpiarCampos();
         if (CommonFunctions.isUserInRole("Inspector"))
-            CommonFunctions.goToPage("/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml");
+            CommonFunctions.goToPage("/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml?cid=".concat(this.cambioEstadoConvBean.getConversation().getId()));
         if (CommonFunctions.isUserInRole("Operario"))
-            CommonFunctions.goToPage("/faces/users/operario/agregarMantencionPuntoLimpio.xhtml");
+            CommonFunctions.goToPage("/faces/users/operario/agregarMantencionPuntoLimpio.xhtml?cid=".concat(this.cambioEstadoConvBean.getConversation().getId()));
     }
 
     public List<SelectElemPojo> getListaEstadosPtoLimpio() {

@@ -40,6 +40,10 @@ public class MantenedorSolicitudVerDetallesMB {
     
     private String detalles;
     
+    private boolean revisada_seleccionado;
+    
+    private boolean resuelta_seleccionado;
+    
     
     @PostConstruct
     public void init() {
@@ -65,12 +69,21 @@ public class MantenedorSolicitudVerDetallesMB {
         String apellido1 = rev.getInspectorSolicitante().getUsuario().getApellido1();
         //String apellido2 = rev.getOperarioMantencion().getUsuario().getApellido2();
         this.inspector = rut.concat(" - ").concat(nombre).concat(" ").concat(apellido1);
-        
+        if (CommonFunctions.isUserInRole("Operario")) {
+            this.revisada_seleccionado = true; //Por defecto se revisa al abrir esta ventana
+        }
         rut = Integer.toString(rev.getOperarioAsignado().getUsuario().getRut());
         nombre = rev.getOperarioAsignado().getUsuario().getNombre();
         apellido1 = rev.getOperarioAsignado().getUsuario().getApellido1();
         //String apellido2 = rev.getOperarioMantencion().getUsuario().getApellido2();
         this.operario = rut.concat(" - ").concat(nombre).concat(" ").concat(apellido1);
+    }
+    
+    public void volverToListaAndSave() {
+        System.out.println("idSolicitud: "+mantSolicitudes.getIdSolicitudDetalles() +" " + revisada_seleccionado);
+        crudSolicitud.checkRevisada(mantSolicitudes.getIdSolicitudDetalles(), revisada_seleccionado);
+        crudSolicitud.checkResuelta(mantSolicitudes.getIdSolicitudDetalles(), resuelta_seleccionado);
+        volverToLista();
     }
     
     public void volverToLista() {
@@ -129,4 +142,21 @@ public class MantenedorSolicitudVerDetallesMB {
     public void setDetalles(String detalles) {
         this.detalles = detalles;
     }
+
+    public boolean isRevisada_seleccionado() {
+        return revisada_seleccionado;
+    }
+
+    public void setRevisada_seleccionado(boolean revisada_seleccionado) {
+        this.revisada_seleccionado = revisada_seleccionado;
+    }
+
+    public boolean isResuelta_seleccionado() {
+        return resuelta_seleccionado;
+    }
+
+    public void setResuelta_seleccionado(boolean resuelta_seleccionado) {
+        this.resuelta_seleccionado = resuelta_seleccionado;
+    }
+    
 }

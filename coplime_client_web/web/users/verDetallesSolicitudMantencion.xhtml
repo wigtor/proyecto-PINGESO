@@ -38,10 +38,16 @@
                          
                          <p:outputLabel value="Detalle"/>
                          <p:inputTextarea value="#{mantenedorSolicitudVerDetallesMB.detalles}" disabled="true" readonly="true" />
-                         
-                         
+
+                         <p:outputLabel value="Revisada"/>
+                         <p:selectBooleanCheckbox value="#{mantenedorSolicitudVerDetallesMB.revisada_seleccionado}" disabled="#{!request.isUserInRole('Operario')}"/>
+
+                         <p:outputLabel value="Resuelta"/>
+                         <p:selectBooleanCheckbox value="#{mantenedorSolicitudVerDetallesMB.resuelta_seleccionado}" disabled="#{!request.isUserInRole('Operario')}" />
+
+
                          <f:facet name="footer">
-                            <p:commandButton value="Volver" action="#{mantenedorSolicitudVerDetallesMB.volverToLista()}"/>                         
+                            <p:commandButton value="Volver" action="#{mantenedorSolicitudVerDetallesMB.volverToListaAndSave()}"/>                         
                          </f:facet>
                      </p:panelGrid>                
                 </h:form>

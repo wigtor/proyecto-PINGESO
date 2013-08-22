@@ -19,5 +19,7 @@ public interface NotificacionDAO extends genericDAO<Notificacion>{
      * @return Devuelve la cantidad de notificaciones sin revisar
      */
     public Integer countPorRevisar(String username);
+    
+    
     public Collection<Notificacion> findAllOfUser(String username);
 }

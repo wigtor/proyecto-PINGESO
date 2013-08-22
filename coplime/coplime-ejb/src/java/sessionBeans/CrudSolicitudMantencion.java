@@ -106,8 +106,44 @@ public class CrudSolicitudMantencion implements CrudSolicitudMantencionLocal {
         }
         return null;
     }
-
-    public void persist(Object object) {
-        em.persist(object);
+    
+    @Override
+    public Integer obtenerCantidadSolicitudes(String username) {
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        SolicitudMantencionDAO solDAO = factoryDeDAOs.getSolicitudMantencionDAO();
+        return solDAO.countPorRevisar(username);
     }
+    
+    @Override
+    public boolean checkResuelta(Integer idsol, boolean check) {
+        if (idsol == null) {
+            return false;
+        }
+        DAOFactory factory = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        SolicitudMantencionDAO solDAO = factory.getSolicitudMantencionDAO();
+        SolicitudMantencion solic = solDAO.find(idsol);
+        if (solic == null ) {
+            return false;
+        }
+        solic.setResuelto(check);
+        solDAO.update(solic);
+        return true;
+    }
+    
+    @Override
+    public boolean checkRevisada(Integer idsol, boolean check) {
+        if (idsol == null) {
+            return false;
+        }
+        DAOFactory factory = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        SolicitudMantencionDAO solDAO = factory.getSolicitudMantencionDAO();
+        SolicitudMantencion solic = solDAO.find(idsol);
+        if (solic == null ) {
+            return false;
+        }
+        solic.setRevisado(check);
+        solDAO.update(solic);
+        return true;
+    }
+    
 }

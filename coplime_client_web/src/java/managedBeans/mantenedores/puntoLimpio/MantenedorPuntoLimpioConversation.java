@@ -10,9 +10,8 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
-import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.inject.Inject;
+import managedBeans.AbstractConversation;
 
 /**
  *
@@ -20,24 +19,11 @@ import javax.inject.Inject;
  */
 @Named(value = "mantenedorPuntoLimpioConversation")
 @ConversationScoped
-public class MantenedorPuntoLimpioConversation implements Serializable {
-    @Inject Conversation conversation;
+public class MantenedorPuntoLimpioConversation extends AbstractConversation implements Serializable {
     
     private PuntoLimpioPojo pto_creando;
     private List<ContenedorPojo> contenedores_creando;
     private Integer idPuntoLimpioDetalles;
-    
-    public void beginConversation() {
-        if (conversation.isTransient()) {
-            conversation.begin();
-        }
-    }
-    
-    public void endConversation() {
-        if (!conversation.isTransient()) {
-            conversation.end();
-        }
-    }
     
     /**
      * Creates a new instance of MantenedorPuntoLimpioConversation
@@ -80,10 +66,6 @@ public class MantenedorPuntoLimpioConversation implements Serializable {
 
     public void setIdPuntoLimpioDetalles(Integer idPuntoLimpioDetalles) {
         this.idPuntoLimpioDetalles = idPuntoLimpioDetalles;
-    }
-    
-    public Conversation getConversation() {
-        return conversation;
     }
     
 }

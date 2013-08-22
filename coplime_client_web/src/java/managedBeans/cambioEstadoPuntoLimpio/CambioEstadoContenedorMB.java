@@ -30,7 +30,7 @@ public class CambioEstadoContenedorMB {
     private CrudPuntoLimpioLocal crudPuntoLimpio;
     
     @Inject
-    private CambioEstadoPuntoLimpioConversation cambioEstadoSessionBean;
+    private CambioEstadoPuntoLimpioConversation cambioEstadoConvBean;
     
     private List<SelectElemPojo> listaEstados;
     
@@ -66,8 +66,8 @@ public class CambioEstadoContenedorMB {
     }
     
     private void cargarDatosContenedor() {
-        this.idPtoLimpio = cambioEstadoSessionBean.getIdEstadoToChange();
-        this.idContenedor = cambioEstadoSessionBean.getIdContenedorToChange();
+        this.idPtoLimpio = cambioEstadoConvBean.getIdEstadoToChange();
+        this.idContenedor = cambioEstadoConvBean.getIdContenedorToChange();
         if (this.idContenedor == null) {
             //Error
             CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
@@ -81,7 +81,7 @@ public class CambioEstadoContenedorMB {
         this.nombrePtoLimpio = Integer.toString(cont.getPuntoLimpio().getId()).concat(" - ").concat(cont.getPuntoLimpio().getNombre());
         int indice = buscarSiContenedorFueModificado(idContenedor);
         if (indice >= 0) {
-            ContenedorPojo c = cambioEstadoSessionBean.getListaContenedoresModificados().get(indice);
+            ContenedorPojo c = cambioEstadoConvBean.getListaContenedoresModificados().get(indice);
             this.idEstado = c.getIdEstadoContenedor();
             this.llenado = c.getLlenadoContenedor();
         }
@@ -93,7 +93,7 @@ public class CambioEstadoContenedorMB {
     
     private int buscarSiContenedorFueModificado(Integer idContenedor) {
         int index = 0;
-        for(ContenedorPojo c : cambioEstadoSessionBean.getListaContenedoresModificados()) {
+        for(ContenedorPojo c : cambioEstadoConvBean.getListaContenedoresModificados()) {
             if (c.getId().intValue() == idContenedor.intValue()) {
                 return index;
             }
@@ -107,15 +107,15 @@ public class CambioEstadoContenedorMB {
         contModificado.setId(this.idContenedor);
         contModificado.setLlenadoContenedor(llenado);
         contModificado.setIdEstadoContenedor(idEstado);
-        this.cambioEstadoSessionBean.getListaContenedoresModificados().add(contModificado);
-        this.cambioEstadoSessionBean.setIdContenedorToChange(null); //Sólo el contenedor lo mando a null
+        this.cambioEstadoConvBean.getListaContenedoresModificados().add(contModificado);
+        this.cambioEstadoConvBean.setIdContenedorToChange(null); //Sólo el contenedor lo mando a null
         
-        CommonFunctions.goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml");
+        CommonFunctions.goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml?cid=".concat(this.cambioEstadoConvBean.getConversation().getId()));
     }
     
     public void volver() {
-        cambioEstadoSessionBean.setIdContenedorToChange(null);
-        CommonFunctions.goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml");
+        cambioEstadoConvBean.setIdContenedorToChange(null);
+        CommonFunctions.goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml?cid=".concat(this.cambioEstadoConvBean.getConversation().getId()));
     }
 
     public List<SelectElemPojo> getListaEstados() {

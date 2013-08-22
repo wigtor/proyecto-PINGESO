@@ -76,9 +76,10 @@ public class MantenedorNotificacionVerListadoMB implements Serializable {
     }
     
     public void verDetalles(Integer idSeleccionado) {
-        mantNotificaciones.beginConversation();
+        //mantNotificaciones.beginConversation();
         mantNotificaciones.setIdNotificacionSeleccionada(idSeleccionado);
-        CommonFunctions.goToPage("/faces/users/verDetallesNotificacion.xhtml?cid=".concat(this.mantNotificaciones.getConversation().getId()));
+        CommonFunctions.goToPage("/faces/users/verDetallesNotificacion.xhtml");
+        //CommonFunctions.goToPage("/faces/users/verDetallesNotificacion.xhtml?cid=".concat(this.mantNotificaciones.getConversation().getId()));
     }
     
     public void volverToListado() {

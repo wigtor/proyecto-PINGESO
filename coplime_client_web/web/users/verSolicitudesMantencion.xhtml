@@ -38,7 +38,7 @@
                                 <h:outputText value="#{solMant.usuarioReceptor}"/>
                             </p:column>
                             <p:column headerText="Revisada" >
-                                <p:selectBooleanCheckbox value="#{solMant.revisada}"/>
+                                <p:selectBooleanCheckbox value="#{solMant.revisada}" disabled="true"/>
                             </p:column>
                             <p:column headerText="" >
                                 <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{mantenedorSolicitudVerListadoMB.verDetalles(solMant.num)}">

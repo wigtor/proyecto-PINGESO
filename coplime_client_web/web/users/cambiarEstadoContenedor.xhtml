@@ -26,22 +26,24 @@
                         <p:outputLabel value="Material del contenedor"/>
                         <p:outputLabel value="#{cambioEstadoContenedorMB.material}"/>
                         
-                        <p:outputLabel value="Estado"/>
-                        <h:selectOneMenu value="#{cambioEstadoContenedorMB.idEstado}">
+                        <p:outputLabel for="estado" value="Estado"/>
+                        <h:selectOneMenu id="estado" value="#{cambioEstadoContenedorMB.idEstado}">
                             <f:selectItems value="#{cambioEstadoContenedorMB.listaEstados}" 
                                 var="mat" itemLabel="#{mat.label}" itemValue="#{mat.id}" />
                         </h:selectOneMenu>
                         
-                        <p:outputLabel value="Porcentaje de llenado"/>
+                        <p:outputLabel for="llenadoContenedor" value="Porcentaje de llenado"/>
                         <h:panelGroup >
-                            <p:inputText id="llenadoContenedor" value="#{cambioEstadoContenedorMB.llenado}"/>%
+                            <p:inputText id="llenadoContenedor" value="#{cambioEstadoContenedorMB.llenado}">
+                                <f:validator validatorId="PorcentajeLlenadoValidator" />
+                            </p:inputText> %
                             <p:slider step="5" for="llenadoContenedor"/>
                         </h:panelGroup>
                         
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Aceptar" action="#{cambioEstadoContenedorMB.guardarCambios()}"/>
-                            <p:commandButton value="Volver" action="#{cambioEstadoContenedorMB.volver()}"/>
+                            <p:commandButton value="Aceptar" ajax="false" action="#{cambioEstadoContenedorMB.guardarCambios()}"/>
+                            <p:commandButton value="Volver" immediate="true" action="#{cambioEstadoContenedorMB.volver()}"/>
                         </f:facet>
                     </p:panelGrid>
 

@@ -21,7 +21,7 @@ import sessionBeans.NotificadorLocal;
  */
 @Named(value = "notificacionesManagedBeans")
 @SessionScoped
-public class notificacionesManagedBeans implements Serializable {
+public class NotificacionesManagedBeans implements Serializable {
     @EJB
     private NotificadorLocal notificador;
     
@@ -30,9 +30,9 @@ public class notificacionesManagedBeans implements Serializable {
     
     
     /**
-     * Creates a new instance of notificacionesManagedBeans
+     * Creates a new instance of NotificacionesManagedBeans
      */
-    public notificacionesManagedBeans() {
+    public NotificacionesManagedBeans() {
     }
 
     @PostConstruct

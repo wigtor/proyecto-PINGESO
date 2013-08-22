@@ -17,4 +17,10 @@ public interface CrudSolicitudMantencionLocal {
     public boolean agregarSolicitudMantencion(Integer numPtoLimpio, String usernameLogueado, Integer numOperario, String detalle);
     public SolicitudMantencion getSolicitudById(Integer numSolicitud);
     public Collection<SolicitudMantencion> getAllSolicitudes(String usernameQuienPregunta);
+
+    public Integer obtenerCantidadSolicitudes(String username);
+
+    public boolean checkRevisada(Integer idNotif, boolean check);
+
+    public boolean checkResuelta(Integer idNotif, boolean check);
 }

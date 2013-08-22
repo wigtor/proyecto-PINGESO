@@ -38,8 +38,8 @@
                         </h:panelGroup >
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Aceptar" action="#{cambioEstadoPuntoLimpioMB.guardarCambios()}"/>
-                            <p:commandButton value="Volver" action="#{cambioEstadoPuntoLimpioMB.volver()}"/>
+                            <p:commandButton value="Aceptar" ajax="false" action="#{cambioEstadoPuntoLimpioMB.guardarCambios()}"/>
+                            <p:commandButton value="Volver" immediate="true" action="#{cambioEstadoPuntoLimpioMB.volver()}"/>
                         </f:facet>
                     </p:panelGrid>
 

@@ -6,9 +6,8 @@ package managedBeans.mantencionesPuntoLimpio;
 
 import javax.inject.Named;
 import java.io.Serializable;
-import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.inject.Inject;
+import managedBeans.AbstractConversation;
 
 /**
  *
@@ -16,23 +15,9 @@ import javax.inject.Inject;
  */
 @Named(value = "mantenedorMantencionConversation")
 @ConversationScoped
-public class MantenedorMantencionConversation implements Serializable {
+public class MantenedorMantencionConversation extends AbstractConversation implements Serializable {
 
-    @Inject Conversation conversation;
-    
     private Integer idMantencionDetalles;
-    
-    public void beginConversation() {
-        if (conversation.isTransient()) {
-            conversation.begin();
-        }
-    }
-    
-    public void endConversation() {
-        if (!conversation.isTransient()) {
-            conversation.end();
-        }
-    }
     
     public void limpiarDatos() {
         idMantencionDetalles = null;
@@ -50,10 +35,6 @@ public class MantenedorMantencionConversation implements Serializable {
 
     public void setIdMantencionDetalles(Integer idMantencionDetalles) {
         this.idMantencionDetalles = idMantencionDetalles;
-    }
-    
-    public Conversation getConversation() {
-        return conversation;
     }
     
 }

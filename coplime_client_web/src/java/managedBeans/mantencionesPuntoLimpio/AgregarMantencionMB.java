@@ -35,7 +35,7 @@ public class AgregarMantencionMB {
     private CrudMantencionPuntoLimpioLocal crudMantencion;
     
     @Inject
-    private CambioEstadoPuntoLimpioConversation cambioEstadoSessionBean;
+    private CambioEstadoPuntoLimpioConversation cambioEstadoConvBean;
     
     private Integer numPtoLimpio;
     private List<SelectElemPojo> listaPuntosLimpios;
@@ -51,17 +51,17 @@ public class AgregarMantencionMB {
     public void init() {
         this.listaPuntosLimpios = cargarPuntosLimpios();
         if (detalle == null) {
-            detalle = cambioEstadoSessionBean.getDetalle();
+            detalle = cambioEstadoConvBean.getDetalle();
         }
         else if (detalle.trim().isEmpty()) {
-            detalle = cambioEstadoSessionBean.getDetalle();
+            detalle = cambioEstadoConvBean.getDetalle();
         }
         
-        if (this.cambioEstadoSessionBean.getIdPuntoLimpioToChange()!= null) {
-            this.numPtoLimpio = this.cambioEstadoSessionBean.getIdPuntoLimpioToChange();
+        if (this.cambioEstadoConvBean.getIdPuntoLimpioToChange()!= null) {
+            this.numPtoLimpio = this.cambioEstadoConvBean.getIdPuntoLimpioToChange();
         }
         else {
-            this.cambioEstadoSessionBean.setIdPuntoLimpioToChange(this.numPtoLimpio);
+            this.cambioEstadoConvBean.setIdPuntoLimpioToChange(this.numPtoLimpio);
         }
     }
     
@@ -81,10 +81,11 @@ public class AgregarMantencionMB {
     
     public void cambiarEstadoPtoLimpio() {
         //Almaceno en el managed bean session el punto limpio que se está editando
-        cambioEstadoSessionBean.setDetalle(detalle);
-        cambioEstadoSessionBean.setIdPuntoLimpioToChange(numPtoLimpio);
+        cambioEstadoConvBean.beginConversation();
+        cambioEstadoConvBean.setDetalle(detalle);
+        cambioEstadoConvBean.setIdPuntoLimpioToChange(numPtoLimpio);
         
-        CommonFunctions.goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml");
+        CommonFunctions.goToPage("/faces/users/cambiarEstadoPuntoLimpio.xhtml?cid=".concat(this.cambioEstadoConvBean.getConversation().getId()));
     }
     
     public void guardarMantencion() {
@@ -93,8 +94,8 @@ public class AgregarMantencionMB {
          String usernameLogueado = CommonFunctions.getUsuarioLogueado();
          
          //Envío al session bean los cambios para que se persistan a nivel de DB
-         crudMantencion.agregarMantencion(numPtoLimpio, usernameLogueado, detalle, cambioEstadoSessionBean.getIdEstadoToChange());
-         for(ContenedorPojo c : cambioEstadoSessionBean.getListaContenedoresModificados()) {
+         crudMantencion.agregarMantencion(numPtoLimpio, usernameLogueado, detalle, cambioEstadoConvBean.getIdEstadoToChange());
+         for(ContenedorPojo c : cambioEstadoConvBean.getListaContenedoresModificados()) {
              crudPuntoLimpio.cambiarEstadoContenedor(c.getId(), c.getIdEstadoContenedor(), c.getLlenadoContenedor());
          }
          CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO, 
@@ -105,7 +106,8 @@ public class AgregarMantencionMB {
     
     public void volverToLista() {
         //System.out.println("Se hizo click en 'volverToLista()'");
-        cambioEstadoSessionBean.limpiarCampos();
+        cambioEstadoConvBean.limpiarCampos();
+        cambioEstadoConvBean.endConversation();
         CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml?faces-redirect=true");
     }
 

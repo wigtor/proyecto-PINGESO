@@ -5,10 +5,9 @@
 package managedBeans.mantenedores.operario;
 
 import java.io.Serializable;
-import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
-import javax.inject.Inject;
+import managedBeans.AbstractConversation;
 
 /**
  *
@@ -16,23 +15,9 @@ import javax.inject.Inject;
  */
 @Named(value = "mantenedorOperarioConversation")
 @ConversationScoped
-public class MantenedorOperarioConversation implements Serializable{
-    
-    @Inject Conversation conversation;
+public class MantenedorOperarioConversation extends AbstractConversation implements Serializable{
     
     private Integer idUsuarioDetalles;
-    
-    public void beginConversation() {
-        if (conversation.isTransient()) {
-            conversation.begin();
-        }
-    }
-    
-    public void endConversation() {
-        if (!conversation.isTransient()) {
-            conversation.end();
-        }
-    }
     
     public MantenedorOperarioConversation() {
     }
@@ -43,10 +28,6 @@ public class MantenedorOperarioConversation implements Serializable{
 
     public void setIdUsuarioDetalles(Integer idUsuarioDetalles) {
         this.idUsuarioDetalles = idUsuarioDetalles;
-    }
-    
-    public Conversation getConversation() {
-        return conversation;
     }
    
 }

@@ -32,7 +32,7 @@
                     <h:outputLink value="#{request.contextPath}/faces/users/admin/verAdministradores.xhtml">Ver administradores</h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verNotificaciones.xhtml">Ver notificaciones
-                        <h:outputText id="txt_num_notif" styleClass="ui-li-count" value="#{notificacionesManagedBeans.cantidadNotificaciones}"/>
+                        <h:outputText id="txt_num_notif" styleClass="ui-li-count" value="(#{notificacionesManagedBeans.cantidadNotificaciones})"/>
                         <p:poll interval="30" autoStart="true" listener="#{notificacionesManagedBeans.refresNotificaciones(null)}" update="txt_num_notif"/>
                     </h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención</h:outputLink>
@@ -56,7 +56,7 @@
                     <h:outputLink value="#{request.contextPath}/faces/users/infoUsuario.xhtml">Información del usuario</h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verNotificaciones.xhtml">Ver notificaciones
-                        <h:outputText id="txt_num_notif" styleClass="ui-li-count" value="#{notificacionesManagedBeans.cantidadNotificaciones}"/>
+                        <h:outputText id="txt_num_notif" styleClass="ui-li-count" value="(#{notificacionesManagedBeans.cantidadNotificaciones})"/>
                         <p:poll interval="30" autoStart="true" listener="#{notificacionesManagedBeans.refresNotificaciones(null)}" update="txt_num_notif"/>
                     </h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención</h:outputLink>
@@ -81,10 +81,13 @@
                     <h:outputLink value="#{request.contextPath}/faces/users/infoUsuario.xhtml">Información del usuario</h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verPuntosLimpios.xhtml">Ver puntos limpios</h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verNotificaciones.xhtml">Ver notificaciones
-                        <h:outputText id="txt_num_notif" styleClass="ui-li-count" value="#{notificacionesManagedBeans.cantidadNotificaciones}"/>
+                        <h:outputText id="txt_num_notif" styleClass="ui-li-count" value="(#{notificacionesManagedBeans.cantidadNotificaciones})"/>
                         <p:poll interval="30" autoStart="true" listener="#{notificacionesManagedBeans.refresNotificaciones(null)}" update="txt_num_notif"/>
                     </h:outputLink>
-                    <h:outputLink value="#{request.contextPath}/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención
+                        <h:outputText id="txt_num_solic" styleClass="ui-li-count" value="(#{solicitudesManagedBeans.cantidadSolicitudes})"/>
+                        <p:poll interval="30" autoStart="true" listener="#{solicitudesManagedBeans.refresSolicitudes(null)}" update="txt_num_solic"/>
+                    </h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verMantenciones.xhtml">Ver mantenciones de puntos limpios</h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verOperariosMantencion.xhtml">Ver operarios de mantención</h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verInspectores.xhtml">Ver inspectores</h:outputLink>

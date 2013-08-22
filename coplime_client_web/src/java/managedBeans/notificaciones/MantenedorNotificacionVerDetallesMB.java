@@ -113,7 +113,6 @@ public class MantenedorNotificacionVerDetallesMB implements Serializable {
     
     
     public void volverToListaAndSave() {
-        mantNotificacion.endConversation();
         notificador.checkRevisada(mantNotificacion.getIdNotificacionSeleccionada(), revisada_seleccionado);
         notificador.checkResuelta(mantNotificacion.getIdNotificacionSeleccionada(), resuelta_seleccionado);
         volverToLista();
@@ -121,7 +120,7 @@ public class MantenedorNotificacionVerDetallesMB implements Serializable {
     
     public void volverToLista() {
         mantNotificacion.limpiarDatos();
-        mantNotificacion.endConversation();
+        //mantNotificacion.endConversation();
         CommonFunctions.goToPage("/faces/users/verNotificaciones.xhtml");
     }
     

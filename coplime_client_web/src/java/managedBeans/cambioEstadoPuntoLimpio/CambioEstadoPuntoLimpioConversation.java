@@ -9,9 +9,8 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.inject.Inject;
+import managedBeans.AbstractConversation;
 
 /**
  *
@@ -19,26 +18,13 @@ import javax.inject.Inject;
  */
 @Named(value = "cambioEstadoPuntoLimpioConversation")
 @ConversationScoped
-public class CambioEstadoPuntoLimpioConversation implements Serializable {
-    @Inject Conversation conversation;
+public class CambioEstadoPuntoLimpioConversation extends AbstractConversation implements Serializable {
     
     private Integer idPuntoLimpioToChange;
     private Integer idContenedorToChange;
     private Integer idEstadoToChange;
     private List<ContenedorPojo> listaContenedoresModificados;
     private String detalle;
-    
-    public void beginConversation() {
-        if (conversation.isTransient()) {
-            conversation.begin();
-        }
-    }
-    
-    public void endConversation() {
-        if (!conversation.isTransient()) {
-            conversation.end();
-        }
-    }
     
     /**
      * Creates a new instance of CambioEstadoPuntoLimpioConversation
@@ -90,5 +76,5 @@ public class CambioEstadoPuntoLimpioConversation implements Serializable {
     public void setDetalle(String detalle) {
         this.detalle = detalle;
     }
-    
+
 }

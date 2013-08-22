@@ -9,6 +9,7 @@ import entities.SolicitudMantencion;
 import java.util.Collection;
 import java.util.LinkedList;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -42,6 +43,22 @@ public class SolicitudMantencionDAO_impl extends genericDAO_impl<SolicitudManten
         q.setParameter("idUsuario", idUsuario);
         Collection<SolicitudMantencion> res = (Collection<SolicitudMantencion>)q.getResultList();
         return res;
+    }
+    
+    @Override
+    public Integer countPorRevisar(String username) {
+        Query q = this.em.createNamedQuery("SolicitudMantencion.countNoRevisadasUsuarioDestinatario");
+        q.setParameter("username", username);
+        
+        Long resultado;
+        try {
+            resultado = (Long)q.getSingleResult();
+        }
+        catch (NoResultException nre) {
+            return 0;
+        }
+        //System.out.println("Notificaciones por revisar para el usuario con username: "+username+" son:"+resultado);
+        return new Integer(resultado.intValue());
     }
     
 }

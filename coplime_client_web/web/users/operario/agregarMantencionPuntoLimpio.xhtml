@@ -19,8 +19,8 @@
                     <p:panelGrid columns="2" styleClass="centrar" >
                         <f:facet name="header">Ingrese datos de la mantención realizada</f:facet>
 
-                        <p:outputLabel value="Seleccione punto limpio" />
-                        <h:selectOneMenu value="#{agregarMantencionMB.numPtoLimpio}">
+                        <p:outputLabel for="ptoLimpio" value="Seleccione punto limpio" />
+                        <h:selectOneMenu id="ptoLimpio" value="#{agregarMantencionMB.numPtoLimpio}">
                             <f:selectItems value="#{agregarMantencionMB.listaPuntosLimpios}"  
                                 var="ptoLimpio" itemLabel="#{ptoLimpio.label}" itemValue="#{ptoLimpio.id}" />
                         </h:selectOneMenu>
@@ -28,8 +28,8 @@
                         <p:outputLabel value="Cambiar su estado" />
                         <p:commandButton value="Cambiar estado" action="#{agregarMantencionMB.cambiarEstadoPtoLimpio()}"/>
 
-                        <p:outputLabel value="Detalles de la mantención" />
-                        <p:inputTextarea value="#{agregarMantencionMB.detalle}"/>
+                        <p:outputLabel for="detallesMant" value="Detalles de la mantención" />
+                        <p:inputTextarea id="detallesMant" value="#{agregarMantencionMB.detalle}"/>
                         
                         <f:facet name="footer">
                             <p:commandButton value="Guardar mantención" action="#{agregarMantencionMB.guardarMantencion()}"/>

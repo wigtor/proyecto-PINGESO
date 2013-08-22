@@ -24,7 +24,8 @@ import javax.persistence.Temporal;
 @Entity
 @NamedQueries( {
     @NamedQuery(name="SolicitudMantencion.findByInspector", query="SELECT u FROM SolicitudMantencion u WHERE u.inspectorSolicitante.usuario.id = :idUsuario"), 
-    @NamedQuery(name="SolicitudMantencion.findByOperario", query="SELECT u FROM SolicitudMantencion u WHERE u.operarioAsignado.usuario.id = :idUsuario")
+    @NamedQuery(name="SolicitudMantencion.findByOperario", query="SELECT u FROM SolicitudMantencion u WHERE u.operarioAsignado.usuario.id = :idUsuario"),
+    @NamedQuery(name="SolicitudMantencion.countNoRevisadasUsuarioDestinatario", query="SELECT count(u) FROM SolicitudMantencion u WHERE (u.operarioAsignado.usuario.username = :username) AND (u.revisado = false)")
 })
 public class SolicitudMantencion implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -50,10 +51,17 @@ public class SolicitudMantencion implements Serializable {
     private Calendar fecha;
     
     private String detalles;
+    
+    @Column(nullable = false)
+    private boolean revisado;
+    
+    @Column(nullable = false)
+    private boolean resuelto;
 
     
     public SolicitudMantencion() {
-        
+        this.resuelto = false;
+        this.revisado = false;
     }
     
     public SolicitudMantencion(PuntoLimpio p, Inspector ins, OperarioMantencion opAsign, String detalle) {
@@ -61,6 +69,8 @@ public class SolicitudMantencion implements Serializable {
         this.inspectorSolicitante = ins;
         this.operarioAsignado = opAsign;
         this.detalles = detalle;
+        this.resuelto = false;
+        this.revisado = false;
     }
 
     public RevisionPuntoLimpio getRevisionOriginadora() {
@@ -126,6 +136,23 @@ public class SolicitudMantencion implements Serializable {
     public void setDetalles(String detalles) {
         this.detalles = detalles;
     }
+
+    public boolean isRevisado() {
+        return revisado;
+    }
+
+    public void setRevisado(boolean revisado) {
+        this.revisado = revisado;
+    }
+
+    public boolean isResuelto() {
+        return resuelto;
+    }
+
+    public void setResuelto(boolean resuelto) {
+        this.resuelto = resuelto;
+    }
+    
 
     @Override
     public int hashCode() {
