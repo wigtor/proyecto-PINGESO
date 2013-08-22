@@ -69,6 +69,9 @@ public class MantenedorNotificacionVerDetallesMB implements Serializable {
     
     private void cargarDatosNotificacion() {
         Notificacion notifTemp = notificador.getNotificacion(this.numNotif);
+        if (notifTemp == null) {
+            return;
+        }
         this.detalleCompleto_seleccionado = notifTemp.getComentario();
         this.fecha_seleccionado = Integer.toString(notifTemp.getFechaHora().get(Calendar.DAY_OF_MONTH)).concat(
                     "-").concat(
