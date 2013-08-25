@@ -19,8 +19,10 @@ import DAO.interfaces.RolDAO;
 import DAO.interfaces.TipoIncidenciaDAO;
 import DAO.interfaces.UnidadMedidaDAO;
 import DAO.interfaces.UsuarioDAO;
+import DAO.interfaces.ConfiguracionDAO;
 import entities.Administrador;
 import entities.Comuna;
+import entities.Configuracion;
 import entities.Contenedor;
 import entities.Estado;
 import entities.HistoricoContenedor;
@@ -33,14 +35,18 @@ import entities.Rol;
 import entities.TipoIncidencia;
 import entities.UnidadMedida;
 import entities.Usuario;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import scheduler.GeneradorProgramadoNotificaciones;
 
 /**
  *
@@ -48,6 +54,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class configuracionInicial implements configuracionInicialLocal {
+    
     @PersistenceContext(unitName = "coplime-ejbPU")
     private EntityManager em;
     DAOFactory factoryDeDAOs;
@@ -64,8 +71,9 @@ public class configuracionInicial implements configuracionInicialLocal {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     @Override
-    public void primeraEjecicion() {
+    public void primeraEjecucion() {
         factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        cargarConfiguracion();
         cargaUsuarios();
         cargarEstadosPuntosLimpios();
         cargarTipoIncidencias();
@@ -75,6 +83,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         cargarPuntosLimpios();
         cargarMantenciones();
         cargarNotificaciones();
+        //programarTimersIniciales();
     }
     
     private void cargarEstadosPuntosLimpios() {
@@ -404,4 +413,71 @@ public class configuracionInicial implements configuracionInicialLocal {
         userDAO.insert(nvoUsuario3);
         OperDAO.insert(nvoOperario);
     }
+
+    @Override
+    public void cargarConfiguracion() {
+        
+        
+        //Contraseña maestra sistema
+        //Posible feature a futuro
+        Configuracion conf1 = new Configuracion();
+        conf1.setIdParam("contrasegna_maestra_sistema");
+        conf1.setValorParam(this.aMD5("emeres"));
+        
+        //Define un intervalo de 24 horas para el temporizador
+        //de estimación de llenado de contenedores.
+        Configuracion conf2 = new Configuracion();
+        conf2.setIdParam("timer_intervalo_estimacion_contenedores");
+        conf2.setValorParam("86400000"); //24 horas en milisegundos
+        
+        //Llamar a la DAO
+        ConfiguracionDAO configDAO = factoryDeDAOs.getConfiguracionDAO();
+        configDAO.insert(conf1);
+        configDAO.insert(conf2);
+    }
+    
+    /**
+     * La función consulta los valores en la configuración inicial de los temporizadores existentes
+     * y los programa en el sistema.
+     */
+    private void programarTimersIniciales(){
+        List<Configuracion> listaTimers;
+        ConfiguracionDAO configDAO = factoryDeDAOs.getConfiguracionDAO();
+        //Podría pasar que el guión bajo de "timer_" pudiera causar confusión en la sentencia JPQL, OJO
+        //TODO verificar posible problema "timer_"
+        listaTimers = configDAO.buscarTodosParamsAprox("timer_");
+        if (!(listaTimers.isEmpty())){
+            for(Configuracion c:listaTimers){
+               switch(c.getIdParam()){
+                   case "timer_intervalo_estimacion_contenedores":
+                       GeneradorProgramadoNotificaciones genProNotif = new GeneradorProgramadoNotificaciones();
+                       genProNotif.setTemporizadorEstimacionLlenadoContenedor(Long.parseLong(c.getValorParam()));
+                       System.out.println("Detectado timer de estimación de contenedores, intervalo = ".concat(c.getValorParam()).concat(" ms."));
+                       break;
+                   default:
+                       System.out.println("Timer ".concat(c.getIdParam()).concat(" detectado, sin acción predefinida."));
+                       break;
+               } 
+            }
+        }        
+    }
+    
+    private String aMD5(String entrada){
+        //Método tomado de la implementación de Víctor para carga de otras contraseñas
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(entrada.getBytes("UTF-8"));
+
+            byte[] digest = md.digest();
+            BigInteger bigInt = new BigInteger(1, digest);
+            entrada = bigInt.toString(16);
+            return entrada;
+        }
+        catch (Exception e) {
+            System.out.println("No se pudo convertir a MD5 la password");
+            return "";
+        }
+    }
+    
+    
 }

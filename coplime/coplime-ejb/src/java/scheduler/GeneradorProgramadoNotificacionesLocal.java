@@ -18,4 +18,6 @@ public interface GeneradorProgramadoNotificacionesLocal {
      * fecha de revisión de los puntos limpios.
      */
     public void calculoLlenadoAutomatico();
+
+    public void setTemporizadorEstimacionLlenadoContenedor(Long milisegundosIntervalo);
 }

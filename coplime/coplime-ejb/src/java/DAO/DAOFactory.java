@@ -21,6 +21,7 @@ import DAO.interfaces.SolicitudMantencionDAO;
 import DAO.interfaces.TipoIncidenciaDAO;
 import DAO.interfaces.UnidadMedidaDAO;
 import DAO.interfaces.UsuarioDAO;
+import DAO.interfaces.ConfiguracionDAO;
 import entities.HistoricoContenedor;
 import javax.persistence.EntityManager;
 
@@ -71,6 +72,8 @@ public abstract class DAOFactory {
     public abstract SolicitudMantencionDAO getSolicitudMantencionDAO();
     
     public abstract HistoricoContenedorDAO getHistoricoContenedorDAO();
+    
+    public abstract ConfiguracionDAO getConfiguracionDAO();
     
     public abstract void close();
 

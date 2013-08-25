@@ -60,7 +60,6 @@ public class AlgoritmoPromediosPonderados implements AlgoritmoCalculo {
         Double diasEstimados;
         Long diasEstimadosL;
         diasEstimados = (porcentajeBuscado - historialContenedor.getLast().getPorcentajeLlenado())/pendiente;
-        //Si la estimación da 4.01 días estimados, 
         diasEstimadosL = Math.round(diasEstimados);
         //TODO averiguar método intValue() (JavaDoc)
         //TODO mejorar tipos double, long e int

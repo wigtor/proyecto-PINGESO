@@ -16,10 +16,13 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.logging.Level;
-import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.Timer;
+import javax.ejb.Timeout;
+import javax.ejb.TimerService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import scheduler.algoritmosCalculo.AlgoritmoCalculo;
@@ -38,8 +41,12 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
     @PersistenceContext(unitName = "coplime-ejbPU")
     private EntityManager em;
     
+    @Resource
+    TimerService servicioTemporizador;
+    
     //TODO Cambiar por Programatic Timers (buscar en la documentación)
-    @Schedule(minute = "0", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "01")
+    //@Schedule(minute = "0", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "01")
+    @Timeout
     @Override
     //NOTA: Los parámetros de periodicidad de la tarea programada deben ser configurables externamente
     //a través de la aplicación.
@@ -199,4 +206,17 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
     public void persist(Object object) {
         em.persist(object);
     }
+    
+    /**
+     * Programa el temporizador que determina cada cuánto tiempo se ejecuta la tarea de estimación
+     * de llenado de los contenedores registrados.
+     * @param milisegundosIntervalo el intervalo en milisegundos entre el que se ejecuta la tarea.
+     */
+    @Override
+    public void setTemporizadorEstimacionLlenadoContenedor(Long milisegundosIntervalo){
+        Timer temporizador = servicioTemporizador.createTimer(milisegundosIntervalo, "Temporizador creado para notificaciones automáticas [Estimación de llenado de contenedores], intervalo de ".concat(milisegundosIntervalo.toString()).concat(" milisegundos."));
+        Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.INFO, "Se ha establecido un temporizador para la estimación automática de llenado de contenedores, con un intervalo de ".concat(milisegundosIntervalo.toString()).concat(" milisegundos."));
+    }
+
+    
 }

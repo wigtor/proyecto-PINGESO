@@ -12,5 +12,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface configuracionInicialLocal {
-    public void primeraEjecicion();
+    public void primeraEjecucion();
+
+    void cargarConfiguracion();
 }

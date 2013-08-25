@@ -32,7 +32,7 @@ public class pobladoInicial {
     
     public void poblar() {
         
-        configuracionInicial.primeraEjecicion();
+        configuracionInicial.primeraEjecucion();
         CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
                     "Se ha poblado la base de datos",
                     "Se ha poblado la base de datos y está todo listo para poder ejecutar COPLIME");
