@@ -28,7 +28,7 @@
                         en buen estado los puntos limpios siempre.
                         <f:facet name="footer" >
                             <div style="text-align:center;">
-                                <p:commandButton styleClass="text-center" value="Generar aviso" action="#{autenticadorMB.goToEnviarAvisoIncidencia()}"/>
+                                <p:commandButton styleClass="text-center" value="Generar aviso" action="#{login.goToEnviarAvisoIncidencia()}"/>
                             </div>
                         </f:facet>
                     </p:panel>
@@ -41,14 +41,14 @@
                         <f:facet name="header">Inicio de sesión</f:facet>
                         
                             <p:outputLabel value="Nombre de usuario" for="input_username"/>
-                            <p:inputText id="input_username" label="Nombre de usuario" value="#{autenticadorMB.username}" required="true"/>
+                            <p:inputText id="input_username" label="Nombre de usuario" value="#{login.username}" required="true"/>
 
                             <p:outputLabel value="contraseña" for="input_password"/>
-                            <p:inputText id="input_password" type="password" value="#{autenticadorMB.password}" required="true"/>
+                            <p:inputText id="input_password" type="password" value="#{login.password}" required="true"/>
                             
                             <f:facet name="footer">
                                 <p:growl id="msj_error_login"/>
-                                <p:commandButton styleClass="centrar" value="Iniciar sesión" action="#{autenticadorMB.login()}" update="msj_error_login"/>
+                                <p:commandButton styleClass="centrar" value="Iniciar sesión" action="#{login.login()}" update="msj_error_login"/>
                             </f:facet>
                         </p:panelGrid>
                     </p:panel>
