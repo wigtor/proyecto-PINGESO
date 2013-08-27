@@ -18,26 +18,30 @@
             
             <ui:define name="centro">
                  <h:form>
-                     <p:panelGrid columns="2" styleClass="centrar">
-                         <f:facet name="header">¿qué datos desea incluir?</f:facet>
+                     <h:panelGrid columns="2" styleClass="centrar" cellpadding="10">
+                         <f:facet name="header">¿Qué datos desea incluir?</f:facet>
+                         
+                         <h:panelGroup></h:panelGroup>
                          
                          <p:selectManyCheckbox value="#{generarReporteMB.selectedOptions}"  
-                                               layout="pageDirection">  
+                                               layout="pageDirection" required="true">  
                              <f:selectItems value="#{generarReporteMB.availablesOptions}" />  
                          </p:selectManyCheckbox>
                          
                          <p:outputLabel value="Desde que fecha" for="fechaIni"/>
-                         <p:inputText id="fechaIni" value="#{generarReporteMB.fechaIni}" required="true"/>
+                         <p:calendar id="fechaIni" value="#{generarReporteMB.fechaIni}" required="true"/>
                          
                          <p:outputLabel value="Hasta que fecha" for="fechaFin"/>
-                         <p:inputText id="fechaFin" value="#{generarReporteMB.fechaFin}" required="true"/>
+                         <p:calendar id="fechaFin" value="#{generarReporteMB.fechaFin}" required="true"/>
                          
                          
                          <f:facet name="footer">
-                            <p:commandButton value="Generar reporte" ajax="false" action="#{generarReporteMB.generarReporte()}"/>
+                             <p:commandButton value="Generar reporte" ajax="false" actionListener="#{generarReporteMB.generarReporte()}" onclick="Primefaces.monitorDownload(start, stop)">
+                                 <p:fileDownload value="#{generarReporteMB.file}"/>
+                             </p:commandButton>
                             <p:commandButton immediate="true" value="Volver" action="#{generarReporteMB.goToPuntosLimpios()}"/>                         
                          </f:facet>
-                     </p:panelGrid>                
+                     </h:panelGrid>                
                 </h:form>               
             </ui:define>
         </ui:composition>       

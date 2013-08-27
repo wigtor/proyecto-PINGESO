@@ -21,9 +21,6 @@ import otros.CommonFunctions;
 @Named(value = "autenticadorMB")
 @SessionScoped
 public class AutenticadorMB implements Serializable {
-
-    private String username;
-    private String password;
     private String originalURL;
     
     
@@ -49,7 +46,7 @@ public class AutenticadorMB implements Serializable {
         return false;
     }
     
-    public boolean login() {
+    public boolean login(String username, String password) {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
@@ -73,23 +70,11 @@ public class AutenticadorMB implements Serializable {
         CommonFunctions.goToPage("/faces/index.xhtml");
     }
     
+    public void indexLoggued() {
+        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
+    }
+    
     public AutenticadorMB() {
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getOriginalURL() {

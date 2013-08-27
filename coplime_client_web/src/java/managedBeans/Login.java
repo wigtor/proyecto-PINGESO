@@ -55,10 +55,7 @@ public class Login {
     }
     
     public void login() {
-        autenticador.setUsername(username);
-        autenticador.setPassword(password);
-        
-        if(autenticador.login()) {
+        if(autenticador.login(username, password)) {
             CommonFunctions.goToPage(originalURL);
         }
         

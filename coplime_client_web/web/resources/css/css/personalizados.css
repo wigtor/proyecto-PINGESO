@@ -13,6 +13,13 @@ root {
 .centrar {
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
+}
+
+.centrar > *{
+    margin-left: 0px;
+    margin-right: auto;
+    text-align: left;
 }
 
 .ui-panelgrid .ui-panelgrid-footer {
