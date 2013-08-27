@@ -12,6 +12,11 @@ public class SelectElemPojo {
     private String label;
     private String id;
 
+    public SelectElemPojo(String id, String label) {
+        this.label = label;
+        this.id = id;
+    }
+    
     public String getLabel() {
         return label;
     }

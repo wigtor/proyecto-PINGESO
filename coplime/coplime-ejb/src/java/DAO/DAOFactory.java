@@ -22,7 +22,6 @@ import DAO.interfaces.TipoIncidenciaDAO;
 import DAO.interfaces.UnidadMedidaDAO;
 import DAO.interfaces.UsuarioDAO;
 import DAO.interfaces.ConfiguracionDAO;
-import entities.HistoricoContenedor;
 import javax.persistence.EntityManager;
 
 /**

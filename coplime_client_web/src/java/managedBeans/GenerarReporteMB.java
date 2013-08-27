@@ -4,6 +4,7 @@
  */
 package managedBeans;
 
+import ObjectsForManagedBeans.SelectElemPojo;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -28,6 +30,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import otros.CommonFunctions;
+import sessionBeans.GeneradorReportesLocal;
 
 /**
  *
@@ -36,8 +39,12 @@ import otros.CommonFunctions;
 @Named(value = "generarReporteMB")
 @RequestScoped
 public class GenerarReporteMB {
+    @EJB
+    private GeneradorReportesLocal generadorReportes;
 
     private List<String> selectedOptions;
+    private List<SelectElemPojo> tiposReporte;
+    private Integer tipoReporteSelected;
     private Map<String, String> availablesOptions;
     private Calendar fechaIni;
     private Calendar fechaFin;
@@ -47,22 +54,8 @@ public class GenerarReporteMB {
      * Creates a new instance of GenerarReporteMB
      */
     public GenerarReporteMB() {
-        this.availablesOptions = new HashMap<>();
-        this.availablesOptions.put("numero", "Número");
-        this.availablesOptions.put("nombre", "Nombre");
-        this.availablesOptions.put("comuna", "Comuna");
-        this.availablesOptions.put("ubicacion", "Ubicación");
-        this.availablesOptions.put("cantidadVisitas", "Cantidad de visitas");
-        this.availablesOptions.put("cantidadMantenciones", "Cantidad de mantenciones");
-        this.availablesOptions.put("inspectorEncargado", "Inspector encargado");
-        this.availablesOptions.put("fechaUltimaRevision", "Fecha última revisión");
-        this.availablesOptions.put("fechaProximaRevision", "Fecha próxima revisión");
-        selectedOptions = new LinkedList<>();
-        
-        //Selecciono todo por defecto
-        for (String strTemp : availablesOptions.keySet()) {
-            this.selectedOptions.add(strTemp);
-        }
+        cargarTiposReporte();
+        cargarOpcionesReporte();
         
         //Doy las fechas por defecto
         Calendar fechaActual = Calendar.getInstance();
@@ -70,6 +63,27 @@ public class GenerarReporteMB {
         Calendar fechaFinal = (Calendar)fechaActual.clone();
         fechaFinal.add(Calendar.MONTH, -1);
         this.fechaIni = fechaFinal;
+    }
+    
+    private void cargarTiposReporte() {
+        this.tiposReporte = new LinkedList<>();
+        this.tiposReporte.add(new SelectElemPojo(Integer.toString(GeneradorReportesLocal.DATOS_PUNTOS_LIMPIOS), "Datos de puntos limpios"));
+        this.tiposReporte.add(new SelectElemPojo(Integer.toString(GeneradorReportesLocal.MANTENCIONES_PUNTO_LIMPIO), "Mantenciones de puntos limpios"));
+        this.tiposReporte.add(new SelectElemPojo(Integer.toString(GeneradorReportesLocal.REVISIONES_PUNTO_LIMPIO), "Revisiones de puntos limpios"));
+        this.tiposReporte.add(new SelectElemPojo(Integer.toString(GeneradorReportesLocal.SOLICITUDES_PUNTO_LIMPIO), "Solicitudes de puntos limpios"));
+        this.tiposReporte.add(new SelectElemPojo(Integer.toString(GeneradorReportesLocal.USUARIOS_SISTEMA), "Usuarios registrados en el sistema"));
+        this.tipoReporteSelected = GeneradorReportesLocal.DATOS_PUNTOS_LIMPIOS;
+    }
+    
+    private void cargarOpcionesReporte() {
+        this.availablesOptions = generadorReportes.getOpcionesReporte(this.tipoReporteSelected);
+        
+        selectedOptions = new LinkedList<>();
+        
+        //Selecciono todo por defecto
+        for (String strTemp : availablesOptions.values()) {
+            this.selectedOptions.add(strTemp);
+        }
     }
 
     public void goToPuntosLimpios() {
@@ -105,6 +119,7 @@ public class GenerarReporteMB {
     }
     
     public HSSFWorkbook construirExcel() {
+        
         HSSFWorkbook libroReporte= new HSSFWorkbook();
         HSSFSheet hojaReporte = libroReporte.createSheet();
         HSSFCellStyle style = libroReporte.createCellStyle();
@@ -128,12 +143,29 @@ public class GenerarReporteMB {
         cfilaReporteCabecera = hojaReporte.createRow(1);
         int i = 0;
         for (String opcion : selectedOptions) {
+            System.out.println("Seleccionada opción: " + opcion);
             celdaTemp = cfilaReporteCabecera.createCell(i);
             celdaTemp.setCellValue(opcion);
             i++;
         }
         
+        String[][] datosReporte = generadorReportes.getDatosReporte(this.tipoReporteSelected, this.selectedOptions);
+        if (datosReporte == null) {
+            return libroReporte;
+        }
         
+        i = 2; //Comienzo en la segunda fila
+        int j;
+        HSSFRow cFilaTemp;
+        for (String[] fila : datosReporte) {
+            cFilaTemp = hojaReporte.createRow(i);
+            j = 0;
+            for (String celda : fila) {
+                celdaTemp = cFilaTemp.createCell(j);
+                celdaTemp.setCellValue(celda);
+            }
+            i++;
+        }
         return libroReporte;
     }
 
@@ -180,4 +212,21 @@ public class GenerarReporteMB {
     public void setFile(StreamedContent file) {
         this.file = file;
     }
+
+    public List<SelectElemPojo> getTiposReporte() {
+        return tiposReporte;
+    }
+
+    public void setTiposReporte(List<SelectElemPojo> tiposReporte) {
+        this.tiposReporte = tiposReporte;
+    }
+
+    public Integer getTipoReporteSelected() {
+        return tipoReporteSelected;
+    }
+
+    public void setTipoReporteSelected(Integer tipoReporteSelected) {
+        this.tipoReporteSelected = tipoReporteSelected;
+    }
+    
 }
