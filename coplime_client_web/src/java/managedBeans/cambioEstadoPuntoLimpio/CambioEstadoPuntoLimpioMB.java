@@ -69,9 +69,7 @@ public class CambioEstadoPuntoLimpioMB {
         SelectElemPojo elemTemp;
         this.listaEstadosPtoLimpio = new ArrayList<>();
         for(Estado estado_iter : listaTemp) {
-            elemTemp = new SelectElemPojo();
-            elemTemp.setId(Integer.toString(estado_iter.getId()));
-            elemTemp.setLabel(estado_iter.getNombreEstado());
+            elemTemp = new SelectElemPojo(Integer.toString(estado_iter.getId()), estado_iter.getNombreEstado());
             this.listaEstadosPtoLimpio.add(elemTemp);
         }
     }
@@ -81,9 +79,7 @@ public class CambioEstadoPuntoLimpioMB {
         SelectElemPojo elemTemp;
         this.listaContenedores = new ArrayList<>();
         for(Contenedor cont : listaTemp) {
-            elemTemp = new SelectElemPojo();
-            elemTemp.setId(Integer.toString(cont.getId()));
-            elemTemp.setLabel(Integer.toString(cont.getId()).concat(" - ").concat(cont.getMaterialDeAcopio().getNombre_material()));
+            elemTemp = new SelectElemPojo(Integer.toString(cont.getId()), Integer.toString(cont.getId()).concat(" - ").concat(cont.getMaterialDeAcopio().getNombre_material()));
             this.listaContenedores.add(elemTemp);
         }
         

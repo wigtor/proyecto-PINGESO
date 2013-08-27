@@ -6,7 +6,6 @@ package managedBeans;
 
 import ObjectsForManagedBeans.SelectElemPojo;
 import entities.PuntoLimpio;
-import java.awt.event.ActionEvent;
 import java.util.Collection;
 import java.util.LinkedList;
 import javax.annotation.PostConstruct;
@@ -14,7 +13,6 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
-import javax.faces.context.FacesContext;
 import otros.CommonFunctions;
 import sessionBeans.CrudPuntoLimpioLocal;
 

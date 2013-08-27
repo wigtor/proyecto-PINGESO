@@ -58,9 +58,7 @@ public class CambioEstadoContenedorMB {
         SelectElemPojo elemTemp;
         this.listaEstados = new ArrayList<>();
         for(Estado estado_iter : listaTemp) {
-            elemTemp = new SelectElemPojo();
-            elemTemp.setId(Integer.toString(estado_iter.getId()));
-            elemTemp.setLabel(estado_iter.getNombreEstado());
+            elemTemp = new SelectElemPojo(Integer.toString(estado_iter.getId()), estado_iter.getNombreEstado());
             this.listaEstados.add(elemTemp);
         }
     }

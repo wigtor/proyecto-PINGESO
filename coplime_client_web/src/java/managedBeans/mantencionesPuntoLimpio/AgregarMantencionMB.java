@@ -70,10 +70,7 @@ public class AgregarMantencionMB {
         SelectElemPojo ptoTemporal;
         List<SelectElemPojo> listaResult = new ArrayList<>();
         for(PuntoLimpio pto_iter : listaTemp) {
-            ptoTemporal = new SelectElemPojo();
-            
-            ptoTemporal.setId(pto_iter.getId().toString());
-            ptoTemporal.setLabel(pto_iter.getNombre());
+            ptoTemporal = new SelectElemPojo(pto_iter.getId().toString(), pto_iter.getNombre());
             listaResult.add(ptoTemporal);
         }
         return listaResult;
