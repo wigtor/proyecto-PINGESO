@@ -5,12 +5,16 @@
 package sessionBeans;
 
 import DAO.DAOFactory;
+import DAO.interfaces.InspectorDAO;
 import DAO.interfaces.MantencionDAO;
+import DAO.interfaces.OperarioDAO;
 import DAO.interfaces.PuntoLimpioDAO;
 import DAO.interfaces.RevisionDAO;
 import DAO.interfaces.SolicitudMantencionDAO;
 import DAO.interfaces.UsuarioDAO;
+import entities.Inspector;
 import entities.MantencionPuntoLimpio;
+import entities.OperarioMantencion;
 import entities.PuntoLimpio;
 import entities.RevisionPuntoLimpio;
 import entities.SolicitudMantencion;
@@ -48,8 +52,7 @@ public class GeneradorReportes implements GeneradorReportesLocal {
         "Nombre punto limpio", "Inspector solicitante", "Operario encargado", "Fecha", "Detalle"};
     private static final String[] OPCIONES_USUARIOS_SISTEMA = {"Id", "Tipo de usuario", 
         "Nombre", "Apellido paterno", "Apellido materno", "Correo electrónico", 
-        "Cantidad de revisiones", "Cantidad de mantenciones", "Cantidad de solicitudes", 
-        "Cantidad de revisiones"};
+        "Cantidad de revisiones", "Cantidad de mantenciones", "Cantidad de solicitudes"};
 
     @Override
     public Map<String, Integer> getOpcionesReporte(int tipoReporte) {
@@ -259,22 +262,120 @@ public class GeneradorReportes implements GeneradorReportesLocal {
     }
     
     private String extraeDatoMantencion(int index, MantencionPuntoLimpio obj) {
-        
-        return null;
+        switch (index) {
+            case 0:
+                return obj.getId().toString();
+            case 1:
+                return obj.getPuntoLimpio().getId().toString();
+            case 2:
+                return obj.getPuntoLimpio().getNombre();
+            case 3:
+                Usuario userTemp = obj.getOperarioMantencion().getUsuario();
+                return userTemp.getNombre().concat(" ").concat(userTemp.getApellido1())
+                        .concat(" ").concat(userTemp.getApellido2());
+            case 4:
+                Calendar f2 = obj.getFecha();
+                return Integer.toString(f2.get(Calendar.DAY_OF_MONTH)).concat("-")
+                        .concat(Integer.toString(f2.get(Calendar.MONTH))).concat("-")
+                        .concat(Integer.toString(f2.get(Calendar.YEAR)));
+            case 5:
+                return obj.getComentarios();
+        }
+        return "";
     }
     
     private String extraeDatoRevision(int index, RevisionPuntoLimpio obj) {
-        
-        return null;
+        switch (index) {
+            case 0:
+                return obj.getId().toString();
+            case 1:
+                return obj.getPuntoLimpio().getId().toString();
+            case 2:
+                return obj.getPuntoLimpio().getNombre();
+            case 3:
+                Usuario userTemp = obj.getInspectorRevisor().getUsuario();
+                return userTemp.getNombre().concat(" ").concat(userTemp.getApellido1())
+                        .concat(" ").concat(userTemp.getApellido2());
+            case 4:
+                Calendar f2 = obj.getFecha();
+                return Integer.toString(f2.get(Calendar.DAY_OF_MONTH)).concat("-")
+                        .concat(Integer.toString(f2.get(Calendar.MONTH))).concat("-")
+                        .concat(Integer.toString(f2.get(Calendar.YEAR)));
+            case 5:
+                return obj.getDetalles();
+        }
+        return "";
     }
     
     private String extraeDatoSolicitud(int index, SolicitudMantencion obj) {
-        
-        return null;
+        switch (index) {
+            case 0:
+                return obj.getId().toString();
+            case 1:
+                return obj.getPuntoLimpio().getId().toString();
+            case 2:
+                return obj.getPuntoLimpio().getNombre();
+            case 3:
+                Usuario userTemp = obj.getInspectorSolicitante().getUsuario();
+                return userTemp.getNombre().concat(" ").concat(userTemp.getApellido1())
+                        .concat(" ").concat(userTemp.getApellido2());
+            case 4:
+                Usuario userTemp2 = obj.getOperarioAsignado().getUsuario();
+                return userTemp2.getNombre().concat(" ").concat(userTemp2.getApellido1())
+                        .concat(" ").concat(userTemp2.getApellido2());
+            case 5:
+                Calendar f2 = obj.getFecha();
+                return Integer.toString(f2.get(Calendar.DAY_OF_MONTH)).concat("-")
+                        .concat(Integer.toString(f2.get(Calendar.MONTH))).concat("-")
+                        .concat(Integer.toString(f2.get(Calendar.YEAR)));
+            case 6:
+                return obj.getDetalles();
+        }
+        return "";
     }
     
     private String extraeDatoUsuario(int index, Usuario obj) {
-        
-        return null;
+        switch (index) {
+            case 0:
+                return obj.getId().toString();
+            case 1:
+                return obj.getRol().getNombreRol();
+            case 2:
+                return obj.getNombre();
+            case 3:
+                return obj.getApellido1();
+            case 4:
+                return obj.getApellido2();
+            case 5:
+                return obj.getEmail();
+            case 6: //Revisiones
+                if (obj.getRol().getNombreRol().equals("Inspector")) {
+                    InspectorDAO inspDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em).getInspectorDAO();
+                    Inspector insp = inspDAO.findByRut(obj.getRut());
+                    if (insp != null) {
+                        return Integer.toString(insp.getRevisionesRealizadas().size());
+                    }
+                }
+                return "";
+            case 7: //Mantenciones
+                if (obj.getRol().getNombreRol().equals("Operario")) {
+                    OperarioDAO operDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em).getOperarioDAO();
+                    OperarioMantencion oper = operDAO.findByRut(obj.getRut());
+                    if (oper != null) {
+                        return Integer.toString(oper.getMantencionesRealizadas().size());
+                    }
+                }
+                return "";
+            case 8: //Solicitudes
+                if (obj.getRol().getNombreRol().equals("Inspector")) {
+                    InspectorDAO inspDAO2 = DAOFactory.getDAOFactory(DAOFactory.JPA, em).getInspectorDAO();
+                    Inspector insp2 = inspDAO2.findByRut(obj.getRut());
+                    if (insp2 != null) {
+                        return Integer.toString(insp2.getSolicitudesMantencionRealizadas().size());
+                    }
+                }
+                return "";
+        }
+        return "";
     }
 }

@@ -159,15 +159,21 @@ public class GenerarReporteMB {
         
         int i; //Comienzo en la segunda fila
         int j;
-        System.out.println("CACA");
         HSSFRow cFilaTemp;
         i = 1;
+        int valorParseado;
         for (String[] fila : datosReporte) {
             cFilaTemp = hojaReporte.createRow(i);
             j = 0;
             for (String celda : fila) {
                 celdaTemp = cFilaTemp.createCell(j);
-                celdaTemp.setCellValue(celda);
+                try {
+                    valorParseado = Integer.parseInt(celda);
+                    celdaTemp.setCellValue(valorParseado);
+                }
+                catch (NumberFormatException nfe) {
+                    celdaTemp.setCellValue(celda);
+                }
                 j++;
             }
             i++;
