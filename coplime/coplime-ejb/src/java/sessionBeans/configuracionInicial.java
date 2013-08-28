@@ -427,7 +427,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         //Define un intervalo de 24 horas para el temporizador
         //de estimación de llenado de contenedores.
         Configuracion conf2 = new Configuracion();
-        conf2.setIdParam("timer_intervalo_estimacion_contenedores");
+        conf2.setIdParam("timer_estimacion_contenedores_intervalo");
         conf2.setValorParam("86400000"); //24 horas en milisegundos
         
         //Llamar a la DAO
@@ -449,9 +449,9 @@ public class configuracionInicial implements configuracionInicialLocal {
         if (!(listaTimers.isEmpty())){
             for(Configuracion c:listaTimers){
                switch(c.getIdParam()){
-                   case "timer_intervalo_estimacion_contenedores":
+                   case "timer_estimacion_contenedores_intervalo":
                        GeneradorProgramadoNotificaciones genProNotif = new GeneradorProgramadoNotificaciones();
-                       genProNotif.setTemporizadorEstimacionLlenadoContenedor(Long.parseLong(c.getValorParam()));
+                       genProNotif.setTemporizadorEstimacionLlenadoContenedor(Long.parseLong(c.getValorParam()), Long.parseLong(c.getValorParam()));
                        System.out.println("Detectado timer de estimación de contenedores, intervalo = ".concat(c.getValorParam()).concat(" ms."));
                        break;
                    default:

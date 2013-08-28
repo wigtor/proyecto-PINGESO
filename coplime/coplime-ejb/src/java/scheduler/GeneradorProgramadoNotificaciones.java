@@ -8,20 +8,25 @@ import DAO.DAOFactory;
 import DAO.interfaces.NotificacionDAO;
 import DAO.interfaces.PuntoLimpioDAO;
 import DAO.interfaces.AdministradorDAO;
+import DAO.interfaces.ConfiguracionDAO;
 import entities.Contenedor;
 import entities.Notificacion;
 import entities.PuntoLimpio;
 import entities.Administrador;
+import entities.Configuracion;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import javax.ejb.Stateless;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.Schedule;
 import javax.ejb.Timer;
 import javax.ejb.Timeout;
+import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -43,6 +48,11 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
     
     @Resource
     TimerService servicioTemporizador;
+    
+    //Variables de control del temporizador
+    private Long milisegsIntervaloOriginal, milisegsIntervalo;//para detectar cambios en la configuración del intervalo
+    private static final int DIA_EN_MILISEGS = 86400000;
+    
     
     //TODO Cambiar por Programatic Timers (buscar en la documentación)
     //@Schedule(minute = "0", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "01")
@@ -66,13 +76,20 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
         resultadoOperacion = evaluar(listaPuntosLimpios);
         if (resultadoOperacion == true){
             Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.FINER, "Generación de notificaciones automáticas finalizada exitosamente.");
+            //Actualizamos la fecha/hora de última ejecución
+            DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+            ConfiguracionDAO configDAO = fabricaDAO.getConfiguracionDAO();
+            Configuracion fechaUltimaEjecucionEstimador = new Configuracion();
+            fechaUltimaEjecucionEstimador.setIdParam("timer_estimacion_contenedores_ultima_ejecucion");
+            Calendar cal = Calendar.getInstance();
+            fechaUltimaEjecucionEstimador.setValorParam(cal.toString());
         } else {
             Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.WARNING, "Error en generación de notificaciones automáticas.");
         }
     }
         
      /**
-     * Función evaluar: dado una lista de puntos limpios procede a aplicar un algoritmo
+     * Dada una lista de puntos limpios procede a aplicar un algoritmo
      * de estimación de fecha de llenado de cada contenedor para cada punto limpio en la
      * lista, refrescando las fechas de próxima revisión del punto limpio en la base
      * de datos a través de la interfaz DAO correspondiente. Además, si la fecha de
@@ -141,7 +158,6 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
     }
     
     /**
-     * private void actualizarFechaRevisionPL
      * Establece una nueva fecha de revisión para un punto limpio P
      * @param p : Punto limpio cuya fecha de revisión se modificará
      * @param nuevaFecha : Nueva fecha de revisión
@@ -157,7 +173,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
     }
     
     /**
-     * private void generarNotificaciones: dada la lista de Puntos Limpios y dada la lista de resultados
+     * Dada la lista de Puntos Limpios y dada la lista de resultados
      * asociados a cada Punto Limpio, le indica al sistema generar las Notificaciones correspondientes
      * según corresponda.
      * @param fechaRevision : fecha en la cual el punto limpio deberá revisarse
@@ -210,12 +226,70 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
     /**
      * Programa el temporizador que determina cada cuánto tiempo se ejecuta la tarea de estimación
      * de llenado de los contenedores registrados.
+     * @param milisegundosIntervaloTransicion el intervalo en milisegundos del tiempo restante del temporizador anterior más el intervalo en milisegundos en el que se ejecuta la tarea
      * @param milisegundosIntervalo el intervalo en milisegundos entre el que se ejecuta la tarea.
      */
     @Override
-    public void setTemporizadorEstimacionLlenadoContenedor(Long milisegundosIntervalo){
-        Timer temporizador = servicioTemporizador.createTimer(milisegundosIntervalo, "Temporizador creado para notificaciones automáticas [Estimación de llenado de contenedores], intervalo de ".concat(milisegundosIntervalo.toString()).concat(" milisegundos."));
-        Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.INFO, "Se ha establecido un temporizador para la estimación automática de llenado de contenedores, con un intervalo de ".concat(milisegundosIntervalo.toString()).concat(" milisegundos."));
+    public void setTemporizadorEstimacionLlenadoContenedor(Long milisegundosIntervaloTransicion, Long milisegundosIntervalo){
+        //Verificamos si ya existe un timer fijado previamente
+        List<Timer> listaTimers;
+        listaTimers = (List<Timer>) servicioTemporizador.getTimers();
+        if(listaTimers.isEmpty()==true){
+         Timer temporizador = servicioTemporizador.createIntervalTimer(milisegundosIntervalo, milisegundosIntervalo, new TimerConfig());
+         Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.INFO, "Se ha establecido un temporizador para la estimación automática de llenado de contenedores, con un intervalo de ".concat(milisegundosIntervalo.toString()).concat(" milisegundos."));   
+        } else {
+         //Cancelar el timer original
+         listaTimers.get(0).cancel();
+         Timer temporizador = servicioTemporizador.createIntervalTimer(milisegundosIntervaloTransicion, milisegundosIntervalo, new TimerConfig());
+         Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.INFO, "Se ha reprogramado un temporizador para la estimación automática de llenado de contenedores, con un intervalo de ".concat(milisegundosIntervalo.toString()).concat(" milisegundos."));
+        }        
+    }
+    
+    
+    @Schedule(hour="*/10")
+    /**
+     * Ajusta el valor del temporizador automático de la estimación de llenado de contenedores.
+     * Si no existe un valor para el temporizador automático, establece uno por defecto para 24 horas
+     * 
+     */
+    private void ajusteTemporizadorEstimacion(){
+       //Verificamos la existencia de la configuración
+        DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        ConfiguracionDAO configDAO = fabricaDAO.getConfiguracionDAO();
+        Configuracion timerConfig = configDAO.buscarParamExacto("timer_estimacion_contenedores_intervalo");
+        Configuracion timerUltimaEjec = configDAO.buscarParamExacto("timer_estimacion_contenedores_ultima_ejecucion");
+        if(timerConfig == null){
+            //Nunca se ha configurado el temporizador
+            this.setTemporizadorEstimacionLlenadoContenedor(Long.valueOf(DIA_EN_MILISEGS), Long.valueOf(DIA_EN_MILISEGS));
+            timerUltimaEjec.setValorParam(Long.toString(Calendar.getInstance().getTimeInMillis()));
+            this.milisegsIntervalo = Long.valueOf(DIA_EN_MILISEGS);
+            this.milisegsIntervaloOriginal = Long.valueOf(DIA_EN_MILISEGS);
+            configDAO.update(timerUltimaEjec);
+        } else {
+           //Se obtiene el valor de intervalo
+            milisegsIntervalo = Long.parseLong(timerConfig.getValorParam());
+            //Se determina si existen cambios en la configuración desde la última vez
+            if(milisegsIntervalo != milisegsIntervaloOriginal){
+                /*
+                 * Si la configuración ha cambiado, se determina la diferencia con la última
+                 * ejecución y el tiempo restante del timer original.
+                 */
+                
+                //Calculando tiempo restante del temporizador en curso
+                Calendar cal = Calendar.getInstance();
+                Long milisegsCal = cal.getTimeInMillis();
+                Long milisPendientes = milisegsCal - Long.parseLong(timerUltimaEjec.getValorParam());
+                //Long diferenciaIntervalos = milisegsIntervalo - milisegsIntervaloOriginal;
+                
+                //Se determina la próxima ejecución y se le suma un minuto
+                Long proxEje = (milisegsIntervalo % (milisPendientes))+60000;
+                
+                this.setTemporizadorEstimacionLlenadoContenedor(proxEje, milisegsIntervalo);
+                
+                //Por último, igualamos ambos valores a fin de detectar nuevos cambios
+                milisegsIntervaloOriginal = milisegsIntervalo;
+        }
+      }
     }
 
     

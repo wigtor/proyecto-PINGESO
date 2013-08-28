@@ -27,7 +27,7 @@ public class ConfiguracionSistema implements ConfiguracionSistemaLocal {
     private GeneradorProgramadoNotificacionesLocal generadorProgramadoNotificaciones;
     
     /**
-     * Programa el valor <i>timer_intervalo_estimacion_contenedores</i> que determina
+     * Programa el valor <i>timer_estimacion_contenedores_intervalo</i> que determina
      * cada cuánto tiempo se ejecuta la estimación automática de llenado de contenedores.
      * @param intervalo Intervalo, expresado en horas.
      */
@@ -37,7 +37,7 @@ public class ConfiguracionSistema implements ConfiguracionSistemaLocal {
         ConfiguracionDAO configDAO = fabricaDAO.getConfiguracionDAO();
         Long milisegundos;
         milisegundos = new Long(intervalo*3600*1000);
-        Configuracion timerEstimacionContenedores = configDAO.buscarParamExacto("timer_intervalo_estimacion_contenedores");
+        Configuracion timerEstimacionContenedores = configDAO.buscarParamExacto("timer_estimacion_contenedores_intervalo");
         timerEstimacionContenedores.setValorParam(milisegundos.toString());
         configDAO.update(timerEstimacionContenedores);
     }
@@ -51,7 +51,7 @@ public class ConfiguracionSistema implements ConfiguracionSistemaLocal {
         DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         ConfiguracionDAO configDAO = fabricaDAO.getConfiguracionDAO();
         Integer intervalo;
-        Configuracion timerEstimacionContenedores = configDAO.buscarParamExacto("timer_intervalo_estimacion_contenedores");
+        Configuracion timerEstimacionContenedores = configDAO.buscarParamExacto("timer_estimacion_contenedores_intervalo");
         intervalo = Math.round(Long.parseLong(timerEstimacionContenedores.getValorParam())/3600000);
         return intervalo;
     }

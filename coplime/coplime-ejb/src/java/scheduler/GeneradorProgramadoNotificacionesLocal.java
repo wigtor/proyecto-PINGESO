@@ -19,5 +19,5 @@ public interface GeneradorProgramadoNotificacionesLocal {
      */
     public void calculoLlenadoAutomatico();
 
-    public void setTemporizadorEstimacionLlenadoContenedor(Long milisegundosIntervalo);
+    public void setTemporizadorEstimacionLlenadoContenedor(Long milisegundosIntervaloTransicion, Long milisegundosIntervalo);
 }

@@ -22,6 +22,7 @@ public class ConfiguracionDAO_impl extends genericDAO_impl<Configuracion> implem
         this.em = em;
     }
 
+    //TODO Lista es reemplazable por varibale única de tipo Configuración?
     @Override
     public Configuracion buscarParamExacto(String parametro) {
         List<Configuracion> res;

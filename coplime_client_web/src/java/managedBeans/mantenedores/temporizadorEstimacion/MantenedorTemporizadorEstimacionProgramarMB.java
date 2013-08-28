@@ -46,10 +46,10 @@ public class MantenedorTemporizadorEstimacionProgramarMB {
     public void fijarTemporizador(){
         //TODO deshabilitar-habilitar Botón Guardar según se hayan hecho cambios o no
         if(numHorasIntervalo==numHorasIntervaloOld){//¿Ha cambiado este campo?
-            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, "Error", "Este valor ya está configurado en el sistema.");
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,  "Este valor ya está configurado en el sistema.", "Error.");
         } else {
           configuracionSistema.fijarIntervaloEstimacionContenedores(numHorasIntervalo);
-          CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO, "Operacion Exitosa", "Se ha fijado correctamente el nuevo intervalo.");
+          CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO, "Se ha fijado correctamente el nuevo intervalo.", "Éxito.");
           CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
           numHorasIntervaloOld = numHorasIntervalo;
         }
