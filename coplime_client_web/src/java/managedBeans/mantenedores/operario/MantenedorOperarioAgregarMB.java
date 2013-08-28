@@ -39,7 +39,7 @@ public class MantenedorOperarioAgregarMB {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
                     "Se ha creado un nuevo operario de mantención",
                     "Se ha creado el operario de mantención \"".concat(username).concat("\""));
-            CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml?faces-redirect=true");
+            volver();
         }
         catch (Exception e) {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
@@ -51,7 +51,7 @@ public class MantenedorOperarioAgregarMB {
     }
     
     public void volver() {
-        CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml");
+        CommonFunctions.goToPage("/faces/users/verOperariosMantencion.xhtml?faces-redirect=true");
        
     }
 

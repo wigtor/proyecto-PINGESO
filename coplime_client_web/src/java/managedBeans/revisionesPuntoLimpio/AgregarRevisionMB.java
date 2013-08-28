@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -90,37 +91,31 @@ public class AgregarRevisionMB {
     }
     
     public void guardarRevision() {
-        /*
-         System.out.println("Se hizo click en 'guardarRevision()'");
-         System.out.println("Detalle: " + detalle);
-         System.out.println("Punto limpio a modificar: "+ numPtoLimpio);
-         System.out.println("Estado global del punto limpio: " + cambioEstadoConvBean.getIdEstadoToChange());
-         System.out.println("Cantidad de contenedores modificados: " + cambioEstadoConvBean.getListaContenedoresModificados().size());
-         for(ContenedorPojo c : cambioEstadoConvBean.getListaContenedoresModificados()) {
-         System.out.println("Id del contenedor: "+c.getId());
-         System.out.println("Id del estado del contenedor: "+c.getIdEstadoContenedor());
-         System.out.println("Llenado del contenedor: "+c.getLlenadoContenedor());
-         }
-         */
-        //BORRAR LOS PRINTLN ANTERIORES
+        try {
+            String usernameLogueado = CommonFunctions.getUsuarioLogueado();
 
-
-        HttpServletRequest request = (HttpServletRequest) (FacesContext.getCurrentInstance().getExternalContext().getRequest());
-        String usernameLogueado = request.getRemoteUser();
-
-        //Envío al session bean los cambios para que se persistan a nivel de DB
-        crudRevision.agregarRevision(numPtoLimpio, usernameLogueado, detalle, cambioEstadoConvBean.getIdEstadoToChange());
-        for (ContenedorPojo c : cambioEstadoConvBean.getListaContenedoresModificados()) {
-            crudPuntoLimpio.cambiarEstadoContenedor(c.getId(), c.getIdEstadoContenedor(), c.getLlenadoContenedor());
+            //Envío al session bean los cambios para que se persistan a nivel de DB
+            crudRevision.agregarRevision(numPtoLimpio, usernameLogueado, detalle, cambioEstadoConvBean.getIdEstadoToChange());
+            for (ContenedorPojo c : cambioEstadoConvBean.getListaContenedoresModificados()) {
+                crudPuntoLimpio.cambiarEstadoContenedor(c.getId(), c.getIdEstadoContenedor(), c.getLlenadoContenedor());
+            }
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                    "Se ha agregado la revisión del punto limpio",
+                    "Se ha agregado la revisión del punto limpio N°".concat(numPtoLimpio.toString()));
+            volverToLista();
         }
-
-        volverToLista();
+        catch (Exception e) {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
+                    e.getMessage(), 
+                    e.getMessage());
+            CommonFunctions.goToPage("/faces/users/inspector/agregarRevisionPuntoLimpio.xhtml?faces-redirect=true");
+        }
     }
 
     public void volverToLista() {
         cambioEstadoConvBean.limpiarCampos();
         cambioEstadoConvBean.endConversation();
-        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
+        CommonFunctions.goToPage("/faces/users/verRevisiones.xhtml?faces-redirect=true");
     }
 
     public Integer getNumPtoLimpio() {

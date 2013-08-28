@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import otros.CommonFunctions;
 import sessionBeans.CrudOperarioLocal;
 import sessionBeans.CrudPuntoLimpioLocal;
@@ -83,18 +84,25 @@ public class AgregarSolicitudMB {
     }
     
     public void guardarSolicitud() {
-         System.out.println("Se hizo click en 'guardarSolicitud()'");
-         
-         String usernameLogueado = CommonFunctions.getUsuarioLogueado();
-         
-         //Envío al session bean los cambios para que se persistan a nivel de DB
-         crudSolicitud.agregarSolicitudMantencion(numPtoLimpio, usernameLogueado, numOperario, detalle);
-         
-         volverToLista();
+         try {
+            String usernameLogueado = CommonFunctions.getUsuarioLogueado();
+            //Envío al session bean los cambios para que se persistan a nivel de DB
+            crudSolicitud.agregarSolicitudMantencion(numPtoLimpio, usernameLogueado, numOperario, detalle);
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                    "Se ha agregado la solicitud de mantención para un punto limpio",
+                    "Se ha agregado la solicitud de mantención para el punto limpio N°".concat(numPtoLimpio.toString()));
+            volverToLista();
+        }
+        catch (Exception e) {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
+                    e.getMessage(), 
+                    e.getMessage());
+            CommonFunctions.goToPage("/faces/users/inspector/solicitarMantencionPuntoLimpio.xhtml?faces-redirect=true");
+        }
     }
     
     public void volverToLista() {
-        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
+        CommonFunctions.goToPage("/faces/users/verSolicitudesMantencion.xhtml");
     }
 
     public Integer getNumPtoLimpio() {

@@ -39,7 +39,7 @@ public class MantenedorInspectorAgregarMB {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
                     "Se ha creado un nuevo inspector",
                     "Se ha creado el inspector \"".concat(username).concat("\""));
-            CommonFunctions.goToPage("/faces/users/verInspectores.xhtml?faces-redirect=true");
+            volver();
         }
         catch (Exception e) {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
@@ -50,8 +50,7 @@ public class MantenedorInspectorAgregarMB {
     }
     
     public void volver() {
-        
-        CommonFunctions.goToPage("/faces/users/verInspectores.xhtml");
+        CommonFunctions.goToPage("/faces/users/verInspectores.xhtml?faces-redirect=true");
        
     }
     

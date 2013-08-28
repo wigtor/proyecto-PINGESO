@@ -22,6 +22,10 @@
                     <p:panelGrid columns="2" styleClass="centrar">
                         <f:facet name="header">Ingrese datos del operario</f:facet>
 
+                        <p:outputLabel value="Rut" for="rut"/>
+                        <p:inputText id="rut" value="#{mantenedorOperarioAgregarMB.rut}" required="true" maxlength="9">
+                            <f:validator validatorId="RutValidator"/>
+                        </p:inputText>
 
                         <p:outputLabel value="Nombre" for="nombre"/>
                         <p:inputText id="nombre" value="#{mantenedorOperarioAgregarMB.nombre}" required="true"/>
@@ -31,11 +35,6 @@
 
                         <p:outputLabel value="Apellido materno" for="apellido2"/>
                         <p:inputText id="apellido2" value="#{mantenedorOperarioAgregarMB.apellido2}" required="true"/>
-
-                        <p:outputLabel value="Rut" for="rut"/>
-                        <p:inputText id="rut" value="#{mantenedorOperarioAgregarMB.rut}" required="true" maxlength="9">
-                            <f:validator validatorId="RutValidator"/>
-                        </p:inputText>
 
                         <p:outputLabel value="Teléfono" for="telefono"/>
                         <p:inputText id="telefono" value="#{mantenedorOperarioAgregarMB.telefono}" required="true" maxlength="9"/>
