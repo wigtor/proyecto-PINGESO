@@ -24,7 +24,7 @@
                        
                        <p:dataTable id="inspectores" value="#{mantenedorInspectorVerListadoMB.lista}" var="insp" widgetVar="inspectorTable"  
                                       emptyMessage="No hay inspectores registrados en el sistema" 
-                                      filteredValue="#{mantenedorInspectorVerListadoMB.listaBusqueda}" >
+                                      filteredValue="#{mantenedorInspectorVerListadoMB.listaBusqueda}">
                                                      
                            <p:column id="rutColumn" sortBy="#{insp.num}" headerText="Rut" filterMatchMode="contains" filterBy="#{insp.num}"  >
                                 <h:outputText value="#{insp.num}" /> 
