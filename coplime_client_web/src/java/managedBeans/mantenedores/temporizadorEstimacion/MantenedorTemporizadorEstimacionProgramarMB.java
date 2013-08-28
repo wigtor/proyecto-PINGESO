@@ -52,7 +52,6 @@ public class MantenedorTemporizadorEstimacionProgramarMB {
           numHorasIntervaloOld = numHorasIntervalo;
           CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO, "Se ha fijado correctamente el nuevo intervalo.", "Éxito.");
           CommonFunctions.goToPage("/faces/users/verInspectores.xhtml?faces-redirect=true");
-          
         }
         
     }

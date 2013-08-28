@@ -9,6 +9,7 @@ import DAO.interfaces.MaterialDAO;
 import java.util.logging.Logger;
 import entities.Material;
 import java.util.Collection;
+import java.util.LinkedList;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -92,14 +93,11 @@ public class CrudMaterial implements CrudMaterialLocal {
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             MaterialDAO matDAO = fabricaDAO.getMaterialDAO();
             resultado = matDAO.findAll();
-            if(!(resultado.isEmpty())){
-                return resultado;
-            } else {
-                return null;
-            }
+            return resultado;
+            
         } catch (Exception e) {
             Logger.getLogger(CrudMaterial.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar recuperar la lista de materiales: ".concat(e.toString()));
-            return null;
+            return new LinkedList();
         }
     }
 
