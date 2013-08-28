@@ -10,13 +10,13 @@
     <body>
        
        <ui:composition template="/mainTemplate.xhtml">
-           <ui:define name="titulo" >Configuración de temporizador</ui:define>
+           <ui:define name="titulo" >Configuración del sistema</ui:define>
            <ui:define name="botonesBarra">
                 <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{autenticadorMB.indexLoggued()}" />
             </ui:define>
            
            <ui:define name="centro">
-               <h:form>
+               <h:form title="Estimación llenado contenedores">
                    <p:panelGrid columns="2" styleClass="centrar" >
                         <f:facet name="header">¿Cada cuánto estimar llenado?</f:facet>
                         
@@ -35,6 +35,30 @@
                             
                         </f:facet>
                    </p:panelGrid>
+               </h:form>
+               <h:form title="Listado de materiales..">
+                   <p:panelGrid columns="2" styleClass="centrar">
+                       <f:facet name="header">Listado de materiales</f:facet>
+                       <p:dataTable id="materiales" value="#{mantenedorMaterialVerListadoMB.listaMatPOJO}"
+                                    var="mat" filteredValue="#{mantenedorMaterialVerListadoMB.listaMatPOJOBusq}"
+                                    emptyMessage="No hay materiales." sortBy="#{mat.id}"
+                                    
+                                    widgetVar="materialTable">
+                           <p:column id="idColumn" sortBy="#{mat.id}" headerText="ID" filterMatchMode="contains" filterBy="#{mat.id}" >
+                               <h:outputText value="#{mat.id}"/>
+                            </p:column>
+                            
+                           <p:column id="labelColumn" sortBy="#{mat.label}" headerText="Nombre material" filterMatchMode="contains" filterBy="#{mat.label}">
+                               <h:outputText value="#{mat.label}"/>
+                           </p:column>
+                       </p:dataTable>
+                       <f:facet name="footer">
+                           <p:commandButton value="Agregar" ajax="true" action="#{mantenedorMaterialVerListadoMB.aAgregarNuevoMat()}"/>
+                            <p:commandButton value="Volver" immediate="" action="#{mantenedorMaterialVerListadoMB.volver()}"/>
+                        </f:facet>
+                   
+                   </p:panelGrid>
+                   
                </h:form>
            </ui:define>
        </ui:composition>
