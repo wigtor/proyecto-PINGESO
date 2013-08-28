@@ -87,7 +87,7 @@ public class CrudAdministrador implements CrudAdministradorLocal {
     }
     
     @Override
-    public boolean eliminarAdministrador(Integer rutUser, String usernameEjecutor){
+    public boolean eliminarAdministrador(Integer rutUser, String usernameEjecutor) throws Exception{
         
         if (rutUser != null) {
             DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
@@ -95,7 +95,8 @@ public class CrudAdministrador implements CrudAdministradorLocal {
             if (usernameEjecutor != null) {
                 Administrador adminEjecutor = adminDAO.findByUsername(usernameEjecutor);
                 if (adminEjecutor.getUsuario().getRut().intValue() == rutUser.intValue()) {
-                    return false; //Se está eliminando a si mismo
+                    
+                    throw new Exception("No se puede eliminar a si mismo como usuario, además debe quedar al menos un administrador en el sistema");
                 }
                 try {
                     return adminDAO.deleteByRut(rutUser);

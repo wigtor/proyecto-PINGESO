@@ -87,17 +87,24 @@ public class MantenedorAdministradorVerListadoMB {
     }
 
     public void eliminar(Integer numAdministrador) {
-        boolean resultado = crudAdministrador.eliminarAdministrador(numAdministrador, CommonFunctions.getUsuarioLogueado());
-        if (resultado) {
-            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
-                    "Se ha eliminado el administrador",
-                    "Se ha eliminado correctamente el administrador ");
-        } else {
-            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
-                    "Error al eliminar el administrador",
-                    "Error, no se ha podido eliminar el administrador seleccionado");
+        try {
+            boolean resultado = crudAdministrador.eliminarAdministrador(numAdministrador, CommonFunctions.getUsuarioLogueado());
+            if (resultado) {
+                CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                        "Se ha eliminado el administrador",
+                        "Se ha eliminado correctamente el administrador ");
+            } else {
+                CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                        "Error al eliminar el administrador",
+                        "Error, no se ha podido eliminar el administrador seleccionado");
+            }
         }
-        CommonFunctions.goToPage("/faces/users/verAdministradores.xhtml?faces-redirect=true");
+        catch (Exception e) {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                        e.getMessage(),
+                        e.getMessage());
+        }
+        CommonFunctions.goToPage("/faces/users/admin/verAdministradores.xhtml?faces-redirect=true");
     }
 
     public void volver() {

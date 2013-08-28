@@ -34,7 +34,7 @@ public interface CrudAdministradorLocal {
      * @param usernameEjecutor El nombre de usuario de quien está realizando la acción de eliminación
      * @return true si el usuario administrador pudo ser borrado, false si hubo un error
      */
-    public boolean eliminarAdministrador(Integer rutUser, String usernameEjecutor);
+    public boolean eliminarAdministrador(Integer rutUser, String usernameEjecutor) throws Exception;
     
     /**
      * Obtiene la lista de todos los administradores registrados en el sistema.
