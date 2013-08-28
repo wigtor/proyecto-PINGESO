@@ -148,7 +148,7 @@ public class MantenedorPuntoLimpioAgregarMB {
         } catch (Exception ex) {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), ex.getMessage());
             this.mantPtoLimpio.endConversation();
-            CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?faces-redirect=true");
+            CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
             return;
         }
         if (numPuntoLimpio != null) {
