@@ -4,7 +4,8 @@
  */
 package sessionBeans;
 
-import java.util.Collection;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
 
@@ -22,5 +23,5 @@ public interface GeneradorReportesLocal {
     
     public Map<String, Integer> getOpcionesReporte(int tipoReporte);
     
-    public String[][] getDatosReporte(int tipoReporte, Collection<String> cabeceraReporte);
+    public String[][] getDatosReporte(int tipoReporte, List<String> cabeceraReporte, Calendar fechaIni, Calendar fechaFin);
 }

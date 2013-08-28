@@ -5,9 +5,20 @@
 package sessionBeans;
 
 import DAO.DAOFactory;
+import DAO.interfaces.MantencionDAO;
 import DAO.interfaces.PuntoLimpioDAO;
+import DAO.interfaces.RevisionDAO;
+import DAO.interfaces.SolicitudMantencionDAO;
+import DAO.interfaces.UsuarioDAO;
+import entities.MantencionPuntoLimpio;
 import entities.PuntoLimpio;
+import entities.RevisionPuntoLimpio;
+import entities.SolicitudMantencion;
+import entities.Usuario;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.ejb.Stateless;
@@ -35,6 +46,10 @@ public class GeneradorReportes implements GeneradorReportesLocal {
         "N° de punto limpio", "Nombre punto limpio", "Inspector encargado", "Fecha", "Detalle"};
     private static final String[] OPCIONES_SOLICITUDES_PUNTO_LIMPIO = {"Número", "N° de punto limpio", 
         "Nombre punto limpio", "Inspector solicitante", "Operario encargado", "Fecha", "Detalle"};
+    private static final String[] OPCIONES_USUARIOS_SISTEMA = {"Id", "Tipo de usuario", 
+        "Nombre", "Apellido paterno", "Apellido materno", "Correo electrónico", 
+        "Cantidad de revisiones", "Cantidad de mantenciones", "Cantidad de solicitudes", 
+        "Cantidad de revisiones"};
 
     @Override
     public Map<String, Integer> getOpcionesReporte(int tipoReporte) {
@@ -63,15 +78,9 @@ public class GeneradorReportes implements GeneradorReportesLocal {
                 }
                 return availablesOptions;
             case USUARIOS_SISTEMA:
-                availablesOptions.put("Id", 0);
-                availablesOptions.put("Tipo de usuario", 1);
-                availablesOptions.put("Nombre", 2);
-                availablesOptions.put("Apellido paterno", 3);
-                availablesOptions.put("Apellido materno", 4);
-                availablesOptions.put("Correo electrónico", 5);
-                availablesOptions.put("Cantidad de revisiones", 6);
-                availablesOptions.put("Cantidad de mantenciones", 7);
-                availablesOptions.put("Cantidad de solicitudes", 8);
+                for (i = 0; i < OPCIONES_USUARIOS_SISTEMA.length; i++) {
+                    availablesOptions.put(OPCIONES_USUARIOS_SISTEMA[i], i);
+                }
                 return availablesOptions;
         }
         return null;
@@ -79,18 +88,18 @@ public class GeneradorReportes implements GeneradorReportesLocal {
     }
 
     @Override
-    public String[][] getDatosReporte(int tipoReporte, Collection<String> cabeceraReporte) {
+    public String[][] getDatosReporte(int tipoReporte, List<String> cabeceraReporte, Calendar fechaIni, Calendar fechaFin) {
+        Collections.sort(cabeceraReporte);
         String [][] resultado = null;
         DAOFactory factory = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-        
+        int i, j, index;
         switch(tipoReporte) {
             case DATOS_PUNTOS_LIMPIOS:
                 PuntoLimpioDAO ptoDAO = factory.getPuntoLimpioDAO();
                 Collection<PuntoLimpio> ptosLimpios = ptoDAO.findAll();
-                System.out.println("Cantidad filas: "+ (ptosLimpios.size()+1) + " Cantidad columnas: " + cabeceraReporte.size());
                 resultado = new String[ptosLimpios.size()+1][cabeceraReporte.size()];
+                
                 //Defino la cabecera de los datos
-                int i, j, index;
                 i = 0;
                 for (String elemCabeceraInt : cabeceraReporte) {
                     index = Integer.parseInt(elemCabeceraInt);
@@ -98,32 +107,174 @@ public class GeneradorReportes implements GeneradorReportesLocal {
                     i++;
                 }
                 
-                for (i = 1; i < resultado.length; i++) {
+                i = 1;
+                for (PuntoLimpio ptoTemp : ptosLimpios) {
                     j = 0;
                     for (String elemCabeceraInt : cabeceraReporte) {
-                        //index = Integer.parseInt(elemCabeceraInt);
-                        resultado[i][j] = elemCabeceraInt;
+                        index = Integer.parseInt(elemCabeceraInt);
+                        resultado[i][j] = extraeDatoPuntoLimpio(index, ptoTemp);
                         j++;
                     }
+                    i++;
+                }
+                break;
+            case MANTENCIONES_PUNTO_LIMPIO:
+                MantencionDAO mantDAO = factory.getMantencionDAO();
+                Collection<MantencionPuntoLimpio> mantenciones = mantDAO.findAll();
+                resultado = new String[mantenciones.size()+1][cabeceraReporte.size()];
+                
+                //Defino la cabecera de los datos
+                
+                i = 0;
+                for (String elemCabeceraInt : cabeceraReporte) {
+                    index = Integer.parseInt(elemCabeceraInt);
+                    resultado[0][i] = OPCIONES_MANTENCIONES_PUNTO_LIMPIO[index];
+                    i++;
                 }
                 
-            case MANTENCIONES_PUNTO_LIMPIO:
-                
-                
+                i = 1;
+                for (MantencionPuntoLimpio mantTemp : mantenciones) {
+                    j = 0;
+                    for (String elemCabeceraInt : cabeceraReporte) {
+                        index = Integer.parseInt(elemCabeceraInt);
+                        resultado[i][j] = extraeDatoMantencion(index, mantTemp);
+                        j++;
+                    }
+                    i++;
+                }
+                break;
             case REVISIONES_PUNTO_LIMPIO:
+                RevisionDAO revDAO = factory.getRevisionDAO();
+                Collection<RevisionPuntoLimpio> revisiones = revDAO.findAll();
+                resultado = new String[revisiones.size()+1][cabeceraReporte.size()];
                 
+                //Defino la cabecera de los datos
+                i = 0;
+                for (String elemCabeceraInt : cabeceraReporte) {
+                    index = Integer.parseInt(elemCabeceraInt);
+                    resultado[0][i] = OPCIONES_REVISIONES_PUNTO_LIMPIO[index];
+                    i++;
+                }
+                
+                i = 1;
+                for (RevisionPuntoLimpio revTemp : revisiones) {
+                    j = 0;
+                    for (String elemCabeceraInt : cabeceraReporte) {
+                        index = Integer.parseInt(elemCabeceraInt);
+                        resultado[i][j] = extraeDatoRevision(index, revTemp);
+                        j++;
+                    }
+                    i++;
+                }
+                break;
                 
             case SOLICITUDES_PUNTO_LIMPIO:
+                SolicitudMantencionDAO solDAO = factory.getSolicitudMantencionDAO();
+                Collection<SolicitudMantencion> solicitudes = solDAO.findAll();
+                resultado = new String[solicitudes.size()+1][cabeceraReporte.size()];
                 
+                //Defino la cabecera de los datos
+                i = 0;
+                for (String elemCabeceraInt : cabeceraReporte) {
+                    index = Integer.parseInt(elemCabeceraInt);
+                    resultado[0][i] = OPCIONES_SOLICITUDES_PUNTO_LIMPIO[index];
+                    i++;
+                }
+                
+                i = 1;
+                for (SolicitudMantencion solTemp : solicitudes) {
+                    j = 0;
+                    for (String elemCabeceraInt : cabeceraReporte) {
+                        index = Integer.parseInt(elemCabeceraInt);
+                        resultado[i][j] = extraeDatoSolicitud(index, solTemp);
+                        j++;
+                    }
+                    i++;
+                }
+                break;
                 
             case USUARIOS_SISTEMA:
+                UsuarioDAO userDAO = factory.getUsuarioDAO();
+                Collection<Usuario> usuarios = userDAO.findAll();
+                resultado = new String[usuarios.size()+1][cabeceraReporte.size()];
                 
+                //Defino la cabecera de los datos
+                i = 0;
+                for (String elemCabeceraInt : cabeceraReporte) {
+                    index = Integer.parseInt(elemCabeceraInt);
+                    resultado[0][i] = OPCIONES_USUARIOS_SISTEMA[index];
+                    i++;
+                }
                 
+                i = 1;
+                for (Usuario userTemp : usuarios) {
+                    j = 0;
+                    for (String elemCabeceraInt : cabeceraReporte) {
+                        index = Integer.parseInt(elemCabeceraInt);
+                        resultado[i][j] = extraeDatoUsuario(index, userTemp);
+                        j++;
+                    }
+                    i++;
+                }
+                break;
         }
         return resultado;
     }
-
-    public void persist(Object object) {
-        em.persist(object);
+    
+    private String extraeDatoPuntoLimpio(int index, PuntoLimpio obj) {
+        //String nombreDatos = OPCIONES_DATOS_PUNTOS_LIMPIOS[index];
+        switch (index) {
+            case 0:
+                return obj.getId().toString();
+            case 1:
+                return obj.getNombre();
+            case 2:
+                return obj.getComuna().getNombre();
+            case 3:
+                return obj.getUbicacion();
+            case 4:
+                return Integer.toString(obj.getRevisiones().size());
+            case 5:
+                return Integer.toString(obj.getMantenciones().size());
+            case 6:
+                Usuario userTemp = obj.getInspectorEncargado().getUsuario();
+                return userTemp.getNombre().concat(" ").concat(userTemp.getApellido1())
+                        .concat(" ").concat(userTemp.getApellido2());
+            case 7:
+                int cantidadMant = obj.getMantenciones().size();
+                if (cantidadMant > 0) {
+                    Calendar f1 = obj.getMantenciones().get(cantidadMant - 1).getFecha();
+                    return Integer.toString(f1.get(Calendar.DAY_OF_MONTH)).concat("-")
+                            .concat(Integer.toString(f1.get(Calendar.MONTH))).concat("-")
+                            .concat(Integer.toString(f1.get(Calendar.YEAR)));
+                }
+                return "";
+            case 8:
+                Calendar f2 = obj.getFechaProxRevision();
+                return Integer.toString(f2.get(Calendar.DAY_OF_MONTH)).concat("-")
+                        .concat(Integer.toString(f2.get(Calendar.MONTH))).concat("-")
+                        .concat(Integer.toString(f2.get(Calendar.YEAR)));
+        }
+        return "";
+    }
+    
+    private String extraeDatoMantencion(int index, MantencionPuntoLimpio obj) {
+        
+        return null;
+    }
+    
+    private String extraeDatoRevision(int index, RevisionPuntoLimpio obj) {
+        
+        return null;
+    }
+    
+    private String extraeDatoSolicitud(int index, SolicitudMantencion obj) {
+        
+        return null;
+    }
+    
+    private String extraeDatoUsuario(int index, Usuario obj) {
+        
+        return null;
     }
 }

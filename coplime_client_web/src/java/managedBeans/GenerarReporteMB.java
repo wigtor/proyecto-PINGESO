@@ -137,21 +137,21 @@ public class GenerarReporteMB {
         HSSFRow cfilaReporteCabecera = hojaReporte.createRow(0);
         HSSFCell celdaTemp = cfilaReporteCabecera.createCell(0);
         celdaTemp.setCellValue("Reporte de puntos limpios");
-        celdaTemp = cfilaReporteCabecera.createCell(3);
+        celdaTemp = cfilaReporteCabecera.createCell(1);
         celdaTemp.setCellValue("Desde:");
-        celdaTemp = cfilaReporteCabecera.createCell(4);
+        celdaTemp = cfilaReporteCabecera.createCell(2);
         celdaTemp.setCellValue(Integer.toString(this.fechaIni.get(Calendar.DAY_OF_MONTH)).
                 concat("-").concat(Integer.toString(this.fechaIni.get(Calendar.MONTH))).
                 concat("-").concat(Integer.toString(this.fechaIni.get(Calendar.YEAR))));
-        celdaTemp = cfilaReporteCabecera.createCell(5);
+        celdaTemp = cfilaReporteCabecera.createCell(3);
         celdaTemp.setCellValue("Hasta:");
-        celdaTemp = cfilaReporteCabecera.createCell(6);
+        celdaTemp = cfilaReporteCabecera.createCell(4);
         celdaTemp.setCellValue(Integer.toString(this.fechaFin.get(Calendar.DAY_OF_MONTH)).
                 concat("-").concat(Integer.toString(this.fechaFin.get(Calendar.MONTH))).
                 concat("-").concat(Integer.toString(this.fechaFin.get(Calendar.YEAR))));
         
         
-        String[][] datosReporte = generadorReportes.getDatosReporte(this.tipoReporteSelected, this.selectedOptions);
+        String[][] datosReporte = generadorReportes.getDatosReporte(this.tipoReporteSelected, this.selectedOptions, fechaIni, fechaFin);
         
         if (datosReporte == null) {
             return libroReporte;
@@ -167,11 +167,9 @@ public class GenerarReporteMB {
             j = 0;
             for (String celda : fila) {
                 celdaTemp = cFilaTemp.createCell(j);
-                System.out.print(celda);
                 celdaTemp.setCellValue(celda);
                 j++;
             }
-            System.out.println("FIN DE FILA2");
             i++;
         }
         if (datosReporte.length > 0) {
