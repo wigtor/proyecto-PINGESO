@@ -19,8 +19,10 @@
         </f:facet>
     </h:head>
 
-    <body data-tarjet=".bs-docs-sidebar" data-spy="scroll" data-twttr-rendered="true">
+    <body data-tarjet=".bs-docs-sidebar" data-spy="scroll" data-twttr-rendered="true" style="background:url('#{request.contextPath}/resources/img/Fondo2.jpg')">
         
+        
+            
         
         <p:overlayPanel id="menu_administrador" for=":form_botones_barra:btnPanelContext" rendered="#{request.isUserInRole('Administrador')}">
             <h:form>
@@ -155,5 +157,6 @@
                 <p:growl id="growl_msj_accion" />
             </h:form>
         </div>
+      
     </body>
 </html>
