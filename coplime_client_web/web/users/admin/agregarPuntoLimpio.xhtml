@@ -39,7 +39,9 @@
                         <p:inputText id="direccion" value="#{mantenedorPuntoLimpioAgregarMB.direccion}" required="true"/>
 
                         <p:outputLabel value="Fecha primera revisión" for="fechaRev"/>
-                        <p:calendar id="fechaRev" value="#{mantenedorPuntoLimpioAgregarMB.fechaRevision}" required="true"/>
+                        <p:calendar id="fechaRev" value="#{mantenedorPuntoLimpioAgregarMB.fechaRevision}" required="true" >
+                            <f:validator validatorId="FechaFuturaValidator" />
+                        </p:calendar>
 
                         <p:outputLabel value="Estado global inicial"/>
                         <p:selectOneMenu value="#{mantenedorPuntoLimpioAgregarMB.estado_seleccionado}">
