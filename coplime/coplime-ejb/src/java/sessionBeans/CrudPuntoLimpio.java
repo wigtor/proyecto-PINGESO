@@ -42,6 +42,10 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
     public Integer agregarPuntoLimpio(String nombre, Integer numeroDadoPorCliente, Integer idComuna, String direccion,
                     Calendar fechaProxRev, Integer idEstadoIni, Integer numInspEnc) throws Exception {
         
+        if(isValidDate(fechaProxRev)) {
+            throw new Exception("La fecha para la primera revisión no puede ser pasada");
+        }
+        
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
         ComunaDAO comDAO = factoryDeDAOs.getComunaDAO();
@@ -77,8 +81,17 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         return numeroDadoPorCliente;
     }
     
+    private boolean isValidDate(Calendar fecha) {
+        Calendar actual = Calendar.getInstance();
+        if (actual.before(fecha)) { //actual < fecha
+            return false;
+        }
+        return true;
+    }
+    
     @Override
     public boolean agregarContenedor(Integer numPuntoLimpio, Integer idMaterial, Integer idEstadoIni, int llenadoIni, int capacidad, Integer idUnidadMedida) {
+        
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
         ContenedorDAO contDAO = factoryDeDAOs.getContenedorDAO();
