@@ -7,7 +7,6 @@ package sessionBeans;
 import DAO.DAOFactory;
 import DAO.interfaces.ConfiguracionDAO;
 import entities.Configuracion;
-import java.util.Calendar;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -52,6 +51,12 @@ public class ConfiguracionSistema implements ConfiguracionSistemaLocal {
         ConfiguracionDAO configDAO = fabricaDAO.getConfiguracionDAO();
         Integer intervalo;
         Configuracion timerEstimacionContenedores = configDAO.buscarParamExacto("timer_estimacion_contenedores_intervalo");
+        if (timerEstimacionContenedores == null){
+            timerEstimacionContenedores = new Configuracion();
+            timerEstimacionContenedores.setIdParam("timer_estimacion_contenedores_intervalo");
+            timerEstimacionContenedores.setValorParam("86400000");
+            configDAO.insert(timerEstimacionContenedores);
+        }
         intervalo = Math.round(Long.parseLong(timerEstimacionContenedores.getValorParam())/3600000);
         return intervalo;
     }

@@ -49,9 +49,10 @@ public class MantenedorTemporizadorEstimacionProgramarMB {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,  "Este valor ya está configurado en el sistema.", "Error.");
         } else {
           configuracionSistema.fijarIntervaloEstimacionContenedores(numHorasIntervalo);
-          CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO, "Se ha fijado correctamente el nuevo intervalo.", "Éxito.");
-          CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
           numHorasIntervaloOld = numHorasIntervalo;
+          CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO, "Se ha fijado correctamente el nuevo intervalo.", "Éxito.");
+          CommonFunctions.goToPage("/faces/users/verInspectores.xhtml?faces-redirect=true");
+          
         }
         
     }
@@ -62,6 +63,6 @@ public class MantenedorTemporizadorEstimacionProgramarMB {
     
     public void btnVolver(){
         //TODO revisar URLs de retorno
-        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
+        CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml?faces-redirect=true");
     }
 }
