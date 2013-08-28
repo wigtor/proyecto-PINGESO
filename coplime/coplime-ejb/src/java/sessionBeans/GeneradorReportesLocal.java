@@ -14,13 +14,13 @@ import javax.ejb.Local;
  */
 @Local
 public interface GeneradorReportesLocal {
-    public static int DATOS_PUNTOS_LIMPIOS = 1;
-    public static int MANTENCIONES_PUNTO_LIMPIO = 2;
-    public static int REVISIONES_PUNTO_LIMPIO = 3;
-    public static int SOLICITUDES_PUNTO_LIMPIO = 4;
-    public static int USUARIOS_SISTEMA = 5;
+    public static final int DATOS_PUNTOS_LIMPIOS = 1;
+    public static final int MANTENCIONES_PUNTO_LIMPIO = 2;
+    public static final int REVISIONES_PUNTO_LIMPIO = 3;
+    public static final int SOLICITUDES_PUNTO_LIMPIO = 4;
+    public static final int USUARIOS_SISTEMA = 5;
     
-    public Map<String, String> getOpcionesReporte(int tipoReporte);
+    public Map<String, Integer> getOpcionesReporte(int tipoReporte);
     
     public String[][] getDatosReporte(int tipoReporte, Collection<String> cabeceraReporte);
 }

@@ -18,13 +18,19 @@
             
             <ui:define name="centro">
                  <h:form>
-                     <h:panelGrid columns="2" styleClass="centrar" cellpadding="10">
-                         <f:facet name="header">¿Qué datos desea incluir?</f:facet>
+                     <h:panelGrid columns="2" styleClass="centrar" cellpadding="10" id="todoElPanel">
+                         <f:facet name="header">¿Cómo desea el reporte?</f:facet>
+                         
+                        <p:outputLabel for="selectTipoReporte" value="Seleccione el tipo de reporte"/>
+                        <h:selectOneMenu id="selectTipoReporte" value="#{generarReporteMB.tipoReporteSelected}">
+                            <f:ajax render="todoElPanel" event="change" listener="#{generarReporteMB.updateOpcionesReporte()}"/>
+                            <f:selectItems value="#{generarReporteMB.tiposReporte}" var="t_report" itemValue="#{t_report.id}" itemLabel="#{t_report.label}"/>
+                        </h:selectOneMenu>
                          
                          <h:panelGroup></h:panelGroup>
                          
-                         <p:selectManyCheckbox value="#{generarReporteMB.selectedOptions}"  
-                                               layout="pageDirection" required="true">  
+                         <p:selectManyCheckbox value="#{generarReporteMB.selectedOptions}" id="listaOpciones" 
+                                               layout="pageDirection">  
                              <f:selectItems value="#{generarReporteMB.availablesOptions}" />  
                          </p:selectManyCheckbox>
                          

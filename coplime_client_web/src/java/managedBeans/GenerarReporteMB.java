@@ -13,12 +13,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -45,7 +45,7 @@ public class GenerarReporteMB {
     private List<String> selectedOptions;
     private List<SelectElemPojo> tiposReporte;
     private Integer tipoReporteSelected;
-    private Map<String, String> availablesOptions;
+    private Map<String, Integer> availablesOptions;
     private Calendar fechaIni;
     private Calendar fechaFin;
     private StreamedContent file;
@@ -54,6 +54,10 @@ public class GenerarReporteMB {
      * Creates a new instance of GenerarReporteMB
      */
     public GenerarReporteMB() {
+    }
+    
+    @PostConstruct
+    public void init() {
         cargarTiposReporte();
         cargarOpcionesReporte();
         
@@ -73,6 +77,7 @@ public class GenerarReporteMB {
         this.tiposReporte.add(new SelectElemPojo(Integer.toString(GeneradorReportesLocal.SOLICITUDES_PUNTO_LIMPIO), "Solicitudes de puntos limpios"));
         this.tiposReporte.add(new SelectElemPojo(Integer.toString(GeneradorReportesLocal.USUARIOS_SISTEMA), "Usuarios registrados en el sistema"));
         this.tipoReporteSelected = GeneradorReportesLocal.DATOS_PUNTOS_LIMPIOS;
+        System.out.println("tipo reporte selected: "+this.tipoReporteSelected);
     }
     
     private void cargarOpcionesReporte() {
@@ -81,8 +86,8 @@ public class GenerarReporteMB {
         selectedOptions = new LinkedList<>();
         
         //Selecciono todo por defecto
-        for (String strTemp : availablesOptions.values()) {
-            this.selectedOptions.add(strTemp);
+        for (Integer strTemp : availablesOptions.values()) {
+            this.selectedOptions.add(strTemp.toString());
         }
     }
 
@@ -118,6 +123,10 @@ public class GenerarReporteMB {
 
     }
     
+    public void updateOpcionesReporte() {
+        cargarOpcionesReporte();
+    }
+    
     public HSSFWorkbook construirExcel() {
         
         HSSFWorkbook libroReporte= new HSSFWorkbook();
@@ -140,31 +149,35 @@ public class GenerarReporteMB {
         celdaTemp.setCellValue(Integer.toString(this.fechaFin.get(Calendar.DAY_OF_MONTH)).
                 concat("-").concat(Integer.toString(this.fechaFin.get(Calendar.MONTH))).
                 concat("-").concat(Integer.toString(this.fechaFin.get(Calendar.YEAR))));
-        cfilaReporteCabecera = hojaReporte.createRow(1);
-        int i = 0;
-        for (String opcion : selectedOptions) {
-            System.out.println("Seleccionada opción: " + opcion);
-            celdaTemp = cfilaReporteCabecera.createCell(i);
-            celdaTemp.setCellValue(opcion);
-            i++;
-        }
+        
         
         String[][] datosReporte = generadorReportes.getDatosReporte(this.tipoReporteSelected, this.selectedOptions);
+        
         if (datosReporte == null) {
             return libroReporte;
         }
         
-        i = 2; //Comienzo en la segunda fila
+        int i; //Comienzo en la segunda fila
         int j;
+        System.out.println("CACA");
         HSSFRow cFilaTemp;
+        i = 1;
         for (String[] fila : datosReporte) {
             cFilaTemp = hojaReporte.createRow(i);
             j = 0;
             for (String celda : fila) {
                 celdaTemp = cFilaTemp.createCell(j);
+                System.out.print(celda);
                 celdaTemp.setCellValue(celda);
+                j++;
             }
+            System.out.println("FIN DE FILA2");
             i++;
+        }
+        if (datosReporte.length > 0) {
+            for (i = 0; i < datosReporte[0].length; i++) {
+                hojaReporte.autoSizeColumn(i);
+            }
         }
         return libroReporte;
     }
@@ -177,11 +190,11 @@ public class GenerarReporteMB {
         this.selectedOptions = selectedOptions;
     }
 
-    public Map<String, String> getAvailablesOptions() {
+    public Map<String, Integer> getAvailablesOptions() {
         return availablesOptions;
     }
 
-    public void setAvailablesOptions(Map<String, String> availablesOptions) {
+    public void setAvailablesOptions(Map<String, Integer> availablesOptions) {
         this.availablesOptions = availablesOptions;
     }
 

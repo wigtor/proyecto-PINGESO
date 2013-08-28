@@ -4,10 +4,15 @@
  */
 package sessionBeans;
 
+import DAO.DAOFactory;
+import DAO.interfaces.PuntoLimpioDAO;
+import entities.PuntoLimpio;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -15,61 +20,58 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class GeneradorReportes implements GeneradorReportesLocal {
+    @PersistenceContext(unitName = "coplime-ejbPU")
+    private EntityManager em;
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     
-    
+    private static final String[] OPCIONES_DATOS_PUNTOS_LIMPIOS = {"Número", "Nombre",
+        "Comuna", "Ubicación", "Cantidad de visitas", "Cantidad de mantenciones", 
+        "Inspector encargado", "Fecha última revisión", "Fecha próxima revisión"};
+    private static final String[] OPCIONES_MANTENCIONES_PUNTO_LIMPIO = {"Número", 
+        "N° de punto limpio", "Nombre punto limpio", "Operario encargado", "Fecha", "Detalle"};
+    private static final String[] OPCIONES_REVISIONES_PUNTO_LIMPIO = {"Número", 
+        "N° de punto limpio", "Nombre punto limpio", "Inspector encargado", "Fecha", "Detalle"};
+    private static final String[] OPCIONES_SOLICITUDES_PUNTO_LIMPIO = {"Número", "N° de punto limpio", 
+        "Nombre punto limpio", "Inspector solicitante", "Operario encargado", "Fecha", "Detalle"};
+
     @Override
-    public Map<String, String> getOpcionesReporte(int tipoReporte) {
-        HashMap<String, String> availablesOptions = new HashMap<>();
+    public Map<String, Integer> getOpcionesReporte(int tipoReporte) {
+        TreeMap<String, Integer> availablesOptions = new TreeMap<>();
+        int i;
         switch(tipoReporte) {
             case DATOS_PUNTOS_LIMPIOS:
-                availablesOptions.put("numero", "Número");
-                availablesOptions.put("nombre", "Nombre");
-                availablesOptions.put("comuna", "Comuna");
-                availablesOptions.put("ubicacion", "Ubicación");
-                availablesOptions.put("cantidadVisitas", "Cantidad de visitas");
-                availablesOptions.put("cantidadMantenciones", "Cantidad de mantenciones");
-                availablesOptions.put("inspectorEncargado", "Inspector encargado");
-                availablesOptions.put("fechaUltimaRevision", "Fecha última revisión");
-                availablesOptions.put("fechaProximaRevision", "Fecha próxima revisión");
+                for (i = 0; i < OPCIONES_DATOS_PUNTOS_LIMPIOS.length; i++) {
+                    availablesOptions.put(OPCIONES_DATOS_PUNTOS_LIMPIOS[i], i);
+                }
+                
                 return availablesOptions;
             case MANTENCIONES_PUNTO_LIMPIO:
-                availablesOptions.put("numero", "Número");
-                availablesOptions.put("num_punto_limpio", "N° de punto limpio");
-                availablesOptions.put("nombre_punto_limpio", "Nombre punto limpio");
-                availablesOptions.put("operario_encargado", "Operario encargado");
-                availablesOptions.put("fecha", "Fecha");
-                availablesOptions.put("detalle", "Detalle");
+                for (i = 0; i < OPCIONES_MANTENCIONES_PUNTO_LIMPIO.length; i++) {
+                    availablesOptions.put(OPCIONES_MANTENCIONES_PUNTO_LIMPIO[i], i);
+                }
                 return availablesOptions;
             case REVISIONES_PUNTO_LIMPIO:
-                availablesOptions.put("numero", "Número");
-                availablesOptions.put("num_punto_limpio", "N° de punto limpio");
-                availablesOptions.put("nombre_punto_limpio", "Nombre punto limpio");
-                availablesOptions.put("inspector_encargado", "Inspector encargado");
-                availablesOptions.put("fecha", "Fecha");
-                availablesOptions.put("detalle", "Detalle");
+                for (i = 0; i < OPCIONES_REVISIONES_PUNTO_LIMPIO.length; i++) {
+                    availablesOptions.put(OPCIONES_REVISIONES_PUNTO_LIMPIO[i], i);
+                }
                 return availablesOptions;
             case SOLICITUDES_PUNTO_LIMPIO:
-                availablesOptions.put("numero", "Número");
-                availablesOptions.put("num_punto_limpio", "N° de punto limpio");
-                availablesOptions.put("nombre_punto_limpio", "Nombre punto limpio");
-                availablesOptions.put("inspector_solicitate", "Inspector solicitante");
-                availablesOptions.put("operario_encargado", "Operario encargado");
-                availablesOptions.put("fecha", "Fecha");
-                availablesOptions.put("detalle", "Detalle");
+                for (i = 0; i < OPCIONES_SOLICITUDES_PUNTO_LIMPIO.length; i++) {
+                    availablesOptions.put(OPCIONES_SOLICITUDES_PUNTO_LIMPIO[i], i);
+                }
                 return availablesOptions;
             case USUARIOS_SISTEMA:
-                availablesOptions.put("id", "id");
-                availablesOptions.put("rol_usuario", "Tipo de usuario");
-                availablesOptions.put("nombre", "Nombre");
-                availablesOptions.put("apellido1", "Apellido paterno");
-                availablesOptions.put("apellido2", "Apellido materno");
-                availablesOptions.put("correo", "Correo electrónico");
-                availablesOptions.put("cantidad_revisiones", "Cantidad de revisiones");
-                availablesOptions.put("cantidad_mantenciones", "Cantidad de mantenciones");
-                availablesOptions.put("cantiad_solicitudes", "Cantidad de solicitudes");
+                availablesOptions.put("Id", 0);
+                availablesOptions.put("Tipo de usuario", 1);
+                availablesOptions.put("Nombre", 2);
+                availablesOptions.put("Apellido paterno", 3);
+                availablesOptions.put("Apellido materno", 4);
+                availablesOptions.put("Correo electrónico", 5);
+                availablesOptions.put("Cantidad de revisiones", 6);
+                availablesOptions.put("Cantidad de mantenciones", 7);
+                availablesOptions.put("Cantidad de solicitudes", 8);
                 return availablesOptions;
         }
         return null;
@@ -78,9 +80,32 @@ public class GeneradorReportes implements GeneradorReportesLocal {
 
     @Override
     public String[][] getDatosReporte(int tipoReporte, Collection<String> cabeceraReporte) {
+        String [][] resultado = null;
+        DAOFactory factory = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        
         switch(tipoReporte) {
             case DATOS_PUNTOS_LIMPIOS:
+                PuntoLimpioDAO ptoDAO = factory.getPuntoLimpioDAO();
+                Collection<PuntoLimpio> ptosLimpios = ptoDAO.findAll();
+                System.out.println("Cantidad filas: "+ (ptosLimpios.size()+1) + " Cantidad columnas: " + cabeceraReporte.size());
+                resultado = new String[ptosLimpios.size()+1][cabeceraReporte.size()];
+                //Defino la cabecera de los datos
+                int i, j, index;
+                i = 0;
+                for (String elemCabeceraInt : cabeceraReporte) {
+                    index = Integer.parseInt(elemCabeceraInt);
+                    resultado[0][i] = OPCIONES_DATOS_PUNTOS_LIMPIOS[index];
+                    i++;
+                }
                 
+                for (i = 1; i < resultado.length; i++) {
+                    j = 0;
+                    for (String elemCabeceraInt : cabeceraReporte) {
+                        //index = Integer.parseInt(elemCabeceraInt);
+                        resultado[i][j] = elemCabeceraInt;
+                        j++;
+                    }
+                }
                 
             case MANTENCIONES_PUNTO_LIMPIO:
                 
@@ -95,6 +120,10 @@ public class GeneradorReportes implements GeneradorReportesLocal {
                 
                 
         }
-        return null;
+        return resultado;
+    }
+
+    public void persist(Object object) {
+        em.persist(object);
     }
 }

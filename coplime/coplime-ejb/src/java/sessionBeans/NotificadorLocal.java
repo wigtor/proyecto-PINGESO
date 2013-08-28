@@ -5,7 +5,6 @@
 package sessionBeans;
 
 import entities.Notificacion;
-import entities.NotificacionDeUsuario;
 import java.util.Collection;
 import javax.ejb.Local;
 
