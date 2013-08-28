@@ -92,6 +92,12 @@ public class GeneradorReportes implements GeneradorReportesLocal {
 
     @Override
     public String[][] getDatosReporte(int tipoReporte, List<String> cabeceraReporte, Calendar fechaIni, Calendar fechaFin) {
+        //Se arregla la horaFin para que quede al final del día
+        fechaFin.set(Calendar.HOUR_OF_DAY, 23);
+        fechaFin.set(Calendar.MINUTE, 59);
+        fechaFin.set(Calendar.SECOND, 59);
+        fechaFin.set(Calendar.MILLISECOND, 999);
+        
         Collections.sort(cabeceraReporte);
         String [][] resultado = null;
         DAOFactory factory = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
@@ -123,7 +129,7 @@ public class GeneradorReportes implements GeneradorReportesLocal {
                 break;
             case MANTENCIONES_PUNTO_LIMPIO:
                 MantencionDAO mantDAO = factory.getMantencionDAO();
-                Collection<MantencionPuntoLimpio> mantenciones = mantDAO.findAll();
+                Collection<MantencionPuntoLimpio> mantenciones = mantDAO.findByDateRange(fechaIni, fechaFin);
                 resultado = new String[mantenciones.size()+1][cabeceraReporte.size()];
                 
                 //Defino la cabecera de los datos
@@ -148,7 +154,7 @@ public class GeneradorReportes implements GeneradorReportesLocal {
                 break;
             case REVISIONES_PUNTO_LIMPIO:
                 RevisionDAO revDAO = factory.getRevisionDAO();
-                Collection<RevisionPuntoLimpio> revisiones = revDAO.findAll();
+                Collection<RevisionPuntoLimpio> revisiones = revDAO.findByDateRange(fechaIni, fechaFin);
                 resultado = new String[revisiones.size()+1][cabeceraReporte.size()];
                 
                 //Defino la cabecera de los datos
@@ -173,7 +179,7 @@ public class GeneradorReportes implements GeneradorReportesLocal {
                 
             case SOLICITUDES_PUNTO_LIMPIO:
                 SolicitudMantencionDAO solDAO = factory.getSolicitudMantencionDAO();
-                Collection<SolicitudMantencion> solicitudes = solDAO.findAll();
+                Collection<SolicitudMantencion> solicitudes = solDAO.findByDateRange(fechaIni, fechaFin);
                 resultado = new String[solicitudes.size()+1][cabeceraReporte.size()];
                 
                 //Defino la cabecera de los datos

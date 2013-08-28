@@ -25,7 +25,8 @@ import javax.persistence.Temporal;
  */
 @Entity
 @NamedQueries( {
-    @NamedQuery(name="RevisionPuntoLimpio.findByInspector", query="SELECT u FROM RevisionPuntoLimpio u WHERE u.inspectorRevisor.usuario.id = :idUsuario") 
+    @NamedQuery(name="RevisionPuntoLimpio.findByInspector", query="SELECT u FROM RevisionPuntoLimpio u WHERE u.inspectorRevisor.usuario.id = :idUsuario"),
+    @NamedQuery(name="RevisionPuntoLimpio.findByDateRange", query="SELECT u FROM RevisionPuntoLimpio u WHERE u.fecha >= :fechaIni AND u.fecha <= :fechaFin")
 })
 public class RevisionPuntoLimpio implements Serializable {
     private static final long serialVersionUID = 1L;

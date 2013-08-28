@@ -25,7 +25,8 @@ import javax.persistence.Temporal;
 @NamedQueries( {
     @NamedQuery(name="SolicitudMantencion.findByInspector", query="SELECT u FROM SolicitudMantencion u WHERE u.inspectorSolicitante.usuario.id = :idUsuario"), 
     @NamedQuery(name="SolicitudMantencion.findByOperario", query="SELECT u FROM SolicitudMantencion u WHERE u.operarioAsignado.usuario.id = :idUsuario"),
-    @NamedQuery(name="SolicitudMantencion.countNoRevisadasUsuarioDestinatario", query="SELECT count(u) FROM SolicitudMantencion u WHERE (u.operarioAsignado.usuario.username = :username) AND (u.revisado = false)")
+    @NamedQuery(name="SolicitudMantencion.countNoRevisadasUsuarioDestinatario", query="SELECT count(u) FROM SolicitudMantencion u WHERE (u.operarioAsignado.usuario.username = :username) AND (u.revisado = false)"),
+    @NamedQuery(name="SolicitudMantencion.findByDateRange", query="SELECT u FROM SolicitudMantencion u WHERE u.fecha >= :fechaIni AND u.fecha <= :fechaFin") 
 })
 public class SolicitudMantencion implements Serializable {
     private static final long serialVersionUID = 1L;

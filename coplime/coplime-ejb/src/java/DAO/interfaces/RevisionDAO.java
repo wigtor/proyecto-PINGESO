@@ -5,6 +5,7 @@
 package DAO.interfaces;
 
 import entities.RevisionPuntoLimpio;
+import java.util.Calendar;
 import java.util.Collection;
 
 /**
@@ -19,4 +20,5 @@ public interface RevisionDAO extends genericDAO<RevisionPuntoLimpio> {
      * @return 
      */
     public Collection<RevisionPuntoLimpio> findAllFromInspector(Integer idUsuario);
+    public Collection<RevisionPuntoLimpio> findByDateRange(Calendar fechaIni, Calendar fechaFin);
 }

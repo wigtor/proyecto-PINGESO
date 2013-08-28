@@ -6,6 +6,7 @@ package DAO.impl.JPA_mysql;
 
 import DAO.interfaces.SolicitudMantencionDAO;
 import entities.SolicitudMantencion;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.LinkedList;
 import javax.persistence.EntityManager;
@@ -59,6 +60,21 @@ public class SolicitudMantencionDAO_impl extends genericDAO_impl<SolicitudManten
         }
         //System.out.println("Notificaciones por revisar para el usuario con username: "+username+" son:"+resultado);
         return new Integer(resultado.intValue());
+    }
+
+    @Override
+    public Collection<SolicitudMantencion> findByDateRange(Calendar fechaIni, Calendar fechaFin) {
+        if (fechaIni == null) {
+            return new LinkedList<>();
+        }
+        if (fechaFin == null) {
+            return new LinkedList<>();
+        }
+        Query q = this.em.createNamedQuery("SolicitudMantencion.findByDateRange");
+        q.setParameter("fechaIni", fechaIni);
+        q.setParameter("fechaFin", fechaFin);
+        Collection<SolicitudMantencion> res = (Collection<SolicitudMantencion>)q.getResultList();
+        return res;
     }
     
 }

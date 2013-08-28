@@ -5,6 +5,7 @@
 package DAO.interfaces;
 
 import entities.SolicitudMantencion;
+import java.util.Calendar;
 import java.util.Collection;
 
 /**
@@ -33,4 +34,6 @@ public interface SolicitudMantencionDAO extends genericDAO<SolicitudMantencion>{
      * @return Devuelve la cantidad de solicitudes sin revisar
      */
     public Integer countPorRevisar(String username);
+    
+    public Collection<SolicitudMantencion> findByDateRange(Calendar fechaIni, Calendar fechaFin);
 }

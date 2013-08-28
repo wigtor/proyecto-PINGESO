@@ -5,6 +5,7 @@
 package DAO.interfaces;
 
 import entities.MantencionPuntoLimpio;
+import java.util.Calendar;
 import java.util.Collection;
 
 /**
@@ -19,4 +20,6 @@ public interface MantencionDAO extends genericDAO<MantencionPuntoLimpio>{
      * @return Devuelve una colección de objetos MantencionPuntoLimpio que ha realizado el operario
      */
     public Collection<MantencionPuntoLimpio> findAllFromOperario(Integer idUsuario);
+    
+    public Collection<MantencionPuntoLimpio> findByDateRange(Calendar fechaIni, Calendar fechaFin);
 }
