@@ -51,7 +51,7 @@ public class MantenedorTemporizadorEstimacionProgramarMB {
           configuracionSistema.fijarIntervaloEstimacionContenedores(numHorasIntervalo);
           numHorasIntervaloOld = numHorasIntervalo;
           CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO, "Se ha fijado correctamente el nuevo intervalo.", "Éxito.");
-          CommonFunctions.goToPage("/faces/users/verInspectores.xhtml?faces-redirect=true");
+          CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml?faces-redirect=true");
         }
         
     }

@@ -16,144 +16,158 @@
             </ui:define>
            
            <ui:define name="centro">
-               <h:form>
-                   <p:panelGrid columns="2" styleClass="centrar" >
-                        <f:facet name="header">¿Cada cuánto estimar llenado?</f:facet>
-                        
-                        <p:outputLabel value="Intervalo (hrs)"/>
-                        <p:inputText value="#{mantenedorTemporizadorEstimacionProgramarMB.numHorasIntervalo}" type="numeric" title="Escriba aquí cada cuántas horas el sistema debe estimar el llenado de los contenedores.">
-                            <f:validator validatorId="NumPositiveValidator"/>
-                            
-                        </p:inputText>
-                            
-                        
-                        
-                        
-                        <f:facet name="footer">
-                            <p:commandButton value="Guardar" ajax="false" action="#{mantenedorTemporizadorEstimacionProgramarMB.fijarTemporizador()}"/>
-                            <p:commandButton value="Volver" immediate="true" action="#{mantenedorTemporizadorEstimacionProgramarMB.btnVolver()}"/>
-                            
-                        </f:facet>
-                   </p:panelGrid>
-               </h:form>
-               <h:form>
-                   <p:panelGrid columns="2" styleClass="centrar">
-                       <f:facet name="header">Listado de materiales</f:facet>
-                       <p:dataTable id="materiales" value="#{mantenedorMaterialVerListadoMB.listaMatPOJO}"
-                                    var="mat" filteredValue="#{mantenedorMaterialVerListadoMB.listaMatPOJOBusq}"
-                                    emptyMessage="No hay materiales." sortBy="#{mat.id}"
-                                    
-                                    widgetVar="materialTable">
-                           <p:column id="idColumn" sortBy="#{mat.id}" headerText="Identificador" filterMatchMode="contains" filterBy="#{mat.id}" >
-                               <h:outputText value="#{mat.id}"/>
-                            </p:column>
-                            
-                           <p:column id="labelColumn" sortBy="#{mat.label}" headerText="Nombre material" filterMatchMode="contains" filterBy="#{mat.label}">
-                               <h:outputText value="#{mat.label}"/>
-                           </p:column>
-                       </p:dataTable>
-                       <f:facet name="footer">
-                           <p:commandButton value="Agregar" ajax="true" action="#{mantenedorMaterialVerListadoMB.aAgregarNuevoMat()}"/>
-                            <p:commandButton value="Volver" immediate="" action="#{mantenedorMaterialVerListadoMB.volver()}"/>
-                        </f:facet>
+               <p:accordionPanel >
+                   <p:tab title="Configurar intervalo estimación llenado contenedores">
+                     <h:form>
+                           <p:panelGrid columns="2" styleClass="centrar" >
+                                <f:facet name="header">¿Cada cuánto estimar llenado?</f:facet>
+
+                                <p:outputLabel for="largo_intervalo" value="Intervalo (hrs)"/>
+                                <p:inputText id="largo_intervalo" value="#{mantenedorTemporizadorEstimacionProgramarMB.numHorasIntervalo}" type="numeric" title="Escriba aquí cada cuántas horas el sistema debe estimar el llenado de los contenedores.">
+                                    <f:validator validatorId="NumPositiveValidator"/>
+
+                                </p:inputText>
+
+
+
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Guardar" ajax="false" action="#{mantenedorTemporizadorEstimacionProgramarMB.fijarTemporizador()}"/>
+                                    <p:commandButton value="Volver" immediate="true" action="#{mantenedorTemporizadorEstimacionProgramarMB.btnVolver()}"/>
+
+                                </f:facet>
+                           </p:panelGrid>
+                       </h:form>
+                   </p:tab>
                    
-                   </p:panelGrid>
+                   <p:tab title="Materiales">
+                       <h:form>
+                           <p:panelGrid columns="2" styleClass="centrar">
+                               <f:facet name="header">Listado de materiales</f:facet>
+                               <p:dataTable id="materiales" value="#{mantenedorMaterialVerListadoMB.listaMatPOJO}"
+                                            var="mat" filteredValue="#{mantenedorMaterialVerListadoMB.listaMatPOJOBusq}"
+                                            emptyMessage="No hay materiales." sortBy="#{mat.id}"
+
+                                            widgetVar="materialTable">
+                                   <p:column id="idColumn" sortBy="#{mat.id}" headerText="Identificador" filterMatchMode="contains" filterBy="#{mat.id}" >
+                                       <h:outputText value="#{mat.id}"/>
+                                    </p:column>
+
+                                   <p:column id="labelColumn" sortBy="#{mat.label}" headerText="Nombre material" filterMatchMode="contains" filterBy="#{mat.label}">
+                                       <h:outputText value="#{mat.label}"/>
+                                   </p:column>
+                               </p:dataTable>
+                               <f:facet name="footer">
+                                   <p:commandButton value="Agregar" ajax="true" action="#{mantenedorMaterialVerListadoMB.aAgregarNuevoMat()}"/>
+                                    <p:commandButton value="Volver" immediate="" action="#{mantenedorMaterialVerListadoMB.volver()}"/>
+                                </f:facet>
+
+                           </p:panelGrid>
+
+                       </h:form>
+                   </p:tab>
                    
-               </h:form>
-               <h:form>
-                   <p:panelGrid columns="2" styleClass="centrar">
-                       <f:facet name="header">Listado de tipos de incidencia</f:facet>
-                        
-                       <p:dataTable id="tiposIncidencia" value="#{mantenedorTipoIncidenciaVerListadoMB.listaMatPOJO}"
-                                    var="tipoInc" filteredValue="#{mantenedorTipoIncidenciaVerListadoMB.listaMatPOJOBusq}"
-                                    emptyMessage="No hay tipos de incidencia." sortBy="#{tipoInc.id}"
-                                    widgetVar="tipoIncTable">
-                           <p:column id="idColumn" sortBy="#{tipoInc.id}" headerText="Identificador" filterMatchMode="contains" filterBy="#{tipoInc.id}" >
-                               <h:outputText value="#{tipoInc.id}"/>
-                            </p:column>
-                            
-                           <p:column id="nombreTipoIncColumn" sortBy="#{tipoInc.nombreTipoIncidencia}" headerText="Tipo incidencia" filterMatchMode="contains" filterBy="#{tipoInc.nombreTipoIncidencia}">
-                               <h:outputText value="#{tipoInc.nombreTipoIncidencia}"/>
-                           </p:column>
-                           <p:column id="visibleColumn" style="text-align: center" sortBy="#{tipoInc.visibleAlUsuario}" headerText="Visible a usuarios">
-                               <h:selectBooleanCheckbox readonly="true" disabled="true"  value="#{tipoInc.visibleAlUsuario}"/>
-                           </p:column>
-                       </p:dataTable>
-                        <f:facet name="footer">
-                            <p:commandButton value="Agregar" ajax="false" action="#{mantenedorTipoIncidenciaVerListadoMB.aAgregarNuevoTipoInc()}"/>
-                            <p:commandButton value="Volver" immediate="true" action="#{mantenedorTipoIncidenciaVerListadoMB.volver()}"/>   
-                        </f:facet>
-                   </p:panelGrid>
-               </h:form>
-               
-               <h:form>
-                   <p:panelGrid columns="2" styleClass="centrar">
-                       <f:facet name="header">Listado de estados</f:facet>
-                        
-                       <p:dataTable id="tiposEstados" value="#{mantenedorEstadoVerListadoMB.listaEstadosPOJO}"
-                                    var="estado" filteredValue="#{mantenedorEstadoVerListadoMB.listaEstadosPOJOBusq}"
-                                    emptyMessage="No hay estados." sortBy="#{estado.id}"
-                                    widgetVar="estadosTable">
-                           <p:column id="idColumn" sortBy="#{estado.id}" headerText="Identificador" filterMatchMode="contains" filterBy="#{estado.id}" >
-                               <h:outputText value="#{estado.id}"/>
-                            </p:column>
-                            
-                           <p:column id="nombreEstadoColumn" sortBy="#{estado.label}" headerText="Tipo incidencia" filterMatchMode="contains" filterBy="#{estado.label}">
-                               <h:outputText value="#{estado.label}"/>
-                           </p:column>
-                       </p:dataTable>
-                        <f:facet name="footer">
-                            <p:commandButton value="Agregar" ajax="false" action="#{mantenedorEstadoVerListadoMB.aAgregarNuevoEstado()}"/>
-                            <p:commandButton value="Volver" immediate="true" action="#{mantenedorEstadoVerListadoMB.volver()}"/>   
-                        </f:facet>
-                   </p:panelGrid>
-               </h:form>
-               
-               <h:form>
-                   <p:panelGrid columns="2" styleClass="centrar">
-                       <f:facet name="header">Listado de unidades</f:facet>
-                        
-                       <p:dataTable id="unidadesMedida" value="#{mantenedorUnidadMedidaVerListadoMB.listaUnidadesPOJO}"
-                                    var="unidad" filteredValue="#{mantenedorUnidadMedidaVerListadoMB.listaUnidadesPOJOBusq}"
-                                    emptyMessage="No hay unidades de medida." sortBy="#{estado.id}"
-                                    widgetVar="unidadesTable">
-                           <p:column id="idColumn" sortBy="#{unidad.id}" headerText="Identificador" filterMatchMode="contains" filterBy="#{unidad.id}" >
-                               <h:outputText value="#{unidad.id}"/>
-                            </p:column>
-                            
-                           <p:column id="nombreUnidadColumn" sortBy="#{unidad.label}" headerText="Nombre unidad" filterMatchMode="contains" filterBy="#{unidad.label}">
-                               <h:outputText value="#{unidad.label}"/>
-                           </p:column>
-                       </p:dataTable>
-                        <f:facet name="footer">
-                            <p:commandButton value="Agregar" ajax="false" action="#{mantenedorUnidadMedidaVerListadoMB.aAgregarNuevaUnidad()}"/>
-                            <p:commandButton value="Volver" immediate="true" action="#{mantenedorUnidadMedidaVerListadoMB.volver()}"/>   
-                        </f:facet>
-                   </p:panelGrid>
-               </h:form>
-               
-               <h:form>
-                   <p:panelGrid columns="2" styleClass="centrar">
-                       <f:facet name="header">Listado de comunas</f:facet>
-                        
-                       <p:dataTable id="comunas" value="#{mantenedorComunaVerListadoMB.listaComunasPOJO}"
-                                    var="comuna" filteredValue="#{mantenedorComunaVerListadoMB.listaComunasPOJOBusq}"
-                                    emptyMessage="No hay comunas." sortBy="#{comuna.id}"
-                                    widgetVar="comunasTable">
-                           <p:column id="idColumn" sortBy="#{comuna.id}" headerText="Identificador" filterMatchMode="contains" filterBy="#{comuna.id}" >
-                               <h:outputText value="#{comuna.id}"/>
-                            </p:column>
-                            
-                           <p:column id="nombreComunaColumn" sortBy="#{comuna.label}" headerText="Nombre comuna" filterMatchMode="contains" filterBy="#{comuna.label}">
-                               <h:outputText value="#{comuna.label}"/>
-                           </p:column>
-                       </p:dataTable>
-                        <f:facet name="footer">
-                            <p:commandButton value="Agregar" ajax="false" action="#{mantenedorComunaVerListadoMB.aAgregarNuevaComuna()}"/>
-                            <p:commandButton value="Volver" immediate="true" action="#{mantenedorComunaVerListadoMB.volver()}"/>   
-                        </f:facet>
-                   </p:panelGrid>
-               </h:form>
+                   <p:tab title="Tipos incidencia">
+                       <h:form>
+                           <p:panelGrid columns="2" styleClass="centrar">
+                               <f:facet name="header">Listado de tipos de incidencia</f:facet>
+
+                               <p:dataTable id="tiposIncidencia" value="#{mantenedorTipoIncidenciaVerListadoMB.listaMatPOJO}"
+                                            var="tipoInc" filteredValue="#{mantenedorTipoIncidenciaVerListadoMB.listaMatPOJOBusq}"
+                                            emptyMessage="No hay tipos de incidencia." sortBy="#{tipoInc.id}"
+                                            widgetVar="tipoIncTable">
+                                   <p:column id="idColumn" sortBy="#{tipoInc.id}" headerText="Identificador" filterMatchMode="contains" filterBy="#{tipoInc.id}" >
+                                       <h:outputText value="#{tipoInc.id}"/>
+                                    </p:column>
+
+                                   <p:column id="nombreTipoIncColumn" sortBy="#{tipoInc.nombreTipoIncidencia}" headerText="Tipo incidencia" filterMatchMode="contains" filterBy="#{tipoInc.nombreTipoIncidencia}">
+                                       <h:outputText value="#{tipoInc.nombreTipoIncidencia}"/>
+                                   </p:column>
+                                   <p:column id="visibleColumn" style="text-align: center" sortBy="#{tipoInc.visibleAlUsuario}" headerText="Visible a usuarios">
+                                       <h:selectBooleanCheckbox readonly="true" disabled="true"  value="#{tipoInc.visibleAlUsuario}"/>
+                                   </p:column>
+                               </p:dataTable>
+                                <f:facet name="footer">
+                                    <p:commandButton value="Agregar" ajax="false" action="#{mantenedorTipoIncidenciaVerListadoMB.aAgregarNuevoTipoInc()}"/>
+                                    <p:commandButton value="Volver" immediate="true" action="#{mantenedorTipoIncidenciaVerListadoMB.volver()}"/>   
+                                </f:facet>
+                           </p:panelGrid>
+                       </h:form>
+                   </p:tab>
+                   
+                   <p:tab title="Lista estados">
+                       <h:form>
+                           <p:panelGrid columns="2" styleClass="centrar">
+                               <f:facet name="header">Listado de estados</f:facet>
+
+                               <p:dataTable id="tiposEstados" value="#{mantenedorEstadoVerListadoMB.listaEstadosPOJO}"
+                                            var="estado" filteredValue="#{mantenedorEstadoVerListadoMB.listaEstadosPOJOBusq}"
+                                            emptyMessage="No hay estados." sortBy="#{estado.id}"
+                                            widgetVar="estadosTable">
+                                   <p:column id="idColumn" sortBy="#{estado.id}" headerText="Identificador" filterMatchMode="contains" filterBy="#{estado.id}" >
+                                       <h:outputText value="#{estado.id}"/>
+                                    </p:column>
+
+                                   <p:column id="nombreEstadoColumn" sortBy="#{estado.label}" headerText="Tipo incidencia" filterMatchMode="contains" filterBy="#{estado.label}">
+                                       <h:outputText value="#{estado.label}"/>
+                                   </p:column>
+                               </p:dataTable>
+                                <f:facet name="footer">
+                                    <p:commandButton value="Agregar" ajax="false" action="#{mantenedorEstadoVerListadoMB.aAgregarNuevoEstado()}"/>
+                                    <p:commandButton value="Volver" immediate="true" action="#{mantenedorEstadoVerListadoMB.volver()}"/>   
+                                </f:facet>
+                           </p:panelGrid>
+                       </h:form>
+                   </p:tab>
+                   
+                   <p:tab title="Unidades de medida">
+                       <h:form>
+                           <p:panelGrid columns="2" styleClass="centrar">
+                               <f:facet name="header">Listado de unidades</f:facet>
+
+                               <p:dataTable id="unidadesMedida" value="#{mantenedorUnidadMedidaVerListadoMB.listaUnidadesPOJO}"
+                                            var="unidad" filteredValue="#{mantenedorUnidadMedidaVerListadoMB.listaUnidadesPOJOBusq}"
+                                            emptyMessage="No hay unidades de medida." sortBy="#{estado.id}"
+                                            widgetVar="unidadesTable">
+                                   <p:column id="idColumn" sortBy="#{unidad.id}" headerText="Identificador" filterMatchMode="contains" filterBy="#{unidad.id}" >
+                                       <h:outputText value="#{unidad.id}"/>
+                                    </p:column>
+
+                                   <p:column id="nombreUnidadColumn" sortBy="#{unidad.label}" headerText="Nombre unidad" filterMatchMode="contains" filterBy="#{unidad.label}">
+                                       <h:outputText value="#{unidad.label}"/>
+                                   </p:column>
+                               </p:dataTable>
+                                <f:facet name="footer">
+                                    <p:commandButton value="Agregar" ajax="false" action="#{mantenedorUnidadMedidaVerListadoMB.aAgregarNuevaUnidad()}"/>
+                                    <p:commandButton value="Volver" immediate="true" action="#{mantenedorUnidadMedidaVerListadoMB.volver()}"/>   
+                                </f:facet>
+                           </p:panelGrid>
+                       </h:form>
+                   </p:tab>
+                   
+                   <p:tab title="Comunas">
+                       <h:form>
+                           <p:panelGrid columns="2" styleClass="centrar">
+                               <f:facet name="header">Listado de comunas</f:facet>
+                               <p:dataTable id="comunas" value="#{mantenedorComunaVerListadoMB.listaComunasPOJO}"
+                                            var="comuna" filteredValue="#{mantenedorComunaVerListadoMB.listaComunasPOJOBusq}"
+                                            emptyMessage="No hay comunas." sortBy="#{comuna.id}"
+                                            widgetVar="comunasTable">
+                                   <p:column id="idColumn" sortBy="#{comuna.id}" headerText="Identificador" filterMatchMode="contains" filterBy="#{comuna.id}" >
+                                       <h:outputText value="#{comuna.id}"/>
+                                   </p:column>
+                                   <p:column id="nombreComunaColumn" sortBy="#{comuna.label}" headerText="Nombre comuna" filterMatchMode="contains" filterBy="#{comuna.label}">
+                                       <h:outputText value="#{comuna.label}"/>
+                                   </p:column>
+                               </p:dataTable>
+                                <f:facet name="footer">
+                                    <p:commandButton value="Agregar" ajax="false" action="#{mantenedorComunaVerListadoMB.aAgregarNuevaComuna()}"/>
+                                    <p:commandButton value="Volver" immediate="true" action="#{mantenedorComunaVerListadoMB.volver()}"/>   
+                                </f:facet>
+                           </p:panelGrid>
+                       </h:form>
+                   </p:tab>
+               </p:accordionPanel>   
            </ui:define>
        </ui:composition>
     </body>    
