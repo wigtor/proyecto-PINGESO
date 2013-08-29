@@ -10,19 +10,19 @@
     
     <body>
          <ui:composition template="/mainTemplate.xhtml">
-           <ui:define name="titulo" >Configuración del sistema - Agregar material</ui:define>
+           <ui:define name="titulo" >Configuración del sistema - Agregar comuna</ui:define>
            <ui:define name="botonesBarra">
                 <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{autenticadorMB.indexLoggued()}" />
             </ui:define> 
            <ui:define name="centro">
-               <h:form title="Agregar nuevo material">
+               <h:form title="Agregar nueva comuna">
                    <p:panelGrid columns="2" styleClass="centrar" >
-                        <f:facet name="header">Ingrese el nuevo material</f:facet>     
-                        <p:outputLabel value="Nombre material:"/>
-                        <p:inputText value="#{mantenedorMaterialAgregarMB.nombreMaterial}"/>
+                        <f:facet name="header">Ingrese la nueva comuna</f:facet>     
+                        <p:outputLabel value="Nombre comuna:"/>
+                        <p:inputText value="#{mantenedorComunaAgregarMB.nombreComuna}"/>
                         <f:facet name="footer">
-                            <p:commandButton value="Guardar" ajax="false" action="#{mantenedorMaterialAgregarMB.agregarMaterial()}"/>
-                            <p:commandButton value="Volver" immediate="true" action="#{mantenedorMaterialAgregarMB.volver()}"/>  
+                            <p:commandButton value="Guardar" ajax="false" action="#{mantenedorComunaAgregarMB.agregarComuna()}"/>
+                            <p:commandButton value="Volver" immediate="true" action="#{mantenedorComunaAgregarMB.volver()}"/>  
                         </f:facet>
                    </p:panelGrid>
                </h:form>

@@ -24,9 +24,6 @@ public class CrudMaterial implements CrudMaterialLocal {
     @PersistenceContext(unitName = "coplime-ejbPU")
     private EntityManager em;
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
     @Override
     public boolean agregarMaterial(String nombreMaterial) {
         try{
@@ -47,10 +44,8 @@ public class CrudMaterial implements CrudMaterialLocal {
         try{
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             MaterialDAO matDAO = fabricaDAO.getMaterialDAO();
-            //Se busca el material a editar
             Material matEditar;
             matEditar = matDAO.find(nombreMaterialOriginal);
-            //TODO failsafe si no encuentra materiales por ese nombre
             if (matEditar != null){
                 matEditar.setNombre_material(nombreMaterialNuevo);
                 matDAO.update(matEditar);
@@ -70,12 +65,10 @@ public class CrudMaterial implements CrudMaterialLocal {
         try{
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             MaterialDAO matDAO = fabricaDAO.getMaterialDAO();
-            //Se busca el material a editar
-            Material matEditar;
-            matEditar = matDAO.find(nombreMaterial);
-            //TODO failsafe si no encuentra materiales por ese nombre
-            if (matEditar != null){
-                matDAO.delete(matEditar);
+            Material matEliminar;
+            matEliminar = matDAO.find(nombreMaterial);
+            if (matEliminar != null){
+                matDAO.delete(matEliminar);
                 return true;
             } else {
                 return false;
@@ -106,10 +99,8 @@ public class CrudMaterial implements CrudMaterialLocal {
         try{
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             MaterialDAO matDAO = fabricaDAO.getMaterialDAO();
-            //Se busca el material a editar
             Material mat;
             mat = matDAO.find(nombreMaterial);
-            //TODO failsafe si no encuentra materiales por ese nombre
             if (mat != null){
                 return mat;
             } else {
