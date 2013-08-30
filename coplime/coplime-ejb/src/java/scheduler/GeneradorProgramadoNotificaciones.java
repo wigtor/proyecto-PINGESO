@@ -246,18 +246,26 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
     }
     
     
-    @Schedule(hour="*/10")
+    @Schedule(second="*/30")
     /**
      * Ajusta el valor del temporizador automático de la estimación de llenado de contenedores.
      * Si no existe un valor para el temporizador automático, establece uno por defecto para 24 horas
      * 
      */
     private void ajusteTemporizadorEstimacion(){
+        System.out.println("Ejecutándose tarea programada: Ajuste Temporizador Estimación.");
        //Verificamos la existencia de la configuración
         DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         ConfiguracionDAO configDAO = fabricaDAO.getConfiguracionDAO();
         Configuracion timerConfig = configDAO.buscarParamExacto("timer_estimacion_contenedores_intervalo");
         Configuracion timerUltimaEjec = configDAO.buscarParamExacto("timer_estimacion_contenedores_ultima_ejecucion");
+        if (timerUltimaEjec == null){
+            System.out.println("El generador programado de notificaciones ha establecido la fecha y hora actuales como la última ejecución del temporizador al no existir registro previo.");
+            timerUltimaEjec = new Configuracion();
+            timerUltimaEjec.setIdParam("timer_estimacion_contenedores_ultima_ejecucion");
+            timerUltimaEjec.setValorParam(Calendar.getInstance().getTime().toString());
+            configDAO.insert(timerUltimaEjec);
+        }
         if(timerConfig == null){
             //Nunca se ha configurado el temporizador
             this.setTemporizadorEstimacionLlenadoContenedor(Long.valueOf(DIA_EN_MILISEGS), Long.valueOf(DIA_EN_MILISEGS));

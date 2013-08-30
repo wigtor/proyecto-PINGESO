@@ -6,6 +6,7 @@ package DAO.impl.JPA_mysql;
 
 import DAO.interfaces.ConfiguracionDAO;
 import entities.Configuracion;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -57,7 +58,7 @@ public class ConfiguracionDAO_impl extends genericDAO_impl<Configuracion> implem
         q.setParameter("cadenaBusq", cadenaBusq);
         res = q.getResultList();
         if (res.isEmpty()){
-            return null;
+            return new LinkedList();
         } else {
             return res;
         }

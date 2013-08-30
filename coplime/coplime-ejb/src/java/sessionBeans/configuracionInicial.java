@@ -83,7 +83,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         cargarPuntosLimpios();
         cargarMantenciones();
         cargarNotificaciones();
-        //programarTimersIniciales();
+        programarTimersIniciales();
     }
     
     private void cargarEstadosPuntosLimpios() {
@@ -430,10 +430,27 @@ public class configuracionInicial implements configuracionInicialLocal {
         conf2.setIdParam("timer_estimacion_contenedores_intervalo");
         conf2.setValorParam("86400000"); //24 horas en milisegundos
         
+        //Establece la ultima fecha de ejecucion del timer como "ahora"
+        Configuracion conf3 = new Configuracion();
+        conf3.setIdParam("timer_estimacion_contenedores_ultima_ejecucion");
+        conf3.setValorParam(Calendar.getInstance().getTime().toString());
+        
         //Llamar a la DAO
         ConfiguracionDAO configDAO = factoryDeDAOs.getConfiguracionDAO();
-        configDAO.insert(conf1);
-        configDAO.insert(conf2);
+        if(configDAO.buscarParamExacto("contrasegna_maestra_sistema")==null){
+            configDAO.insert(conf1);
+            System.out.println("Establecida contraseña maestra en poblado inicial.");
+        }
+        
+        if(configDAO.buscarParamExacto("timer_estimacion_contenedores_intervalo")==null){
+            configDAO.insert(conf2);
+            System.out.println("Establecido intervalo por defecto de estimación de contenedores en poblado inicial.");
+        }
+        
+        if(configDAO.buscarParamExacto("timer_estimacion_contenedores_ultima_ejecucion")==null){
+            configDAO.insert(conf3);
+            System.out.println("Establecida fecha de última ejecución de la estimación de llenado de contenedores en poblado inicial.");
+        }
     }
     
     /**
@@ -445,7 +462,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         ConfiguracionDAO configDAO = factoryDeDAOs.getConfiguracionDAO();
         //Podría pasar que el guión bajo de "timer_" pudiera causar confusión en la sentencia JPQL, OJO
         //TODO verificar posible problema "timer_"
-        listaTimers = configDAO.buscarTodosParamsAprox("timer_");
+        listaTimers = configDAO.buscarTodosParamsAprox("timer");
         if (!(listaTimers.isEmpty())){
             for(Configuracion c:listaTimers){
                switch(c.getIdParam()){
