@@ -237,6 +237,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
         } else {
             //Cancelar el timer original
             for (Timer timer : listaTimers) {
+                System.out.println("Cancelando timer: " + timer.getSchedule());
                 timer.cancel();
             }
             Timer temporizador = servicioTemporizador.createIntervalTimer(milisegundosIntervaloTransicion, milisegundosIntervalo, new TimerConfig());
