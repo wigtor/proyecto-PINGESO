@@ -59,7 +59,7 @@
                          
                          <f:facet name="footer">
                             <p:commandButton value="Guardar" ajax="false" action="#{mantenedorInspectorEditarMB.guardarCambiosInspector()}"/>
-                            <p:commandButton value="Volver" action="#{mantenedorInspectorEditarMB.volverToLista()}"/>                            
+                            <p:commandButton value="Volver" immediate="true" action="#{mantenedorInspectorEditarMB.volverToLista()}"/>                            
                          </f:facet>
                      </p:panelGrid>                
                 </h:form>               

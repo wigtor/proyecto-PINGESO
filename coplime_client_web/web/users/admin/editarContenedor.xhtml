@@ -33,8 +33,8 @@
                                 var="estadoCont" itemLabel="#{estadoCont.nombre}" itemValue="#{estadoCont.num}" />
                         </p:selectOneMenu>
                         
-                        <p:commandButton value="Guardar" action="#{mantenedorPuntoLimpio.guardarCambiosContenedor()}"/>
-                        <p:commandButton value="Volver" action="#{mantenedorPuntoLimpio.volverToPuntoLimpio()}"/>
+                        <p:commandButton value="Guardar" ajax="false" action="#{mantenedorPuntoLimpio.guardarCambiosContenedor()}"/>
+                        <p:commandButton value="Volver" immediate="true" action="#{mantenedorPuntoLimpio.volverToPuntoLimpio()}"/>
                     </p:dataList>
                 </p:outputPanel>
                 </h:form>

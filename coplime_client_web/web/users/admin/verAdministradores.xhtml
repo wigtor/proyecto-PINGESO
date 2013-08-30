@@ -57,7 +57,7 @@
                        
                        <f:facet name="footer">
                            <p:commandButton value="Agregar" action="#{mantenedorAdministradorVerListadoMB.agregar()}" rendered="#{request.isUserInRole('Administrador')}"/>
-                           <p:commandButton value="Volver" action="#{mantenedorAdministradorVerListadoMB.volver()}"/>
+                           <p:commandButton value="Volver" immediate="true" action="#{mantenedorAdministradorVerListadoMB.volver()}"/>
                            
                        </f:facet>
                             

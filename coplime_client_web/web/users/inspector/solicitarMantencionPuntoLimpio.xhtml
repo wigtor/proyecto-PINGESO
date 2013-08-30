@@ -36,8 +36,8 @@
                         
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Realizar solicitud" action="#{agregarSolicitudMB.guardarSolicitud()}"/>
-                            <p:commandButton value="Ver listado" action="#{agregarSolicitudMB.volverToLista()}"/>
+                            <p:commandButton value="Realizar solicitud" ajax="false" action="#{agregarSolicitudMB.guardarSolicitud()}"/>
+                            <p:commandButton value="Ver listado" immediate="true" action="#{agregarSolicitudMB.volverToLista()}"/>
                         </f:facet>
                     </p:panelGrid>
 

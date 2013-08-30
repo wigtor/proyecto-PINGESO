@@ -32,8 +32,8 @@
                         <p:inputTextarea id="detallesMant" value="#{agregarMantencionMB.detalle}"/>
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Guardar mantención" action="#{agregarMantencionMB.guardarMantencion()}"/>
-                            <p:commandButton value="Volver" action="#{agregarMantencionMB.volverToLista()}"/>
+                            <p:commandButton value="Guardar mantención" ajax="false" action="#{agregarMantencionMB.guardarMantencion()}"/>
+                            <p:commandButton value="Volver" immediate="true" action="#{agregarMantencionMB.volverToLista()}"/>
                         </f:facet>
                     </p:panelGrid>
 

@@ -32,8 +32,8 @@
                         <p:inputTextarea id="detallesRev" value="#{agregarRevisionMB.detalle}"/>
                         
                         <f:facet name="footer">
-                            <p:commandButton value="Guardar revisión" action="#{agregarRevisionMB.guardarRevision()}"/>
-                            <p:commandButton value="Ver Listado" action="#{agregarRevisionMB.volverToLista()}"/>
+                            <p:commandButton value="Guardar revisión" ajax="false" action="#{agregarRevisionMB.guardarRevision()}"/>
+                            <p:commandButton value="Ver Listado" immediate="true" action="#{agregarRevisionMB.volverToLista()}"/>
                         </f:facet>
                     </p:panelGrid>
 
