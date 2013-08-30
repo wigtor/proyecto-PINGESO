@@ -51,9 +51,9 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
     TimerService servicioTemporizador;
     
     //Variables de control del temporizador
-    private Long milisegsIntervaloOriginal, milisegsIntervalo;//para detectar cambios en la configuración del intervalo
-    private static final int DIA_EN_MILISEGS = 86400000;
-    
+    private Long milisegsIntervaloOriginal=new Long (10000), milisegsIntervalo= new Long(10000);//para detectar cambios en la configuración del intervalo
+    //private static final int DIA_EN_MILISEGS = 86400000;
+    private static final int DIA_EN_MILISEGS = 120000;
     
     //TODO Cambiar por Programatic Timers (buscar en la documentación)
     //@Schedule(minute = "0", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "01")
@@ -298,7 +298,10 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
         Collection<Timer> listaTimers;
         listaTimers = (Collection<Timer>) servicioTemporizador.getTimers();
         if (!(listaTimers.size()>1)) {
+            //No hay más temporizadores que el programado a través de @Schedule
             this.setTemporizadorEstimacionLlenadoContenedor(Long.valueOf(DIA_EN_MILISEGS), Long.valueOf(DIA_EN_MILISEGS));
+            milisegsIntervalo = Long.valueOf(DIA_EN_MILISEGS);
+            milisegsIntervaloOriginal = Long.valueOf(DIA_EN_MILISEGS);
         }else{
             //Existe un temporizador ya en curso, sólo se evalúa si la configuración
             //ha cambiado el intervalo
@@ -306,7 +309,9 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
             //Se obtiene el valor de intervalo
             milisegsIntervalo = Long.parseLong(timerConfig.getValorParam());
             //Se determina si existen cambios en la configuración desde la última vez
-            if(milisegsIntervalo != milisegsIntervaloOriginal){
+            if(milisegsIntervalo.longValue() != milisegsIntervaloOriginal.longValue()){
+                System.out.println("Diferencia de configuración: ".concat(milisegsIntervaloOriginal.toString()).concat(" / ").concat(milisegsIntervalo.toString()).concat(" ."));
+                System.out.println("Se renovará el Timer.");
                 /*
                  * Si la configuración ha cambiado, se determina la diferencia con la última
                  * ejecución y el tiempo restante del timer original.
