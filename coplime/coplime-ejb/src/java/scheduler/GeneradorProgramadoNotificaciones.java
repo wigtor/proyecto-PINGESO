@@ -17,13 +17,13 @@ import entities.Configuracion;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import javax.ejb.Stateless;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
+import javax.ejb.ScheduleExpression;
 import javax.ejb.Timer;
 import javax.ejb.Timeout;
 import javax.ejb.TimerConfig;
@@ -33,6 +33,7 @@ import javax.persistence.PersistenceContext;
 import scheduler.algoritmosCalculo.AlgoritmoCalculo;
 import scheduler.algoritmosCalculo.FactoryAlgoritmosCalculo;
 import sessionBeans.CrudPuntoLimpioLocal;
+
 
 /**
  *
@@ -237,12 +238,26 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
         } else {
             //Cancelar el timer original
             for (Timer timer : listaTimers) {
-                System.out.println("Cancelando timer: " + timer.getSchedule());
-                timer.cancel();
+                try{
+                    if("ScheduleExpression [second=0;minute=*;hour=*;dayOfMonth=*;month=*;dayOfWeek=*;year=*;timezoneID=null;start=null;end=null]".equals(timer.getSchedule().toString())){
+                        System.out.println("Detectado timer asociado a scheduler, se mantiene operativo.");
+                    }else{
+                        System.out.println("Cancelando timer: " + timer.getSchedule());
+                        timer.cancel(); 
+                    }
+                }catch(IllegalStateException e){
+                    System.out.println("Temporizador cancelado por excepción: ".concat(e.toString()));
+                    timer.cancel();
+                }catch (Exception e){
+                    System.out.println("Excepción no determinada: ".concat(e.toString()));
+                    System.out.println("Por seguridad, el timer que lanza la excepción se cancelará.");
+                    timer.cancel();
+                }
             }
+         }
             Timer temporizador = servicioTemporizador.createIntervalTimer(milisegundosIntervaloTransicion, milisegundosIntervalo, new TimerConfig());
             Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.INFO, "Se ha reprogramado un temporizador para la estimación automática de llenado de contenedores, con un intervalo de ".concat(milisegundosIntervalo.toString()).concat(" milisegundos."));
-        }
+        
     }
     
     /**
@@ -258,6 +273,8 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
         ConfiguracionDAO configDAO = fabricaDAO.getConfiguracionDAO();
         Configuracion timerConfig = configDAO.buscarParamExacto("timer_estimacion_contenedores_intervalo");
         Configuracion timerUltimaEjec = configDAO.buscarParamExacto("timer_estimacion_contenedores_ultima_ejecucion");
+        
+        //failsafe
         if (timerUltimaEjec == null){
             System.out.println("El generador programado de notificaciones ha establecido la fecha y hora actuales como la última ejecución del temporizador al no existir registro previo.");
             timerUltimaEjec = new Configuracion();
@@ -265,15 +282,28 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
             timerUltimaEjec.setValorParam(Calendar.getInstance().getTime().toString());
             configDAO.insert(timerUltimaEjec);
         }
+
+        //Se consulta si existe la configuración de temporizador, en caso contrario, se crea
         if(timerConfig == null){
             //Nunca se ha configurado el temporizador
-            this.setTemporizadorEstimacionLlenadoContenedor(Long.valueOf(DIA_EN_MILISEGS), Long.valueOf(DIA_EN_MILISEGS));
-            timerUltimaEjec.setValorParam(Long.toString(Calendar.getInstance().getTimeInMillis()));
-            this.milisegsIntervalo = Long.valueOf(DIA_EN_MILISEGS);
-            this.milisegsIntervaloOriginal = Long.valueOf(DIA_EN_MILISEGS);
             configDAO.update(timerUltimaEjec);
-        } else {
-           //Se obtiene el valor de intervalo
+            timerConfig = new Configuracion();
+            timerConfig.setIdParam("timer_estimacion_contenedores_intervalo");
+            timerConfig.setValorParam(Integer.toString(DIA_EN_MILISEGS));
+            configDAO.insert(timerConfig);
+        }
+        
+        //Se verifica si ya hay un Timer funcionando, esto se verifica a través de la cantidad de timers
+        //que contiene este sessionBean. Si es igual o menor a uno, entonces se crea un nuevo Timer.
+        Collection<Timer> listaTimers;
+        listaTimers = (Collection<Timer>) servicioTemporizador.getTimers();
+        if (!(listaTimers.size()>1)) {
+            this.setTemporizadorEstimacionLlenadoContenedor(Long.valueOf(DIA_EN_MILISEGS), Long.valueOf(DIA_EN_MILISEGS));
+        }else{
+            //Existe un temporizador ya en curso, sólo se evalúa si la configuración
+            //ha cambiado el intervalo
+            
+            //Se obtiene el valor de intervalo
             milisegsIntervalo = Long.parseLong(timerConfig.getValorParam());
             //Se determina si existen cambios en la configuración desde la última vez
             if(milisegsIntervalo != milisegsIntervaloOriginal){
