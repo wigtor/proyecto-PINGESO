@@ -218,10 +218,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
         nuevaNotificacion.setComentario("Contenedor ID ".concat(c.getId().toString()).concat(" (".concat(c.getMaterialDeAcopio().toString()).concat(") perteneciente al Punto Limpio ".concat(pl.getNombre()).concat(" no tiene historial de llenado.\nPor favor, ingrese una revisión del punto limpio para generar el historial."))));
         notifDAO.insert(nuevaNotificacion);
     }
-
-    public void persist(Object object) {
-        em.persist(object);
-    }
+    
     
     /**
      * Programa el temporizador que determina cada cuánto tiempo se ejecuta la tarea de estimación
@@ -232,27 +229,28 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
     @Override
     public void setTemporizadorEstimacionLlenadoContenedor(Long milisegundosIntervaloTransicion, Long milisegundosIntervalo){
         //Verificamos si ya existe un timer fijado previamente
-        List<Timer> listaTimers;
-        listaTimers = (List<Timer>) servicioTemporizador.getTimers();
-        if(listaTimers.isEmpty()==true){
-         Timer temporizador = servicioTemporizador.createIntervalTimer(milisegundosIntervalo, milisegundosIntervalo, new TimerConfig());
-         Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.INFO, "Se ha establecido un temporizador para la estimación automática de llenado de contenedores, con un intervalo de ".concat(milisegundosIntervalo.toString()).concat(" milisegundos."));   
+        Collection<Timer> listaTimers;
+        listaTimers = (Collection<Timer>) servicioTemporizador.getTimers();
+        if (listaTimers.isEmpty() == true) {
+            Timer temporizador = servicioTemporizador.createIntervalTimer(milisegundosIntervalo, milisegundosIntervalo, new TimerConfig());
+            Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.INFO, "Se ha establecido un temporizador para la estimación automática de llenado de contenedores, con un intervalo de ".concat(milisegundosIntervalo.toString()).concat(" milisegundos."));
         } else {
-         //Cancelar el timer original
-         listaTimers.get(0).cancel();
-         Timer temporizador = servicioTemporizador.createIntervalTimer(milisegundosIntervaloTransicion, milisegundosIntervalo, new TimerConfig());
-         Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.INFO, "Se ha reprogramado un temporizador para la estimación automática de llenado de contenedores, con un intervalo de ".concat(milisegundosIntervalo.toString()).concat(" milisegundos."));
-        }        
+            //Cancelar el timer original
+            for (Timer timer : listaTimers) {
+                timer.cancel();
+            }
+            Timer temporizador = servicioTemporizador.createIntervalTimer(milisegundosIntervaloTransicion, milisegundosIntervalo, new TimerConfig());
+            Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.INFO, "Se ha reprogramado un temporizador para la estimación automática de llenado de contenedores, con un intervalo de ".concat(milisegundosIntervalo.toString()).concat(" milisegundos."));
+        }
     }
     
-    
-    @Schedule(second="*/30")
     /**
      * Ajusta el valor del temporizador automático de la estimación de llenado de contenedores.
      * Si no existe un valor para el temporizador automático, establece uno por defecto para 24 horas
      * 
      */
-    private void ajusteTemporizadorEstimacion(){
+    @Schedule(hour = "*", minute = "*")
+    public void ajusteTemporizadorEstimacion(){
         System.out.println("Ejecutándose tarea programada: Ajuste Temporizador Estimación.");
        //Verificamos la existencia de la configuración
         DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
