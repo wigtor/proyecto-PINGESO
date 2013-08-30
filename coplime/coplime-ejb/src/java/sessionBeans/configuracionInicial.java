@@ -430,7 +430,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         //Establece la ultima fecha de ejecucion del timer como "ahora"
         Configuracion conf3 = new Configuracion();
         conf3.setIdParam("timer_estimacion_contenedores_ultima_ejecucion");
-        conf3.setValorParam(Calendar.getInstance().getTime().toString());
+        conf3.setValorParam(Long.toString(Calendar.getInstance().getTimeInMillis()));
         
         //Llamar a la DAO
         ConfiguracionDAO configDAO = factoryDeDAOs.getConfiguracionDAO();

@@ -83,7 +83,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
             Configuracion fechaUltimaEjecucionEstimador = new Configuracion();
             fechaUltimaEjecucionEstimador.setIdParam("timer_estimacion_contenedores_ultima_ejecucion");
             Calendar cal = Calendar.getInstance();
-            fechaUltimaEjecucionEstimador.setValorParam(cal.toString());
+            fechaUltimaEjecucionEstimador.setValorParam(Long.toString(cal.getTimeInMillis()));
         } else {
             Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.WARNING, "Error en generación de notificaciones automáticas.");
         }
@@ -279,7 +279,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
             System.out.println("El generador programado de notificaciones ha establecido la fecha y hora actuales como la última ejecución del temporizador al no existir registro previo.");
             timerUltimaEjec = new Configuracion();
             timerUltimaEjec.setIdParam("timer_estimacion_contenedores_ultima_ejecucion");
-            timerUltimaEjec.setValorParam(Calendar.getInstance().getTime().toString());
+            timerUltimaEjec.setValorParam(Long.toString(Calendar.getInstance().getTimeInMillis()));
             configDAO.insert(timerUltimaEjec);
         }
 
