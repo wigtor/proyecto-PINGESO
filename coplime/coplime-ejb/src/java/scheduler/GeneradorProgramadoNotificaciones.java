@@ -14,6 +14,7 @@ import entities.Notificacion;
 import entities.PuntoLimpio;
 import entities.Administrador;
 import entities.Configuracion;
+import entities.TipoIncidencia;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -77,6 +78,8 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
         resultadoOperacion = evaluar(listaPuntosLimpios);
         if (resultadoOperacion == true){
             Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.FINER, "Generación de notificaciones automáticas finalizada exitosamente.");
+            System.out.println("Timer event [" + new Date() + "]: Exitoso: Generando notificaciones automáticas.");
+
             //Actualizamos la fecha/hora de última ejecución
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             ConfiguracionDAO configDAO = fabricaDAO.getConfiguracionDAO();
@@ -84,8 +87,11 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
             fechaUltimaEjecucionEstimador.setIdParam("timer_estimacion_contenedores_ultima_ejecucion");
             Calendar cal = Calendar.getInstance();
             fechaUltimaEjecucionEstimador.setValorParam(Long.toString(cal.getTimeInMillis()));
+            System.out.println("El sistema ha reprogramado la fecha de última ejecución y ha finalizado el cálculo automático de estimación de llenado y generación de notificaciones.");
         } else {
             Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.WARNING, "Error en generación de notificaciones automáticas.");
+            System.out.println("Timer event [" + new Date() + "]: Errores en Generando notificaciones automáticas.");
+
         }
     }
         
@@ -102,6 +108,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
      * @return True cuando la operación es exitosa, False si existieron errores.
      */
     private boolean evaluar(Collection<PuntoLimpio> puntosLimpiosEvaluar){
+        System.out.println("Evaluando lista de puntos limpios: ".concat(Integer.toString(puntosLimpiosEvaluar.size()).concat(" puntos limpios a evaluar.")));
         AlgoritmoCalculo ac = FactoryAlgoritmosCalculo.getAlgoritmoCalculo(FactoryAlgoritmosCalculo.PROMEDIO_PENDIENTES);
         Date fechaRevision,menorFechaRevision=null;
         for (PuntoLimpio p:puntosLimpiosEvaluar){
@@ -121,6 +128,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
                     stringAviso = stringAviso.concat(" perteneciente al punto limpio ").concat(p.getNombre());
                     stringAviso = stringAviso.concat(" no contiene registros en su historial de llenado.");
                     Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.WARNING, stringAviso);
+                    System.out.println(stringAviso);
                     //Volvemos al día de "hoy" sumando 1 al valor de la variable calendario
                     calendario.add(Calendar.DAY_OF_MONTH, 1);
                     //Se corrige el valor de la fecha de revisión de "ayer" a "hoy"
@@ -140,6 +148,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
                     }
                 }
             }
+            System.out.println("Fecha de revisión para punto limpio ".concat(p.getNombre()).concat(": ").concat(menorFechaRevision.toString()));
             actualizarFechaRevisionPL(p, menorFechaRevision);
             
             Calendar magnana = Calendar.getInstance();
@@ -147,6 +156,8 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
             Calendar menorFechaRevisionCalendar = Calendar.getInstance();
             menorFechaRevisionCalendar.setTime(menorFechaRevision);
             if(menorFechaRevision.before(magnana.getTime())){
+                System.out.println("Generando notificación!");
+                System.out.println("Punto limpio: ".concat(p.getNombre()).concat("."));
                 generarNotificacionRevisionPL(menorFechaRevisionCalendar, p);
             }
             //Es necesario resetear la menor fecha de revisión para un nuevo punto limpio
@@ -197,9 +208,12 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
         } else {
             nuevaNotificacion.setUsuarioEncargado(pl.getInspectorEncargado().getUsuario());
         }
-        nuevaNotificacion.setComentario("El punto limpio número ".concat(pl.getId().toString()).concat(" de nombre ").concat(pl.getNombre()).concat(" necesita ser revisado. Causa: probable llenado de uno de los contenedores el día ").concat(fechaRevision.toString()).concat("."));
+        //nuevaNotificacion.setComentario("El punto limpio número ".concat(pl.getId().toString()).concat(" de nombre ").concat(pl.getNombre()).concat(" necesita ser revisado. Causa: probable llenado de uno de los contenedores el día ").concat(fechaRevision.toString()).concat("."));
+        nuevaNotificacion.setComentario("El punto limpio ".concat(pl.getNombre()).concat(" necesita ser revisado. Causa: probable llenado de uno de los contenedores."));
         //TODO resolver tipo de incidencia
-        //nuevaNotificacion.setTipoIncidencia(null);
+        TipoIncidencia ti = new TipoIncidencia();
+        ti.setId(4);
+        nuevaNotificacion.setTipoIncidencia(ti);
         notifDAO.insert(nuevaNotificacion);        
         }
     
@@ -232,7 +246,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
         //Verificamos si ya existe un timer fijado previamente
         Collection<Timer> listaTimers;
         listaTimers = (Collection<Timer>) servicioTemporizador.getTimers();
-        if (listaTimers.isEmpty() == true) {
+        if (listaTimers.size() < 2) {
             Timer temporizador = servicioTemporizador.createIntervalTimer(milisegundosIntervalo, milisegundosIntervalo, new TimerConfig());
             Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.INFO, "Se ha establecido un temporizador para la estimación automática de llenado de contenedores, con un intervalo de ".concat(milisegundosIntervalo.toString()).concat(" milisegundos."));
         } else {
@@ -244,19 +258,24 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
                     }else{
                         System.out.println("Cancelando timer: " + timer.getSchedule());
                         timer.cancel(); 
+                        Timer temporizador = servicioTemporizador.createIntervalTimer(milisegundosIntervaloTransicion, milisegundosIntervalo, new TimerConfig());
+                        Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.INFO, "Se ha reprogramado un temporizador para la estimación automática de llenado de contenedores, con un intervalo de ".concat(milisegundosIntervalo.toString()).concat(" milisegundos."));
                     }
                 }catch(IllegalStateException e){
                     System.out.println("Temporizador cancelado por excepción: ".concat(e.toString()));
                     timer.cancel();
+                    Timer temporizador = servicioTemporizador.createIntervalTimer(milisegundosIntervaloTransicion, milisegundosIntervalo, new TimerConfig());
+                    Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.INFO, "Se ha reprogramado un temporizador para la estimación automática de llenado de contenedores, con un intervalo de ".concat(milisegundosIntervalo.toString()).concat(" milisegundos."));
                 }catch (Exception e){
                     System.out.println("Excepción no determinada: ".concat(e.toString()));
                     System.out.println("Por seguridad, el timer que lanza la excepción se cancelará.");
                     timer.cancel();
+                    Timer temporizador = servicioTemporizador.createIntervalTimer(milisegundosIntervaloTransicion, milisegundosIntervalo, new TimerConfig());
+                    Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.INFO, "Se ha reprogramado un temporizador para la estimación automática de llenado de contenedores, con un intervalo de ".concat(milisegundosIntervalo.toString()).concat(" milisegundos."));
                 }
             }
          }
-            Timer temporizador = servicioTemporizador.createIntervalTimer(milisegundosIntervaloTransicion, milisegundosIntervalo, new TimerConfig());
-            Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.INFO, "Se ha reprogramado un temporizador para la estimación automática de llenado de contenedores, con un intervalo de ".concat(milisegundosIntervalo.toString()).concat(" milisegundos."));
+            
         
     }
     
@@ -286,6 +305,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
         //Se consulta si existe la configuración de temporizador, en caso contrario, se crea
         if(timerConfig == null){
             //Nunca se ha configurado el temporizador
+            System.out.println("El sistema ha detectado que no existe configuración previa del temporizador. Se programará el temporizador por defecto cada 24 horas.");
             configDAO.update(timerUltimaEjec);
             timerConfig = new Configuracion();
             timerConfig.setIdParam("timer_estimacion_contenedores_intervalo");
@@ -299,6 +319,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
         listaTimers = (Collection<Timer>) servicioTemporizador.getTimers();
         if (!(listaTimers.size()>1)) {
             //No hay más temporizadores que el programado a través de @Schedule
+            System.out.println("Se ha detectado que no hay Timers activos. Se programará uno por defecto cada 24 horas.");
             this.setTemporizadorEstimacionLlenadoContenedor(Long.valueOf(DIA_EN_MILISEGS), Long.valueOf(DIA_EN_MILISEGS));
             milisegsIntervalo = Long.valueOf(DIA_EN_MILISEGS);
             milisegsIntervaloOriginal = Long.valueOf(DIA_EN_MILISEGS);
@@ -330,7 +351,9 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
                 
                 //Por último, igualamos ambos valores a fin de detectar nuevos cambios
                 milisegsIntervaloOriginal = milisegsIntervalo;
-        }
+        } else {
+                System.out.println("No se han detectado cambios en la configuración, se mantienen ".concat(Integer.toString(servicioTemporizador.getTimers().size())));
+            }
       }
     }
 
