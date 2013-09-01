@@ -95,6 +95,7 @@ public class MantenedorPuntoLimpioEditarMB {
                 contTempPojo = new ContenedorPojo();
 
                 contTempPojo.setId(cont_iter.getId());
+                contTempPojo.setNombreUnidadMedida(cont_iter.getUnidadMedida().getNombreUnidad());
                 contTempPojo.setCapacidad(cont_iter.getCapacidad());
                 contTempPojo.setNombreMaterial(cont_iter.getMaterialDeAcopio().getNombre_material());
                 contTempPojo.setLlenadoContenedor(cont_iter.getProcentajeUso());

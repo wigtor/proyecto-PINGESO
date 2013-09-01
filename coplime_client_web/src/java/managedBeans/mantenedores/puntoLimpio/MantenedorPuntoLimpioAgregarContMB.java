@@ -122,6 +122,14 @@ public class MantenedorPuntoLimpioAgregarContMB {
             }
         }
         
+        for(SelectElemPojo unidTemp : this.listaUnidadesMedida) {
+            intTemp = Integer.parseInt(unidTemp.getId());
+            if (intTemp == material) {
+                res.setNombreUnidadMedida(unidTemp.getLabel());
+                break;
+            }
+        }
+        
         return res;
     }
     

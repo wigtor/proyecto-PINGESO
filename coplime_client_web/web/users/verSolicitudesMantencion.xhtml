@@ -31,14 +31,17 @@
                             <p:column headerText="Fecha" sortBy="#{solMant.fecha}" filterMatchMode="contains" filterBy="#{solMant.fecha}">
                                 <h:outputText value="#{solMant.fecha}"/>
                             </p:column>
-                            <p:column headerText="Inspector emisor" rendered="#{request.isUserInRole('Administrador') || request.isUserInRole('Operario')}">
+                            <p:column headerText="Inspector emisor" sortBy="#{solMant.usuarioEmisor}" filterMatchMode="contains" filterBy="#{solMant.usuarioEmisor}" rendered="#{request.isUserInRole('Administrador') || request.isUserInRole('Operario')}">
                                 <h:outputText value="#{solMant.usuarioEmisor}" />
                             </p:column>
-                            <p:column headerText="Operario asignado" >
+                            <p:column headerText="Operario asignado" sortBy="#{solMant.usuarioReceptor}" filterMatchMode="contains" filterBy="#{solMant.usuarioReceptor}">
                                 <h:outputText value="#{solMant.usuarioReceptor}"/>
                             </p:column>
-                            <p:column headerText="Revisada" >
+                            <p:column headerText="Revisada" sortBy="#{solMant.revisada}">
                                 <p:selectBooleanCheckbox value="#{solMant.revisada}" disabled="true"/>
+                            </p:column>
+                            <p:column headerText="Resuelta" sortBy="#{solMant.resuelta}">
+                                <p:selectBooleanCheckbox value="#{solMant.resuelta}" disabled="true"/>
                             </p:column>
                             <p:column headerText="" >
                                 <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{mantenedorSolicitudVerListadoMB.verDetalles(solMant.num)}">

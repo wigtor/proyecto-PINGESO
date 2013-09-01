@@ -63,6 +63,10 @@
                                 <h:outputText value="#{contenedor.nombreMaterial}"/>
                             </p:column>
                             
+                            <p:column headerText="Capacidad" >
+                                <h:outputText value="#{contenedor.capacidad} #{contenedor.nombreUnidadMedida}"/>
+                            </p:column>
+                            
                             <p:column headerText="">
                                 <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{contenedor.id}.show();" />
 

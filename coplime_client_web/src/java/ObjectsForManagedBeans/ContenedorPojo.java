@@ -17,6 +17,7 @@ public class ContenedorPojo {
     int capacidad;
     String nombreMaterial;
     String nombreEstadoContenedor;
+    String nombreUnidadMedida;
     
     public ContenedorPojo() {
         llenadoContenedor = 0;
@@ -84,6 +85,14 @@ public class ContenedorPojo {
 
     public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
+    }
+
+    public String getNombreUnidadMedida() {
+        return nombreUnidadMedida;
+    }
+
+    public void setNombreUnidadMedida(String nombreUnidadMedida) {
+        this.nombreUnidadMedida = nombreUnidadMedida;
     }
     
 }

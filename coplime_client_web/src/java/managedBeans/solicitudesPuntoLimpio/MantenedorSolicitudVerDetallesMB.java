@@ -80,9 +80,10 @@ public class MantenedorSolicitudVerDetallesMB {
     }
     
     public void volverToListaAndSave() {
-        System.out.println("idSolicitud: "+mantSolicitudes.getIdSolicitudDetalles() +" " + revisada_seleccionado);
-        crudSolicitud.checkRevisada(mantSolicitudes.getIdSolicitudDetalles(), revisada_seleccionado);
-        crudSolicitud.checkResuelta(mantSolicitudes.getIdSolicitudDetalles(), resuelta_seleccionado);
+        if (CommonFunctions.isUserInRole("Operario")) {
+            crudSolicitud.checkRevisada(mantSolicitudes.getIdSolicitudDetalles(), revisada_seleccionado);
+            crudSolicitud.checkResuelta(mantSolicitudes.getIdSolicitudDetalles(), resuelta_seleccionado);
+        }
         volverToLista();
     }
     

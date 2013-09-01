@@ -67,6 +67,7 @@ public class MantenedorSolicitudVerListadoMB {
             }
             revTemporal.setDetalleCortado(str_temp);
             revTemporal.setRevisada(rev_iter.isRevisado());
+            revTemporal.setResuelta(rev_iter.isResuelto());
             
             
             rut = Integer.toString(rev_iter.getInspectorSolicitante().getUsuario().getRut());

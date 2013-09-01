@@ -31,7 +31,7 @@
                             <p:column headerText="Fecha" sortBy="#{rev.fecha}" filterMatchMode="contains" filterBy="#{rev.fecha}">
                                 <h:outputText value="#{rev.fecha}"/>
                             </p:column>
-                            <p:column headerText="Operario encargado" rendered="#{request.isUserInRole('Administrador')}" >
+                            <p:column headerText="Operario encargado" sortBy="#{rev.usuario}" filterMatchMode="contains" filterBy="#{rev.usuario}" rendered="#{request.isUserInRole('Administrador')}" >
                                 <h:outputText value="#{rev.usuario}"/>
                             </p:column>
                             <p:column headerText="" >

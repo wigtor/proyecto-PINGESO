@@ -15,6 +15,7 @@ public class SolicitudPojo {
     String usuarioEmisor;
     String usuarioReceptor;
     boolean revisada;
+    boolean resuelta;
 
     public Integer getNum() {
         return num;
@@ -62,6 +63,14 @@ public class SolicitudPojo {
 
     public void setRevisada(boolean revisada) {
         this.revisada = revisada;
+    }
+
+    public boolean isResuelta() {
+        return resuelta;
+    }
+
+    public void setResuelta(boolean resuelta) {
+        this.resuelta = resuelta;
     }
     
 }
