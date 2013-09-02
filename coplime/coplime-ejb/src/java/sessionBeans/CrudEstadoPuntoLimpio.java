@@ -25,55 +25,74 @@ public class CrudEstadoPuntoLimpio implements CrudEstadoPuntoLimpioLocal {
     private EntityManager em;
 
     @Override
-    public boolean agregarEstadoPuntoLimpio(String nuevoEstadoPL) {
+    public boolean agregarEstadoPuntoLimpio(String nuevoEstadoPL) throws Exception {
         try{
-        DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-        EstadoDAO estadosDAO = fabricaDAO.getEstadoDAO();
-        Estado nuevoEstado = new Estado(nuevoEstadoPL);
-        estadosDAO.insert(nuevoEstado);
+            DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+            EstadoDAO estadosDAO = fabricaDAO.getEstadoDAO();
+            if(estadosDAO.find(nuevoEstadoPL)!=null){
+                throw new Exception("El estado ya existe.");
+            } else {
+                Estado nuevoEstado;
+                nuevoEstado = new Estado(nuevoEstadoPL);
+                estadosDAO.insert(nuevoEstado);
+            }
         } catch (Exception e){
             Logger.getLogger(CrudEstadoPuntoLimpio.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar agregar el estado \"".concat(nuevoEstadoPL).concat("\":".concat(e.toString())));
-            return false;
+            throw new Exception ("Error al intentar agregar el nuevo estado.");
         }
         return true;
     }
 
     @Override
-    public boolean editarEstadoPuntoLimpio(String antiguoEstadoPL, String nuevoEstadoPL) {
+    public boolean editarEstadoPuntoLimpio(Integer idEstado, String antiguoEstadoPL, String nuevoEstadoPL) throws Exception {
         try{
+            //failsafe
+            if(antiguoEstadoPL.equals(nuevoEstadoPL)){
+                throw new Exception("Los nombres de estado son iguales.");
+            }
+            
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             EstadoDAO estadosDAO = fabricaDAO.getEstadoDAO();
             Estado estadoEditar;
-            estadoEditar = estadosDAO.find(antiguoEstadoPL);
-            if (estadoEditar != null){
-                estadoEditar.setNombreEstado(nuevoEstadoPL);
-                estadosDAO.update(estadoEditar);
-                return true;
+            estadoEditar = estadosDAO.find(idEstado.intValue());
+            if (estadoEditar == null){
+                throw new Exception("No se puede editar el estado, el ID ".concat(idEstado.toString()).concat(" no existe."));
             } else {
-                return false;
-            }
+                if(!(estadoEditar.getNombreEstado().equals(antiguoEstadoPL))){
+                   throw new Exception("No se puede editar el estado, el nombre asociado al ID es diferente. "); 
+                } else {
+                   estadoEditar.setNombreEstado(nuevoEstadoPL);
+                   estadosDAO.update(estadoEditar);
+                   return true; 
+                }
+            }    
+            
         } catch (Exception e){
             Logger.getLogger(CrudEstadoPuntoLimpio.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar editar el estado \"".concat(antiguoEstadoPL).concat("\":".concat(e.toString())));
-            return false;
+            throw new Exception ("Error al intentar editar el estado.");
         }
     }
 
     @Override
-    public boolean eliminarEstadoPuntoLimpio(String eliminarEstadoPL) {
+    public boolean eliminarEstadoPuntoLimpio(Integer idEstado, String eliminarEstadoPL) throws Exception {
         try{
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             EstadoDAO estadosDAO = fabricaDAO.getEstadoDAO();
             Estado estadoEliminar;
-            estadoEliminar = estadosDAO.find(eliminarEstadoPL);
-            if (estadoEliminar != null){
-                estadosDAO.delete(estadoEliminar);
-                return true;
+            estadoEliminar = estadosDAO.find(idEstado.intValue());
+            if (estadoEliminar == null){
+                throw new Exception("No se puede eliminar el estado, el identificador ".concat(idEstado.toString()).concat(" no existe."));
             } else {
-                return false;
+                if(!(estadoEliminar.getNombreEstado().equals(eliminarEstadoPL))){
+                    throw new Exception ("No se puede eliminar el estado, el nombre asociado al ID es diferente.");
+                } else {
+                    estadosDAO.delete(estadoEliminar);
+                    return true;
+                }
             }
         } catch (Exception e){
             Logger.getLogger(CrudEstadoPuntoLimpio.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar eliminar el estado \"".concat(eliminarEstadoPL).concat("\":".concat(e.toString())));
-            return false;
+            throw new Exception("Error al intentar eliminar el estado.");
         }
     }
 

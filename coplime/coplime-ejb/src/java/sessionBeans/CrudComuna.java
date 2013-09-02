@@ -6,9 +6,7 @@ package sessionBeans;
 
 import DAO.DAOFactory;
 import DAO.interfaces.ComunaDAO;
-import DAO.interfaces.MaterialDAO;
 import entities.Comuna;
-import entities.Material;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -27,56 +25,84 @@ public class CrudComuna implements CrudComunaLocal {
     private EntityManager em;
 
     @Override
-    public boolean agregarComuna(String nombreComuna) {
-        try{
+    public boolean agregarComuna(String nombreComuna) throws Exception {
         DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         ComunaDAO comDAO = fabricaDAO.getComunaDAO();
-        Comuna nuevaComuna = new Comuna();
-        nuevaComuna.setNombre(nombreComuna);
-        comDAO.insert(nuevaComuna);
+        /*Primero se verifica la existencia de la comuna a través
+        * de una búsqueda por nombre usando el nombre de la comuna
+        * a agregar como argumento. Para ello, si la lista de resultados
+        * que retorna la función buscarPorNombre de ComunaDAO es nula
+        * entonces la comuna no existe, caso contrario la comuna ya existe
+        * y en ese caso, se lanza la excepción correspondiente.
+        */
+
+        try{
+            if(comDAO.buscarPorNombre(nombreComuna)!=null){
+                throw new Exception("La comuna ya existe.");
+            } else {
+                Comuna nuevaComuna = new Comuna();
+                nuevaComuna.setNombre(nombreComuna);
+                comDAO.insert(nuevaComuna);
+            }
         } catch (Exception e){
             Logger.getLogger(CrudComuna.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar agregar la comuna \"".concat(nombreComuna).concat("\":".concat(e.toString())));
-            return false;
+            throw new Exception ("Error al intentar agregar la nueva comuna.");
         }
         return true;
     }
 
     @Override
-    public boolean editarComuna(String nombreAntiguoComuna, String nombreNuevoComuna) {
+    public boolean editarComuna(Integer idComuna, String nombreAntiguoComuna, String nombreNuevoComuna) throws Exception {
         try{
+            //failsafe
+            if(nombreAntiguoComuna.equals(nombreNuevoComuna)){
+                throw new Exception("Los nombres de comuna son iguales.");
+            }
+            
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             ComunaDAO comDAO = fabricaDAO.getComunaDAO();
             Comuna comunaEditar;
-            comunaEditar = comDAO.find(nombreAntiguoComuna);
-            if (comunaEditar != null){
-                comunaEditar.setNombre(nombreAntiguoComuna);
-                comDAO.update(comunaEditar);
-                return true;
+            comunaEditar=comDAO.find(idComuna.intValue());
+            if(comunaEditar==null){
+                throw new Exception ("No se puede editar la comuna, el identificador ".concat(idComuna.toString()).concat(" no existe."));
             } else {
-                return false;
+                if(!(comunaEditar.getNombre().equals(nombreAntiguoComuna))){
+                    //La comuna que se intenta editar a través del ID tiene un nombre
+                    //distinto al esperado
+                    throw new Exception ("No se puede editar la comuna, el nombre asociado al ID es diferente.");
+                } else {
+                    comunaEditar.setNombre(nombreNuevoComuna);
+                    comDAO.update(comunaEditar);
+                    return true;
+                }
             }
         } catch (Exception e){
             Logger.getLogger(CrudComuna.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar editar la comuna ".concat(nombreAntiguoComuna).concat(":".concat(e.toString())));
-            return false;
+            throw new Exception ("Error al intentar editar la comuna.");
         }
     }
 
     @Override
-    public boolean eliminarComuna(String nombreComunaEliminar) {
+    public boolean eliminarComuna(Integer idComuna, String nombreComunaEliminar) throws Exception{
         try{
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             ComunaDAO comDAO = fabricaDAO.getComunaDAO();
             Comuna comunaEliminar;
-            comunaEliminar = comDAO.find(nombreComunaEliminar);
-            if (comunaEliminar != null){
-                comDAO.delete(comunaEliminar);
-                return true;
+            comunaEliminar = comDAO.find(idComuna.intValue());
+            if (comunaEliminar == null){
+                throw new Exception("No se puede eliminar la comuna, el identificador ".concat(idComuna.toString()).concat(" no existe."));
             } else {
-                return false;
+                if(!(comunaEliminar.getNombre().equals(nombreComunaEliminar))){
+                    throw new Exception("No se puede eliminar la comuna, el nombre asociado al ID es diferente.");
+                }else{
+                    comDAO.delete(comunaEliminar);
+                    return true;
+                }
             }
         } catch (Exception e){
             Logger.getLogger(CrudComuna.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar eliminar la comuna \"".concat(nombreComunaEliminar).concat("\":".concat(e.toString())));
-            return false;
+            throw new Exception ("Error al intentar eliminar la comuna.");
+
         }
     }
 
@@ -101,7 +127,7 @@ public class CrudComuna implements CrudComunaLocal {
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             ComunaDAO matDAO = fabricaDAO.getComunaDAO();
             Comuna com;
-            com = matDAO.find(nombreComunaBusq);
+            com = matDAO.buscarPorNombre(nombreComunaBusq);
             if (com != null){
                 return com;
             } else {

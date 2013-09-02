@@ -15,11 +15,11 @@ import javax.ejb.Local;
 @Local
 public interface CrudComunaLocal {
 
-    boolean agregarComuna(String nombreComuna);
+    boolean agregarComuna(String nombreComuna) throws Exception;
 
-    boolean editarComuna(String nombreAntiguoComuna, String nombreNuevoComuna);
+    boolean editarComuna(Integer idComuna, String nombreAntiguoComuna, String nombreNuevoComuna) throws Exception;
 
-    boolean eliminarComuna(String nombreComunaEliminar);
+    boolean eliminarComuna(Integer idComuna, String nombreComunaEliminar) throws Exception;
 
     Collection getAllComunas();
 

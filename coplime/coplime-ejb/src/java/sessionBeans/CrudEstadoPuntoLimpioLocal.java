@@ -15,11 +15,11 @@ import javax.ejb.Local;
 @Local
 public interface CrudEstadoPuntoLimpioLocal {
 
-    boolean agregarEstadoPuntoLimpio(String nuevoEstadoPL);
+    boolean agregarEstadoPuntoLimpio(String nuevoEstadoPL) throws Exception;
 
-    boolean editarEstadoPuntoLimpio(String antiguoEstadoPL, String nuevoEstadoPL);
+    boolean editarEstadoPuntoLimpio(Integer idEstado, String antiguoEstadoPL, String nuevoEstadoPL) throws Exception;
 
-    boolean eliminarEstadoPuntoLimpio(String eliminarEstadoPL);
+    boolean eliminarEstadoPuntoLimpio(Integer idEstado, String eliminarEstadoPL) throws Exception;
 
     Estado getEstadoPuntoLimpio(String nombreEstadoPLBusq);
 

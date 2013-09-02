@@ -23,7 +23,7 @@ public class ComunaDAO_impl extends genericDAO_impl<Comuna> implements ComunaDAO
     
     //Poner otras funciones extra que sólo haga este DAO
     @Override
-    public Comuna find(String comunaName) {
+    public Comuna buscarPorNombre(String comunaName) {
         Query q = this.em.createNamedQuery("Comuna.findByName");
         q.setParameter("nombre", comunaName);
         List<Comuna> res = q.getResultList();

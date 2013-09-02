@@ -17,5 +17,5 @@ public interface ComunaDAO extends genericDAO<Comuna>{
      * @param nombreComuna El nombre de la comuna que se está buscando
      * @return Un objeto "Comuna" si pudo encontrarse, null si no se encuentra
      */
-    public Comuna find(String nombreComuna);
+    public Comuna buscarPorNombre(String nombreComuna);
 }
