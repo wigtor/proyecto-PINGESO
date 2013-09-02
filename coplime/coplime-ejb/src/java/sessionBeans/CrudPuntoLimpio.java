@@ -39,7 +39,7 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
     // "Insert Code > Add Business Method")
 
     @Override
-    public Integer agregarPuntoLimpio(String nombre, Integer numeroDadoPorCliente, Integer idComuna, String direccion,
+    public Integer agregarPuntoLimpio(Integer numeroDadoPorCliente, String nombre, Integer idComuna, String direccion,
                     Calendar fechaProxRev, Integer idEstadoIni, Integer numInspEnc) throws Exception {
         
         if(isValidDate(fechaProxRev)) {
@@ -90,7 +90,7 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
     }
     
     @Override
-    public boolean agregarContenedor(Integer numPuntoLimpio, Integer idMaterial, Integer idEstadoIni, int llenadoIni, int capacidad, Integer idUnidadMedida) {
+    public void agregarContenedor(Integer numPuntoLimpio, Integer idMaterial, Integer idEstadoIni, int llenadoIni, int capacidad, Integer idUnidadMedida) throws Exception{
         
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
@@ -103,24 +103,24 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         PuntoLimpio p = ptoDAO.find(numPuntoLimpio.intValue());
         if (p == null) {
             //System.out.println("No se encontró el id del puntolimpio al agregar el contenedor");
-            return false;
+            throw new Exception("El punto limpio no es válido");
         }
         Estado estTemp = estDAO.find(idEstadoIni.intValue());
         if (estTemp == null) {
             //System.out.println("No se encontró el id del estado al agregar el contenedor");
-            return false;
+            throw new Exception("El estado seleccionado no es válido");
         }
         
         Material matTemp = matDAO.find(idMaterial.intValue());
         if (matTemp == null) {
             //System.out.println("No se encontró el id del material al agregar el contenedor");
-            return false;
+            throw new Exception("El material seleccionado no es válido");
         }
         
         UnidadMedida uniTemp = uniMedDAO.find(idUnidadMedida.intValue());
         if (uniTemp == null) {
             //System.out.println("No se encontró el id de la unidad de medida al agregar el contenedor");
-            return false;
+            throw new Exception("La unidad de medida del material no es válida");
         }
         
         Contenedor nvoCont = new Contenedor();
@@ -147,9 +147,92 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
             ptoDAO.update(p);
         }
         catch (Exception e) {
-            return false;
+            throw new Exception("No ha sido posible agregar el contenedor");
         }
-        return true;
+        
+    }
+    
+    
+    @Override
+    public void editarPuntoLimpio(Integer idPtoLimpio, String nombre, Integer idComuna, String direccion, Calendar fechaProxRev, Integer idEstadoIni, Integer numInspEnc) throws Exception{
+        if (idPtoLimpio == null) {
+            throw new Exception("El N° del punto limpio no es válido");
+        }
+        
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
+        ComunaDAO comDAO = factoryDeDAOs.getComunaDAO();
+        EstadoDAO estDAO = factoryDeDAOs.getEstadoDAO();
+        InspectorDAO inspDAO = factoryDeDAOs.getInspectorDAO();
+        
+        
+        try {
+            PuntoLimpio p = ptoDAO.find(idPtoLimpio.intValue());
+            
+            if (!p.getFechaProxRevision().equals(fechaProxRev)) {
+                if (isValidDate(fechaProxRev)) {
+                    throw new Exception("La fecha para la primera revisión no puede ser pasada");
+                }
+            }
+
+            if (existeNombrePuntoLimpioExcepto(nombre, p)) {
+                throw new Exception("El nombre del punto limpio \"".concat(nombre).concat("\" ya existe"));
+            }
+
+            Comuna comunaP = comDAO.find(idComuna);
+            if (comunaP == null) {
+                throw new Exception("La comuna seleccionada no es válida");
+            }
+            Estado estadoP = estDAO.find(idEstadoIni);
+            if (estadoP == null) {
+                throw new Exception("El estado seleccionado no es válido");
+            }
+            Inspector inspectorEnc = inspDAO.find(numInspEnc);
+            if (inspectorEnc == null) {
+                throw new Exception("El inspector seleccionado no es válido");
+            }
+            if (nombre== null) {
+                throw new Exception("El nombre ingresado no puede ser nulo");
+            }
+            if (nombre.trim().isEmpty()) {
+                throw new Exception("El nombre ingresado no puede ser vacio");
+            }
+            if (direccion== null) {
+                throw new Exception("La dirección ingresada no puede ser nula");
+            }
+            if (direccion.trim().isEmpty()) {
+                throw new Exception("La dirección ingresada no puede ser vacia");
+            }
+            
+            p.setNombre(nombre.trim());
+            p.setUbicacion(direccion.trim());
+            p.setFechaProxRevision(fechaProxRev);
+            p.setComuna(comunaP);
+            p.setEstadoGlobal(estadoP);
+            p.setInspectorEncargado(inspectorEnc);
+            ptoDAO.update(p);
+        }
+        catch (Exception e) {
+            
+            throw new Exception("No ha sido posible editar los datos del punto limpio N°".concat(idPtoLimpio.toString()));
+        }
+    }
+    
+    
+    @Override
+    public void eliminarPuntoLimpioByNum(Integer num) throws Exception{
+        if (num != null) {
+            DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+            PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
+            try {
+                if (!ptoDAO.delete(num))
+                    throw new Exception("No ha sido posible eliminar el punto limpio N°".concat(num.toString()));
+            }
+            catch (Exception e) {
+                throw new Exception("No ha sido posible eliminar el punto limpio N°".concat(num.toString()));
+            }
+        }
+        throw new Exception("El N° del punto limpio no puede ser nulo");
     }
     
     @Override
@@ -201,35 +284,6 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
         return ptoDAO.find(num.intValue());
-    }
-    
-    
-    @Override
-    public void editarPuntoLimpio(Integer idPtoLimpio, String nombre, Integer idComuna, String direccion, Calendar fechaProxRev, Integer estadoIni, Integer numInspEnc) {
-        if (idPtoLimpio == null) {
-            return;
-        }
-    }
-    
-    
-    @Override
-    public boolean eliminarPuntoLimpioByNum(Integer num){
-        if (num != null) {
-            DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-            PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
-            return ptoDAO.delete(num);
-        }
-        return false;
-    }
-    
-    @Override
-    public boolean eliminarPuntoLimpio(Integer id){
-        if (id != null) {
-            DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-            PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
-            return ptoDAO.delete(id);
-        }
-        return false;
     }
 
     @Override
@@ -298,5 +352,12 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
         return ptoDAO.nombreExist(nombre);
+    }
+    
+    @Override
+    public boolean existeNombrePuntoLimpioExcepto(String nombre, PuntoLimpio p) {
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
+        return ptoDAO.nombreExistExcept(nombre, p.getId());
     }
 }

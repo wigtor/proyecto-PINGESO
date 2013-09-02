@@ -144,7 +144,7 @@ public class MantenedorPuntoLimpioAgregarMB {
         fechaComoCalendar.setTime(fechaRevision);
         Integer numPuntoLimpio;
         try {
-            numPuntoLimpio = crudPuntoLimpio.agregarPuntoLimpio(nombre, num, comuna_seleccionada, direccion, fechaComoCalendar, estado_seleccionado, inspectorEncargado_seleccionado);
+            numPuntoLimpio = crudPuntoLimpio.agregarPuntoLimpio(num, nombre, comuna_seleccionada, direccion, fechaComoCalendar, estado_seleccionado, inspectorEncargado_seleccionado);
         } catch (Exception ex) {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), ex.getMessage());
             this.mantPtoLimpio.endConversation();
@@ -153,7 +153,6 @@ public class MantenedorPuntoLimpioAgregarMB {
         }
         if (numPuntoLimpio != null) {
             //Agrego los contenedores ahora
-            boolean resultadoAgregarCont;
             Integer idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida;
             List<ContenedorPojo> listaContenedoresTemp = this.mantPtoLimpio.getContenedores_creando();
             for (ContenedorPojo contTemp : listaContenedoresTemp) {
@@ -162,11 +161,16 @@ public class MantenedorPuntoLimpioAgregarMB {
                 llenadoIni = contTemp.getLlenadoContenedor();
                 capacidad = contTemp.getCapacidad();
                 idUnidadMedida = contTemp.getIdUnidadMedida();
-                System.out.format("%d, %d, %d, %d, %d, %d\n\n", numPuntoLimpio, idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida);
-                resultadoAgregarCont = crudPuntoLimpio.agregarContenedor(
+                //System.out.format("%d, %d, %d, %d, %d, %d\n\n", numPuntoLimpio, idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida);
+                try {
+                    crudPuntoLimpio.agregarContenedor(
                         numPuntoLimpio, idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida);
-                if (!resultadoAgregarCont) {
-                    //Mostrar error
+                }
+                catch (Exception e) {
+                    //Avisar que se agregó correctamente el punto limpio
+                    CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                            e.getMessage(),
+                            e.getMessage());
                 }
             }
             //Avisar que se agregó correctamente el punto limpio

@@ -32,4 +32,6 @@ public interface PuntoLimpioDAO extends genericDAO<PuntoLimpio>{
      * @return true si el nombre existe, false si no
      */
     public boolean nombreExist(String nombre);
+    
+    public boolean nombreExistExcept(String nombre, Integer idPuntoLimpio);
 }

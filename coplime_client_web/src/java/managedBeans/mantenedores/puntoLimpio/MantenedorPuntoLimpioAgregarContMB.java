@@ -62,8 +62,7 @@ public class MantenedorPuntoLimpioAgregarContMB {
         }
         else {
             //MOSTRAR ERROR
-            
-            CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml");
+            CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml");
         }
     }
     
@@ -153,12 +152,22 @@ public class MantenedorPuntoLimpioAgregarContMB {
         CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO, 
                 "Se ha almacenado temporalmente la creación de un contenedor", 
                 "Se ha almacenado temporalmente la creación de un contenedor para el punto limpio que está creando");
-        CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
+        
+        if (this.mantPtoLimpio.getState() == MantenedorPuntoLimpioConversation.AGREGAR) {
+            CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
+        }
+        if (this.mantPtoLimpio.getState() == MantenedorPuntoLimpioConversation.EDITAR) {
+            CommonFunctions.goToPage("/faces/users/admin/editarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
+        }
     }
     
     public void volverToPuntoLimpio() {
-        //System.out.println("Se hizo click en 'volverToPuntoLimpio()'");
-        CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
+        if (this.mantPtoLimpio.getState() == MantenedorPuntoLimpioConversation.AGREGAR) {
+            CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
+        }
+        if (this.mantPtoLimpio.getState() == MantenedorPuntoLimpioConversation.EDITAR) {
+            CommonFunctions.goToPage("/faces/users/admin/editarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
+        }
     }
     
     public Integer getNumPtoLimpio() {

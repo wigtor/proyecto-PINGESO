@@ -69,6 +69,7 @@ public class MantenedorPuntoLimpioVerListadoMB {
     
     public void agregar() {
         this.mantPtoLimpio.beginConversation();
+        this.mantPtoLimpio.setState(MantenedorPuntoLimpioConversation.AGREGAR);
         CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
     }
     
@@ -77,6 +78,7 @@ public class MantenedorPuntoLimpioVerListadoMB {
         
         if (ptoLimpioSelec != null) { //Verifico que exista
             this.mantPtoLimpio.beginConversation();
+            this.mantPtoLimpio.setState(MantenedorPuntoLimpioConversation.VER);
             this.mantPtoLimpio.setIdPuntoLimpioDetalles(numPtoLimpio);
             CommonFunctions.goToPage("/faces/users/verDetallesPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
         }
@@ -90,6 +92,8 @@ public class MantenedorPuntoLimpioVerListadoMB {
         PuntoLimpio ptoEdit = crudPuntoLimpio.getPuntoLimpioByNum(numPto);
         if (ptoEdit != null) {
             this.mantPtoLimpio.beginConversation();
+            this.mantPtoLimpio.setState(MantenedorPuntoLimpioConversation.EDITAR);
+            this.mantPtoLimpio.setPrimeraCarga(true);
             this.mantPtoLimpio.setIdPuntoLimpioDetalles(numPto);
             CommonFunctions.goToPage("/faces/users/admin/editarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
         }
@@ -101,16 +105,16 @@ public class MantenedorPuntoLimpioVerListadoMB {
     }
     
     public void eliminar(Integer numPto) {
-       boolean resultado = crudPuntoLimpio.eliminarPuntoLimpio(numPto);
-        if (resultado) {
+        try {
+            crudPuntoLimpio.eliminarPuntoLimpioByNum(numPto);
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
                     "Se ha eliminado el punto limpio",
                     "Se ha eliminado correctamente el punto limpio ");
         }
-        else {
+        catch (Exception e) {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
-                    "Error al eliminar el punto limpio",
-                    "Error, no se ha podido eliminar el punto limpio seleccionado");
+                    e.getMessage(),
+                    e.getMessage());
         }
         this.mantPtoLimpio.limpiarDatos();
         CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml?faces-redirect=true");

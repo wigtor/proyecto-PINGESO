@@ -21,9 +21,15 @@ import managedBeans.AbstractConversation;
 @ConversationScoped
 public class MantenedorPuntoLimpioConversation extends AbstractConversation implements Serializable {
     
+    public static final int AGREGAR = 1;
+    public static final int EDITAR = 2;
+    public static final int VER = 3;
+    
     private PuntoLimpioPojo pto_creando;
     private List<ContenedorPojo> contenedores_creando;
     private Integer idPuntoLimpioDetalles;
+    private int state;
+    private boolean primeraCarga;
     
     /**
      * Creates a new instance of MantenedorPuntoLimpioConversation
@@ -66,6 +72,22 @@ public class MantenedorPuntoLimpioConversation extends AbstractConversation impl
 
     public void setIdPuntoLimpioDetalles(Integer idPuntoLimpioDetalles) {
         this.idPuntoLimpioDetalles = idPuntoLimpioDetalles;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public boolean isPrimeraCarga() {
+        return primeraCarga;
+    }
+
+    public void setPrimeraCarga(boolean primeraCarga) {
+        this.primeraCarga = primeraCarga;
     }
     
 }

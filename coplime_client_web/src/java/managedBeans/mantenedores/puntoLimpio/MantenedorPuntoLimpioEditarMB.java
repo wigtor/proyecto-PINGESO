@@ -88,22 +88,24 @@ public class MantenedorPuntoLimpioEditarMB {
             this.estado_seleccionado = p.getEstadoGlobal().getId();
             this.fechaRevision = p.getFechaProxRevision().getTime();
             
-            List<Contenedor> listaTemp = p.getContenedores();
-            ArrayList<ContenedorPojo> resultado = new ArrayList<>();
-            ContenedorPojo contTempPojo;
-            for (Contenedor cont_iter : listaTemp) {
-                contTempPojo = new ContenedorPojo();
+            if (this.mantPtoLimpio.isPrimeraCarga()) {
+                List<Contenedor> listaTemp = p.getContenedores();
+                ArrayList<ContenedorPojo> resultado = new ArrayList<>();
+                ContenedorPojo contTempPojo;
+                for (Contenedor cont_iter : listaTemp) {
+                    contTempPojo = new ContenedorPojo();
 
-                contTempPojo.setId(cont_iter.getId());
-                contTempPojo.setNombreUnidadMedida(cont_iter.getUnidadMedida().getNombreUnidad());
-                contTempPojo.setCapacidad(cont_iter.getCapacidad());
-                contTempPojo.setNombreMaterial(cont_iter.getMaterialDeAcopio().getNombre_material());
-                contTempPojo.setLlenadoContenedor(cont_iter.getProcentajeUso());
-                contTempPojo.setNombreEstadoContenedor(cont_iter.getEstadoContenedor().getNombreEstado());
-                resultado.add(contTempPojo);
+                    contTempPojo.setId(cont_iter.getId());
+                    contTempPojo.setNombreUnidadMedida(cont_iter.getUnidadMedida().getNombreUnidad());
+                    contTempPojo.setCapacidad(cont_iter.getCapacidad());
+                    contTempPojo.setNombreMaterial(cont_iter.getMaterialDeAcopio().getNombre_material());
+                    contTempPojo.setLlenadoContenedor(cont_iter.getProcentajeUso());
+                    contTempPojo.setNombreEstadoContenedor(cont_iter.getEstadoContenedor().getNombreEstado());
+                    resultado.add(contTempPojo);
+                }
+                this.mantPtoLimpio.getContenedores_creando().addAll(resultado);
             }
-            this.mantPtoLimpio.getContenedores_creando().addAll(resultado);
-            
+            this.mantPtoLimpio.setPrimeraCarga(false);
             
         }
     }
@@ -184,58 +186,27 @@ public class MantenedorPuntoLimpioEditarMB {
     }
 
     public void guardarCambiosPtoLimpio() {
-        
-        //System.out.println("Se hizo click en 'agregarPuntoLimpio()'");
-        //System.out.println("Cantidad de contenedores: " + mantPtoLimpio.getContenedores_creando().size());
         Calendar fechaComoCalendar = new GregorianCalendar();
         fechaComoCalendar.setTime(fechaRevision);
-        Integer numPuntoLimpio;
         try {
-            numPuntoLimpio = crudPuntoLimpio.agregarPuntoLimpio(nombre, num, comuna_seleccionada, direccion, fechaComoCalendar, estado_seleccionado, inspectorEncargado_seleccionado);
+            crudPuntoLimpio.editarPuntoLimpio(num, nombre, comuna_seleccionada, direccion, fechaComoCalendar, estado_seleccionado, inspectorEncargado_seleccionado);
+            //Avisar que se editó correctamente el punto limpio
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                    "Se han editado los datos del punto limpio N° ".concat(num.toString()),
+                    "Se han editado los datos del punto limpio \"".concat(nombre).concat("\""));
         } catch (Exception ex) {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), ex.getMessage());
             this.mantPtoLimpio.endConversation();
             CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?faces-redirect=true");
             return;
         }
-        if (numPuntoLimpio != null) {
-            //Agrego los contenedores ahora
-            boolean resultadoAgregarCont;
-            Integer idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida;
-            List<ContenedorPojo> listaContenedoresTemp = this.mantPtoLimpio.getContenedores_creando();
-            for (ContenedorPojo contTemp : listaContenedoresTemp) {
-                idMaterial = contTemp.getIdMaterial();
-                idEstadoIni = contTemp.getIdEstadoContenedor();
-                llenadoIni = contTemp.getLlenadoContenedor();
-                capacidad = contTemp.getCapacidad();
-                idUnidadMedida = contTemp.getIdUnidadMedida();
-                System.out.format("%d, %d, %d, %d, %d, %d\n\n", numPuntoLimpio, idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida);
-                resultadoAgregarCont = crudPuntoLimpio.agregarContenedor(
-                        numPuntoLimpio, idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida);
-                if (!resultadoAgregarCont) {
-                    //Mostrar error
-                }
-            }
-            //Avisar que se agregó correctamente el punto limpio
-            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
-                    "Se ha creado un nuevo punto limpio",
-                    "Se ha creado el punto limpio \"".concat(nombre).concat("\""));
-
-        } else {
-            //Avisar que ocurrió un error al agregar el punto limpio
-            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
-                    "Ha ocurrido un error al crear el punto limpio",
-                    "No ha sido posible crear el punto limpio, intente más tarde");
-        }
-        this.mantPtoLimpio.endConversation();
         volverToLista();
     }
 
     public void volverToLista() {
-        this.mantPtoLimpio.endConversation();
-        //System.out.println("Se hizo click en 'volverToLista()'");
         mantPtoLimpio.setPto_creando(null);
         mantPtoLimpio.getContenedores_creando().clear();
+        this.mantPtoLimpio.endConversation();
         CommonFunctions.goToPage("/faces/users/verPuntosLimpios.xhtml?faces-redirect=true");
     }
 

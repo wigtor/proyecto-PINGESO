@@ -11,8 +11,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -29,7 +27,8 @@ import javax.persistence.Temporal;
 @NamedQueries( {
     @NamedQuery(name="PuntoLimpio.findByName", query="SELECT u FROM PuntoLimpio u WHERE u.nombre = :nombre"),
     @NamedQuery(name = "PuntoLimpio.checkByNum", query = "SELECT COUNT(U) FROM PuntoLimpio u WHERE u.id = :num"),
-    @NamedQuery(name = "PuntoLimpio.checkByNombre", query = "SELECT COUNT(U) FROM PuntoLimpio u WHERE u.nombre = :nombre")
+    @NamedQuery(name = "PuntoLimpio.checkByNombre", query = "SELECT COUNT(U) FROM PuntoLimpio u WHERE u.nombre = :nombre"),
+    @NamedQuery(name = "PuntoLimpio.checkByNombreExcepto", query = "SELECT COUNT(U) FROM PuntoLimpio u WHERE (u.nombre = :nombre) AND (u.id != :idPuntoExcept)")
 })
 public class PuntoLimpio implements Serializable {
     private static final long serialVersionUID = 1L;

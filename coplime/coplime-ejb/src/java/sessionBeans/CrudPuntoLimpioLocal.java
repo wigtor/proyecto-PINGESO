@@ -22,13 +22,6 @@ import javax.ejb.Local;
 public interface CrudPuntoLimpioLocal {
 
     /**
-     * Elimina un punto limpio de la fuente de datos, sus mantenciones, revisiones y solicitudes de mantención.
-     * @param id El N° del punto limpio
-     * @return true si pudo eliminarse, false si hubo un error
-     */
-    public boolean eliminarPuntoLimpio(Integer id);
-
-    /**
      * Busca un punto limpio en la fuente de datos utilizando su N°.
      * @param num El N° del punto limpio
      * @return El objeto "PuntoLimpio", null si no se encuentra
@@ -41,13 +34,18 @@ public interface CrudPuntoLimpioLocal {
      */
     public Collection<PuntoLimpio> getAllPuntosLimpios();
 
-    public Integer agregarPuntoLimpio(String nombre, Integer numeroDadoPorCliente, Integer idComuna, String direccion, Calendar fechaProxRev, Integer idEstadoIni, Integer numInspEnc) throws Exception;
+    public Integer agregarPuntoLimpio(Integer numeroDadoPorCliente, String nombre, Integer idComuna, String direccion, Calendar fechaProxRev, Integer idEstadoIni, Integer numInspEnc) throws Exception;
     
-    public boolean agregarContenedor( Integer numPuntoLimpio, Integer idMaterial, Integer idEstadoIni, int llenadoIni, int capacidad, Integer idUnidadMedida);
+    public void agregarContenedor( Integer numPuntoLimpio, Integer idMaterial, Integer idEstadoIni, int llenadoIni, int capacidad, Integer idUnidadMedida) throws Exception;
     
-    public void editarPuntoLimpio(Integer idPtoLimpio, String nombre, Integer idComuna, String direccion, Calendar fechaProxRev, Integer estadoIni, Integer numInspEnc);
+    public void editarPuntoLimpio(Integer idPtoLimpio, String nombre, Integer idComuna, String direccion, Calendar fechaProxRev, Integer idEstadoIni, Integer numInspEnc) throws Exception;
 
-    public boolean eliminarPuntoLimpioByNum(Integer num);
+    /**
+     * Elimina un punto limpio de la fuente de datos, sus mantenciones, revisiones y solicitudes de mantención.
+     * @param id El N° del punto limpio
+     * @return true si pudo eliminarse, false si hubo un error
+     */
+    public void eliminarPuntoLimpioByNum(Integer num) throws Exception;
 
     /**
      * Busca todos los estados en que puede encotnrarse un punto limpio.
@@ -109,4 +107,6 @@ public interface CrudPuntoLimpioLocal {
      * @return Devuelve true si el punto limpio ya existe, falso en caso contrario
      */
     public boolean existeNombrePuntoLimpio(String nombre);
+    
+    public boolean existeNombrePuntoLimpioExcepto(String nombre, PuntoLimpio p);
 }

@@ -65,4 +65,18 @@ public class PuntoLimpioDAO_impl extends genericDAO_impl<PuntoLimpio> implements
         return false;
     }
     
+    @Override
+    public boolean nombreExistExcept(String nombre, Integer idPuntoLimpio) {
+        Query q1 = this.em.createNamedQuery("PuntoLimpio.checkByNombreExcepto");
+        q1.setParameter("nombre", nombre);
+        q1.setParameter("idPuntoExcept", idPuntoLimpio);
+        Long res = (Long)q1.getSingleResult();
+        if (res == null) {
+            return false;
+        }
+        if (res.intValue() > 0) {
+            return true;
+        }
+        return false;
+    }
 }
