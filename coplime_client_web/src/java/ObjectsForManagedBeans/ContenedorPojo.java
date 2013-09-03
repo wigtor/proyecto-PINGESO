@@ -10,6 +10,8 @@ package ObjectsForManagedBeans;
  */
 public class ContenedorPojo {
     Integer id;
+    boolean editado;
+    boolean nuevo;
     Integer idMaterial;
     Integer llenadoContenedor;
     Integer idEstadoContenedor;
@@ -21,6 +23,8 @@ public class ContenedorPojo {
     
     public ContenedorPojo() {
         llenadoContenedor = 0;
+        editado = false;
+        nuevo = true;
     }
     
     public Integer getId() {
@@ -93,6 +97,22 @@ public class ContenedorPojo {
 
     public void setNombreUnidadMedida(String nombreUnidadMedida) {
         this.nombreUnidadMedida = nombreUnidadMedida;
+    }
+
+    public boolean isEditado() {
+        return editado;
+    }
+
+    public void setEditado(boolean editado) {
+        this.editado = editado;
+    }
+
+    public boolean isNuevo() {
+        return nuevo;
+    }
+
+    public void setNuevo(boolean nuevo) {
+        this.nuevo = nuevo;
     }
     
 }

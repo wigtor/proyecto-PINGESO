@@ -27,6 +27,7 @@ public class MantenedorPuntoLimpioConversation extends AbstractConversation impl
     
     private PuntoLimpioPojo pto_creando;
     private List<ContenedorPojo> contenedores_creando;
+    private List<ContenedorPojo> contenedores_eliminados;
     private Integer idPuntoLimpioDetalles;
     private int state;
     private boolean primeraCarga;
@@ -37,6 +38,7 @@ public class MantenedorPuntoLimpioConversation extends AbstractConversation impl
     public MantenedorPuntoLimpioConversation() {
         //System.out.println("Se contruyó un MantenedorPuntoLimpioConversation");
         contenedores_creando = new LinkedList<>();
+        contenedores_eliminados = new LinkedList<>();
     }
     
     public void limpiarDatos() {
@@ -49,6 +51,7 @@ public class MantenedorPuntoLimpioConversation extends AbstractConversation impl
         for(ContenedorPojo temp : contenedores_creando) {
             if (temp.getId().intValue() == id.intValue()) {
                 contenedores_creando.remove(temp);
+                contenedores_eliminados.add(temp);
                 break;
             }
         }
@@ -64,6 +67,14 @@ public class MantenedorPuntoLimpioConversation extends AbstractConversation impl
 
     public List<ContenedorPojo> getContenedores_creando() {
         return contenedores_creando;
+    }
+
+    public List<ContenedorPojo> getContenedores_eliminados() {
+        return contenedores_eliminados;
+    }
+
+    public void setContenedores_eliminados(List<ContenedorPojo> contenedores_eliminados) {
+        this.contenedores_eliminados = contenedores_eliminados;
     }
 
     public Integer getIdPuntoLimpioDetalles() {

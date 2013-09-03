@@ -109,4 +109,6 @@ public interface CrudPuntoLimpioLocal {
     public boolean existeNombrePuntoLimpio(String nombre);
     
     public boolean existeNombrePuntoLimpioExcepto(String nombre, PuntoLimpio p);
+
+    public void eliminarContenedorById(Integer num) throws Exception;
 }

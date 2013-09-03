@@ -96,6 +96,8 @@ public class MantenedorPuntoLimpioEditarMB {
                     contTempPojo = new ContenedorPojo();
 
                     contTempPojo.setId(cont_iter.getId());
+                    contTempPojo.setEditado(false);
+                    contTempPojo.setNuevo(false);
                     contTempPojo.setNombreUnidadMedida(cont_iter.getUnidadMedida().getNombreUnidad());
                     contTempPojo.setCapacidad(cont_iter.getCapacidad());
                     contTempPojo.setNombreMaterial(cont_iter.getMaterialDeAcopio().getNombre_material());
@@ -182,7 +184,7 @@ public class MantenedorPuntoLimpioEditarMB {
     
     public void eliminarContenedorAgregado(Integer id) {
         this.mantPtoLimpio.eliminarContenedor(id);
-        CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
+        //CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
     }
 
     public void guardarCambiosPtoLimpio() {
@@ -190,6 +192,30 @@ public class MantenedorPuntoLimpioEditarMB {
         fechaComoCalendar.setTime(fechaRevision);
         try {
             crudPuntoLimpio.editarPuntoLimpio(num, nombre, comuna_seleccionada, direccion, fechaComoCalendar, estado_seleccionado, inspectorEncargado_seleccionado);
+            
+            //elimino los contenedores
+            for (ContenedorPojo contTemp : this.mantPtoLimpio.getContenedores_eliminados()) {
+                
+                if (!contTemp.isNuevo()) {
+                    crudPuntoLimpio.eliminarContenedorById(contTemp.getId());
+                }
+            }
+            
+            //Agrego nuevos contenedores
+            Integer idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida;
+            for (ContenedorPojo contTemp : this.mantPtoLimpio.getContenedores_creando()) {
+                idMaterial = contTemp.getIdMaterial();
+                idEstadoIni = contTemp.getIdEstadoContenedor();
+                llenadoIni = contTemp.getLlenadoContenedor();
+                capacidad = contTemp.getCapacidad();
+                idUnidadMedida = contTemp.getIdUnidadMedida();
+                if (contTemp.isNuevo()) {
+                    crudPuntoLimpio.agregarContenedor(
+                        num, idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida);
+                }
+            }
+            
+            
             //Avisar que se editó correctamente el punto limpio
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
                     "Se han editado los datos del punto limpio N° ".concat(num.toString()),

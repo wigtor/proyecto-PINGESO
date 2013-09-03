@@ -107,6 +107,8 @@ public class MantenedorPuntoLimpioAgregarContMB {
         ContenedorPojo res = new ContenedorPojo();
         //para darle cualquier valor, pero que no se repita
         res.setId(new Integer(Math.abs((int)(Calendar.getInstance().getTimeInMillis()))));
+        res.setEditado(false);
+        res.setNuevo(true);
         res.setIdMaterial(material);
         res.setLlenadoContenedor(llenadoContenedor);
         res.setIdEstadoContenedor(estadoContenedor);

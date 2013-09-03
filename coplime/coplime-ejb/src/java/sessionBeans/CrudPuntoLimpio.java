@@ -236,6 +236,39 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
     }
     
     @Override
+    public void eliminarContenedorById(Integer num) throws Exception{
+        if (num != null) {
+            DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+            PuntoLimpioDAO ptoDAO = factoryDeDAOs.getPuntoLimpioDAO();
+            ContenedorDAO contDAO = factoryDeDAOs.getContenedorDAO();
+            HistoricoContenedorDAO histDAO = factoryDeDAOs.getHistoricoContenedorDAO();
+            Contenedor contEliminar = contDAO.find(num);
+            PuntoLimpio puntoPerteneciente;
+            if (contEliminar != null) {
+                puntoPerteneciente = contEliminar.getPuntoLimpio();
+                puntoPerteneciente.getContenedores().remove(contEliminar);
+                for (HistoricoContenedor h : contEliminar.getHistorialContenedor()) {
+                    try {
+                        histDAO.delete(h);
+                    } catch (Exception e) {
+                        throw new Exception("No ha sido posible eliminar el contenedor de N°".concat(num.toString()));
+                    }
+                }
+                contEliminar.getHistorialContenedor().clear();
+                if (!contDAO.delete(contEliminar)) {
+                    throw new Exception("No ha sido posible eliminar el contenedor N°".concat(num.toString()));
+                }
+                ptoDAO.update(puntoPerteneciente);
+            } else {
+                throw new Exception("El contenedor que se intenta eliminar no existe");
+            }
+        }
+        else {
+            throw new Exception("El N° del contenedor no puede ser nulo");
+        }
+    }
+    
+    @Override
     public Collection<PuntoLimpio> getAllPuntosLimpios() {
         //Hago los DAO
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
