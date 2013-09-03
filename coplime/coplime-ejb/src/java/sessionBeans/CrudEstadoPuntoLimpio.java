@@ -33,7 +33,8 @@ public class CrudEstadoPuntoLimpio implements CrudEstadoPuntoLimpioLocal {
                 throw new Exception("El estado ya existe.");
             } else {
                 Estado nuevoEstado;
-                nuevoEstado = new Estado(nuevoEstadoPL);
+                nuevoEstado = new Estado();
+                nuevoEstado.setNombreEstado(nuevoEstadoPL);
                 estadosDAO.insert(nuevoEstado);
             }
         } catch (Exception e){
@@ -48,9 +49,8 @@ public class CrudEstadoPuntoLimpio implements CrudEstadoPuntoLimpioLocal {
         try{
             //failsafe
             if(antiguoEstadoPL.equals(nuevoEstadoPL)){
-                throw new Exception("Los nombres de estado son iguales.");
+               throw new Exception("Los nombres de estado son iguales.");
             }
-            
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             EstadoDAO estadosDAO = fabricaDAO.getEstadoDAO();
             Estado estadoEditar;
@@ -97,7 +97,7 @@ public class CrudEstadoPuntoLimpio implements CrudEstadoPuntoLimpioLocal {
     }
 
     @Override
-    public Estado getEstadoPuntoLimpio(String nombreEstadoPLBusq) {
+    public Estado getEstadoPuntoLimpioPorNombre(String nombreEstadoPLBusq) {
         try{
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             EstadoDAO estadosDAO = fabricaDAO.getEstadoDAO();

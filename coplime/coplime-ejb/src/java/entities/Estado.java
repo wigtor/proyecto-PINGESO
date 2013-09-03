@@ -10,12 +10,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author victor
  */
 @Entity
+@NamedQueries( {
+    @NamedQuery(name="Estado.findByName", query="SELECT u FROM Estado u WHERE u.nombreEstado = :nombre") 
+})
 public class Estado implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

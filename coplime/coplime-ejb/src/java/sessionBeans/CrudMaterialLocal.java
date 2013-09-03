@@ -15,11 +15,11 @@ import javax.ejb.Local;
 @Local
 public interface CrudMaterialLocal {
 
-    boolean agregarMaterial(String nombreMaterial);
+    boolean agregarMaterial(String nombreMaterial) throws Exception;
 
-    boolean editarMaterial(String nombreMaterialOriginal, String nombreMaterialNuevo);
+    boolean editarMaterial(Integer idMaterial, String nombreMaterialOriginal, String nombreMaterialNuevo) throws Exception;
 
-    boolean eliminarMaterial(String nombreMaterial);
+    boolean eliminarMaterial(Integer idMaterial, String nombreMaterial)throws Exception;
 
     Collection getAllMateriales();
 

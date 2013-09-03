@@ -15,11 +15,11 @@ import javax.ejb.Local;
 @Local
 public interface CrudTipoIncidenciaLocal {
 
-    boolean agregarTipoIncidencia(String tipoIncidencia, boolean visibleAlUsuario);
+    boolean agregarTipoIncidencia(String tipoIncidencia, boolean visibleAlUsuario) throws Exception;
 
-    boolean editarTipoIncidencia(String tipoIncidenciaOrig, String tipoIncidenciaNuevo, boolean visibleAlUsuarioOrig, boolean visibleAlUsuarioNuevo);
+    boolean editarTipoIncidencia(Integer idIncidencia, String tipoIncidenciaOrig, String tipoIncidenciaNuevo, boolean visibleAlUsuarioOrig, boolean visibleAlUsuarioNuevo) throws Exception;
 
-    boolean eliminarTipoIncidencia(String tipoIncidencia);
+    boolean eliminarTipoIncidencia(Integer idIncidencia, String tipoIncidencia) throws Exception;
 
     TipoIncidencia getTipoIncidenciaByName(String tipoIncidenciaBuscada);
 

@@ -15,14 +15,13 @@ import javax.ejb.Local;
 @Local
 public interface CrudUnidadMedidaLocal {
 
-    boolean agregarUnidadMedida(String nuevaUnidad);
+    boolean agregarUnidadMedida(String nuevaUnidad) throws Exception;
 
-    boolean editarUnidadMedida(String unidadAntigua, String unidadNueva);
+    boolean editarUnidadMedida(Integer idUnidadMedida, String unidadAntigua, String unidadNueva) throws Exception;
 
-    boolean eliminarUnidadMedida(String unidadEliminar);
+    boolean eliminarUnidadMedida(Integer idUnidadMedida, String unidadEliminar) throws Exception;
 
     Collection getAllUnidadesMedida();
 
-    UnidadMedida getUnidadByNombre(String nombreUnidadBusq);
-    
+    UnidadMedida getUnidadByNombre(String nombreUnidadBusq);    
 }

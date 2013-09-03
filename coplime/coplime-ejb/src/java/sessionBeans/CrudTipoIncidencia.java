@@ -25,58 +25,80 @@ public class CrudTipoIncidencia implements CrudTipoIncidenciaLocal {
     private EntityManager em;
 
     @Override
-    public boolean agregarTipoIncidencia(String tipoIncidencia, boolean visibleAlUsuario) {
+    public boolean agregarTipoIncidencia(String tipoIncidencia, boolean visibleAlUsuario) throws Exception {
         try{
-        DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-        TipoIncidenciaDAO matDAO = fabricaDAO.getTipoIncidenciaDAO();
-        TipoIncidencia nuevo = new TipoIncidencia(tipoIncidencia, visibleAlUsuario);
-        matDAO.insert(nuevo);
+            DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+            TipoIncidenciaDAO matDAO = fabricaDAO.getTipoIncidenciaDAO();
+            if(matDAO.find(tipoIncidencia)!=null){
+                throw new Exception("El tipo de incidencia ya existe.");
+            } else {
+                TipoIncidencia nuevo;
+                nuevo = new TipoIncidencia();
+                nuevo.setNombreIncidencia(tipoIncidencia);
+                nuevo.setVisibleAlUsuario(visibleAlUsuario);
+                matDAO.insert(nuevo);
+            }
+
         } catch (Exception e){
             Logger.getLogger(CrudTipoIncidencia.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar agregar el tipo de incidencia \"".concat(tipoIncidencia).concat("\":".concat(e.toString())));
-            return false;
+            throw new Exception("Error al intentar agregar el nuevo tipo de incidencia.");
         }
         return true;
     }
 
     @Override
-    public boolean editarTipoIncidencia(String tipoIncidenciaOrig, String tipoIncidenciaNuevo, boolean visibleAlUsuarioOrig, boolean visibleAlUsuarioNuevo) {
+    public boolean editarTipoIncidencia(Integer idIncidencia, String tipoIncidenciaOrig, String tipoIncidenciaNuevo, boolean visibleAlUsuarioOrig, boolean visibleAlUsuarioNuevo) throws Exception {
+        //failsafe
+        if(tipoIncidenciaOrig.equals(tipoIncidenciaNuevo)){
+            throw new Exception("Los tipos de incidencia son iguales.");
+        }
+        
         try{
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             TipoIncidenciaDAO tipoDAO = fabricaDAO.getTipoIncidenciaDAO();
             TipoIncidencia tipoEditar;
-            tipoEditar = tipoDAO.find(tipoIncidenciaOrig);
-            if (tipoEditar != null){
-                tipoEditar.setNombreIncidencia(tipoIncidenciaNuevo);
-                if(visibleAlUsuarioOrig != visibleAlUsuarioNuevo){
-                    tipoEditar.setVisibleAlUsuario(visibleAlUsuarioNuevo);
-                }
-                tipoDAO.update(tipoEditar);
-                return true;
+            tipoEditar = tipoDAO.find(idIncidencia.intValue());
+            if (tipoEditar == null){
+                throw new Exception("No se puede editar el tipo de incidencia, el ID ".concat(idIncidencia.toString()).concat(" no existe."));
             } else {
-                return false;
-            }
+                if(!(tipoEditar.getNombreIncidencia().equals(tipoIncidenciaOrig))){
+                    throw new Exception("No se puede editar el tipo de incidencia, el nombre asociado al ID es diferente.");
+                } else {
+                    tipoEditar.setNombreIncidencia(tipoIncidenciaNuevo);
+                    if(visibleAlUsuarioOrig != visibleAlUsuarioNuevo){
+                        tipoEditar.setVisibleAlUsuario(visibleAlUsuarioNuevo);
+                    }
+                    tipoDAO.update(tipoEditar);
+                }
+            }   
         } catch (Exception e){
             Logger.getLogger(CrudTipoIncidencia.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar editar el tipo de incidencia \"".concat(tipoIncidenciaOrig).concat("\":".concat(e.toString())));
-            return false;
+            throw new Exception("Error al intentar editar el tipo de incidencia");
         }
+        return true;
     }
 
     @Override
-    public boolean eliminarTipoIncidencia(String tipoIncidencia) {
+    public boolean eliminarTipoIncidencia(Integer idIncidencia, String tipoIncidencia) throws Exception {
         try{
+            
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             TipoIncidenciaDAO tipoDAO = fabricaDAO.getTipoIncidenciaDAO();
             TipoIncidencia tipoEliminar;
-            tipoEliminar = tipoDAO.find(tipoIncidencia);
-            if (tipoEliminar != null){
-                tipoDAO.delete(tipoEliminar);
-                return true;
+            tipoEliminar = tipoDAO.find(idIncidencia.intValue());
+            if (tipoEliminar == null){
+                throw new Exception("No se puede eliminar el estado, el identificador ".concat(idIncidencia.toString()).concat(" no existe."));
             } else {
-                return false;
+                if(!(tipoEliminar.getNombreIncidencia().equals(tipoIncidencia))){
+                    throw new Exception("No se puede eliminar el tipo de incidencia, el nombre asociado al ID es diferente.");
+                } else {
+                    tipoDAO.delete(tipoEliminar);
+                    return true;  
+                }
             }
         } catch (Exception e){
             Logger.getLogger(CrudTipoIncidencia.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar eliminar el tipo de incidencia \"".concat(tipoIncidencia).concat("\":".concat(e.toString())));
-            return false;
+            throw new Exception("Error al intentar eliminar el tipo de incidencia.");
         }
     }
 

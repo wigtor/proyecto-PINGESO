@@ -21,7 +21,9 @@ public interface CrudEstadoPuntoLimpioLocal {
 
     boolean eliminarEstadoPuntoLimpio(Integer idEstado, String eliminarEstadoPL) throws Exception;
 
-    Estado getEstadoPuntoLimpio(String nombreEstadoPLBusq);
+    Estado getEstadoPuntoLimpioPorNombre(String nombreEstadoPLBusq);
+    
+    
 
     Collection getAllEstadosPuntoLimpio();
     

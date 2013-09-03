@@ -40,7 +40,8 @@ public class CrudComuna implements CrudComunaLocal {
             if(comDAO.buscarPorNombre(nombreComuna)!=null){
                 throw new Exception("La comuna ya existe.");
             } else {
-                Comuna nuevaComuna = new Comuna();
+                Comuna nuevaComuna;
+                nuevaComuna = new Comuna();
                 nuevaComuna.setNombre(nombreComuna);
                 comDAO.insert(nuevaComuna);
             }
