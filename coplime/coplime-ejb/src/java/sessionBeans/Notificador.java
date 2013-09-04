@@ -6,6 +6,7 @@ package sessionBeans;
 
 import DAO.DAOFactory;
 import DAO.interfaces.NotificacionDAO;
+import DAO.interfaces.SolicitudMantencionDAO;
 import entities.Notificacion;
 import entities.NotificacionDeUsuario;
 import java.util.Collection;
@@ -27,6 +28,13 @@ public class Notificador implements NotificadorLocal {
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         NotificacionDAO notifDAO = factoryDeDAOs.getNotificacionDAO();
         return notifDAO.countPorRevisar(username);
+    }
+    
+    @Override
+    public Integer obtenerCantidadSolicitudesMantencion(String username) {
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        SolicitudMantencionDAO solicDAO = factoryDeDAOs.getSolicitudMantencionDAO();
+        return solicDAO.countPorRevisar(username);
     }
     
     @Override

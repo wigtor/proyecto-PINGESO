@@ -16,6 +16,7 @@ import entities.Inspector;
 import entities.Notificacion;
 import entities.OperarioMantencion;
 import entities.PuntoLimpio;
+import entities.RevisionPuntoLimpio;
 import entities.SolicitudMantencion;
 import entities.TipoIncidencia;
 import entities.Usuario;
@@ -38,6 +39,11 @@ public class CrudSolicitudMantencion implements CrudSolicitudMantencionLocal {
     // "Insert Code > Add Business Method")
     @Override
     public boolean agregarSolicitudMantencion(Integer numPtoLimpio, String usernameLogueado, Integer numOperario, String detalle) {
+        return agregarSolicitudMantencion( numPtoLimpio, usernameLogueado, numOperario, detalle, null);
+    }
+    
+    @Override
+    public boolean agregarSolicitudMantencion(Integer numPtoLimpio, String usernameLogueado, Integer numOperario, String detalle, RevisionPuntoLimpio revisionOriginadora) {
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         
         PuntoLimpioDAO puntDAO = factoryDeDAOs.getPuntoLimpioDAO();
@@ -51,6 +57,7 @@ public class CrudSolicitudMantencion implements CrudSolicitudMantencionLocal {
         
         SolicitudMantencion nvaSolic = new SolicitudMantencion(p, ins, opAsign, detalle);
         nvaSolic.setFecha(Calendar.getInstance());
+        nvaSolic.setRevisionOriginadora(revisionOriginadora); //puede ser null, no hay problema
         solicDAO.insert(nvaSolic);
         
         TipoIncidenciaDAO tpoIncidDAO = factoryDeDAOs.getTipoIncidenciaDAO();

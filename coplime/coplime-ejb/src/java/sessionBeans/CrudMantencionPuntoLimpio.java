@@ -31,16 +31,34 @@ public class CrudMantencionPuntoLimpio implements CrudMantencionPuntoLimpioLocal
     private EntityManager em;
     
     @Override
-    public boolean agregarMantencion(Integer numPtoLimpio, String usernameLogueado, String detalle, Integer nvoEstado) {
+    public boolean agregarMantencion(Integer numPtoLimpio, String usernameLogueado, String detalle, Integer nvoEstado) throws Exception{
+        if (numPtoLimpio == null) {
+            throw new Exception("El N° de punto limpio no puede ser nulo");
+        }
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         PuntoLimpioDAO puntDAO = factoryDeDAOs.getPuntoLimpioDAO();
         EstadoDAO estDAO = factoryDeDAOs.getEstadoDAO();
         OperarioDAO operDAO = factoryDeDAOs.getOperarioDAO();
         MantencionDAO mantDAO = factoryDeDAOs.getMantencionDAO();
         
+        if (usernameLogueado == null) {
+            throw new Exception("El nombre de usuario no puede ser nulo");
+        }
         OperarioMantencion operario = operDAO.findByUsername(usernameLogueado);
+        if (operario == null) {
+            throw new Exception("El nombre de usuario no ha sido encontrado");
+        }
+        if (nvoEstado == null) {
+            throw new Exception("El nuevo estado del punto limpio no puede ser nulo");
+        }
         Estado e = estDAO.find(nvoEstado);
+        if (e == null) {
+            throw new Exception("El estado no ha sido encontrado");
+        }
         PuntoLimpio p = puntDAO.find(numPtoLimpio.intValue());
+        if (p == null) {
+            throw new Exception("El punto limpio no ha sido encontrado");
+        }
         p.setEstadoGlobal(e);
         puntDAO.update(p);
         

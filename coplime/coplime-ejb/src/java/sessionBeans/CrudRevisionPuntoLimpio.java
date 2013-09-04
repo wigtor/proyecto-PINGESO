@@ -17,6 +17,7 @@ import entities.RevisionPuntoLimpio;
 import entities.Usuario;
 import java.util.Calendar;
 import java.util.Collection;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,13 +28,21 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class CrudRevisionPuntoLimpio implements CrudRevisionPuntoLimpioLocal {
+    @EJB
+    private CrudSolicitudMantencionLocal crudSolicitudMantencion;
+    
     @PersistenceContext(unitName = "coplime-ejbPU")
     private EntityManager em;
+    
+    
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     @Override
-    public boolean agregarRevision(Integer numPtoLimpio, String usernameLogueado, String detalle, Integer nvoEstado) {
+    public boolean agregarRevision(Integer numPtoLimpio, String usernameLogueado, String detalle, Integer nvoEstado) throws Exception {
+        if (numPtoLimpio == null) {
+            throw new Exception("El N° de punto limpio no puede ser nulo");
+        }
         DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         PuntoLimpioDAO puntDAO = factoryDeDAOs.getPuntoLimpioDAO();
         EstadoDAO estDAO = factoryDeDAOs.getEstadoDAO();
@@ -49,6 +58,47 @@ public class CrudRevisionPuntoLimpio implements CrudRevisionPuntoLimpioLocal {
         entities.RevisionPuntoLimpio nvaRev = new entities.RevisionPuntoLimpio(p, ins, detalle);
         nvaRev.setFecha(Calendar.getInstance());
         revDAO.insert(nvaRev);
+        
+        return true;
+    }
+    
+    @Override
+    public boolean agregarRevisionConSolicitud(Integer numPtoLimpio, String usernameLogueado, Integer numOperario, String detalle, Integer nvoEstado) throws Exception{
+        if (numPtoLimpio == null) {
+            throw new Exception("El N° de punto limpio no puede ser nulo");
+        }
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        PuntoLimpioDAO puntDAO = factoryDeDAOs.getPuntoLimpioDAO();
+        EstadoDAO estDAO = factoryDeDAOs.getEstadoDAO();
+        InspectorDAO inspDAO = factoryDeDAOs.getInspectorDAO();
+        RevisionDAO revDAO = factoryDeDAOs.getRevisionDAO();
+        
+        if (usernameLogueado == null) {
+            throw new Exception("El nombre de usuario no puede ser nulo");
+        }
+        Inspector ins = inspDAO.findByUsername(usernameLogueado);
+        if (ins == null) {
+            throw new Exception("El nombre de usuario no ha sido encontrado");
+        }
+        if (nvoEstado == null) {
+            throw new Exception("El nuevo estado del punto limpio no puede ser nulo");
+        }
+        Estado e = estDAO.find(nvoEstado);
+        if (e == null) {
+            throw new Exception("El estado no ha sido encontrado");
+        }
+        PuntoLimpio p = puntDAO.find(numPtoLimpio.intValue());
+        if (p == null) {
+            throw new Exception("El punto limpio no ha sido encontrado");
+        }
+        p.setEstadoGlobal(e);
+        puntDAO.update(p);
+        
+        RevisionPuntoLimpio nvaRev = new RevisionPuntoLimpio(p, ins, detalle);
+        nvaRev.setFecha(Calendar.getInstance());
+        revDAO.insert(nvaRev);
+        
+        crudSolicitudMantencion.agregarSolicitudMantencion(numPtoLimpio, usernameLogueado, numOperario, detalle, nvaRev);
         
         return true;
     }

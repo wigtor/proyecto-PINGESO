@@ -29,10 +29,20 @@
                         <p:commandButton value="Cambiar estado" action="#{agregarRevisionMB.cambiarEstadoPtoLimpio()}"/>
 
                         <p:outputLabel for="detallesRev" value="Detalles de la revisión" />
-                        <p:inputTextarea id="detallesRev" value="#{agregarRevisionMB.detalle}"/>
+                        <p:inputTextarea id="detallesRev" value="#{agregarRevisionMB.detalle}" scrollHeight="10"/>
+                        
+                        <h:panelGroup>
+                            <p:outputLabel for="operario" value="Seleccione operario encargado" />
+                            <p:outputLabel for="operario" value="(Sólo si desea solicitar mantención)" />
+                        </h:panelGroup>
+                        <p:selectOneMenu id="operario" value="#{agregarRevisionMB.numOperarioAsig}">
+                            <f:selectItems value="#{agregarRevisionMB.listaOperarios}"  
+                                           var="operarioEncargado" itemLabel="#{operarioEncargado.label}" itemValue="#{operarioEncargado.id}" />
+                        </p:selectOneMenu>
                         
                         <f:facet name="footer">
                             <p:commandButton value="Guardar revisión" ajax="false" action="#{agregarRevisionMB.guardarRevision()}"/>
+                            <p:commandButton value="Guardar revisión y solicitar mantención" ajax="false" action="#{agregarRevisionMB.guardarRevisionConSolicitudMantencion()}"/>
                             <p:commandButton value="Ver Listado" immediate="true" action="#{agregarRevisionMB.volverToLista()}"/>
                         </f:facet>
                     </p:panelGrid>

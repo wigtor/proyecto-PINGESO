@@ -4,6 +4,7 @@
  */
 package sessionBeans;
 
+import entities.RevisionPuntoLimpio;
 import entities.SolicitudMantencion;
 import java.util.Collection;
 import javax.ejb.Local;
@@ -23,4 +24,6 @@ public interface CrudSolicitudMantencionLocal {
     public boolean checkRevisada(Integer idNotif, boolean check);
 
     public boolean checkResuelta(Integer idNotif, boolean check);
+
+    public boolean agregarSolicitudMantencion(Integer numPtoLimpio, String usernameLogueado, Integer numOperario, String detalle, RevisionPuntoLimpio revisionOriginadora);
 }

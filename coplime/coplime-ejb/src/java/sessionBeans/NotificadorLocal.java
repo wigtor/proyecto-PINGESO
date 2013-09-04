@@ -31,4 +31,6 @@ public interface NotificadorLocal {
 
     public boolean eliminarNotificacion(Integer idNotif);
 
+    public Integer obtenerCantidadSolicitudesMantencion(String username);
+
 }

@@ -38,7 +38,10 @@
                         <h:outputText id="txt_num_notif" styleClass="ui-li-count" value="(#{notificacionesManagedBeans.cantidadNotificaciones})"/>
                         <p:poll interval="30" autoStart="true" listener="#{notificacionesManagedBeans.refresNotificaciones(null)}" update="txt_num_notif"/>
                     </h:outputLink>
-                    <h:outputLink value="#{request.contextPath}/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención</h:outputLink>
+                    <h:outputLink value="#{request.contextPath}/faces/users/verSolicitudesMantencion.xhtml">Ver solicitudes de mantención
+                        <h:outputText id="txt_num_solic" styleClass="ui-li-count" value="(#{notificacionesManagedBeans.cantidadSolicitudesMantencion})"/>
+                        <p:poll interval="30" autoStart="true" listener="#{notificacionesManagedBeans.refresSolicitudes(null)}" update="txt_num_solic"/>
+                    </h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verRevisiones.xhtml">Ver revisiones de puntos limpios</h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verMantenciones.xhtml">Ver mantenciones de puntos limpios</h:outputLink>
                     <h:outputLink value="#{request.contextPath}/faces/users/verOperariosMantencion.xhtml">Ver operarios de mantención</h:outputLink>
