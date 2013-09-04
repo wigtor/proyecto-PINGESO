@@ -5,6 +5,7 @@
 package managedBeans.mantenedores.puntoLimpio;
 
 import ObjectsForManagedBeans.ContenedorPojo;
+import ObjectsForManagedBeans.RevisionPojo;
 import entities.Contenedor;
 import entities.PuntoLimpio;
 import entities.RevisionPuntoLimpio;
@@ -47,6 +48,7 @@ public class MantenedorPuntoLimpioVerDetallesMB {
     private Integer numRevisionesRealizadas;
     private Integer numContenedores;
     private Collection<ContenedorPojo> listaContenedores;
+    private Collection<RevisionPojo> listaRevisiones;
     
     
     /**
@@ -108,11 +110,28 @@ public class MantenedorPuntoLimpioVerDetallesMB {
         Calendar f = ptoLimpioSelec.getFechaProxRevision();
         this.fechaProximaRevision = Integer.toString(f.get(Calendar.DAY_OF_MONTH)).concat("-").concat(
                     f.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH));
-        List<RevisionPuntoLimpio> listaRevisiones = ptoLimpioSelec.getRevisiones();
+        List<RevisionPuntoLimpio> listaRevisionesTemp = ptoLimpioSelec.getRevisiones();
         this.fechaUltimaRevision = "Nunca revisado";
-        if (listaRevisiones != null) {
-            if (!listaRevisiones.isEmpty()) {
-                Calendar f2 = listaRevisiones.get(listaRevisiones.size()-1).getFecha();
+        this.listaRevisiones = new ArrayList<>();
+        if (listaRevisionesTemp != null) {
+            RevisionPojo revPojo;
+            Calendar f2;
+            
+            for (RevisionPuntoLimpio revTemp : listaRevisionesTemp) {
+                revPojo = new RevisionPojo();
+                revPojo.setNum(revTemp.getNum());
+                revPojo.setUsuario(revTemp.getInspectorRevisor().getUsuario().getNombre().concat(
+                        revTemp.getInspectorRevisor().getUsuario().getApellido1()));
+                f2 = revTemp.getFecha();
+                revPojo.setFecha(f2.get(Calendar.DAY_OF_MONTH)
+                    +"-"
+                    +f2.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH));
+                revPojo.setDetalleCortado(revTemp.getDetalles());
+                
+                listaRevisiones.add(revPojo);
+            }
+            if (!listaRevisionesTemp.isEmpty()) {
+                f2 = listaRevisionesTemp.get(listaRevisionesTemp.size()-1).getFecha();
                 this.fechaUltimaRevision = f2.get(Calendar.DAY_OF_MONTH)
                     +"-"
                     +f2.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH);
@@ -240,6 +259,14 @@ public class MantenedorPuntoLimpioVerDetallesMB {
 
     public void setListaContenedores(Collection<ContenedorPojo> listaContenedores) {
         this.listaContenedores = listaContenedores;
+    }
+
+    public Collection<RevisionPojo> getListaRevisiones() {
+        return listaRevisiones;
+    }
+
+    public void setListaRevisiones(Collection<RevisionPojo> listaRevisiones) {
+        this.listaRevisiones = listaRevisiones;
     }
     
 }

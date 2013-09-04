@@ -54,22 +54,40 @@
                          
                          <f:facet name="footer">
                              <p:dataTable value="#{mantenedorPuntoLimpioVerDetallesMB.listaContenedores}" var="contenedor" 
-                                      emptyMessage="No ha agregado contenedores a este punto limpio">
-
-                             <p:column headerText="Material" >
-                                 <h:outputText value="#{contenedor.nombreMaterial}"/>
-                             </p:column>
-                             <p:column headerText="Capacidad" >
-                                 <h:outputText value="#{contenedor.capacidad} #{contenedor.nombreUnidadMedida}"/>
-                             </p:column>
-                             <p:column headerText="Llenado" >
-                                 <h:outputText value="#{contenedor.llenadoContenedor}%"/>
-                             </p:column>
-                             <p:column headerText="Estado" >
-                                 <h:outputText value="#{contenedor.nombreEstadoContenedor}"/>
-                             </p:column>
-                         </p:dataTable>
+                                          emptyMessage="No ha agregado contenedores a este punto limpio"
+                                          style="margin-top: 20px;">
+                                 <f:facet name="header">Listado de contenedores</f:facet>
+                                 
+                                 <p:column headerText="Material" >
+                                     <h:outputText value="#{contenedor.nombreMaterial}"/>
+                                 </p:column>
+                                 <p:column headerText="Capacidad" >
+                                     <h:outputText value="#{contenedor.capacidad} #{contenedor.nombreUnidadMedida}"/>
+                                 </p:column>
+                                 <p:column headerText="Llenado" >
+                                     <h:outputText value="#{contenedor.llenadoContenedor}%"/>
+                                 </p:column>
+                                 <p:column headerText="Estado" >
+                                     <h:outputText value="#{contenedor.nombreEstadoContenedor}"/>
+                                 </p:column>
+                             </p:dataTable>
                              
+                             <p:dataTable value="#{mantenedorPuntoLimpioVerDetallesMB.listaRevisiones}" var="revision" 
+                                          emptyMessage="No se han hecho revisiones a este punto limpio"
+                                          style="margin-top: 20px;">
+                                 <f:facet name="header">Listado de revisiones</f:facet>
+                                 
+                                 <p:column headerText="N°" >
+                                     <h:outputText value="#{revision.num}"/>
+                                 </p:column>
+                                 <p:column headerText="Inspector revisor" >
+                                     <h:outputText value="#{revision.usuario}"/>
+                                 </p:column>
+                                 <p:column headerText="Fecha" >
+                                     <h:outputText value="#{revision.fecha}"/>
+                                 </p:column>
+                             </p:dataTable>
+
                             <p:commandButton value="Volver" action="#{mantenedorPuntoLimpioVerDetallesMB.volverToLista()}"/>                         
                          </f:facet>
                      </p:panelGrid>                

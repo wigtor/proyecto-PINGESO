@@ -56,7 +56,8 @@
                         <p:outputLabel value="Contenedores agregados: #{mantenedorPuntoLimpioAgregarContMB.listaContenedores.size()}"/>
                         <p:dataTable value="#{mantenedorPuntoLimpioAgregarContMB.listaContenedores}" var="contenedor" 
                                      emptyMessage="No ha agregado contenedores a este punto limpio">
-
+                            <f:facet name="header">Listado de contenedores</f:facet>
+                            
                             <p:column headerText="Material" >
                                 <h:outputText value="#{contenedor.nombreMaterial}"/>
                             </p:column>
