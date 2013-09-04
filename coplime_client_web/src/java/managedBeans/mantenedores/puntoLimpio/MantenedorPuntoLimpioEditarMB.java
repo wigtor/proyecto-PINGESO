@@ -100,8 +100,10 @@ public class MantenedorPuntoLimpioEditarMB {
                     contTempPojo.setNuevo(false);
                     contTempPojo.setNombreUnidadMedida(cont_iter.getUnidadMedida().getNombreUnidad());
                     contTempPojo.setCapacidad(cont_iter.getCapacidad());
+                    contTempPojo.setIdMaterial(cont_iter.getMaterialDeAcopio().getId());
                     contTempPojo.setNombreMaterial(cont_iter.getMaterialDeAcopio().getNombre_material());
                     contTempPojo.setLlenadoContenedor(cont_iter.getProcentajeUso());
+                    contTempPojo.setIdEstadoContenedor(cont_iter.getEstadoContenedor().getId());
                     contTempPojo.setNombreEstadoContenedor(cont_iter.getEstadoContenedor().getNombreEstado());
                     resultado.add(contTempPojo);
                 }
@@ -186,6 +188,11 @@ public class MantenedorPuntoLimpioEditarMB {
         this.mantPtoLimpio.eliminarContenedor(id);
         //CommonFunctions.goToPage("/faces/users/admin/agregarPuntoLimpio.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
     }
+    
+    public void editarContenedor(Integer id) {
+        this.mantPtoLimpio.setIdContenedorEditando(id);
+        CommonFunctions.goToPage("/faces/users/admin/editarContenedor.xhtml?cid=".concat(this.mantPtoLimpio.getConversation().getId()));
+    }
 
     public void guardarCambiosPtoLimpio() {
         Calendar fechaComoCalendar = new GregorianCalendar();
@@ -211,6 +218,10 @@ public class MantenedorPuntoLimpioEditarMB {
                 idUnidadMedida = contTemp.getIdUnidadMedida();
                 if (contTemp.isNuevo()) {
                     crudPuntoLimpio.agregarContenedor(
+                        num, idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida);
+                }
+                else if (contTemp.isEditado()) {
+                    crudPuntoLimpio.editarContenedor(
                         num, idMaterial, idEstadoIni, llenadoIni, capacidad, idUnidadMedida);
                 }
             }

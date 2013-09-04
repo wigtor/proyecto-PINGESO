@@ -1,47 +1,94 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<f:view xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pm="http://primefaces.org/mobile"
       contentType="text/html"
-      renderKitId="PRIMEFACES_MOBILE"
       xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
-    
-    
-    <pm:page title="Editar contenedores">
-        <!-- Main View -->
-        <pm:view id="main">
-            <pm:header title="Editar contenedores" swatch="b"/>
-            <pm:content>
-                <h:form>
-                <p:outputPanel>
-                    <p:dataList type="inset" styleClass="ui-li-custom">
-                        <f:facet name="header">Inicio de sesión</f:facet>
-                        <f:attribute name="icon" value="false" />
-                        <p:inputText label="N° de punto limpio" value="#{mantenedorPuntoLimpio.numPuntoLimpio}"/>
-                        <p:selectOneMenu label="Material que almacena" value="#{mantenedorPuntoLimpio.materialContenedor_seleccionado}">
-                            <f:selectItems value="#{mantenedorPuntoLimpio.ListaMateriales}"  
-                                var="mat" itemLabel="#{mat.nombre}" itemValue="#{mat.num}" />
-                        </p:selectOneMenu>
-                        <p:inputText id="llenadoInicialContenedor" label="Llenado actual" value="#{mantenedorPuntoLimpio.llenadoContenedor}"/>
-                        <p:slider step="10" for="llenadoInicialContenedor"/>
-                        <p:selectOneMenu label="Estado actual" value="#{mantenedorPuntoLimpio.estadoContenedor_seleccionado}">
-                            <f:selectItems value="#{mantenedorPuntoLimpio.ListaEstadosContenedores}"  
-                                var="estadoCont" itemLabel="#{estadoCont.nombre}" itemValue="#{estadoCont.num}" />
+    <body>
+       <ui:composition template="/mainTemplate.xhtml">
+           <ui:define name="titulo" >Editar contenedores</ui:define>
+           <ui:define name="botonesBarra">
+                <ezcomp:boton_barra_superior classIcon="ui-icon-home" title="Ir al inicio" action="#{autenticadorMB.indexLoggued()}" />
+            </ui:define>
+           
+           <ui:define name="centro">
+               <h:form>
+                   <p:panelGrid columns="2" styleClass="centrar" >
+                        <f:facet name="header">Edición de datos del contenedor</f:facet>
+                        
+                        <p:outputLabel value="N° de punto limpio"/>
+                        <p:inputText value="#{mantenedorPuntoLimpioEditarContMB.numPtoLimpio}" disabled="true"/>
+                        
+                        <p:outputLabel value="N° de contenedor"/>
+                        <p:inputText value="#{mantenedorPuntoLimpioEditarContMB.idContenedor}" disabled="true"/>
+                        
+                        <p:outputLabel value="Material que almacena" for="material"/>
+                        <p:selectOneMenu id="material" value="#{mantenedorPuntoLimpioEditarContMB.material}">
+                            <f:selectItems value="#{mantenedorPuntoLimpioEditarContMB.listaMateriales}"  
+                                var="mat" itemLabel="#{mat.label}" itemValue="#{mat.id}" />
                         </p:selectOneMenu>
                         
-                        <p:commandButton value="Guardar" ajax="false" action="#{mantenedorPuntoLimpio.guardarCambiosContenedor()}"/>
-                        <p:commandButton value="Volver" immediate="true" action="#{mantenedorPuntoLimpio.volverToPuntoLimpio()}"/>
-                    </p:dataList>
-                </p:outputPanel>
-                </h:form>
-            </pm:content>
-        </pm:view>
-    </pm:page>
+                        <p:outputLabel value="Capacidad del contenedor" for="capacidad"/>
+                        <h:panelGroup >
+                            <p:inputText id="capacidad" value="#{mantenedorPuntoLimpioEditarContMB.capacidad}" style="width:120px; margin-top: -12px;">
+                                <f:validator validatorId="NumPositiveValidator" />
+                            </p:inputText>
+                            <p:selectOneMenu id="unidad" value="#{mantenedorPuntoLimpioEditarContMB.idUnidadMedida}" style="margin-left:5px; width:90px; margin-top: 5px;">
+                                <f:selectItems value="#{mantenedorPuntoLimpioEditarContMB.listaUnidadesMedida}"  
+                                    var="unidad" itemLabel="#{unidad.label}" itemValue="#{unidad.id}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <p:outputLabel value="Llenado inicial" for="llenadoInicialContenedor"/>
+                        <h:panelGroup >
+                            <p:inputText id="llenadoInicialContenedor" value="#{mantenedorPuntoLimpioEditarContMB.llenadoContenedor}">
+                                <f:validator validatorId="PorcentajeLlenadoValidator" />
+                            </p:inputText> %
+                            <p:slider step="5" for="llenadoInicialContenedor"/>
+                        </h:panelGroup>
+                        
+                        <p:outputLabel value="Estado inicial" for="estadoIni"/>
+                        <p:selectOneMenu id="estadoIni" value="#{mantenedorPuntoLimpioEditarContMB.estadoContenedor}">
+                            <f:selectItems value="#{mantenedorPuntoLimpioEditarContMB.listaEstadosContenedores}"  
+                                var="estadoCont" itemLabel="#{estadoCont.label}" itemValue="#{estadoCont.id}" />
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Contenedores agregados: #{mantenedorPuntoLimpioEditarContMB.listaContenedores.size()}"/>
+                        <p:dataTable value="#{mantenedorPuntoLimpioEditarContMB.listaContenedores}" var="contenedor" 
+                                     emptyMessage="No ha agregado contenedores a este punto limpio">
 
-</f:view>
+                            <p:column headerText="Material" >
+                                <h:outputText value="#{contenedor.nombreMaterial}"/>
+                            </p:column>
+                            
+                            <p:column headerText="Capacidad" >
+                                <h:outputText value="#{contenedor.capacidad} #{contenedor.nombreUnidadMedida}"/>
+                            </p:column>
+                            
+                            <p:column headerText="">
+                                <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{contenedor.id}.show();" />
 
-
+                                <p:confirmDialog message="¿Está seguro que desea eliminar el contenedor?"
+                                                 header="Confirmación de eliminación de contenedor" severity="alert"
+                                                 widgetVar="cd_#{contenedor.id}" closeOnEscape="true">
+                                    <p:commandButton value="Si" actionListener="#{mantenedorPuntoLimpioEditarContMB.eliminarContenedorAgregado(contenedor.id)}"
+                                                     oncomplete="cd_#{contenedor.id}.hide();"/>
+                                    <p:commandButton value="No" onclick="cd_#{contenedor.id}.hide();" type="button" />
+                                </p:confirmDialog>
+                            </p:column>
+                        </p:dataTable>
+                        
+                        
+                        <f:facet name="footer">
+                            <p:commandButton value="Guardar" ajax="false" action="#{mantenedorPuntoLimpioEditarContMB.guardarDatosContenedor()}"/>
+                            <p:commandButton value="Volver" immediate="true" action="#{mantenedorPuntoLimpioEditarContMB.volverToPuntoLimpio()}"/>
+                        </f:facet>
+                   </p:panelGrid>
+               </h:form>
+           </ui:define>
+       </ui:composition>
+    </body>    
+</html>

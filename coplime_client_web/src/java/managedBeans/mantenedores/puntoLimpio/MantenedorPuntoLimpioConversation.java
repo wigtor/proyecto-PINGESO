@@ -31,6 +31,7 @@ public class MantenedorPuntoLimpioConversation extends AbstractConversation impl
     private Integer idPuntoLimpioDetalles;
     private int state;
     private boolean primeraCarga;
+    private Integer idContenedorEditando;
     
     /**
      * Creates a new instance of MantenedorPuntoLimpioConversation
@@ -99,6 +100,14 @@ public class MantenedorPuntoLimpioConversation extends AbstractConversation impl
 
     public void setPrimeraCarga(boolean primeraCarga) {
         this.primeraCarga = primeraCarga;
+    }
+
+    public Integer getIdContenedorEditando() {
+        return idContenedorEditando;
+    }
+
+    public void setIdContenedorEditando(Integer idContenedorEditando) {
+        this.idContenedorEditando = idContenedorEditando;
     }
     
 }

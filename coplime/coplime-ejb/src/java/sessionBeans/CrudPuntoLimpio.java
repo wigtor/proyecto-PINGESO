@@ -218,6 +218,63 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
         }
     }
     
+    @Override
+    public void editarContenedor(Integer numContenedor, Integer idMaterial, Integer idEstadoIni, int llenadoIni, int capacidad, Integer idUnidadMedida) throws Exception{
+        
+        DAOFactory factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        ContenedorDAO contDAO = factoryDeDAOs.getContenedorDAO();
+        UnidadMedidaDAO uniMedDAO = factoryDeDAOs.getUnidadMedidaDAO();
+        MaterialDAO matDAO = factoryDeDAOs.getMaterialDAO();
+        EstadoDAO estDAO = factoryDeDAOs.getEstadoDAO();
+        HistoricoContenedorDAO histDAO = factoryDeDAOs.getHistoricoContenedorDAO();
+        
+        Contenedor c = contDAO.find(numContenedor.intValue());
+        if (c == null) {
+            //System.out.println("No se encontró el id del puntolimpio al agregar el contenedor");
+            throw new Exception("El contenedor que desea editar no existe");
+        }
+        Estado estTemp = estDAO.find(idEstadoIni.intValue());
+        if (estTemp == null) {
+            //System.out.println("No se encontró el id del estado al agregar el contenedor");
+            throw new Exception("El estado seleccionado no es válido");
+        }
+        
+        Material matTemp = matDAO.find(idMaterial.intValue());
+        if (matTemp == null) {
+            //System.out.println("No se encontró el id del material al agregar el contenedor");
+            throw new Exception("El material seleccionado no es válido");
+        }
+        
+        UnidadMedida uniTemp = uniMedDAO.find(idUnidadMedida.intValue());
+        if (uniTemp == null) {
+            //System.out.println("No se encontró el id de la unidad de medida al agregar el contenedor");
+            throw new Exception("La unidad de medida del material no es válida");
+        }
+        
+        c.setCapacidad(capacidad);
+        c.setPorcentajeUsoEstimado(llenadoIni);
+        c.setProcentajeUso(llenadoIni);
+        
+        c.setEstadoContenedor(estTemp);
+        c.setMaterialDeAcopio(matTemp);
+        c.setUnidadMedida(uniTemp);
+        
+        HistoricoContenedor nvoHistorico = new HistoricoContenedor();
+        nvoHistorico.setPorcentajeLlenado(llenadoIni);
+        nvoHistorico.setFechaHora(Calendar.getInstance());
+        nvoHistorico.setContenedor(c);
+        c.getHistorialContenedor().add(nvoHistorico);
+        
+        
+        try {
+            histDAO.insert(nvoHistorico);
+            contDAO.update(c);
+        }
+        catch (Exception e) {
+            throw new Exception("No ha sido posible editar el contenedor");
+        }
+        
+    }
     
     @Override
     public void eliminarPuntoLimpioByNum(Integer num) throws Exception{
