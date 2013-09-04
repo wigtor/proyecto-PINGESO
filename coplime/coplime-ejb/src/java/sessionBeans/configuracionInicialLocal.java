@@ -15,4 +15,6 @@ public interface configuracionInicialLocal {
     public void primeraEjecucion();
 
     void cargarConfiguracion();
+
+    public void primeraEjecucionTesting();
 }

@@ -71,6 +71,24 @@ public class configuracionInicial implements configuracionInicialLocal {
     public void primeraEjecucion() {
         factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
         cargarConfiguracion();
+        cargarRoles();
+        cargarUsuarioAdmin();
+        cargarEstadosPuntosLimpios();
+        cargarTipoIncidencias();
+        cargarComunas();
+        cargarUnidadesMedida();
+        cargarMateriales();
+        //cargarPuntosLimpios();
+        //cargarMantenciones();
+        //cargarNotificaciones();
+        programarTimersIniciales();
+    }
+    
+    @Override
+    public void primeraEjecucionTesting() {
+        factoryDeDAOs = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+        cargarConfiguracion();
+        cargarRoles();
         cargaUsuarios();
         cargarEstadosPuntosLimpios();
         cargarTipoIncidencias();
@@ -307,6 +325,75 @@ public class configuracionInicial implements configuracionInicialLocal {
         
         NotificacionDAO notifDAO = factoryDeDAOs.getNotificacionDAO();
         notifDAO.insert(notif);
+        
+    }
+    
+    private void cargarUsuarioAdmin() {
+        String password = "emeresRoot2013";
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes("UTF-8"));
+
+            byte[] digest = md.digest();
+            BigInteger bigInt = new BigInteger(1, digest);
+            password = bigInt.toString(16);
+        }
+        catch (Exception e) {
+            System.out.println("No se pudo convertir a MD5 la password");
+        }
+        
+        RolDAO rolDAO = factoryDeDAOs.getRolDAO();
+        Rol nvoRol = rolDAO.find("Administrador");
+        if (nvoRol == null) { //Para crear el rol en caso que no exista en la DB
+            nvoRol = new Rol();
+            nvoRol.setNombreRol("Administrador");
+            rolDAO.insert(nvoRol);
+        }
+        
+        Administrador nvoAdmin;
+        Usuario nvoUsuario = new Usuario();
+        nvoAdmin = new Administrador();
+        nvoUsuario.setNombre("admin");
+        nvoUsuario.setApellido1("admin");
+        nvoUsuario.setEmail("admin@admin.cl");
+        nvoUsuario.setApellido2("admin");
+        nvoUsuario.setUsername("admin");
+        nvoUsuario.setRut(11111111);
+        nvoUsuario.setTelefono(0);
+        nvoUsuario.setPassword(password);
+        nvoAdmin.setUsuario(nvoUsuario);
+        nvoUsuario.setRol(nvoRol);
+        
+        
+        //Hago los DAO
+        AdministradorDAO adminDAO = factoryDeDAOs.getAdministradorDAO();
+        UsuarioDAO userDAO = factoryDeDAOs.getUsuarioDAO();
+        userDAO.insert(nvoUsuario);
+        adminDAO.insert(nvoAdmin);
+    }
+    
+    private void cargarRoles() {
+        RolDAO rolDAO = factoryDeDAOs.getRolDAO();
+        Rol nvoRol = rolDAO.find("Administrador");
+        if (nvoRol == null) { //Para crear el rol en caso que no exista en la DB
+            nvoRol = new Rol();
+            nvoRol.setNombreRol("Administrador");
+            rolDAO.insert(nvoRol);
+        }
+        
+        nvoRol = rolDAO.find("Inspector");
+        if (nvoRol == null) { //Para crear el rol en caso que no exista en la DB
+            nvoRol = new Rol();
+            nvoRol.setNombreRol("Inspector");
+            rolDAO.insert(nvoRol);
+        }
+        
+        nvoRol = rolDAO.find("Operario");
+        if (nvoRol == null) { //Para crear el rol en caso que no exista en la DB
+            nvoRol = new Rol();
+            nvoRol.setNombreRol("Operario");
+            rolDAO.insert(nvoRol);
+        }
         
     }
     

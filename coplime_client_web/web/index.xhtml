@@ -46,7 +46,7 @@
                             <p:inputText id="input_password" type="password" value="#{login.password}" required="true"/>
                             
                             <f:facet name="footer">
-                                <p:growl id="msj_error_login"/>
+                                <p:growl id="msj_error_login" sticky="true" />
                                 <p:commandButton styleClass="centrar" value="Iniciar sesión" action="#{login.login()}" update="msj_error_login"/>
                             </f:facet>
                         </p:panelGrid>
