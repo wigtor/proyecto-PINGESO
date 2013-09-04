@@ -83,7 +83,8 @@ public class MantenedorPuntoLimpioEditarMB {
             this.comuna_seleccionada = p.getComuna().getId();
             this.nombre = p.getNombre();
             this.direccion = p.getUbicacion();
-            this.inspectorEncargado_seleccionado = p.getInspectorEncargado().getId();
+            if (p.getInspectorEncargado() != null)
+                this.inspectorEncargado_seleccionado = p.getInspectorEncargado().getId();
             //this.num = p.getNum();
             this.estado_seleccionado = p.getEstadoGlobal().getId();
             this.fechaRevision = p.getFechaProxRevision().getTime();

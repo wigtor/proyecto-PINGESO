@@ -44,7 +44,7 @@
                             <p:column headerText="" rendered="#{request.isUserInRole('Administrador')}">
                                 <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{puntoLimpio.num}.show();" />
 
-                                <p:confirmDialog message="¿Está seguro que desea eliminar el punto limpio?"
+                                <p:confirmDialog message="¿Está seguro que desea eliminar el punto limpio? se eliminarán todos sus historiales"
                                                  header="Confirmación de eliminación de punto limpio" severity="alert"
                                                  widgetVar="cd_#{puntoLimpio.num}" closeOnEscape="true">
                                     <p:commandButton value="Si" actionListener="#{mantenedorPuntoLimpioVerListadoMB.eliminar(puntoLimpio.num)}"

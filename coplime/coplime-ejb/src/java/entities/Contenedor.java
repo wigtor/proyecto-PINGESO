@@ -7,6 +7,7 @@ package entities;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -59,7 +60,7 @@ public class Contenedor implements Serializable {
     private PuntoLimpio puntoLimpio;
     
     
-    @OneToMany(mappedBy = "contenedor")
+    @OneToMany(mappedBy = "contenedor", cascade = CascadeType.ALL)
     private List<HistoricoContenedor> historialContenedor;
 
     public Contenedor() {

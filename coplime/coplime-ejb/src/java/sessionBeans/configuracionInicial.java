@@ -477,7 +477,7 @@ public class configuracionInicial implements configuracionInicialLocal {
         Usuario nvoUsuario3 = new Usuario();
         nvoOperario = new OperarioMantencion();
         nvoUsuario3.setNombre("Armando");
-        nvoUsuario3.setApellido1("Casas");
+        nvoUsuario3.setApellido1("Rojas");
         nvoUsuario3.setEmail("armando.casas@usach.cl");
         nvoUsuario3.setApellido2("Rojas");
         nvoUsuario3.setUsername("arojas");

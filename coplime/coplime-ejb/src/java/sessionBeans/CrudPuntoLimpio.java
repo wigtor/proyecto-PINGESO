@@ -68,7 +68,11 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
             Estado estadoP = estDAO.find(idEstadoIni);
             p.setEstadoGlobal(estadoP);
             
-            Inspector inspectorEnc = inspDAO.find(numInspEnc);
+            Inspector inspectorEnc = null;
+            System.out.println("numInspect: "+numInspEnc);
+            if (numInspEnc != null){
+                inspectorEnc = inspDAO.find(numInspEnc);
+            }
             p.setInspectorEncargado(inspectorEnc);
             
             ptoDAO.insert(p);
@@ -289,7 +293,9 @@ public class CrudPuntoLimpio implements CrudPuntoLimpioLocal {
                 throw new Exception("No ha sido posible eliminar el punto limpio N°".concat(num.toString()));
             }
         }
-        throw new Exception("El N° del punto limpio no puede ser nulo");
+        else {
+            throw new Exception("El N° del punto limpio no puede ser nulo");
+        }
     }
     
     @Override

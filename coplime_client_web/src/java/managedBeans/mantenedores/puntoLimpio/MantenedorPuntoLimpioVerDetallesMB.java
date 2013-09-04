@@ -97,9 +97,12 @@ public class MantenedorPuntoLimpioVerDetallesMB {
         this.comuna = ptoLimpioSelec.getComuna().getNombre();
         this.direccion = ptoLimpioSelec.getUbicacion();
         this.estado = ptoLimpioSelec.getEstadoGlobal().getNombreEstado();
-        Usuario userEncargado = ptoLimpioSelec.getInspectorEncargado().getUsuario();
-        this.inspectorEncargado = Integer.toString(userEncargado.getRut()).concat(" - ")
-                .concat(userEncargado.getNombre()).concat(" ").concat(userEncargado.getApellido1());
+        if (ptoLimpioSelec.getInspectorEncargado() != null) {
+            Usuario userEncargado = ptoLimpioSelec.getInspectorEncargado().getUsuario();
+            this.inspectorEncargado = Integer.toString(userEncargado.getRut()).concat(" - ")
+                    .concat(userEncargado.getNombre()).concat(" ").concat(userEncargado.getApellido1());
+        }
+        
         this.numMantencionesRealizadas = ptoLimpioSelec.getMantenciones().size();
         this.numRevisionesRealizadas = ptoLimpioSelec.getRevisiones().size();
         Calendar f = ptoLimpioSelec.getFechaProxRevision();
@@ -132,7 +135,7 @@ public class MantenedorPuntoLimpioVerDetallesMB {
         }
         this.numContenedores = this.listaContenedores.size();
         
-        //FALTA CARGAR LA LISTA DE REVISIONES Y LISTA DE CONTENEDORES
+        //FALTA CARGAR LA LISTA DE REVISIONES
         
         
     }
