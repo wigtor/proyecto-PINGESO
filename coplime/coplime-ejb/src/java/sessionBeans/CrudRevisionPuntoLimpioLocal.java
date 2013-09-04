@@ -15,7 +15,11 @@ import javax.ejb.Local;
 @Local
 public interface CrudRevisionPuntoLimpioLocal {
 
-    public boolean agregarRevision(Integer numPtoLimpio, String usernameLogueado, String detalle, Integer nvoEstado);
+    public boolean agregarRevision(Integer numPtoLimpio, String usernameLogueado, String detalle, Integer nvoEstado) throws Exception;
+    
     public RevisionPuntoLimpio getRevisionById(Integer numRevision);
+    
     public Collection<RevisionPuntoLimpio> getAllRevisiones(String usernameQuienPregunta);
+
+    public boolean agregarRevisionConSolicitud(Integer numPtoLimpio, String usernameLogueado, Integer numOperario, String detalle, Integer nvoEstado) throws Exception;
 }

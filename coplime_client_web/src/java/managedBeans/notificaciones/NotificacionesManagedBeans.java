@@ -26,6 +26,7 @@ public class NotificacionesManagedBeans implements Serializable {
     private NotificadorLocal notificador;
     
     private int cantidadNotificaciones;
+    private int cantidadSolicitudesMantencion;
     private String usernameLogueado;
     
     
@@ -50,6 +51,16 @@ public class NotificacionesManagedBeans implements Serializable {
         
     }
     
+    public void refresSolicitudesMantencion(ActionEvent actionEvent) {
+        //System.out.println("Cargando método cargarCantidadNotificaciones");
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
+        usernameLogueado = request.getRemoteUser();
+        this.cantidadSolicitudesMantencion = notificador.obtenerCantidadSolicitudesMantencion(usernameLogueado);
+        
+    }
+    
     public int getCantidadNotificaciones() {
         return cantidadNotificaciones;
     }
@@ -57,4 +68,13 @@ public class NotificacionesManagedBeans implements Serializable {
     public void setCantidadNotificaciones(int cantidadNotificaciones) {
         this.cantidadNotificaciones = cantidadNotificaciones;
     }
+
+    public int getCantidadSolicitudesMantencion() {
+        return cantidadSolicitudesMantencion;
+    }
+
+    public void setCantidadSolicitudesMantencion(int cantidadSolicitudesMantencion) {
+        this.cantidadSolicitudesMantencion = cantidadSolicitudesMantencion;
+    }
+    
 }

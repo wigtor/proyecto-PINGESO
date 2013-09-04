@@ -23,7 +23,7 @@ public interface CrudMantencionPuntoLimpioLocal {
      * @param nvoEstado EL nuevo estado del punto limpio luego de la mantención
      * @return 
      */
-    public boolean agregarMantencion(Integer numPtoLimpio, String usernameLogueado, String detalle, Integer nvoEstado);
+    public boolean agregarMantencion(Integer numPtoLimpio, String usernameLogueado, String detalle, Integer nvoEstado) throws Exception;
     
     /**
      * Busca en la fuente de datos una mantención de punto limpio con cierto N°.
@@ -39,4 +39,5 @@ public interface CrudMantencionPuntoLimpioLocal {
      * @return Una colección de objetos "MantencionPuntoLimpio", puede ser vacía, pero nunca null
      */
     public Collection<MantencionPuntoLimpio> getAllMantenciones(String usernameQuienPregunta);
+
 }

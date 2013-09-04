@@ -86,18 +86,20 @@ public class AgregarMantencionMB {
     }
     
     public void guardarMantencion() {
-         //System.out.println("Se hizo click en 'guardarRevision()'");
-         
          String usernameLogueado = CommonFunctions.getUsuarioLogueado();
          
          //Envío al session bean los cambios para que se persistan a nivel de DB
-         crudMantencion.agregarMantencion(numPtoLimpio, usernameLogueado, detalle, cambioEstadoConvBean.getIdEstadoToChange());
-         for(ContenedorPojo c : cambioEstadoConvBean.getListaContenedoresModificados()) {
-             crudPuntoLimpio.cambiarEstadoContenedor(c.getId(), c.getIdEstadoContenedor(), c.getLlenadoContenedor());
-         }
-         CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO, 
-                "Se ha guardado la mantención realizada al punto limpio", 
-                "Se ha guardado la mantención realizada al punto limpio");
+         try {
+            crudMantencion.agregarMantencion(numPtoLimpio, usernameLogueado, detalle, cambioEstadoConvBean.getIdEstadoToChange());
+            for (ContenedorPojo c : cambioEstadoConvBean.getListaContenedoresModificados()) {
+                crudPuntoLimpio.cambiarEstadoContenedor(c.getId(), c.getIdEstadoContenedor(), c.getLlenadoContenedor());
+            }
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                    "Se ha guardado la mantención realizada al punto limpio y se ha hecho una solicitud de mantención",
+                    "Se ha guardado la mantención realizada al punto limpio y se ha hecho una solicitud de mantención");
+        } catch (Exception e) {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), e.getMessage());
+        }
          volverToLista();
     }
     
