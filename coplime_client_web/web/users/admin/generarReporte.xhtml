@@ -18,7 +18,7 @@
             
             <ui:define name="centro">
                  <h:form>
-                     <h:panelGrid columns="2" styleClass="centrar" cellpadding="10" id="todoElPanel">
+                     <p:panelGrid columns="2" styleClass="centrar" cellpadding="10" id="todoElPanel">
                          <f:facet name="header">¿Cómo desea el reporte?</f:facet>
                          
                         <p:outputLabel for="selectTipoReporte" value="Seleccione el tipo de reporte"/>
@@ -47,7 +47,7 @@
                              </p:commandButton>
                             <p:commandButton immediate="true" value="Volver" action="#{generarReporteMB.goToPuntosLimpios()}"/>                         
                          </f:facet>
-                     </h:panelGrid>                
+                     </p:panelGrid>                
                 </h:form>               
             </ui:define>
         </ui:composition>       
