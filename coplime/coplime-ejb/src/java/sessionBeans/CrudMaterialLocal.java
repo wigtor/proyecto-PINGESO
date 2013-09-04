@@ -25,4 +25,6 @@ public interface CrudMaterialLocal {
 
     Material getMaterialByName(String nombreMaterial);
     
+    Material getMaterialByID(Integer idMaterial);
+    
 }

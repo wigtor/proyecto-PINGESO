@@ -25,4 +25,6 @@ public interface CrudComunaLocal {
 
     Comuna getComunaByName(String nombreComunaBusq);
     
+    Comuna getComunaByID(Integer idComuna);
+    
 }

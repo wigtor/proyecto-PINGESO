@@ -130,6 +130,24 @@ public class CrudUnidadMedida implements CrudUnidadMedidaLocal {
         }
     }
     
+    @Override
+    public UnidadMedida getUnidadByID(Integer idUnidadMedida){
+        try{
+            DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+            UnidadMedidaDAO unidadDAO = fabricaDAO.getUnidadMedidaDAO();
+            UnidadMedida unidadMedida;
+            unidadMedida = unidadDAO.find(idUnidadMedida);
+            if (unidadMedida != null){
+                return unidadMedida;
+            } else {
+                return null;
+            }
+        } catch (Exception e){
+            Logger.getLogger(CrudComuna.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar buscar la unidad de medida con ID ".concat(idUnidadMedida.toString()).concat(" :").concat(e.toString()));
+            return null;
+        }
+    }
+    
     
 
 }

@@ -131,6 +131,24 @@ public class CrudMaterial implements CrudMaterialLocal {
         }
     }
     
+    @Override
+    public Material getMaterialByID(Integer idMaterial){
+        try{
+            DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+            MaterialDAO matDAO = fabricaDAO.getMaterialDAO();
+            Material mat;
+            mat = matDAO.find(idMaterial);
+            if (mat != null){
+                return mat;
+            } else {
+                return null;
+            }
+        } catch (Exception e){
+            Logger.getLogger(CrudComuna.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar buscar el material con ID ".concat(idMaterial.toString()).concat(" :").concat(e.toString()));
+            return null;
+        }
+    }
+    
     
     
     

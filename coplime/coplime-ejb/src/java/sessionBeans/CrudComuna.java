@@ -126,9 +126,9 @@ public class CrudComuna implements CrudComunaLocal {
     public Comuna getComunaByName(String nombreComunaBusq) {
         try{
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
-            ComunaDAO matDAO = fabricaDAO.getComunaDAO();
+            ComunaDAO comDAO = fabricaDAO.getComunaDAO();
             Comuna com;
-            com = matDAO.buscarPorNombre(nombreComunaBusq);
+            com = comDAO.buscarPorNombre(nombreComunaBusq);
             if (com != null){
                 return com;
             } else {
@@ -136,6 +136,24 @@ public class CrudComuna implements CrudComunaLocal {
             }
         } catch (Exception e){
             Logger.getLogger(CrudComuna.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar buscar la comuna \"".concat(nombreComunaBusq).concat("\":".concat(e.toString())));
+            return null;
+        }
+    }
+    
+    @Override
+    public Comuna getComunaByID(Integer idComuna){
+        try{
+            DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+            ComunaDAO comDAO = fabricaDAO.getComunaDAO();
+            Comuna com;
+            com = comDAO.find(idComuna);
+            if (com != null){
+                return com;
+            } else {
+                return null;
+            }
+        } catch (Exception e){
+            Logger.getLogger(CrudComuna.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar buscar la comuna con ID ".concat(idComuna.toString()).concat(" :").concat(e.toString()));
             return null;
         }
     }

@@ -23,5 +23,7 @@ public interface CrudUnidadMedidaLocal {
 
     Collection getAllUnidadesMedida();
 
-    UnidadMedida getUnidadByNombre(String nombreUnidadBusq);    
+    UnidadMedida getUnidadByNombre(String nombreUnidadBusq);
+    
+    UnidadMedida getUnidadByID(Integer idUnidadMedida);
 }

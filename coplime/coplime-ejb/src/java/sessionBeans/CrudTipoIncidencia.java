@@ -121,6 +121,24 @@ public class CrudTipoIncidencia implements CrudTipoIncidenciaLocal {
     }
     
     @Override
+    public TipoIncidencia getTipoIncidenciaByID(Integer idIncidencia){
+        try{
+            DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+            TipoIncidenciaDAO tipoIncDAO = fabricaDAO.getTipoIncidenciaDAO();
+            TipoIncidencia tipoInc;
+            tipoInc = tipoIncDAO.find(idIncidencia);
+            if (tipoInc != null){
+                return tipoInc;
+            } else {
+                return null;
+            }
+        } catch (Exception e){
+            Logger.getLogger(CrudComuna.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar buscar el tipo de incidencia con ID ".concat(idIncidencia.toString()).concat(" :").concat(e.toString()));
+            return null;
+        }
+    }
+    
+    @Override
     public Collection getAllTiposIncidencia() {
         Collection resultado;
         try{

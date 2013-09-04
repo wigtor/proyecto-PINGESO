@@ -25,4 +25,6 @@ public interface CrudTipoIncidenciaLocal {
 
     Collection getAllTiposIncidencia();
     
+    TipoIncidencia getTipoIncidenciaByID(Integer idIncidencia);
+    
 }

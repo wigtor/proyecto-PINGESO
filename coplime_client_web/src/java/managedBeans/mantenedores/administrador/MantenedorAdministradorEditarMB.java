@@ -45,11 +45,6 @@ public class MantenedorAdministradorEditarMB {
             cargarDatosAdministrador(numAdmin);
         }
         else {
-            //MOSTRAR ERROR
-            String a = "dgg";
-            if (a == "dgg") {
-                System.out.println("son iguales las cadenas");
-            }
             volverToLista();
         }
     }

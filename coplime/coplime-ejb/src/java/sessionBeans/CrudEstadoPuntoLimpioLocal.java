@@ -23,6 +23,8 @@ public interface CrudEstadoPuntoLimpioLocal {
 
     Estado getEstadoPuntoLimpioPorNombre(String nombreEstadoPLBusq);
     
+    Estado getEstadoPuntoLimpioPorID(Integer idEstado);
+    
     
 
     Collection getAllEstadosPuntoLimpio();

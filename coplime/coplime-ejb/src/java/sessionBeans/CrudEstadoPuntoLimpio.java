@@ -113,6 +113,24 @@ public class CrudEstadoPuntoLimpio implements CrudEstadoPuntoLimpioLocal {
             return null;
         }
     }
+    
+    @Override
+    public Estado getEstadoPuntoLimpioPorID(Integer idEstado){
+        try{
+            DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
+            EstadoDAO estDAO = fabricaDAO.getEstadoDAO();
+            Estado est;
+            est = estDAO.find(idEstado);
+            if (est != null){
+                return est;
+            } else {
+                return null;
+            }
+        } catch (Exception e){
+            Logger.getLogger(CrudComuna.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar buscar el estado con ID ".concat(idEstado.toString()).concat(" :").concat(e.toString()));
+            return null;
+        }
+    }
 
     @Override
     public Collection getAllEstadosPuntoLimpio() {
