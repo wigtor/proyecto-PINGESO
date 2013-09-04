@@ -22,22 +22,22 @@
                          
                          
                          <p:outputLabel value="N°"/>
-                         <p:inputText value="#{mantenedorSolicitudVerDetallesMB.num}" disabled="true" readonly="true" />
+                         <p:outputLabel value="#{mantenedorSolicitudVerDetallesMB.num}" />
                          
                          <p:outputLabel value="Operario asignado"/>
-                         <p:inputText value="#{mantenedorSolicitudVerDetallesMB.operario}" disabled="true" readonly="true" />
+                         <p:outputLabel value="#{mantenedorSolicitudVerDetallesMB.operario}"  />
                          
                          <p:outputLabel value="Punto limpio"/>
-                         <p:inputText value="#{mantenedorSolicitudVerDetallesMB.puntoLimpio}" disabled="true" readonly="true" />
+                         <p:outputLabel value="#{mantenedorSolicitudVerDetallesMB.puntoLimpio}" />
                          
                          <p:outputLabel value="Fecha"/>
-                         <p:inputText value="#{mantenedorSolicitudVerDetallesMB.fecha}" disabled="true" readonly="true" />
+                         <p:outputLabel value="#{mantenedorSolicitudVerDetallesMB.fecha}" />
                          
                          <p:outputLabel value="Inspector solicitante"/>
-                         <p:inputText value="#{mantenedorSolicitudVerDetallesMB.inspector}" disabled="true" readonly="true" />
+                         <p:outputLabel value="#{mantenedorSolicitudVerDetallesMB.inspector}" />
                          
                          <p:outputLabel value="Detalle"/>
-                         <p:inputTextarea value="#{mantenedorSolicitudVerDetallesMB.detalles}" disabled="true" readonly="true" />
+                         <p:inputTextarea value="#{mantenedorSolicitudVerDetallesMB.detalles}" readonly="true" scrollHeight="10"/>
 
                          <p:outputLabel value="Revisada"/>
                          <p:selectBooleanCheckbox value="#{mantenedorSolicitudVerDetallesMB.revisada_seleccionado}" disabled="#{!request.isUserInRole('Operario')}"/>

@@ -24,19 +24,19 @@
                         <f:facet name="header">Datos de notificación</f:facet>
                         
                         <p:outputLabel value="N° de notificación" />
-                        <p:inputText value="#{mantenedorNotificacionVerDetallesMB.numNotif}" disabled="true"/>
+                        <p:outputLabel value="#{mantenedorNotificacionVerDetallesMB.numNotif}" />
                         
                         <p:outputLabel value="Origen de notificación" />
-                        <p:inputText value="#{mantenedorNotificacionVerDetallesMB.origen_seleccionado}" disabled="true"/>
+                        <p:outputLabel value="#{mantenedorNotificacionVerDetallesMB.origen_seleccionado}" />
                         
                         <p:outputLabel value="Tipo de notificación"/>
-                        <p:inputText value="#{mantenedorNotificacionVerDetallesMB.tipo_seleccionado}" disabled="true"/>
+                        <p:outputLabel value="#{mantenedorNotificacionVerDetallesMB.tipo_seleccionado}" />
                         
                         <p:outputLabel value="Fecha - hora"/>
-                        <p:inputText value="#{mantenedorNotificacionVerDetallesMB.fecha_seleccionado}" disabled="true"/>
+                        <p:outputLabel value="#{mantenedorNotificacionVerDetallesMB.fecha_seleccionado}" />
                         
                         <p:outputLabel value="Detalle"/>
-                        <p:inputTextarea value="#{mantenedorNotificacionVerDetallesMB.detalleCompleto_seleccionado}" disabled="true"/>
+                        <p:inputTextarea value="#{mantenedorNotificacionVerDetallesMB.detalleCompleto_seleccionado}" readonly="true" scrollHeight="10"/>
                         
                         <p:outputLabel value="Revisada"/>
                         <p:selectBooleanCheckbox value="#{mantenedorNotificacionVerDetallesMB.revisada_seleccionado}"/>
