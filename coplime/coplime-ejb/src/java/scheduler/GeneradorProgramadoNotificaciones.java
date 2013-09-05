@@ -24,7 +24,6 @@ import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
-import javax.ejb.ScheduleExpression;
 import javax.ejb.Timer;
 import javax.ejb.Timeout;
 import javax.ejb.TimerConfig;
@@ -52,9 +51,9 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
     TimerService servicioTemporizador;
     
     //Variables de control del temporizador
-    private Long milisegsIntervaloOriginal=new Long (10000), milisegsIntervalo= new Long(10000);//para detectar cambios en la configuración del intervalo
-    //private static final int DIA_EN_MILISEGS = 86400000;
-    private static final int DIA_EN_MILISEGS = 120000;
+    private Long milisegsIntervaloOriginal=new Long (86400000), milisegsIntervalo= new Long(86400000);//para detectar cambios en la configuración del intervalo
+    private static final int DIA_EN_MILISEGS = 86400000;
+    
     
     //TODO Cambiar por Programatic Timers (buscar en la documentación)
     //@Schedule(minute = "0", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "01")
@@ -124,8 +123,8 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
                 if(fechaRevision.equals(calendario.getTime())){//¿Es la fecha de revisión "Ayer"?
                     generarNotificacionContenedorSinHistorial(p, c);
                     String stringAviso = "Contenedor ID ".concat(c.getId().toString());
-                    stringAviso = stringAviso.concat(", Material ").concat(c.getMaterialDeAcopio().getNombre_material().toString());
-                    stringAviso = stringAviso.concat(" perteneciente al punto limpio ").concat(p.getNombre());
+                    //stringAviso = stringAviso.concat(", Material ").concat(c.getMaterialDeAcopio().getNombre_material().toString());
+                    //stringAviso = stringAviso.concat(" perteneciente al punto limpio ").concat(p.getNombre());
                     stringAviso = stringAviso.concat(" no contiene registros en su historial de llenado.");
                     Logger.getLogger(GeneradorProgramadoNotificaciones.class.getName()).log(Level.WARNING, stringAviso);
                     System.out.println(stringAviso);
@@ -148,8 +147,16 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
                     }
                 }
             }
-            System.out.println("Fecha de revisión para punto limpio ".concat(p.getNombre()).concat(": ").concat(menorFechaRevision.toString()));
-            actualizarFechaRevisionPL(p, menorFechaRevision);
+            
+            if(menorFechaRevision!=null){
+                System.out.println("Fecha de revisión para punto limpio ".concat(p.getNombre()).concat(": ").concat(menorFechaRevision.toString()));
+                actualizarFechaRevisionPL(p, menorFechaRevision);
+            } else {
+                menorFechaRevision = Calendar.getInstance().getTime();
+                System.out.println("Fecha de revisión para punto limpio ".concat(p.getNombre()).concat(": ").concat(menorFechaRevision.toString()));
+                actualizarFechaRevisionPL(p, menorFechaRevision);
+            }
+            
             
             Calendar magnana = Calendar.getInstance();
             magnana.add(Calendar.DATE, 2);
@@ -230,7 +237,7 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
         nuevaNotificacion.setUsuarioEncargado(admin.getUsuario());
         //TODO resolver tipo de incidencia
         //nuevaNotificacion.setTipoIncidencia(null);
-        nuevaNotificacion.setComentario("Contenedor ID ".concat(c.getId().toString()).concat(" (".concat(c.getMaterialDeAcopio().toString()).concat(") perteneciente al Punto Limpio ".concat(pl.getNombre()).concat(" no tiene historial de llenado.\nPor favor, ingrese una revisión del punto limpio para generar el historial."))));
+        nuevaNotificacion.setComentario("Contenedor ID ".concat(c.getId().toString()).concat(" (".concat(c.getMaterialDeAcopio().toString()).concat(") perteneciente al Punto Limpio ".concat(pl.getNombre()).concat(" no tiene historial de llenado."))));
         notifDAO.insert(nuevaNotificacion);
     }
     
@@ -311,6 +318,8 @@ public class GeneradorProgramadoNotificaciones implements GeneradorProgramadoNot
             timerConfig.setIdParam("timer_estimacion_contenedores_intervalo");
             timerConfig.setValorParam(Integer.toString(DIA_EN_MILISEGS));
             configDAO.insert(timerConfig);
+            milisegsIntervalo = Long.valueOf(DIA_EN_MILISEGS);
+            milisegsIntervaloOriginal = Long.valueOf(DIA_EN_MILISEGS);
         }
         
         //Se verifica si ya hay un Timer funcionando, esto se verifica a través de la cantidad de timers

@@ -504,9 +504,9 @@ public class configuracionInicial implements configuracionInicialLocal {
         
         //Contraseña maestra sistema
         //Posible feature a futuro
-        Configuracion conf1 = new Configuracion();
-        conf1.setIdParam("contrasegna_maestra_sistema");
-        conf1.setValorParam(this.aMD5("emeres"));
+        //Configuracion conf1 = new Configuracion();
+        //conf1.setIdParam("contrasegna_maestra_sistema");
+       // conf1.setValorParam(this.aMD5("emeres"));
         
         //Define un intervalo de 24 horas para el temporizador
         //de estimación de llenado de contenedores.
@@ -521,14 +521,14 @@ public class configuracionInicial implements configuracionInicialLocal {
         
         //Llamar a la DAO
         ConfiguracionDAO configDAO = factoryDeDAOs.getConfiguracionDAO();
-        if(configDAO.buscarParamExacto("contrasegna_maestra_sistema")==null){
-            configDAO.insert(conf1);
-            System.out.println("Establecida contraseña maestra en poblado inicial.");
-        }
+        //if(configDAO.buscarParamExacto("contrasegna_maestra_sistema")==null){
+        //    configDAO.insert(conf1);
+        //    System.out.println("Establecida contraseña maestra en poblado inicial.");
+        //}
         
         if(configDAO.buscarParamExacto("timer_estimacion_contenedores_intervalo")==null){
             configDAO.insert(conf2);
-            System.out.println("Establecido intervalo por defecto de estimación de contenedores en poblado inicial.");
+            System.out.println("Establecido intervalo por defecto de estimación de contenedores en poblado inicial (24h).");
         }
         
         if(configDAO.buscarParamExacto("timer_estimacion_contenedores_ultima_ejecucion")==null){
@@ -559,6 +559,14 @@ public class configuracionInicial implements configuracionInicialLocal {
                        System.out.println("Timer ".concat(c.getIdParam()).concat(" detectado, sin acción predefinida."));
                        break;
                } 
+            }
+        } else {
+            Configuracion conf2 = new Configuracion();
+            conf2.setIdParam("timer_estimacion_contenedores_intervalo");
+            conf2.setValorParam("86400000"); //24 horas en milisegundos
+             if(configDAO.buscarParamExacto("timer_estimacion_contenedores_intervalo")==null){
+                configDAO.insert(conf2);
+                System.out.println("Establecido intervalo por defecto de estimación de contenedores en poblado inicial (24h).");
             }
         }        
     }
