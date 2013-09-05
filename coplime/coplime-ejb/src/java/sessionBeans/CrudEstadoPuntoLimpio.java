@@ -74,7 +74,7 @@ public class CrudEstadoPuntoLimpio implements CrudEstadoPuntoLimpioLocal {
     }
 
     @Override
-    public boolean eliminarEstadoPuntoLimpio(Integer idEstado, String eliminarEstadoPL) throws Exception {
+    public boolean eliminarEstadoPuntoLimpio(Integer idEstado) throws Exception {
         try{
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             EstadoDAO estadosDAO = fabricaDAO.getEstadoDAO();
@@ -83,15 +83,11 @@ public class CrudEstadoPuntoLimpio implements CrudEstadoPuntoLimpioLocal {
             if (estadoEliminar == null){
                 throw new Exception("No se puede eliminar el estado, el identificador ".concat(idEstado.toString()).concat(" no existe."));
             } else {
-                if(!(estadoEliminar.getNombreEstado().equals(eliminarEstadoPL))){
-                    throw new Exception ("No se puede eliminar el estado, el nombre asociado al ID es diferente.");
-                } else {
-                    estadosDAO.delete(estadoEliminar);
-                    return true;
-                }
+                estadosDAO.delete(estadoEliminar);
+                return true;
             }
         } catch (Exception e){
-            Logger.getLogger(CrudEstadoPuntoLimpio.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar eliminar el estado \"".concat(eliminarEstadoPL).concat("\":".concat(e.toString())));
+            Logger.getLogger(CrudEstadoPuntoLimpio.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar eliminar el estado".concat(":".concat(e.toString())));
             throw new Exception("Error al intentar eliminar el estado.");
         }
     }

@@ -19,7 +19,7 @@ public interface CrudComunaLocal {
 
     boolean editarComuna(Integer idComuna, String nombreAntiguoComuna, String nombreNuevoComuna) throws Exception;
 
-    boolean eliminarComuna(Integer idComuna, String nombreComunaEliminar) throws Exception;
+    boolean eliminarComuna(Integer idComuna) throws Exception;
 
     Collection getAllComunas();
 

@@ -103,19 +103,19 @@ public class MantenedorComunaEditarMB {
                 CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
                     "Se han guardado los datos de la comuna.",
                     "Se han guardado los datos de la comuna \"".concat(nombreComuna).concat("\""));
-                CommonFunctions.goToPage("/faces/users/admin/configuracionSistema.xhtml?faces-redirect=true");
+                CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml?faces-redirect=true");
             } catch (Exception e){
                  CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
                         e.getMessage(), 
                         e.getMessage());
-                CommonFunctions.goToPage("/faces/users/admin/editarComuna.xhtml?faces-redirect=true");
+                CommonFunctions.goToPage("/faces/users/admin/config/editarComuna.xhtml?faces-redirect=true");
             }
         }
     }
     
     public void volverToLista(){
         mantCom.endConversation();
-        CommonFunctions.goToPage("/faces/users/admin/configuracionSistema.xhtml");
+        CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml");
     }
     
     public MantenedorComunaEditarMB() {

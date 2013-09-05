@@ -19,7 +19,7 @@ public interface CrudEstadoPuntoLimpioLocal {
 
     boolean editarEstadoPuntoLimpio(Integer idEstado, String antiguoEstadoPL, String nuevoEstadoPL) throws Exception;
 
-    boolean eliminarEstadoPuntoLimpio(Integer idEstado, String eliminarEstadoPL) throws Exception;
+    boolean eliminarEstadoPuntoLimpio(Integer idEstado) throws Exception;
 
     Estado getEstadoPuntoLimpioPorNombre(String nombreEstadoPLBusq);
     

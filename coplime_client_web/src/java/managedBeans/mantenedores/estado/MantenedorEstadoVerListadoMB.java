@@ -13,6 +13,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudEstadoPuntoLimpioLocal;
 
@@ -25,6 +27,10 @@ import sessionBeans.CrudEstadoPuntoLimpioLocal;
 public class MantenedorEstadoVerListadoMB {
     @EJB
     private CrudEstadoPuntoLimpioLocal crudE;
+    
+    @Inject
+    private MantenedorEstadoConversation mantEst;
+    
     
     private List<SelectElemPojo> listaEstadosPOJO;
     private List<SelectElemPojo> listaEstadosPOJOBusq;
@@ -72,6 +78,40 @@ public class MantenedorEstadoVerListadoMB {
        CommonFunctions.goToPage("/faces/users/admin/config/agregarEstado.xhtml");
     }
 
+    public void editar(Integer idEstado) {
+        Estado estadoEdit = crudE.getEstadoPuntoLimpioPorID(idEstado);
+        if (estadoEdit != null) {
+            this.mantEst.beginConversation();
+            this.mantEst.setIdEstado(idEstado);
+            CommonFunctions.goToPage("/faces/users/admin/config/editarEstado.xhtml?cid=".concat(this.mantEst.getConversation().getId()));
+        } else {
+            //MOSTRAR ERROR
+            this.mantEst.limpiarDatos();
+            CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml");
+        }
+    }
+    
+    public void eliminar(Integer idEstado) {
+        try {
+            boolean resultado = crudE.eliminarEstadoPuntoLimpio(idEstado);
+            if (resultado) {
+                CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                        "Se ha eliminado el estado",
+                        "Se ha eliminado correctamente el estado");
+            } else {
+                CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                        "Error al eliminar el estado",
+                        "Error, no se ha podido eliminar el estado seleccionado");
+            }
+        }
+        catch (Exception e) {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                        e.getMessage(),
+                        e.getMessage());
+        }
+        CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml?faces-redirect=true");
+    }
+    
     public List<SelectElemPojo> getListaEstadosPOJOBusq() {
         return listaEstadosPOJOBusq;
     }

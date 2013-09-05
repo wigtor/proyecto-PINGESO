@@ -84,7 +84,7 @@ public class CrudComuna implements CrudComunaLocal {
     }
 
     @Override
-    public boolean eliminarComuna(Integer idComuna, String nombreComunaEliminar) throws Exception{
+    public boolean eliminarComuna(Integer idComuna) throws Exception{
         try{
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             ComunaDAO comDAO = fabricaDAO.getComunaDAO();
@@ -93,15 +93,11 @@ public class CrudComuna implements CrudComunaLocal {
             if (comunaEliminar == null){
                 throw new Exception("No se puede eliminar la comuna, el identificador ".concat(idComuna.toString()).concat(" no existe."));
             } else {
-                if(!(comunaEliminar.getNombre().equals(nombreComunaEliminar))){
-                    throw new Exception("No se puede eliminar la comuna, el nombre asociado al ID es diferente.");
-                }else{
                     comDAO.delete(comunaEliminar);
                     return true;
-                }
             }
         } catch (Exception e){
-            Logger.getLogger(CrudComuna.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar eliminar la comuna \"".concat(nombreComunaEliminar).concat("\":".concat(e.toString())));
+            Logger.getLogger(CrudComuna.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar eliminar la comuna".concat(":".concat(e.toString())));
             throw new Exception ("Error al intentar eliminar la comuna.");
 
         }

@@ -5,7 +5,6 @@
 package managedBeans.mantenedores.unidadMedida;
 
 
-import entities.Material;
 import entities.UnidadMedida;
 import javax.inject.Named;
 import javax.annotation.PostConstruct;
@@ -14,7 +13,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import otros.CommonFunctions;
-import sessionBeans.CrudMaterialLocal;
 import sessionBeans.CrudUnidadMedidaLocal;
 
 /**
@@ -95,7 +93,7 @@ public class MantenedorUnidadMedidaEditarMB {
         }
     }
     
-    public void guardarDatosComuna (){
+    public void guardarDatosUnidadMedida (){
         if(nombreUnidadMedida.equals(nombreUnidadMedidaAntiguo)){
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, "Error: ese nombre ya está guardado.", "Ese nombre ya está guardado." );
         } else {
@@ -105,19 +103,19 @@ public class MantenedorUnidadMedidaEditarMB {
                 CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
                     "Se han guardado los datos de la unidad de medida.",
                     "Se han guardado los datos de la unidad de medida \"".concat(nombreUnidadMedida).concat("\""));
-                CommonFunctions.goToPage("/faces/users/admin/configuracionSistema.xhtml?faces-redirect=true");
+                CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml?faces-redirect=true");
             } catch (Exception e){
                  CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
                         e.getMessage(), 
                         e.getMessage());
-                CommonFunctions.goToPage("/faces/users/admin/editarUnidadMedida.xhtml?faces-redirect=true");
+                CommonFunctions.goToPage("/faces/users/admin/config/editarUnidadMedida.xhtml?faces-redirect=true");
             }
         }
     }
     
     public void volverToLista(){
         mantUnidadMedida.endConversation();
-        CommonFunctions.goToPage("/faces/users/admin/configuracionSistema.xhtml");
+        CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml");
     }
     
     public MantenedorUnidadMedidaEditarMB() {

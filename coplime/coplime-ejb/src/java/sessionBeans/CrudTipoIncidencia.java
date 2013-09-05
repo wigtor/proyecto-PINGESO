@@ -48,11 +48,6 @@ public class CrudTipoIncidencia implements CrudTipoIncidenciaLocal {
 
     @Override
     public boolean editarTipoIncidencia(Integer idIncidencia, String tipoIncidenciaOrig, String tipoIncidenciaNuevo, boolean visibleAlUsuarioOrig, boolean visibleAlUsuarioNuevo) throws Exception {
-        //failsafe
-        if(tipoIncidenciaOrig.equals(tipoIncidenciaNuevo)){
-            throw new Exception("Los tipos de incidencia son iguales.");
-        }
-        
         try{
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             TipoIncidenciaDAO tipoDAO = fabricaDAO.getTipoIncidenciaDAO();
@@ -79,7 +74,7 @@ public class CrudTipoIncidencia implements CrudTipoIncidenciaLocal {
     }
 
     @Override
-    public boolean eliminarTipoIncidencia(Integer idIncidencia, String tipoIncidencia) throws Exception {
+    public boolean eliminarTipoIncidencia(Integer idIncidencia) throws Exception {
         try{
             
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
@@ -89,15 +84,11 @@ public class CrudTipoIncidencia implements CrudTipoIncidenciaLocal {
             if (tipoEliminar == null){
                 throw new Exception("No se puede eliminar el estado, el identificador ".concat(idIncidencia.toString()).concat(" no existe."));
             } else {
-                if(!(tipoEliminar.getNombreIncidencia().equals(tipoIncidencia))){
-                    throw new Exception("No se puede eliminar el tipo de incidencia, el nombre asociado al ID es diferente.");
-                } else {
-                    tipoDAO.delete(tipoEliminar);
-                    return true;  
-                }
+                tipoDAO.delete(tipoEliminar);
+                return true;  
             }
         } catch (Exception e){
-            Logger.getLogger(CrudTipoIncidencia.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar eliminar el tipo de incidencia \"".concat(tipoIncidencia).concat("\":".concat(e.toString())));
+            Logger.getLogger(CrudTipoIncidencia.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar eliminar el tipo de incidencia".concat(":".concat(e.toString())));
             throw new Exception("Error al intentar eliminar el tipo de incidencia.");
         }
     }

@@ -76,7 +76,7 @@ public class CrudMaterial implements CrudMaterialLocal {
     }
 
     @Override
-    public boolean eliminarMaterial(Integer idMaterial, String nombreMaterial) throws Exception{
+    public boolean eliminarMaterial(Integer idMaterial) throws Exception{
         try{
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             MaterialDAO matDAO = fabricaDAO.getMaterialDAO();
@@ -85,15 +85,11 @@ public class CrudMaterial implements CrudMaterialLocal {
             if (matEliminar == null){
                 throw new Exception("No se puede eliminar el material, el identificador ".concat(idMaterial.toString()).concat(" no existe."));
             } else {
-                if(!(matEliminar.getNombre_material().equals(nombreMaterial))){
-                    throw new Exception("No se puede eliminar el material, el nombre asociado al ID es diferente.");
-                } else {
-                    matDAO.delete(matEliminar);
-                    return true;
-                }
+                matDAO.delete(matEliminar);
+                return true;
             }
         } catch (Exception e){
-            Logger.getLogger(CrudMaterial.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar eliminar el material ".concat(nombreMaterial).concat(":".concat(e.toString())));
+            Logger.getLogger(CrudMaterial.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar eliminar el material".concat(":".concat(e.toString())));
             throw new Exception("Error al intentar eliminar el material.");
         }
     }

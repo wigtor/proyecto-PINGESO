@@ -13,14 +13,13 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import otros.CommonFunctions;
-import sessionBeans.CrudEstadoPuntoLimpioLocal;
 import sessionBeans.CrudMaterialLocal;
 
 /**
  *
  * @author Armando
  */
-@Named(value = "mantenedorEstadoEditarMB")
+@Named(value = "mantenedorMaterialEditarMB")
 @RequestScoped
 public class MantenedorMaterialEditarMB {
 
@@ -94,7 +93,7 @@ public class MantenedorMaterialEditarMB {
         }
     }
     
-    public void guardarDatosComuna (){
+    public void guardarDatosMaterial (){
         if(nombreMaterial.equals(nombreMaterialAntiguo)){
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, "Error: ese nombre ya está guardado.", "Ese nombre ya está guardado." );
         } else {
@@ -104,19 +103,19 @@ public class MantenedorMaterialEditarMB {
                 CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
                     "Se han guardado los datos del material.",
                     "Se han guardado los datos del material \"".concat(nombreMaterial).concat("\""));
-                CommonFunctions.goToPage("/faces/users/admin/configuracionSistema.xhtml?faces-redirect=true");
+                CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml?faces-redirect=true");
             } catch (Exception e){
                  CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
                         e.getMessage(), 
                         e.getMessage());
-                CommonFunctions.goToPage("/faces/users/admin/editarMaterial.xhtml?faces-redirect=true");
+                CommonFunctions.goToPage("/faces/users/admin/config/editarMaterial.xhtml?faces-redirect=true");
             }
         }
     }
     
     public void volverToLista(){
         mantMaterial.endConversation();
-        CommonFunctions.goToPage("/faces/users/admin/configuracionSistema.xhtml");
+        CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml");
     }
     
     public MantenedorMaterialEditarMB() {

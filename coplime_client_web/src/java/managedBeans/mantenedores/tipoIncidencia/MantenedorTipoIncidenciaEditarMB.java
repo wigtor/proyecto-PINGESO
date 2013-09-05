@@ -5,7 +5,7 @@
 package managedBeans.mantenedores.tipoIncidencia;
 
 
-import entities.Material;
+
 import entities.TipoIncidencia;
 import javax.inject.Named;
 import javax.annotation.PostConstruct;
@@ -34,6 +34,14 @@ public class MantenedorTipoIncidenciaEditarMB {
     private String nombreTipoIncidencia;
     private Boolean visibleAlUsuarioAntiguo;
     private Boolean visibleAlUsuario;
+
+    public Boolean getVisibleAlUsuario() {
+        return visibleAlUsuario;
+    }
+
+    public void setVisibleAlUsuario(Boolean visibleAlUsuario) {
+        this.visibleAlUsuario = visibleAlUsuario;
+    }
     private Integer idTipoIncidencia;
 
     public CrudTipoIncidenciaLocal getCrudTipoIncidencia() {
@@ -99,28 +107,24 @@ public class MantenedorTipoIncidenciaEditarMB {
     }
     
     public void guardarDatosTipoIncidencia (){
-        if(nombreTipoIncidencia.equals(nombreTipoIncidenciaAntiguo)){
-            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, "Error: ese nombre ya está guardado.", "Ese nombre ya está guardado." );
-        } else {
             mantTipoIncidencia.endConversation();
             try{
                 crudTipoIncidencia.editarTipoIncidencia(idTipoIncidencia, nombreTipoIncidenciaAntiguo, nombreTipoIncidencia,visibleAlUsuarioAntiguo,visibleAlUsuario);
                 CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
                     "Se han guardado los datos del tipo de incidencia.",
                     "Se han guardado los datos del tipo de incidencia \"".concat(nombreTipoIncidencia).concat("\""));
-                CommonFunctions.goToPage("/faces/users/admin/configuracionSistema.xhtml?faces-redirect=true");
+                CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml?faces-redirect=true");
             } catch (Exception e){
                  CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
                         e.getMessage(), 
                         e.getMessage());
-                CommonFunctions.goToPage("/faces/users/admin/editarTipoIncidencia.xhtml?faces-redirect=true");
+                CommonFunctions.goToPage("/faces/users/admin/config/editarTipoIncidencia.xhtml?faces-redirect=true");
             }
-        }
     }
     
     public void volverToLista(){
         mantTipoIncidencia.endConversation();
-        CommonFunctions.goToPage("/faces/users/admin/configuracionSistema.xhtml");
+        CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml");
     }
     
     public MantenedorTipoIncidenciaEditarMB() {

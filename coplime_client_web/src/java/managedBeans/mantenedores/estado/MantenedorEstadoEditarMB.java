@@ -4,7 +4,6 @@
  */
 package managedBeans.mantenedores.estado;
 
-import entities.Comuna;
 import entities.Estado;
 import javax.inject.Named;
 import javax.annotation.PostConstruct;
@@ -93,7 +92,7 @@ public class MantenedorEstadoEditarMB {
         }
     }
     
-    public void guardarDatosComuna (){
+    public void guardarDatosEstado (){
         if(nombreEstado.equals(nombreEstadoAntiguo)){
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, "Error: ese nombre ya está guardado.", "Ese nombre ya está guardado." );
         } else {
@@ -103,19 +102,19 @@ public class MantenedorEstadoEditarMB {
                 CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
                     "Se han guardado los datos del estado.",
                     "Se han guardado los datos del estado \"".concat(nombreEstado).concat("\""));
-                CommonFunctions.goToPage("/faces/users/admin/configuracionSistema.xhtml?faces-redirect=true");
+                CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml?faces-redirect=true");
             } catch (Exception e){
                  CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR, 
                         e.getMessage(), 
                         e.getMessage());
-                CommonFunctions.goToPage("/faces/users/admin/editarEstado.xhtml?faces-redirect=true");
+                CommonFunctions.goToPage("/faces/users/admin/config/editarEstado.xhtml?faces-redirect=true");
             }
         }
     }
     
     public void volverToLista(){
         mantEstado.endConversation();
-        CommonFunctions.goToPage("/faces/users/admin/configuracionSistema.xhtml");
+        CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml");
     }
     
     public MantenedorEstadoEditarMB() {

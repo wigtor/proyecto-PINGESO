@@ -19,7 +19,7 @@ public interface CrudTipoIncidenciaLocal {
 
     boolean editarTipoIncidencia(Integer idIncidencia, String tipoIncidenciaOrig, String tipoIncidenciaNuevo, boolean visibleAlUsuarioOrig, boolean visibleAlUsuarioNuevo) throws Exception;
 
-    boolean eliminarTipoIncidencia(Integer idIncidencia, String tipoIncidencia) throws Exception;
+    boolean eliminarTipoIncidencia(Integer idIncidencia) throws Exception;
 
     TipoIncidencia getTipoIncidenciaByName(String tipoIncidenciaBuscada);
 

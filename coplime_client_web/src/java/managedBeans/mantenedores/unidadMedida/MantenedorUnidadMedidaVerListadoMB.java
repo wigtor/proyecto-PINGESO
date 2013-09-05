@@ -5,7 +5,6 @@
 package managedBeans.mantenedores.unidadMedida;
 
 import ObjectsForManagedBeans.SelectElemPojo;
-import entities.Estado;
 import entities.UnidadMedida;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,8 +13,9 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.inject.Inject;
 import otros.CommonFunctions;
-import sessionBeans.CrudEstadoPuntoLimpioLocal;
 import sessionBeans.CrudUnidadMedidaLocal;
 
 /**
@@ -27,6 +27,9 @@ import sessionBeans.CrudUnidadMedidaLocal;
 public class MantenedorUnidadMedidaVerListadoMB {
     @EJB
     private CrudUnidadMedidaLocal crudU;
+    
+    @Inject
+    private MantenedorUnidadMedidaConversation mantUni;
     
     private List<SelectElemPojo> listaUnidadesPOJO;
     private List<SelectElemPojo> listaUnidadesPOJOBusq;
@@ -74,6 +77,40 @@ public class MantenedorUnidadMedidaVerListadoMB {
        CommonFunctions.goToPage("/faces/users/admin/config/agregarUnidadMedida.xhtml");
     }
 
+    public void editar(Integer idUnidad) {
+        UnidadMedida unidadEdit = crudU.getUnidadByID(idUnidad);
+        if (unidadEdit != null) {
+            this.mantUni.beginConversation();
+            this.mantUni.setIdUnidadMedida(idUnidad);
+            CommonFunctions.goToPage("/faces/users/admin/config/editarUnidadMedida.xhtml?cid=".concat(this.mantUni.getConversation().getId()));
+        } else {
+            //MOSTRAR ERROR
+            this.mantUni.limpiarDatos();
+            CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml");
+        }
+    }
+    
+    public void eliminar(Integer idUnidad) {
+        try {
+            boolean resultado = crudU.eliminarUnidadMedida(idUnidad);
+            if (resultado) {
+                CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                        "Se ha eliminado la unidad de medida",
+                        "Se ha eliminado correctamente la unidad de medida");
+            } else {
+                CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                        "Error al eliminar la unidad de medida",
+                        "Error, no se ha podido eliminar la unidad de medida seleccionada");
+            }
+        }
+        catch (Exception e) {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                        e.getMessage(),
+                        e.getMessage());
+        }
+        CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml?faces-redirect=true");
+    }
+    
     public List<SelectElemPojo> getListaUnidadesPOJOBusq() {
         return listaUnidadesPOJOBusq;
     }

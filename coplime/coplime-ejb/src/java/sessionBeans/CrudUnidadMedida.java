@@ -75,7 +75,7 @@ public class CrudUnidadMedida implements CrudUnidadMedidaLocal {
     }
 
     @Override
-    public boolean eliminarUnidadMedida(Integer idUnidadMedida, String unidadEliminar) throws Exception {
+    public boolean eliminarUnidadMedida(Integer idUnidadMedida) throws Exception {
         try{
             DAOFactory fabricaDAO = DAOFactory.getDAOFactory(DAOFactory.JPA, em);
             UnidadMedidaDAO unidadDAO = fabricaDAO.getUnidadMedidaDAO();
@@ -84,15 +84,11 @@ public class CrudUnidadMedida implements CrudUnidadMedidaLocal {
             if (unidadAEliminar == null){
                 throw new Exception("No se puede eliminar la unidad de medida, el ID ".concat(idUnidadMedida.toString()).concat(" no existe."));
             } else {
-                if(!(unidadAEliminar.getNombreUnidad().equals(unidadAEliminar))){
-                    throw new Exception("No se puede eliminar la unidad de medida, el nombre asociado al ID es diferente.");
-                } else {
-                    unidadDAO.delete(unidadAEliminar);
-                    return true;
-                }    
+                unidadDAO.delete(unidadAEliminar);
+                return true;
             }
         } catch (Exception e){
-            Logger.getLogger(CrudUnidadMedida.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar eliminar la unidad de medida \"".concat(unidadEliminar).concat("\":".concat(e.toString())));
+            Logger.getLogger(CrudUnidadMedida.class.getName()).log(Level.WARNING, "Ha ocurrido un error al intentar eliminar la unidad de medida".concat(":".concat(e.toString())));
             throw new Exception("Error al intentar eliminar la unidad de medida.");
         }
     }

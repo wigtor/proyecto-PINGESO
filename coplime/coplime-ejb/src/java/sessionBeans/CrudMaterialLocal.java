@@ -19,7 +19,7 @@ public interface CrudMaterialLocal {
 
     boolean editarMaterial(Integer idMaterial, String nombreMaterialOriginal, String nombreMaterialNuevo) throws Exception;
 
-    boolean eliminarMaterial(Integer idMaterial, String nombreMaterial)throws Exception;
+    boolean eliminarMaterial(Integer idMaterial)throws Exception;
 
     Collection getAllMateriales();
 

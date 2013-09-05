@@ -42,7 +42,7 @@
                    
                    <p:tab title="Materiales">
                        <h:form>
-                           <p:panelGrid columns="2" styleClass="centrar">
+                           <p:panelGrid columns="4" styleClass="centrar">
                                <f:facet name="header">Listado de materiales</f:facet>
                                <p:dataTable id="materiales" value="#{mantenedorMaterialVerListadoMB.listaMatPOJO}"
                                             var="mat" filteredValue="#{mantenedorMaterialVerListadoMB.listaMatPOJOBusq}"
@@ -56,6 +56,25 @@
                                    <p:column id="labelColumn" sortBy="#{mat.label}" headerText="Nombre material" filterMatchMode="contains" filterBy="#{mat.label}">
                                        <h:outputText value="#{mat.label}"/>
                                    </p:column>
+                                                              
+                                    <p:column headerText="">
+                                        <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{mantenedorMaterialVerListadoMB.editar(mat.id)}">
+                                        </p:commandLink>
+                                    </p:column>
+                                    <p:column headerText="">
+                                        <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{mat.id}.show();" />
+
+                                        <p:confirmDialog message="¿Está seguro que desea eliminar el material?"
+                                                         header="Confirmación de eliminación de material" severity="alert"
+                                                         widgetVar="cd_#{mat.id}" closeOnEscape="true">
+                                            <p:commandButton value="Si" actionListener="#{mantenedorMaterialVerListadoMB.eliminar(mat.id)}"
+                                                             oncomplete="cd_#{mat.id}.hide();" ajax="false"/>
+                                            <p:commandButton value="No" onclick="cd_#{mat.id}.hide();" type="button" />
+                                        </p:confirmDialog>
+
+                                    </p:column>
+                                   
+                                   
                                </p:dataTable>
                                <f:facet name="footer">
                                    <p:commandButton value="Agregar" ajax="true" action="#{mantenedorMaterialVerListadoMB.aAgregarNuevoMat()}"/>
@@ -69,7 +88,7 @@
                    
                    <p:tab title="Tipos incidencia">
                        <h:form>
-                           <p:panelGrid columns="2" styleClass="centrar">
+                           <p:panelGrid columns="4" styleClass="centrar">
                                <f:facet name="header">Listado de tipos de incidencia</f:facet>
 
                                <p:dataTable id="tiposIncidencia" value="#{mantenedorTipoIncidenciaVerListadoMB.listaMatPOJO}"
@@ -86,6 +105,23 @@
                                    <p:column id="visibleColumn" style="text-align: center" sortBy="#{tipoInc.visibleAlUsuario}" headerText="Visible a usuarios">
                                        <h:selectBooleanCheckbox readonly="true" disabled="true"  value="#{tipoInc.visibleAlUsuario}"/>
                                    </p:column>
+                                   
+                                   <p:column headerText="">
+                                       <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{mantenedorTipoIncidenciaVerListadoMB.editar(tipoInc.id)}">
+                                        </p:commandLink>
+                                    </p:column>
+                                    <p:column headerText="">
+                                        <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{tipoInc.id}.show();" />
+
+                                        <p:confirmDialog message="¿Está seguro que desea eliminar el tipo de incidencia?"
+                                                         header="Confirmación de eliminación de tipo de incidencia" severity="alert"
+                                                         widgetVar="cd_#{tipoInc.id}" closeOnEscape="true">
+                                            <p:commandButton value="Si" actionListener="#{mantenedorTipoIncidenciaVerListadoMB.eliminar(tipoInc.id)}"
+                                                             oncomplete="cd_#{tipoInc.id}.hide();" ajax="false"/>
+                                            <p:commandButton value="No" onclick="cd_#{tipoInc.id}.hide();" type="button" />
+                                        </p:confirmDialog>
+
+                                    </p:column>
                                </p:dataTable>
                                 <f:facet name="footer">
                                     <p:commandButton value="Agregar" ajax="false" action="#{mantenedorTipoIncidenciaVerListadoMB.aAgregarNuevoTipoInc()}"/>
@@ -97,7 +133,7 @@
                    
                    <p:tab title="Lista estados">
                        <h:form>
-                           <p:panelGrid columns="2" styleClass="centrar">
+                           <p:panelGrid columns="4" styleClass="centrar">
                                <f:facet name="header">Listado de estados</f:facet>
 
                                <p:dataTable id="tiposEstados" value="#{mantenedorEstadoVerListadoMB.listaEstadosPOJO}"
@@ -111,6 +147,24 @@
                                    <p:column id="nombreEstadoColumn" sortBy="#{estado.label}" headerText="Tipo incidencia" filterMatchMode="contains" filterBy="#{estado.label}">
                                        <h:outputText value="#{estado.label}"/>
                                    </p:column>
+                                   
+                                   <p:column headerText="">
+                                       <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{mantenedorEstadoVerListadoMB.editar(estado.id)}">
+                                        </p:commandLink>
+                                    </p:column>
+                                    <p:column headerText="">
+                                        <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{estado.id}.show();" />
+
+                                        <p:confirmDialog message="¿Está seguro que desea eliminar el estado?"
+                                                         header="Confirmación de eliminación de estado" severity="alert"
+                                                         widgetVar="cd_#{estado.id}" closeOnEscape="true">
+                                            <p:commandButton value="Si" actionListener="#{mantenedorEstadoVerListadoMB.eliminar(estado.id)}"
+                                                             oncomplete="cd_#{estado.id}.hide();" ajax="false"/>
+                                            <p:commandButton value="No" onclick="cd_#{estado.id}.hide();" type="button" />
+                                        </p:confirmDialog>
+
+                                    </p:column>
+                                   
                                </p:dataTable>
                                 <f:facet name="footer">
                                     <p:commandButton value="Agregar" ajax="false" action="#{mantenedorEstadoVerListadoMB.aAgregarNuevoEstado()}"/>
@@ -122,7 +176,7 @@
                    
                    <p:tab title="Unidades de medida">
                        <h:form>
-                           <p:panelGrid columns="2" styleClass="centrar">
+                           <p:panelGrid columns="4" styleClass="centrar">
                                <f:facet name="header">Listado de unidades</f:facet>
 
                                <p:dataTable id="unidadesMedida" value="#{mantenedorUnidadMedidaVerListadoMB.listaUnidadesPOJO}"
@@ -136,6 +190,24 @@
                                    <p:column id="nombreUnidadColumn" sortBy="#{unidad.label}" headerText="Nombre unidad" filterMatchMode="contains" filterBy="#{unidad.label}">
                                        <h:outputText value="#{unidad.label}"/>
                                    </p:column>
+                                   
+                                   <p:column headerText="">
+                                       <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{mantenedorUnidadMedidaVerListadoMB.editar(unidad.id)}">
+                                        </p:commandLink>
+                                    </p:column>
+                                    <p:column headerText="">
+                                        <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{unidad.id}.show();" />
+
+                                        <p:confirmDialog message="¿Está seguro que desea eliminar la unidad?"
+                                                         header="Confirmación de eliminación de unidad de medida" severity="alert"
+                                                         widgetVar="cd_#{unidad.id}" closeOnEscape="true">
+                                            <p:commandButton value="Si" actionListener="#{mantenedorUnidadMedidaVerListadoMB.eliminar(unidad.id)}"
+                                                             oncomplete="cd_#{unidad.id}.hide();" ajax="false"/>
+                                            <p:commandButton value="No" onclick="cd_#{unidad.id}.hide();" type="button" />
+                                        </p:confirmDialog>
+
+                                    </p:column>
+                                   
                                </p:dataTable>
                                 <f:facet name="footer">
                                     <p:commandButton value="Agregar" ajax="false" action="#{mantenedorUnidadMedidaVerListadoMB.aAgregarNuevaUnidad()}"/>
@@ -147,7 +219,7 @@
                    
                    <p:tab title="Comunas">
                        <h:form>
-                           <p:panelGrid columns="2" styleClass="centrar">
+                           <p:panelGrid columns="4" styleClass="centrar">
                                <f:facet name="header">Listado de comunas</f:facet>
                                <p:dataTable id="comunas" value="#{mantenedorComunaVerListadoMB.listaComunasPOJO}"
                                             var="comuna" filteredValue="#{mantenedorComunaVerListadoMB.listaComunasPOJOBusq}"
@@ -159,6 +231,24 @@
                                    <p:column id="nombreComunaColumn" sortBy="#{comuna.label}" headerText="Nombre comuna" filterMatchMode="contains" filterBy="#{comuna.label}">
                                        <h:outputText value="#{comuna.label}"/>
                                    </p:column>
+                                   
+                                   <p:column headerText="">
+                                       <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{mantenedorComunaVerListadoMB.editar(comuna.id)}">
+                                        </p:commandLink>
+                                    </p:column>
+                                    <p:column headerText="">
+                                        <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{comuna.id}.show();" />
+
+                                        <p:confirmDialog message="¿Está seguro que desea eliminar la comuna?"
+                                                         header="Confirmación de eliminación de comuna" severity="alert"
+                                                         widgetVar="cd_#{comuna.id}" closeOnEscape="true">
+                                            <p:commandButton value="Si" actionListener="#{mantenedorComunaVerListadoMB.eliminar(comuna.id)}"
+                                                             oncomplete="cd_#{comuna.id}.hide();" ajax="false"/>
+                                            <p:commandButton value="No" onclick="cd_#{comuna.id}.hide();" type="button" />
+                                        </p:confirmDialog>
+
+                                    </p:column>
+                                   
                                </p:dataTable>
                                 <f:facet name="footer">
                                     <p:commandButton value="Agregar" ajax="false" action="#{mantenedorComunaVerListadoMB.aAgregarNuevaComuna()}"/>

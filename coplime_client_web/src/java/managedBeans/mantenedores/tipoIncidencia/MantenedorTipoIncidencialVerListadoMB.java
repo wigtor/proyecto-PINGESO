@@ -13,6 +13,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.inject.Inject;
 import otros.CommonFunctions;
 import sessionBeans.CrudTipoIncidenciaLocal;
 
@@ -25,6 +27,9 @@ import sessionBeans.CrudTipoIncidenciaLocal;
 public class MantenedorTipoIncidencialVerListadoMB {
     @EJB
     private CrudTipoIncidenciaLocal crudTipoInc;
+    
+    @Inject
+    private MantenedorTipoIncidenciaConversation mantInc;
     
     private List<TipoIncidenciaPojo> listaTipoIncPOJO;
     private List<TipoIncidenciaPojo> listaTipoIncPOJOBusq;
@@ -72,6 +77,40 @@ public class MantenedorTipoIncidencialVerListadoMB {
      
     public void aAgregarNuevoTipoInc(){
        CommonFunctions.goToPage("/faces/users/admin/config/agregarTipoIncidencia.xhtml");
+    }
+    
+    public void editar(Integer idTipoIncidencia) {
+        TipoIncidencia tipoIncidenciaEdit = crudTipoInc.getTipoIncidenciaByID(idTipoIncidencia);
+        if (tipoIncidenciaEdit != null) {
+            this.mantInc.beginConversation();
+            this.mantInc.setIdTipoInc(idTipoIncidencia);
+            CommonFunctions.goToPage("/faces/users/admin/config/editarTipoIncidencia.xhtml?cid=".concat(this.mantInc.getConversation().getId()));
+        } else {
+            //MOSTRAR ERROR
+            this.mantInc.limpiarDatos();
+            CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml");
+        }
+    }
+    
+    public void eliminar(Integer idTipoInc) {
+        try {
+            boolean resultado = crudTipoInc.eliminarTipoIncidencia(idTipoInc);
+            if (resultado) {
+                CommonFunctions.viewMessage(FacesMessage.SEVERITY_INFO,
+                        "Se ha eliminado el tipo de incidencia",
+                        "Se ha eliminado correctamente el tipo de incidencia");
+            } else {
+                CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                        "Error al eliminar el tipo de incidencia",
+                        "Error, no se ha podido eliminar el tipo de incidencia seleccionado");
+            }
+        }
+        catch (Exception e) {
+            CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
+                        e.getMessage(),
+                        e.getMessage());
+        }
+        CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml?faces-redirect=true");
     }
 
     public List<TipoIncidenciaPojo> getListaMatPOJOBusq() {

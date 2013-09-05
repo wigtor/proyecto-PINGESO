@@ -19,7 +19,7 @@ public interface CrudUnidadMedidaLocal {
 
     boolean editarUnidadMedida(Integer idUnidadMedida, String unidadAntigua, String unidadNueva) throws Exception;
 
-    boolean eliminarUnidadMedida(Integer idUnidadMedida, String unidadEliminar) throws Exception;
+    boolean eliminarUnidadMedida(Integer idUnidadMedida) throws Exception;
 
     Collection getAllUnidadesMedida();
 
