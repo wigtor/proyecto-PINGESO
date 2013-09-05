@@ -46,7 +46,7 @@
                                <f:facet name="header">Listado de materiales</f:facet>
                                <p:dataTable id="materiales" value="#{mantenedorMaterialVerListadoMB.listaMatPOJO}"
                                             var="mat" filteredValue="#{mantenedorMaterialVerListadoMB.listaMatPOJOBusq}"
-                                            emptyMessage="No hay materiales." sortBy="#{mat.id}"
+                                            emptyMessage="No hay materiales."
 
                                             widgetVar="materialTable">
                                    <p:column id="idColumn" sortBy="#{mat.id}" headerText="Identificador" filterMatchMode="contains" filterBy="#{mat.id}" >
@@ -62,14 +62,14 @@
                                         </p:commandLink>
                                     </p:column>
                                     <p:column headerText="">
-                                        <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{mat.id}.show();" />
+                                        <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cdMat_#{mat.id}.show();" />
 
                                         <p:confirmDialog message="¿Está seguro que desea eliminar el material?"
                                                          header="Confirmación de eliminación de material" severity="alert"
-                                                         widgetVar="cd_#{mat.id}" closeOnEscape="true">
+                                                         widgetVar="cdMat_#{mat.id}" closeOnEscape="true">
                                             <p:commandButton value="Si" actionListener="#{mantenedorMaterialVerListadoMB.eliminar(mat.id)}"
-                                                             oncomplete="cd_#{mat.id}.hide();" ajax="false"/>
-                                            <p:commandButton value="No" onclick="cd_#{mat.id}.hide();" type="button" />
+                                                             oncomplete="cdMat_#{mat.id}.hide();"/>
+                                            <p:commandButton value="No" onclick="cdMat_#{mat.id}.hide();" type="button" />
                                         </p:confirmDialog>
 
                                     </p:column>
@@ -93,7 +93,7 @@
 
                                <p:dataTable id="tiposIncidencia" value="#{mantenedorTipoIncidenciaVerListadoMB.listaMatPOJO}"
                                             var="tipoInc" filteredValue="#{mantenedorTipoIncidenciaVerListadoMB.listaMatPOJOBusq}"
-                                            emptyMessage="No hay tipos de incidencia." sortBy="#{tipoInc.id}"
+                                            emptyMessage="No hay tipos de incidencia."
                                             widgetVar="tipoIncTable">
                                    <p:column id="idColumn" sortBy="#{tipoInc.id}" headerText="Identificador" filterMatchMode="contains" filterBy="#{tipoInc.id}" >
                                        <h:outputText value="#{tipoInc.id}"/>
@@ -103,7 +103,7 @@
                                        <h:outputText value="#{tipoInc.nombreTipoIncidencia}"/>
                                    </p:column>
                                    <p:column id="visibleColumn" style="text-align: center" sortBy="#{tipoInc.visibleAlUsuario}" headerText="Visible a usuarios">
-                                       <h:selectBooleanCheckbox readonly="true" disabled="true"  value="#{tipoInc.visibleAlUsuario}"/>
+                                       <h:selectBooleanCheckbox readonly="true" disabled="true" value="#{tipoInc.visibleAlUsuario}"/>
                                    </p:column>
                                    
                                    <p:column headerText="">
@@ -111,14 +111,14 @@
                                         </p:commandLink>
                                     </p:column>
                                     <p:column headerText="">
-                                        <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{tipoInc.id}.show();" />
+                                        <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cdIn_#{tipoInc.id}.show();" />
 
                                         <p:confirmDialog message="¿Está seguro que desea eliminar el tipo de incidencia?"
                                                          header="Confirmación de eliminación de tipo de incidencia" severity="alert"
-                                                         widgetVar="cd_#{tipoInc.id}" closeOnEscape="true">
+                                                         widgetVar="cdIn_#{tipoInc.id}" closeOnEscape="true">
                                             <p:commandButton value="Si" actionListener="#{mantenedorTipoIncidenciaVerListadoMB.eliminar(tipoInc.id)}"
-                                                             oncomplete="cd_#{tipoInc.id}.hide();" ajax="false"/>
-                                            <p:commandButton value="No" onclick="cd_#{tipoInc.id}.hide();" type="button" />
+                                                             oncomplete="cdIn_#{tipoInc.id}.hide();"/>
+                                            <p:commandButton value="No" onclick="cdIn_#{tipoInc.id}.hide();" type="button" />
                                         </p:confirmDialog>
 
                                     </p:column>
@@ -138,7 +138,7 @@
 
                                <p:dataTable id="tiposEstados" value="#{mantenedorEstadoVerListadoMB.listaEstadosPOJO}"
                                             var="estado" filteredValue="#{mantenedorEstadoVerListadoMB.listaEstadosPOJOBusq}"
-                                            emptyMessage="No hay estados." sortBy="#{estado.id}"
+                                            emptyMessage="No hay estados."
                                             widgetVar="estadosTable">
                                    <p:column id="idColumn" sortBy="#{estado.id}" headerText="Identificador" filterMatchMode="contains" filterBy="#{estado.id}" >
                                        <h:outputText value="#{estado.id}"/>
@@ -153,14 +153,14 @@
                                         </p:commandLink>
                                     </p:column>
                                     <p:column headerText="">
-                                        <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{estado.id}.show();" />
+                                        <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cdEst_#{estado.id}.show();" />
 
                                         <p:confirmDialog message="¿Está seguro que desea eliminar el estado?"
                                                          header="Confirmación de eliminación de estado" severity="alert"
-                                                         widgetVar="cd_#{estado.id}" closeOnEscape="true">
+                                                         widgetVar="cdEst_#{estado.id}" closeOnEscape="true">
                                             <p:commandButton value="Si" actionListener="#{mantenedorEstadoVerListadoMB.eliminar(estado.id)}"
-                                                             oncomplete="cd_#{estado.id}.hide();" ajax="false"/>
-                                            <p:commandButton value="No" onclick="cd_#{estado.id}.hide();" type="button" />
+                                                             oncomplete="cdEst_#{estado.id}.hide();"/>
+                                            <p:commandButton value="No" onclick="cdEst_#{estado.id}.hide();" type="button" />
                                         </p:confirmDialog>
 
                                     </p:column>
@@ -181,7 +181,7 @@
 
                                <p:dataTable id="unidadesMedida" value="#{mantenedorUnidadMedidaVerListadoMB.listaUnidadesPOJO}"
                                             var="unidad" filteredValue="#{mantenedorUnidadMedidaVerListadoMB.listaUnidadesPOJOBusq}"
-                                            emptyMessage="No hay unidades de medida." sortBy="#{estado.id}"
+                                            emptyMessage="No hay unidades de medida."
                                             widgetVar="unidadesTable">
                                    <p:column id="idColumn" sortBy="#{unidad.id}" headerText="Identificador" filterMatchMode="contains" filterBy="#{unidad.id}" >
                                        <h:outputText value="#{unidad.id}"/>
@@ -196,14 +196,14 @@
                                         </p:commandLink>
                                     </p:column>
                                     <p:column headerText="">
-                                        <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{unidad.id}.show();" />
+                                        <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cdUnid_#{unidad.id}.show();" />
 
                                         <p:confirmDialog message="¿Está seguro que desea eliminar la unidad?"
                                                          header="Confirmación de eliminación de unidad de medida" severity="alert"
-                                                         widgetVar="cd_#{unidad.id}" closeOnEscape="true">
+                                                         widgetVar="cdUnid_#{unidad.id}" closeOnEscape="true">
                                             <p:commandButton value="Si" actionListener="#{mantenedorUnidadMedidaVerListadoMB.eliminar(unidad.id)}"
-                                                             oncomplete="cd_#{unidad.id}.hide();" ajax="false"/>
-                                            <p:commandButton value="No" onclick="cd_#{unidad.id}.hide();" type="button" />
+                                                             oncomplete="cdUnid_#{unidad.id}.hide();"/>
+                                            <p:commandButton value="No" onclick="cdUnid_#{unidad.id}.hide();" type="button" />
                                         </p:confirmDialog>
 
                                     </p:column>
@@ -223,7 +223,7 @@
                                <f:facet name="header">Listado de comunas</f:facet>
                                <p:dataTable id="comunas" value="#{mantenedorComunaVerListadoMB.listaComunasPOJO}"
                                             var="comuna" filteredValue="#{mantenedorComunaVerListadoMB.listaComunasPOJOBusq}"
-                                            emptyMessage="No hay comunas." sortBy="#{comuna.id}"
+                                            emptyMessage="No hay comunas."
                                             widgetVar="comunasTable">
                                    <p:column id="idColumn" sortBy="#{comuna.id}" headerText="Identificador" filterMatchMode="contains" filterBy="#{comuna.id}" >
                                        <h:outputText value="#{comuna.id}"/>
@@ -237,14 +237,14 @@
                                         </p:commandLink>
                                     </p:column>
                                     <p:column headerText="">
-                                        <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{comuna.id}.show();" />
+                                        <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cdCom_#{comuna.id}.show();" />
 
                                         <p:confirmDialog message="¿Está seguro que desea eliminar la comuna?"
                                                          header="Confirmación de eliminación de comuna" severity="alert"
-                                                         widgetVar="cd_#{comuna.id}" closeOnEscape="true">
+                                                         widgetVar="cdCom_#{comuna.id}" closeOnEscape="true">
                                             <p:commandButton value="Si" actionListener="#{mantenedorComunaVerListadoMB.eliminar(comuna.id)}"
-                                                             oncomplete="cd_#{comuna.id}.hide();" ajax="false"/>
-                                            <p:commandButton value="No" onclick="cd_#{comuna.id}.hide();" type="button" />
+                                                             oncomplete="cdCom_#{comuna.id}.hide();"/>
+                                            <p:commandButton value="No" onclick="cdCom_#{comuna.id}.hide();" type="button" />
                                         </p:confirmDialog>
 
                                     </p:column>
@@ -252,7 +252,7 @@
                                </p:dataTable>
                                 <f:facet name="footer">
                                     <p:commandButton value="Agregar" ajax="false" action="#{mantenedorComunaVerListadoMB.aAgregarNuevaComuna()}"/>
-                                    <p:commandButton value="Volver" immediate="true" action="#{mantenedorComunaVerListadoMB.volver()}"/>   
+                                    <p:commandButton value="Volver" immediate="true" ajax="false" action="#{mantenedorComunaVerListadoMB.volver()}"/>   
                                 </f:facet>
                            </p:panelGrid>
                        </h:form>

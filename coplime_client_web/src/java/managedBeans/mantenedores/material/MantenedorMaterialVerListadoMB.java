@@ -100,6 +100,7 @@ public class MantenedorMaterialVerListadoMB {
     }
     
     public void eliminar(Integer idMaterial) {
+        System.out.println("Se quiere eliminar el material: "+idMaterial);
         try {
             boolean resultado = crudMat.eliminarMaterial(idMaterial);
             if (resultado) {
