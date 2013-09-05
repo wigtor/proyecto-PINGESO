@@ -58,7 +58,10 @@ public class AvisosIncidencia implements AvisosIncidenciaLocal {
         TipoIncidencia tipoIncidencia = tpo_incidDAO.find(idTipoIncidenciaSeleccionada);
         
         //Creo la notificación de incidencia
-        NotificacionDeUsuario notif = new NotificacionDeUsuario(detalles, ptoLimpioRelacionado, tipoIncidencia);
+        String detallesModificado = "Punto limpio N° ".concat(ptoLimpioRelacionado.getId().toString())
+                .concat(" - ").concat(ptoLimpioRelacionado.getNombre()).concat(": ")
+                .concat(detalles);
+        NotificacionDeUsuario notif = new NotificacionDeUsuario(detallesModificado, ptoLimpioRelacionado, tipoIncidencia);
         notif.setEmailContacto(emailContacto);
         Usuario userEncargado;
         if (ptoLimpioRelacionado.getInspectorEncargado() != null) {

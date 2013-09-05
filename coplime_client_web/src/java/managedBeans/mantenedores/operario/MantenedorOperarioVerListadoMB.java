@@ -67,7 +67,7 @@ public class MantenedorOperarioVerListadoMB {
     }
     
     public void agregar() {
-       CommonFunctions.goToPage("/faces/users/admin/config/agregarOperarioMantencion.xhtml");
+       CommonFunctions.goToPage("/faces/users/admin/agregarOperarioMantencion.xhtml");
         
     }
     

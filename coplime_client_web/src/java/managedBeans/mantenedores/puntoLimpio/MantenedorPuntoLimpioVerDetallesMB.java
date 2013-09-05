@@ -120,8 +120,8 @@ public class MantenedorPuntoLimpioVerDetallesMB {
             for (RevisionPuntoLimpio revTemp : listaRevisionesTemp) {
                 revPojo = new RevisionPojo();
                 revPojo.setNum(revTemp.getNum());
-                revPojo.setUsuario(revTemp.getInspectorRevisor().getUsuario().getNombre().concat(
-                        revTemp.getInspectorRevisor().getUsuario().getApellido1()));
+                revPojo.setUsuario(revTemp.getInspectorRevisor().getUsuario().getNombre()
+                        .concat(" ").concat(revTemp.getInspectorRevisor().getUsuario().getApellido1()));
                 f2 = revTemp.getFecha();
                 revPojo.setFecha(f2.get(Calendar.DAY_OF_MONTH)
                     +"-"
