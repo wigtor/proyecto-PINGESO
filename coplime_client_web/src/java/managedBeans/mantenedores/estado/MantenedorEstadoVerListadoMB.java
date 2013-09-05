@@ -106,8 +106,8 @@ public class MantenedorEstadoVerListadoMB {
         }
         catch (Exception e) {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
-                        e.getMessage(),
-                        e.getMessage());
+                        "No ha sido posible eliminar el estado, quizá se encuentra utilizado",
+                        "No ha sido posible eliminar el estado, quizá se encuentra utilizado por algún punto limpio o contenedor");
         }
         CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml?faces-redirect=true");
     }

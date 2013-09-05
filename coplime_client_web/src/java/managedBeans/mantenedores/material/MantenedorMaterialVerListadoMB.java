@@ -115,8 +115,8 @@ public class MantenedorMaterialVerListadoMB {
         }
         catch (Exception e) {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
-                        e.getMessage(),
-                        e.getMessage());
+                        "No ha sido posible eliminar el material, quizá se encuentra utilizado",
+                        "No ha sido posible eliminar el material, quizá se encuentra utilizado por algún contenedor");
         }
         CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml?faces-redirect=true");
     }

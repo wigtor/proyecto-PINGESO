@@ -107,8 +107,8 @@ public class MantenedorTipoIncidencialVerListadoMB {
         }
         catch (Exception e) {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
-                        e.getMessage(),
-                        e.getMessage());
+                        "No ha sido posible eliminar el tipo de incidencia, quizá se encuentra utilizada",
+                        "No ha sido posible eliminar el tipo de incidencia, quizá se encuentra utilizada por alguna notificación");
         }
         CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml?faces-redirect=true");
     }

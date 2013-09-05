@@ -101,8 +101,8 @@ public class MantenedorComunaVerListadoMB {
         }
         catch (Exception e) {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
-                        e.getMessage(),
-                        e.getMessage());
+                        "No ha sido posible eliminar la comuna, quizá se encuentra utilizada",
+                        "No ha sido posible eliminar la comuna, quizá se encuentra utilizada por algún punto limpio");
         }
         CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml?faces-redirect=true");
     }

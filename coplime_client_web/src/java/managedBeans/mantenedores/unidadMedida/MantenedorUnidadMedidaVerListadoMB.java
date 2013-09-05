@@ -105,8 +105,8 @@ public class MantenedorUnidadMedidaVerListadoMB {
         }
         catch (Exception e) {
             CommonFunctions.viewMessage(FacesMessage.SEVERITY_ERROR,
-                        e.getMessage(),
-                        e.getMessage());
+                        "No ha sido posible eliminar la unidad de medida, quizá se encuentra utilizada",
+                        "No ha sido posible eliminar la unidad de medida, quizá se encuentra utilizada por algún contenedor");
         }
         CommonFunctions.goToPage("/faces/users/admin/config/configuracionSistema.xhtml?faces-redirect=true");
     }
